@@ -1,0 +1,28 @@
+{% extends 'layout_front.html.twig' %}
+
+{% block title %}Spell{% endblock %}
+
+{% block body %}
+
+    <h3>Spell </h3>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Niveau</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for spell in spells %}
+            <tr>
+                <td>{{ spell.name }}</td>
+                <td>{{ spell.level }}</td>
+                <td>{{ spell.range }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

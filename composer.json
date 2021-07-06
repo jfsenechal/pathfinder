@@ -1,0 +1,28 @@
+{
+  "name": "afmlibre/pathfinder",
+  "description": "Rpg, gestion perso",
+  "homepage": "https://github.com/jfsenechal/pathfinder.git",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "authors": [
+    {
+      "name": "Jean-François Sénéchal",
+      "email": "jfsenechal@gmail.com",
+      "homepage": "https://www.afmlibre.be",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "AfmLibre\\Pathfinder\\": "src/AfmLibre/Pathfinder/src"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": "true"
+    }
+  }
+}
