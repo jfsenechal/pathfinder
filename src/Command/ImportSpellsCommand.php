@@ -19,7 +19,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ImportSpellsCommand extends Command
 {
-    protected static $defaultName = 'app:import-spells';
+    protected static $defaultName = 'pathfinder:import-spells';
 
     protected function configure()
     {

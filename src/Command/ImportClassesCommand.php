@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class ImportClassesCommand extends Command
 {
-    protected static $defaultName = 'app:import-classes';
+    protected static $defaultName = 'pathfinder:import-classes';
 
     protected function configure()
     {
