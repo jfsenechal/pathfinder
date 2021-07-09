@@ -8,18 +8,19 @@ use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
 
 /**
  * @ORM\Entity(repositoryClass=SpellClassLevelRepository::class)
+ * @ORM\Table(name="spell_class")
  */
 class SpellClassLevel
 {
     use IdTrait;
 
     /**
-     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity=Spell::class)
+     * @ORM\ManyToOne(targetEntity=Spell::class, inversedBy="spell_classes")
      */
     private ?Spell $spell;
 
     /**
-     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity=CharacterClass::class)
+     * @ORM\ManyToOne(targetEntity=CharacterClass::class, inversedBy="spell_classes")
      */
     private ?CharacterClass $characterClass;
 

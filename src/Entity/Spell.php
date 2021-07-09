@@ -3,10 +3,10 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
 
 /**
  * @ORM\Entity(repositoryClass=SpellRepository::class)
@@ -71,14 +71,21 @@ class Spell
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private ?string $area;
+
     /**
-     * @ORM\ManyToMany(targetEntity=CharacterClass::class, inversedBy="spells")
+     * @ORM\OneToMany(targetEntity=SpellClassLevel::class, mappedBy="spell")
+     * @var SpellClassLevel[]
      */
-    private iterable $character_class;
+    private iterable $spell_classes;
 
     public function __construct()
     {
-        $this->character_class = new ArrayCollection();
+        $this->spell_classes = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getName(): ?string
@@ -250,27 +257,32 @@ class Spell
     }
 
     /**
-     * @return Collection|CharacterClass[]
+     * @return Collection|SpellClassLevel[]
      */
-    public function getCharacterClass(): Collection
+    public function getSpellClasses(): Collection
     {
-        return $this->character_class;
+        return $this->spell_classes;
     }
 
-    public function addCharacterClass(CharacterClass $characterClass): self
+    public function addSpellClass(SpellClassLevel $spellClass): self
     {
-        if (!$this->character_class->contains($characterClass)) {
-            $this->character_class[] = $characterClass;
+        if (!$this->spell_classes->contains($spellClass)) {
+            $this->spell_classes[] = $spellClass;
+            $spellClass->setSpell($this);
         }
 
         return $this;
     }
 
-    public function removeCharacterClass(CharacterClass $characterClass): self
+    public function removeSpellClass(SpellClassLevel $spellClass): self
     {
-        $this->character_class->removeElement($characterClass);
+        if ($this->spell_classes->removeElement($spellClass)) {
+            // set the owning side to null (unless already changed)
+            if ($spellClass->getSpell() === $this) {
+                $spellClass->setSpell(null);
+            }
+        }
 
         return $this;
     }
-
 }

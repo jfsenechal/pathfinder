@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,5 +44,11 @@ class CharacterClassRepository extends ServiceEntityRepository
     public function flush()
     {
         $this->_em->flush();
+    }
+
+    public function getQl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('character_class')
+            ->orderBy('character_class.name');
     }
 }
