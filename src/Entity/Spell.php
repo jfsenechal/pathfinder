@@ -98,7 +98,7 @@ class Spell
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -110,7 +110,7 @@ class Spell
         return $this->reference;
     }
 
-    public function setReference(string $reference): self
+    public function setReference(?string $reference): self
     {
         $this->reference = $reference;
 
@@ -134,7 +134,7 @@ class Spell
         return $this->school;
     }
 
-    public function setSchool(string $school): self
+    public function setSchool(?string $school): self
     {
         $this->school = $school;
 
@@ -146,7 +146,7 @@ class Spell
         return $this->level;
     }
 
-    public function setLevel(string $level): self
+    public function setLevel(?string $level): self
     {
         $this->level = $level;
 
@@ -206,7 +206,7 @@ class Spell
         return $this->duration;
     }
 
-    public function setDuration(string $duration): self
+    public function setDuration(?string $duration): self
     {
         $this->duration = $duration;
 

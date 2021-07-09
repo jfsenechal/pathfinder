@@ -48,8 +48,8 @@ class SpellImportHandler
             //   dd($levels);
             //   break;
         }
-        //   $this->spellRepository->flush();
-        //     $this->spellClassLevelRepository->flush();
+        $this->spellRepository->flush();
+        $this->spellClassLevelRepository->flush();
     }
 
     /**
@@ -74,7 +74,9 @@ class SpellImportHandler
         $spell = new Spell();
         $spell->setName($data[SpellYml::YAML_NAME]);
         $spell->setDescription($data[SpellYml::YAML_DESC]);
-        $spell->setSchool($data[SpellYml::YAML_SCHOOL]);
+        if (isset($data[SpellYml::YAML_SCHOOL])) {
+            $spell->setSchool($data[SpellYml::YAML_SCHOOL]);
+        }
         $spell->setReference($data[SpellYml::YAML_REFERENCE]);
         $spell->setSource($data[SpellYml::YAML_SOURCE]);
 

@@ -69,7 +69,7 @@ class CharacterClass
         return $this->short_name;
     }
 
-    public function setShortName(string $short_name): self
+    public function setShortName(?string $short_name): self
     {
         $this->short_name = $short_name;
 
