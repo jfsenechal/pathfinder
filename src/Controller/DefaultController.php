@@ -2,13 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Mapping\SpellYml;
+use AfmLibre\Pathfinder\Form\SearchFormType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Yaml\Yaml;
 
 class DefaultController extends AbstractController
 {
@@ -26,79 +25,33 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
-        $spells = Yaml::parseFile(__DIR__.'/../../data/spells.yml');
-        $sorts = [];
-        $i = 0;
-
-        foreach ($spells as $data) {
-            //  dump($data);
-            $spell = new Spell();
-            $spell->setName($data[SpellYml::YAML_NAME]);
-            $spell->setDescription($data[SpellYml::YAML_DESC]);
-            $spell->setSchool($data[SpellYml::YAML_SCHOOL]);
-            $spell->setReference($data[SpellYml::YAML_REFERENCE]);
-            $spell->setSource($data[SpellYml::YAML_SOURCE]);
-            $spell->setLevel($data[SpellYml::YAML_LEVEL]);
-
-            $sorts[$i]["nom"] = $data[SpellYml::YAML_NAME];
-            $sorts[$i]["levels"] = $levels = $this->getLevel($data[SpellYml::YAML_LEVEL]);
-
-            foreach ($levels as $level) {
-                $characterClass = $this->getCharacterClass($level['class']);
-                $spell->addCharacterClass($characterClass);
-            }
-
-            if (isset($data[SpellYml::YAML_CASTING])) {
-                $spell->setCastingTime($data[SpellYml::YAML_CASTING]);
-            }
-            if (isset($data[SpellYml::YAML_COMPONENTS])) {
-                $spell->setComponents($data[SpellYml::YAML_COMPONENTS]);
-            }
-            if (isset($data[SpellYml::YAML_RANGE])) {
-                $spell->setRange($data[SpellYml::YAML_RANGE]);
-            }
-            if (isset($data[SpellYml::YAML_TARGET])) {
-                $spell->setTarget($data[SpellYml::YAML_TARGET]);
-            }
-            $spell->setDuration($data[SpellYml::YAML_DURATION]);
-            if (isset($data[SpellYml::YAML_SAVING])) {
-                $spell->setSavingThrow($data[SpellYml::YAML_SAVING]);
-            }
-            if (isset($data[SpellYml::YAML_SPELL_RES])) {
-                $spell->setSpellResistance($data[SpellYml::YAML_SPELL_RES]);
-            }
-            $i++;
-            //    $this->spellRepository->persist($spell);
-        }
-
-        //  $this->spellRepository->flush();
-
         return $this->render(
-            'default/index.html.twig',
+            '@AfmLibrePathfinder/default/index.html.twig',
             [
-                'spells' => $sorts,
             ]
         );
     }
 
-    private function getLevel(string $level)
+    /**
+     * @Route("/search/form", name="pathfinder_search_form")
+     */
+    public function searchForm(): Response
     {
-        $result = [];
-        $i = 0;
-        if (preg_match("#,#", $level)) {
-            $data = explode(",", $level);
-            //   dump($data);
-            foreach ($data as $values) {
-                $number = (int)filter_var($values, FILTER_SANITIZE_NUMBER_INT);
-                $class = trim(preg_replace("/$number/", '', $values));
-                //   dump($class);
-                $result[$i]['class'] = $class;
-                $result[$i]['level'] = $number;
-                $i++;
-            }
-        }
+        $form = $this->createForm(
+            SearchFormType::class,
+            [],
+            [
+                'method' => 'GET',
+                'action' => $this->generateUrl('pathfinder_search_form'),
+            ]
+        );
 
-        return $result;
+        return $this->render(
+            '@AfmLibrePathfinder/_search_form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     private function words()

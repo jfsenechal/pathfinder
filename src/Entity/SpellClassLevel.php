@@ -14,19 +14,19 @@ class SpellClassLevel
     use IdTrait;
 
     /**
-     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\Spell")
+     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity=Spell::class)
      */
     private ?Spell $spell;
 
     /**
-     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity="App\Entity\CharacterClass")
+     * @\Doctrine\ORM\Mapping\ManyToOne(targetEntity=CharacterClass::class)
      */
     private ?CharacterClass $characterClass;
 
     /**
      * @\Doctrine\ORM\Mapping\Column(type="smallint")
      */
-    private int $level = 1;
+    private int $level;
 
     public function __construct(Spell $spell, CharacterClass $characterClass, int $level)
     {

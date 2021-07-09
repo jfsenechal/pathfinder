@@ -12,21 +12,75 @@ class ClassParser
      */
     public static function getClassName(string $classShort): ?string
     {
-        switch ($classShort) {
-            case 'Ens/Mag':
-                return 'Mage';
-            case 'Prê/Ora':
-                return 'Pretre';
-            case 'Psy':
-                return 'Psy';
-            case 'Rôd':
-                return 'Rodeur';
-            case 'x':
-                return 'y';
-            default;
-                return null;
-        }
+        $names = [
+            '' => 'Adepte',
+            'Alc' => 'Alchimiste',
+            'Ant' => 'Antipaladin',
+            '' => 'Arcaniste',
+            '' => 'Archer-mage',
+            '' => 'Arpenteur d\'horizon',
+            '' => 'Assassin',
+            'Bar' => 'Barbare',
+            '' => 'Barde',
+            '' => 'Bretteur',
+            'Chm' => 'Chaman',
+            '' => 'Champion occultiste',
+            '' => 'Chasseur',
+            '' => 'Chasseur de vampire',
+            '' => 'Chevalier',
+            '' => 'Chroniqueur',
+            '' => 'Cinétiste',
+            'Con' => 'Conjurateur',
+            '' => 'Disciple draconien',
+            'Dru' => 'Druide',
+            '' => 'Duelliste',
+            '' => 'Enquêteur',
+            'Ens/Mag' => 'Ensorceleur',
+            '' => 'Expert',
+            '' => 'Fidèle défenseur',
+            '' => 'Gardien de la nature',
+            '' => 'Gardien du savoir',
+            '' => 'Guerrier',
+            '' => 'Héraut',
+            '' => 'Homme d\'arme',
+            '' => 'Homme du peuple',
+            'Hyp' => 'Hypnotiseur',
+            'Inq' => 'Inquisiteur',
+            '' => 'Justicier',
+            '' => 'Lutteur',
+            '' => 'Magicien',
+            'Mgs' => 'Magus',
+            '' => 'Maître chymiste',
+            '' => 'Maître des ombres',
+            '' => 'Maître espion',
+            'Méd' => 'Médium',
+            '' => 'Métamorphe',
+            '' => 'Moine',
+            '' => 'Mystificateur profane',
+            '' => 'Ninja',
+            '' => 'Noble',
+            'Occ' => 'Occultiste',
+            '' => 'Oracle',
+            'Pal' => 'Paladin',
+            '' => 'Pistolier',
+            'Prê/Ora' => 'Prêtre',
+            'Prê' => 'Prêtre',
+            '' => 'Prêtre combattant',
+            '' => 'Prophète enragé',
+            'Psy' => 'Psychiste',
+            'Rôd' => 'Rôdeur',
+            '' => 'Roublard',
+            '' => 'Samouraï',
+            'San' => 'Sanguin',
+            '' => 'Scalde',
+            'Sor' => 'Sorcière',
+            'Spi' => 'Spirite',
+            '' => 'Théurge mystique',
+            '' => 'Tueur',
+            '' => 'Vengeur sacré',
+        ];
 
+        return isset($names[$classShort]) ? $names[$classShort] : null;
     }
 
 }

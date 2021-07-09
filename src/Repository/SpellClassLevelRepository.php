@@ -19,32 +19,13 @@ class SpellClassLevelRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, SpellClassLevel::class);
     }
 
-    // /**
-    //  * @return SpellClassLevel[] Returns an array of SpellClassLevel objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function persist(SpellClassLevel $spellClassLevel)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $this->_em->persist($spellClassLevel);
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?SpellClassLevel
+    public function flush()
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->_em->flush();
     }
-    */
 }

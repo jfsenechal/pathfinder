@@ -19,12 +19,6 @@ class SpellRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, Spell::class);
     }
 
-    public function insert(Spell $spell)
-    {
-        $this->persist($spell);
-        $this->flush();
-    }
-
     public function persist(Spell $spell)
     {
         $this->_em->persist($spell);
@@ -34,33 +28,4 @@ class SpellRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
-
-    // /**
-    //  * @return Spell[] Returns an array of Spell objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Spell
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

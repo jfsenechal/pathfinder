@@ -1,4 +1,4 @@
-{% extends 'layout_front.html.twig' %}
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
 
 {% block title %}Pathfinder{% endblock %}
 
@@ -6,29 +6,4 @@
 
     <h3>Pathfinder</h3>
 
-
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Class</th>
-            <th>Level</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for spell in spells %}
-            <tr>
-                <td colspan="3">{{ spell.nom }}</td>
-            </tr>
-            {% for level in spell.levels %}
-                <tr>
-                    <td></td>
-                    <td>{{ level.class }}</td>
-                    <td>{{ level.level }}</td>
-                </tr>
-            {% endfor %}
-
-        {% endfor %}
-        </tbody>
-    </table>
 {% endblock %}

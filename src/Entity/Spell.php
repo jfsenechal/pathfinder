@@ -20,23 +20,23 @@ class Spell
      */
     protected ?string $name;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     protected ?string $description;
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected ?string $reference;
     /**
-     * @ORM\Column(name="sourcet", type="string", length=150)
+     * @ORM\Column(name="sourcet", type="string", length=150, nullable=true)
      */
     protected ?string $source;
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private ?string $school;
     /**
-     * @ORM\Column(name="levelt",type="string", length=150)
+     * @ORM\Column(name="levelt",type="string", length=150, nullable=true)
      */
     private ?string $level;
     /**
@@ -56,7 +56,7 @@ class Spell
      */
     private ?string $target;
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private ?string $duration;
     /**
@@ -122,7 +122,7 @@ class Spell
         return $this->source;
     }
 
-    public function setSource(string $source): self
+    public function setSource(?string $source): self
     {
         $this->source = $source;
 
