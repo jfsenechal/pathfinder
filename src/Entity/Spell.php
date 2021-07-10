@@ -32,10 +32,6 @@ class Spell
      */
     protected ?string $source;
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $school;
-    /**
      * @ORM\Column(name="levelt",type="string", length=150, nullable=true)
      */
     private ?string $level;
@@ -71,6 +67,12 @@ class Spell
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private ?string $area;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=School::class)
+     * @ORM\Column(nullable=true)
+     */
+    private ?School $school;
 
     /**
      * @ORM\OneToMany(targetEntity=SpellClassLevel::class, mappedBy="spell")
@@ -136,12 +138,12 @@ class Spell
         return $this;
     }
 
-    public function getSchool(): ?string
+    public function getSchool(): ?School
     {
         return $this->school;
     }
 
-    public function setSchool(?string $school): self
+    public function setSchool(?School $school): self
     {
         $this->school = $school;
 

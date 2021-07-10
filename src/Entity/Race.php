@@ -17,9 +17,4 @@ class Race
      * @var Race[]
      */
     protected $traits;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 }

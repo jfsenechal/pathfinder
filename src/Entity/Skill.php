@@ -27,8 +27,5 @@ class Skill
      */
     private $armorpenalty;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 }

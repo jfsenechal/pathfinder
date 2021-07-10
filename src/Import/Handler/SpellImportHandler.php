@@ -4,12 +4,14 @@
 namespace AfmLibre\Pathfinder\Import\Handler;
 
 
+use AfmLibre\Pathfinder\Entity\School;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\SpellClassLevel;
 use AfmLibre\Pathfinder\Level\LevelParser;
 use AfmLibre\Pathfinder\Mapping\SpellYml;
 use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Repository\SchoolRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
@@ -18,15 +20,18 @@ class SpellImportHandler
     private SpellRepository $spellRepository;
     private LevelParser $levelParser;
     private SpellClassLevelRepository $spellClassLevelRepository;
+    private SchoolRepository $schoolRepository;
 
     public function __construct(
         SpellRepository $spellRepository,
         SpellClassLevelRepository $spellClassLevelRepository,
+        SchoolRepository $schoolRepository,
         LevelParser $levelParser
     ) {
         $this->spellRepository = $spellRepository;
         $this->levelParser = $levelParser;
         $this->spellClassLevelRepository = $spellClassLevelRepository;
+        $this->schoolRepository = $schoolRepository;
     }
 
     public function call(SymfonyStyle $io, array $spells)
@@ -75,7 +80,7 @@ class SpellImportHandler
         $spell->setName($data[SpellYml::YAML_NAME]);
         $spell->setDescription($data[SpellYml::YAML_DESC]);
         if (isset($data[SpellYml::YAML_SCHOOL])) {
-            $spell->setSchool($data[SpellYml::YAML_SCHOOL]);
+            $spell->setSchool($this->setSchool($data[SpellYml::YAML_SCHOOL]));
         }
         $spell->setReference($data[SpellYml::YAML_REFERENCE]);
         $spell->setSource($data[SpellYml::YAML_SOURCE]);
@@ -100,6 +105,17 @@ class SpellImportHandler
         }
 
         return $spell;
+    }
+
+    private function setSchool(?string $schoolName): School
+    {
+        if (!$school = $this->schoolRepository->findOneBy(['name' => $schoolName])) {
+            $school = new School($schoolName);
+            $this->schoolRepository->persist($school);
+            $this->schoolRepository->flush();
+        }
+
+        return $school;
     }
 
 }
