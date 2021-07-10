@@ -51,4 +51,20 @@ class CharacterClassRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('character_class')
             ->orderBy('character_class.name');
     }
+
+    /**
+     * @param $name
+     * @return array|CharacterClass[]
+     */
+    public function searchByName(?string $name = null): array
+    {
+        $qb = $this->createQueryBuilder('character_class');
+        if ($name) {
+            $qb->andWhere('character_class.name = :name')
+                ->setParameter('name', $name);
+        }
+        $qb->orderBy('character_class.name');
+
+        return $qb->getQuery()->getResult();
+    }
 }

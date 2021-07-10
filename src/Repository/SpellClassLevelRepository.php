@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\SpellClassLevel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,33 @@ class SpellClassLevelRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, SpellClassLevel::class);
+    }
+    /**
+     * @param string|null $name
+     * @param \AfmLibre\Pathfinder\Entity\CharacterClass|null $class
+     * @return array|SpellClassLevel[]
+     */
+    public function searchByNameAndClass(?string $name = null, ?CharacterClass $class = null): array
+    {
+        $qb = $this->createQueryBuilder('spellClassLevel')
+            ->leftJoin('spellClassLevel.spell', 'spell', 'WITH')
+            ->leftJoin('spellClassLevel.characterClass', 'characterClass', 'WITH')
+            ->addSelect('characterClass', 'spell');
+
+        if ($name) {
+            $qb->andWhere('spell.name LIKE :name')
+                ->setParameter('name', '%'.$name.'%');
+        }
+
+        if ($class) {
+            $qb->andWhere('spellClassLevel.characterClass = :class2')
+                ->setParameter('class2', $class);
+        }
+
+        $qb->addOrderBy('spell.name');
+
+        return $qb->getQuery()->getResult();
+
     }
 
     public function persist(SpellClassLevel $spellClassLevel)

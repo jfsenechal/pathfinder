@@ -6,21 +6,20 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Sorts</h3>
+            <h3>Classes</h3>
         </div>
         <div class="card-body">
-            {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' %}
+            {% include '@AfmLibrePathfinder/character/_form_search.html.twig' %}
 
             <table class="table table-bordered">
                 <tr>
                     <th>Nom</th>
-                    <th>Class</th>
                 </tr>
-                {% for spell in spells %}
+                {% for characterClass in characterClasses %}
                     <tr>
                         <td>
-                            <a href="{{ path('spell_show', {'id': spell.id}) }}">
-                                {{ spell.name }}
+                            <a href="{{ path('character_show', {'id': characterClass.id}) }}">
+                                {{ characterClass.name }}
                             </a>
                         </td>
                         <td></td>

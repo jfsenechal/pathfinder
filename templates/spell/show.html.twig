@@ -13,7 +13,9 @@
                     <th>Niveau</th>
                     <td>
                         {% for spellClasse in spell.spellClasses %}
-                            {{ spellClasse.characterClass }}
+                            <a href="{{ path('character_show', {'id':  spellClasse.characterClass.id }) }}">
+                                {{ spellClasse.characterClass }}
+                            </a>
                             ({{ spellClasse.level }}) /
                         {% endfor %}
                     </td>
@@ -37,6 +39,10 @@
                 <tr>
                     <th>Source</th>
                     <td>{{ spell.source }}</td>
+                </tr>
+                <tr>
+                    <th>Composante</th>
+                    <td>{{ spell.components }}</td>
                 </tr>
                 <tr>
                     <th>Temps d'incantation</th>
