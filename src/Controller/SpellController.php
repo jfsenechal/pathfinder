@@ -2,12 +2,18 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class SpellController
+ * @package AfmLibre\Pathfinder\Controller
+ * @Route("/spell")
+ */
 class SpellController extends AbstractController
 {
     private $spellRepository;
@@ -18,7 +24,7 @@ class SpellController extends AbstractController
     }
 
     /**
-     * @Route("/spell", name="spell_index")
+     * @Route("/", name="spell_index")
      */
     public function index(Request $request)
     {
@@ -34,10 +40,23 @@ class SpellController extends AbstractController
         }
 
         return $this->render(
-            'spell/index.html.twig',
+            '@AfmLibrePathfinder/spell/index.html.twig',
             [
                 'spells' => $spells,
                 'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}", name="spell_show")
+     */
+    public function show(Spell $spell)
+    {
+        return $this->render(
+            '@AfmLibrePathfinder/spell/show.html.twig',
+            [
+                'spell' => $spell,
             ]
         );
     }

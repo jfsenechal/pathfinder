@@ -1,28 +1,33 @@
-{% extends 'layout_front.html.twig' %}
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}Spell{% endblock %}
+{% block title %}Pathfinder{% endblock %}
 
 {% block body %}
 
-    <h3>Spell </h3>
+    <div class="card">
+        <div class="card-header">
+            <h3>Sorts</h3>
+        </div>
+        <div class="card-body">
+            {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' %}
 
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Niveau</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for spell in spells %}
-            <tr>
-                <td>{{ spell.name }}</td>
-                <td>{{ spell.level }}</td>
-                <td>{{ spell.range }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                    <th>Class</th>
+                </tr>
+                {% for spell in spells %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('spell_show', {'id': spell.id}) }}">
+                                {{ spell.name }}
+                            </a>
+                        </td>
+                        <td>{{ spell.level }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

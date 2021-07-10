@@ -13,7 +13,6 @@ use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Yaml\Yaml;
 
 class SpellImportHandler
 {
@@ -79,8 +78,9 @@ class SpellImportHandler
         $spell = new Spell();
         $spell->setName($data[SpellYml::YAML_NAME]);
         $spell->setDescription($data[SpellYml::YAML_DESC]);
+        $spell->setDescriptionHtml($data[SpellYml::YAML_DESCHTML]);
         if (isset($data[SpellYml::YAML_SCHOOL])) {
-            $spell->setSchool($this->setSchool($data[SpellYml::YAML_SCHOOL]));
+            $spell->setSchool($this->findSchool($data[SpellYml::YAML_SCHOOL]));
         }
         $spell->setReference($data[SpellYml::YAML_REFERENCE]);
         $spell->setSource($data[SpellYml::YAML_SOURCE]);
@@ -107,7 +107,7 @@ class SpellImportHandler
         return $spell;
     }
 
-    private function setSchool(?string $schoolName): School
+    private function findSchool(?string $schoolName): School
     {
         if (!$school = $this->schoolRepository->findOneBy(['name' => $schoolName])) {
             $school = new School($schoolName);

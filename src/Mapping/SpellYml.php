@@ -24,4 +24,5 @@ class SpellYml
     public  const YAML_DURATION = "Durée";
     public  const YAML_SAVING = "Jet de sauvegarde";
     public  const YAML_SPELL_RES = "Résistance à la magie";
+    const YAML_DESCHTML = "DescriptionHtml";
 }

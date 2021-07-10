@@ -24,6 +24,10 @@ class Spell
      */
     protected ?string $description;
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected ?string $descriptionHtml;
+    /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     protected ?string $reference;
@@ -31,10 +35,6 @@ class Spell
      * @ORM\Column(name="sourcet", type="string", length=150, nullable=true)
      */
     protected ?string $source;
-    /**
-     * @ORM\Column(name="levelt",type="string", length=150, nullable=true)
-     */
-    private ?string $level;
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
@@ -70,7 +70,7 @@ class Spell
 
     /**
      * @ORM\ManyToOne(targetEntity=School::class)
-     * @ORM\Column(nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private ?School $school;
 
@@ -146,18 +146,6 @@ class Spell
     public function setSchool(?School $school): self
     {
         $this->school = $school;
-
-        return $this;
-    }
-
-    public function getLevel(): ?string
-    {
-        return $this->level;
-    }
-
-    public function setLevel(?string $level): self
-    {
-        $this->level = $level;
 
         return $this;
     }
@@ -284,6 +272,18 @@ class Spell
                 $spellClass->setSpell(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescriptionHtml(): ?string
+    {
+        return $this->descriptionHtml;
+    }
+
+    public function setDescriptionHtml(?string $descriptionHtml): self
+    {
+        $this->descriptionHtml = $descriptionHtml;
 
         return $this;
     }
