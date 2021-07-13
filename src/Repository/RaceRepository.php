@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Entity\Race;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,32 @@ class RaceRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     */
+    public function getQl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.name', 'ASC');
+    }
+
+    public function persist(Race $race)
+    {
+        $this->_em->persist($race);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
+    /**
+     * @return array|Race[]
+     */
+    public function findAllOrdered(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.name')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -28,12 +28,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, nullable=false)
      */
-    private ?string $nom = null;
+    private ?string $name = null;
 
     /**
      * @ORM\Column(type="string", length=180, nullable=true)
      */
-    private ?string $prenom = null;
+    private ?string $first_name = null;
 
     /**
      * @var string The hashed password
@@ -78,7 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-     return $this->nom. ' '.$this->prenom;
+     return $this->name. ' '.$this->first_name;
     }
 
     public function getEmail(): ?string
@@ -175,6 +175,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(?string $first_name): self
+    {
+        $this->first_name = $first_name;
 
         return $this;
     }

@@ -1,32 +1,36 @@
 {% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}Pathfinder{% endblock %}
+{% block title %}Personnages{% endblock %}
 
 {% block body %}
-
     <div class="card">
         <div class="card-header">
-            <h3>Classes</h3>
+            <h3>Vos personnages</h3>
         </div>
         <div class="card-body">
-            {% include '@AfmLibrePathfinder/character/_form_search.html.twig' %}
+            <a href="{{ path('pathfinder_character_new') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Ajouter un personnage
+            </a> <br/><br/>
 
             <table class="table table-bordered">
+                <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Race</th>
+                    <th>Classe</th>
                 </tr>
-                {% for characterClass in characterClasses %}
+                </thead>
+                <tbody>
+                {% for character in characters %}
                     <tr>
-                        <td>
-                            <a href="{{ path('character_show', {'id': characterClass.id}) }}">
-                                {{ characterClass.name }}
-                            </a>
-                        </td>
-                        <td></td>
+                        <td>{{ character.name }}</td>
+                        <td>{{ character.race ? character.race.name }}</td>
+                        <td>{{ character.class ? character.class.name }}</td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
+
         </div>
     </div>
-
 {% endblock %}

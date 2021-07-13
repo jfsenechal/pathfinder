@@ -24,7 +24,7 @@ class SpellController extends AbstractController
     }
 
     /**
-     * @Route("/", name="spell_index")
+     * @Route("/", name="pathfinder_spell_index")
      */
     public function index(Request $request)
     {
@@ -36,7 +36,6 @@ class SpellController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $spells = $this->spellRepository->searchByNameAndClass($data['name'], $data['class']);
-            dump($spells);
         }
 
         return $this->render(
@@ -49,7 +48,7 @@ class SpellController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="spell_show")
+     * @Route("/{id}", name="pathfinder_spell_show")
      */
     public function show(Spell $spell)
     {

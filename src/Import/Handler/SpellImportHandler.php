@@ -9,9 +9,9 @@ use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\SpellClassLevel;
 use AfmLibre\Pathfinder\Level\LevelParser;
 use AfmLibre\Pathfinder\Mapping\SpellYml;
+use AfmLibre\Pathfinder\Repository\SchoolRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
-use AfmLibre\Pathfinder\Repository\SchoolRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SpellImportHandler
@@ -37,9 +37,7 @@ class SpellImportHandler
     {
         foreach ($spells as $spellData) {
             $spell = $this->createSpell($spellData);
-            $spell->setName($spellData['Nom']);
             $this->spellRepository->persist($spell);
-
             try {
                 $levels = $this->levelParser->parse($spellData['Niveau']);
                 foreach ($levels as $levelDto) {
@@ -49,8 +47,6 @@ class SpellImportHandler
             } catch (\Exception $e) {
                 $io->error($e->getMessage().$spellData['Nom']);
             }
-            //   dd($levels);
-            //   break;
         }
         $this->spellRepository->flush();
         $this->spellClassLevelRepository->flush();
@@ -74,11 +70,12 @@ class SpellImportHandler
 
     private function createSpell(array $data): Spell
     {
-        //  dump($data);
         $spell = new Spell();
         $spell->setName($data[SpellYml::YAML_NAME]);
         $spell->setDescription($data[SpellYml::YAML_DESC]);
-        $spell->setDescriptionHtml($data[SpellYml::YAML_DESCHTML]);
+        if (isset($data[SpellYml::YAML_DESCHTML])) {
+            $spell->setDescriptionHtml($data[SpellYml::YAML_DESCHTML]);
+        }
         if (isset($data[SpellYml::YAML_SCHOOL])) {
             $spell->setSchool($this->findSchool($data[SpellYml::YAML_SCHOOL]));
         }

@@ -16,38 +16,61 @@ class RaceTrait
     /**
      * @ORM\Column(type="string", length=150)
      */
-    private $name;
+    protected ?string $name;
+
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected ?string $description;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    /**
+     * @ORM\ManyToOne(targetEntity="AfmLibre\Pathfinder\Entity\Race", inversedBy="traits")
+     */
+   private ?Race $race;
 
-    public function getName(): ?string
+   public function __construct(Race $race)
+   {
+       $this->race = $race;
+   }
+
+    public function __toString()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
+    public function getName(): ?string
+   {
+       return $this->name;
+   }
 
-        return $this;
-    }
+   public function setName(string $name): self
+   {
+       $this->name = $name;
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+       return $this;
+   }
 
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
+   public function getDescription(): ?string
+   {
+       return $this->description;
+   }
 
-        return $this;
-    }
+   public function setDescription(?string $description): self
+   {
+       $this->description = $description;
+
+       return $this;
+   }
+
+   public function getRace(): ?Race
+   {
+       return $this->race;
+   }
+
+   public function setRace(?Race $race): self
+   {
+       $this->race = $race;
+
+       return $this;
+   }
 }

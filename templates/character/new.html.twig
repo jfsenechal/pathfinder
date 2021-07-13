@@ -1,0 +1,16 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Personnage{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>Nouveau personnage</h3>
+        </div>
+        <div class="card-body">
+
+            {{ include('@AfmLibrePathfinder/character/_form.html.twig') }}
+
+        </div>
+    </div>
+{% endblock %}

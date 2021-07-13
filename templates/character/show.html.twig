@@ -1,39 +1,28 @@
 {% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}Spell{% endblock %}
+{% block title %}Personnage{% endblock %}
 
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3>{{ characterClass }}</h3>
+            <h3>{{ character }}</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Dé de vie</th>
-                    <td>{{ characterClass.dieOfLive }}</td>
-                </tr>
 
-            </table>
-            <h4>Sorts</h4>
             <table class="table table-bordered">
+                <tbody>
                 <tr>
-                    <th>Nom</th>
-                    <th>Level</th>
+                    <th>Race</th>
+                    <td>{{ character.race }}</td>
                 </tr>
-                {% for spellClass in spellsClass %}
-                    <tr>
-                        <td>
-                            <a href="{{ path('spell_show', {'id': spellClass.spell.id}) }}">
-                                {{ spellClass.spell.name }}
-                            </a>
-                        </td>
-                        <td>{{ spellClass.level }}</td>
-                    </tr>
-                {% endfor %}
+                <tr>
+                    <th>Classe</th>
+                    <td>{{ character.characterClass }}</td>
+                </tr>
+                </tbody>
             </table>
 
-            <br/>
+            {{ include('@AfmLibrePathfinder/character/_form_delete.html.twig') }}
         </div>
     </div>
 {% endblock %}

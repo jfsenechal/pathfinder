@@ -1,0 +1,29 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Pathfinder{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Les races</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                </tr>
+                {% for race in races %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('pathfinder_race_show', {'id': race.id}) }}">
+                                {{ race.name }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

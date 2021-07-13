@@ -25,8 +25,8 @@ class CharacterClassImportHandler
                 $die = preg_replace('/[^0-9]/', '', $classData['DésDeVie']);
                 $class->setDieOfLive($die);
                 $this->characterClassRepository->persist($class);
-
             }
         }
+        $this->characterClassRepository->flush();
     }
 }

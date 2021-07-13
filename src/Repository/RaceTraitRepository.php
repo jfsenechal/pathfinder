@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Entity\RaceTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,14 @@ class RaceTraitRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function persist(RaceTrait $raceTrait)
+    {
+        $this->_em->persist($raceTrait);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
 }

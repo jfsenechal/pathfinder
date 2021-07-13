@@ -33,10 +33,17 @@ class CharacterClass
      */
     private iterable $spell_classes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="characterClass")
+     * @var Character[]
+     */
+    private iterable $characters;
+
     public function __construct()
     {
         $this->spells = new ArrayCollection();
         $this->spell_classes = new ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 
     public function __toString()
@@ -92,6 +99,36 @@ class CharacterClass
             // set the owning side to null (unless already changed)
             if ($spellClass->getCharacterClass() === $this) {
                 $spellClass->setCharacterClass(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Character[]
+     */
+    public function getCharacters(): Collection
+    {
+        return $this->characters;
+    }
+
+    public function addCharacter(Character $character): self
+    {
+        if (!$this->characters->contains($character)) {
+            $this->characters[] = $character;
+            $character->setCharacterClass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacter(Character $character): self
+    {
+        if ($this->characters->removeElement($character)) {
+            // set the owning side to null (unless already changed)
+            if ($character->getCharacterClass() === $this) {
+                $character->setCharacterClass(null);
             }
         }
 

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/characterclass")
+ * @Route("/class")
  */
 class CharacterClassController extends AbstractController
 {
@@ -25,12 +25,11 @@ class CharacterClassController extends AbstractController
     public function __construct(CharacterClassRepository $characterClassRepository, SpellClassLevelRepository $spellClassLevelRepository)
     {
         $this->characterClassRepository = $characterClassRepository;
-
         $this->spellClassLevelRepository = $spellClassLevelRepository;
     }
 
     /**
-     * @Route("/", name="character_index")
+     * @Route("/", name="pathfinder_class_index")
      */
     public function index(Request $request)
     {
@@ -45,7 +44,7 @@ class CharacterClassController extends AbstractController
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/character/index.html.twig',
+            '@AfmLibrePathfinder/class/index.html.twig',
             [
                 'characterClasses' => $characterClasses,
                 'form' => $form->createView(),
@@ -54,14 +53,14 @@ class CharacterClassController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="character_show")
+     * @Route("/{id}", name="pathfinder_class_show")
      */
     public function show(CharacterClass $characterClass)
     {
         $spellsClass = $this->spellClassLevelRepository->searchByNameAndClass(null, $characterClass);
 
         return $this->render(
-            '@AfmLibrePathfinder/character/show.html.twig',
+            '@AfmLibrePathfinder/class/show.html.twig',
             [
                 'characterClass' => $characterClass,
                 'spellsClass' => $spellsClass,
