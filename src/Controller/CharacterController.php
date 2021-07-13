@@ -49,7 +49,7 @@ class CharacterController extends AbstractController
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_character_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('pathfinder_character_show', ['id'=>$character->getId()]);
         }
 
         return $this->renderForm(
@@ -85,7 +85,7 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_character_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('pathfinder_character_show', ['id'=>$character->getId()]);
         }
 
         return $this->renderForm(

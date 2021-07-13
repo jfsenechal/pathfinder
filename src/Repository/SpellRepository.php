@@ -31,12 +31,13 @@ class SpellRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string|null $name
-     * @param \AfmLibre\Pathfinder\Entity\CharacterClass|null $class
      * @return array|Spell[]
      */
-    public function searchByNameAndClass(?string $name = null, ?CharacterClass $class = null): array
-    {
+    public function searchByNameAndClassAndLevel(
+        ?string $name = null,
+        ?CharacterClass $class = null,
+        ?int $level = null
+    ): array {
         $qb = $this->createQueryBuilder('spell')
             ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
             ->addSelect('spell_classes');
@@ -51,9 +52,13 @@ class SpellRepository extends ServiceEntityRepository
                 ->setParameter('class2', $class);
         }
 
+        if ($level) {
+            $qb->andWhere('spell_classes.level = :level')
+                ->setParameter('level', $level);
+        }
+
         $qb->addOrderBy('spell.name');
 
         return $qb->getQuery()->getResult();
-
     }
 }

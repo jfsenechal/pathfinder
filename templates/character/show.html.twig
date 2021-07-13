@@ -8,7 +8,7 @@
             <h3>{{ character }}</h3>
         </div>
         <div class="card-body">
-
+            {% include '@AfmLibrePathfinder/character/_actions.html.twig' %}
             <table class="table table-bordered">
                 <tbody>
                 <tr>
@@ -21,6 +21,11 @@
                 </tr>
                 </tbody>
             </table>
+
+            <h4>Sorts</h4>
+            {% for spellD in character.characterClass.spellClasses %}
+                {{ spellD.spell.name }}
+            {% endfor %}
 
             {{ include('@AfmLibrePathfinder/character/_form_delete.html.twig') }}
         </div>

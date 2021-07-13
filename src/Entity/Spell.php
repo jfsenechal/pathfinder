@@ -80,9 +80,15 @@ class Spell
      */
     private iterable $spell_classes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="spell", orphanRemoval=true)
+     */
+    private $characterSpells;
+
     public function __construct()
     {
         $this->spell_classes = new ArrayCollection();
+        $this->characterSpells = new ArrayCollection();
     }
 
     public function __toString()
@@ -284,6 +290,36 @@ class Spell
     public function setDescriptionHtml(?string $descriptionHtml): self
     {
         $this->descriptionHtml = $descriptionHtml;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CharacterSpell[]
+     */
+    public function getCharacterSpells(): Collection
+    {
+        return $this->characterSpells;
+    }
+
+    public function addCharacterSpell(CharacterSpell $characterSpell): self
+    {
+        if (!$this->characterSpells->contains($characterSpell)) {
+            $this->characterSpells[] = $characterSpell;
+            $characterSpell->setSpell($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSpell(CharacterSpell $characterSpell): self
+    {
+        if ($this->characterSpells->removeElement($characterSpell)) {
+            // set the owning side to null (unless already changed)
+            if ($characterSpell->getSpell() === $this) {
+                $characterSpell->setSpell(null);
+            }
+        }
 
         return $this;
     }

@@ -5,9 +5,11 @@ namespace AfmLibre\Pathfinder\Form;
 
 
 use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Level\LevelUtils;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,6 +44,15 @@ class SearchSpellType extends AbstractType
                     'placeholder' => 'Sélectionnez une classe',
                     'query_builder' =>
                         fn(CharacterClassRepository $characterClassRepository) => $characterClassRepository->getQl(),
+                ]
+            )
+            ->add(
+                'level',
+                ChoiceType::class,
+                [
+                    'choices' => LevelUtils::getSpellLevels(),
+                    'placeholder' => 'Niveau',
+                    'required' => false,
                 ]
             );
     }

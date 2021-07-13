@@ -35,7 +35,7 @@ class SpellController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $spells = $this->spellRepository->searchByNameAndClass($data['name'], $data['class']);
+            $spells = $this->spellRepository->searchByNameAndClassAndLevel($data['name'], $data['class']);
         }
 
         return $this->render(

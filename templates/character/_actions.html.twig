@@ -1,10 +1,10 @@
-<a href="{{ path('pathfinder_character_edit', { 'id': utilisateur.id }) }}" role="button"
+<a href="{{ path('pathfinder_character_edit', { 'id': character.id }) }}" role="button"
    class="btn btn-primary"><i
             class="far fa-edit"></i> Editer</a>
 
-<a href="{{ path('pathfinder_character_edit', { 'id': utilisateur.id }) }}" role="button"
+<a href="{{ path('pathfinder_spell_selection_index', { 'id': character.id }) }}" role="button"
    class="btn btn-primary"><i
-            class="fas fa-lock"></i> Mot de passe</a>
+            class="fas fa-lock"></i> Sélection des sorts</a>
 
 <a href="{{ path('pathfinder_character_index') }}" class="btn btn-primary" role='button'><i class="fas fa-list"></i>
     Retour à la Liste</a>

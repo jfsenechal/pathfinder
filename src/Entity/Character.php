@@ -64,19 +64,19 @@ class Character
     private ?CharacterClass $characterClass;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Spell::class)
+     * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="character_player", orphanRemoval=true)
      */
-    private iterable $favorites_spells;
+    private iterable $spells;
 
     public function __construct()
     {
-        $this->strength = 0;
-        $this->dexterity = 0;
-        $this->constitution = 0;
-        $this->intelligence = 0;
-        $this->wisdom = 0;
-        $this->charisma = 0;
-        $this->favorites_spells = new ArrayCollection();
+        $this->strength = 10;
+        $this->dexterity = 10;
+        $this->constitution = 10;
+        $this->intelligence = 10;
+        $this->wisdom = 10;
+        $this->charisma = 10;
+        $this->spells = new ArrayCollection();
     }
 
     public function __toString()
@@ -205,25 +205,31 @@ class Character
     }
 
     /**
-     * @return Collection|Spell[]
+     * @return Collection|CharacterSpell[]
      */
-    public function getFavoritesSpells(): Collection
+    public function getSpells(): Collection
     {
-        return $this->favorites_spells;
+        return $this->spells;
     }
 
-    public function addFavoritesSpell(Spell $favoritesSpell): self
+    public function addSpell(CharacterSpell $spell): self
     {
-        if (!$this->favorites_spells->contains($favoritesSpell)) {
-            $this->favorites_spells[] = $favoritesSpell;
+        if (!$this->spells->contains($spell)) {
+            $this->spells[] = $spell;
+            $spell->setCharacterPlayer($this);
         }
 
         return $this;
     }
 
-    public function removeFavoritesSpell(Spell $favoritesSpell): self
+    public function removeSpell(CharacterSpell $spell): self
     {
-        $this->favorites_spells->removeElement($favoritesSpell);
+        if ($this->spells->removeElement($spell)) {
+            // set the owning side to null (unless already changed)
+            if ($spell->getCharacterPlayer() === $this) {
+                $spell->setCharacterPlayer(null);
+            }
+        }
 
         return $this;
     }

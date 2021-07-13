@@ -23,9 +23,13 @@
                 <tbody>
                 {% for character in characters %}
                     <tr>
-                        <td>{{ character.name }}</td>
+                        <td>
+                            <a href="{{ path('pathfinder_character_show', {'id': character.id}) }}">
+                                {{ character.name }}
+                            </a>
+                        </td>
                         <td>{{ character.race ? character.race.name }}</td>
-                        <td>{{ character.class ? character.class.name }}</td>
+                        <td>{{ character.characterClass ? character.characterClass.name }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
