@@ -28,8 +28,8 @@ class CharacterClass
     private ?int $die_of_live;
 
     /**
-     * @ORM\OneToMany(targetEntity=SpellClassLevel::class, mappedBy="characterClass")
-     * @var SpellClassLevel[]
+     * @ORM\OneToMany(targetEntity=SpellClass::class, mappedBy="characterClass")
+     * @var SpellClass[]
      */
     private iterable $spell_classes;
 
@@ -76,14 +76,14 @@ class CharacterClass
     }
 
     /**
-     * @return Collection|SpellClassLevel[]
+     * @return Collection|SpellClass[]
      */
     public function getSpellClasses(): Collection
     {
         return $this->spell_classes;
     }
 
-    public function addSpellClass(SpellClassLevel $spellClass): self
+    public function addSpellClass(SpellClass $spellClass): self
     {
         if (!$this->spell_classes->contains($spellClass)) {
             $this->spell_classes[] = $spellClass;
@@ -93,7 +93,7 @@ class CharacterClass
         return $this;
     }
 
-    public function removeSpellClass(SpellClassLevel $spellClass): self
+    public function removeSpellClass(SpellClass $spellClass): self
     {
         if ($this->spell_classes->removeElement($spellClass)) {
             // set the owning side to null (unless already changed)

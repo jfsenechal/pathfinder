@@ -7,21 +7,21 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
+use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 
 class HandlerCharacterSelection
 {
-    private SpellClassLevelRepository $spellClassLevelRepository;
+    private SpellClassRepository $spellClassRepository;
     private CharacterSpellRepository $characterSpellRepository;
     private SpellRepository $spellRepository;
 
     public function __construct(
         CharacterSpellRepository $characterSpellRepository,
-        SpellClassLevelRepository $spellClassLevelRepository,
+        SpellClassRepository $spellClassRepository,
         SpellRepository $spellRepository
     ) {
-        $this->spellClassLevelRepository = $spellClassLevelRepository;
+        $this->spellClassRepository = $spellClassRepository;
         $this->characterSpellRepository = $characterSpellRepository;
         $this->spellRepository = $spellRepository;
     }
@@ -44,7 +44,7 @@ class HandlerCharacterSelection
     {
         $class = $character->getCharacterClass();
         $level = 0;
-        if ($spellLevel = $this->spellClassLevelRepository->searchByClassAndSpell($class, $spell)) {
+        if ($spellLevel = $this->spellClassRepository->searchByClassAndSpell($class, $spell)) {
             $level = $spellLevel->getLevel();
         }
 

@@ -13,7 +13,7 @@
                     <th>Niveau</th>
                     <td>
                         {% for spellClasse in spell.spellClasses %}
-                            <a href="{{ path('character_show', {'id':  spellClasse.characterClass.id }) }}">
+                            <a href="{{ path('pathfinder_character_show', {'id':  spellClasse.characterClass.id }) }}">
                                 {{ spellClasse.characterClass }}
                             </a>
                             ({{ spellClasse.level }}) /

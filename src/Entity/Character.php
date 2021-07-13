@@ -66,7 +66,7 @@ class Character
     /**
      * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="character_player", orphanRemoval=true)
      */
-    private iterable $spells;
+    private iterable $character_spells;
 
     public function __construct()
     {
@@ -76,7 +76,7 @@ class Character
         $this->intelligence = 10;
         $this->wisdom = 10;
         $this->charisma = 10;
-        $this->spells = new ArrayCollection();
+        $this->character_spells = new ArrayCollection();
     }
 
     public function __toString()
@@ -207,15 +207,15 @@ class Character
     /**
      * @return Collection|CharacterSpell[]
      */
-    public function getSpells(): Collection
+    public function getCharacterSpells(): Collection
     {
-        return $this->spells;
+        return $this->character_spells;
     }
 
     public function addSpell(CharacterSpell $spell): self
     {
-        if (!$this->spells->contains($spell)) {
-            $this->spells[] = $spell;
+        if (!$this->character_spells->contains($spell)) {
+            $this->character_spells[] = $spell;
             $spell->setCharacterPlayer($this);
         }
 
@@ -224,7 +224,7 @@ class Character
 
     public function removeSpell(CharacterSpell $spell): self
     {
-        if ($this->spells->removeElement($spell)) {
+        if ($this->character_spells->removeElement($spell)) {
             // set the owning side to null (unless already changed)
             if ($spell->getCharacterPlayer() === $this) {
                 $spell->setCharacterPlayer(null);

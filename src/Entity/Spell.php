@@ -75,8 +75,8 @@ class Spell
     private ?School $school;
 
     /**
-     * @ORM\OneToMany(targetEntity=SpellClassLevel::class, mappedBy="spell")
-     * @var SpellClassLevel[]
+     * @ORM\OneToMany(targetEntity=SpellClass::class, mappedBy="spell")
+     * @var SpellClass[]
      */
     private iterable $spell_classes;
 
@@ -253,14 +253,14 @@ class Spell
     }
 
     /**
-     * @return Collection|SpellClassLevel[]
+     * @return Collection|SpellClass[]
      */
     public function getSpellClasses(): Collection
     {
         return $this->spell_classes;
     }
 
-    public function addSpellClass(SpellClassLevel $spellClass): self
+    public function addSpellClass(SpellClass $spellClass): self
     {
         if (!$this->spell_classes->contains($spellClass)) {
             $this->spell_classes[] = $spellClass;
@@ -270,7 +270,7 @@ class Spell
         return $this;
     }
 
-    public function removeSpellClass(SpellClassLevel $spellClass): self
+    public function removeSpellClass(SpellClass $spellClass): self
     {
         if ($this->spell_classes->removeElement($spellClass)) {
             // set the owning side to null (unless already changed)

@@ -4,13 +4,13 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
-use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
+use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 
 /**
- * @ORM\Entity(repositoryClass=SpellClassLevelRepository::class)
+ * @ORM\Entity(repositoryClass=SpellClassRepository::class)
  * @ORM\Table(name="spell_class")
  */
-class SpellClassLevel
+class SpellClass
 {
     use IdTrait;
 

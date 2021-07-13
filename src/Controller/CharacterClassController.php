@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
+use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +20,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CharacterClassController extends AbstractController
 {
     private CharacterClassRepository $characterClassRepository;
-    private SpellClassLevelRepository $spellClassLevelRepository;
+    private SpellClassRepository $spellClassRepository;
 
-    public function __construct(CharacterClassRepository $characterClassRepository, SpellClassLevelRepository $spellClassLevelRepository)
+    public function __construct(CharacterClassRepository $characterClassRepository, SpellClassRepository $spellClassRepository)
     {
         $this->characterClassRepository = $characterClassRepository;
-        $this->spellClassLevelRepository = $spellClassLevelRepository;
+        $this->spellClassRepository = $spellClassRepository;
     }
 
     /**
@@ -57,7 +57,7 @@ class CharacterClassController extends AbstractController
      */
     public function show(CharacterClass $characterClass)
     {
-        $spellsClass = $this->spellClassLevelRepository->searchByNameAndClass(null, $characterClass);
+        $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);
 
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',

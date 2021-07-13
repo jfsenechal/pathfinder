@@ -6,11 +6,11 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\School;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\SpellClassLevel;
+use AfmLibre\Pathfinder\Entity\SpellClass;
 use AfmLibre\Pathfinder\Level\LevelParser;
 use AfmLibre\Pathfinder\Mapping\SpellYml;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassLevelRepository;
+use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -18,18 +18,18 @@ class SpellImportHandler
 {
     private SpellRepository $spellRepository;
     private LevelParser $levelParser;
-    private SpellClassLevelRepository $spellClassLevelRepository;
+    private SpellClassRepository $spellClassRepository;
     private SchoolRepository $schoolRepository;
 
     public function __construct(
         SpellRepository $spellRepository,
-        SpellClassLevelRepository $spellClassLevelRepository,
+        SpellClassRepository $spellClassRepository,
         SchoolRepository $schoolRepository,
         LevelParser $levelParser
     ) {
         $this->spellRepository = $spellRepository;
         $this->levelParser = $levelParser;
-        $this->spellClassLevelRepository = $spellClassLevelRepository;
+        $this->spellClassRepository = $spellClassRepository;
         $this->schoolRepository = $schoolRepository;
     }
 
@@ -41,15 +41,15 @@ class SpellImportHandler
             try {
                 $levels = $this->levelParser->parse($spellData['Niveau']);
                 foreach ($levels as $levelDto) {
-                    $spellClass = new SpellClassLevel($spell, $levelDto->characterClass, $levelDto->level);
-                    $this->spellClassLevelRepository->persist($spellClass);
+                    $spellClass = new SpellClass($spell, $levelDto->characterClass, $levelDto->level);
+                    $this->spellClassRepository->persist($spellClass);
                 }
             } catch (\Exception $e) {
                 $io->error($e->getMessage().$spellData['Nom']);
             }
         }
         $this->spellRepository->flush();
-        $this->spellClassLevelRepository->flush();
+        $this->spellClassRepository->flush();
     }
 
     /**

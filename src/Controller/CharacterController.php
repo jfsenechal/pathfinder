@@ -5,6 +5,8 @@ namespace AfmLibre\Pathfinder\Controller;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
+use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CharacterController extends AbstractController
 {
     private CharacterRepository $characterRepository;
+    private CharacterSpellRepository $characterSpellRepository;
 
     public function __construct(
-        CharacterRepository $characterRepository
+        CharacterRepository $characterRepository,
+        CharacterSpellRepository $characterSpellRepository
     ) {
         $this->characterRepository = $characterRepository;
+        $this->characterSpellRepository = $characterSpellRepository;
     }
 
     /**
@@ -49,7 +54,7 @@ class CharacterController extends AbstractController
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_character_show', ['id'=>$character->getId()]);
+            return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
         }
 
         return $this->renderForm(
@@ -66,10 +71,14 @@ class CharacterController extends AbstractController
      */
     public function show(Character $character): Response
     {
+        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+        $spells = SpellUtils::groupByLevel($characterSpells);
+
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
                 'character' => $character,
+                'spells' => $spells,
             ]
         );
     }
@@ -85,7 +94,7 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_character_show', ['id'=>$character->getId()]);
+            return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
         }
 
         return $this->renderForm(
