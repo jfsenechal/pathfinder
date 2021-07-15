@@ -8,6 +8,7 @@ use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Handler\HandlerCharacterSelection;
+use AfmLibre\Pathfinder\Spell\Message\SpellSelectionUpdated;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,7 +59,6 @@ class SpellSelectionController extends AbstractController
             $this->searchHelper->setArgs($keySearch, $data);
         }
 
-        dump($data);
         $spellsForSelection = $this->spellRepository->searchByNameAndClassAndLevel(
             $data['name'],
             $data['class'],
@@ -71,10 +71,9 @@ class SpellSelectionController extends AbstractController
         if ($formSelection->isSubmitted() && $formSelection->isValid()) {
             $selection = $formSelection->getData();
             $this->handlerCharacterSelection->handle($character, $selection->getSpells());
+            $this->dispatchMessage(new SpellSelectionUpdated());
 
-            //     return $this->redirectToRoute('pathfinder_spell_selection_index', ['id' => $character->getId()]);
-        } else {
-            dump($formSelection);
+            return $this->redirectToRoute('pathfinder_spell_selection_index', ['id' => $character->getId()]);
         }
 
         return $this->render(

@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
+use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
@@ -53,6 +55,7 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
+            $this->dispatchMessage(new CharacterCreated($character->getId()));
 
             return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
         }
@@ -93,6 +96,7 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
+            $this->dispatchMessage(new CharacterUpdated($character->getId()));
 
             return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
         }
@@ -112,7 +116,8 @@ class CharacterController extends AbstractController
     public function delete(Request $request, Character $character): Response
     {
         if ($this->isCsrfTokenValid('delete'.$character->getId(), $request->request->get('_token'))) {
-
+            $id = $character->getId();
+            $this->dispatchMessage(new CharacterUpdated($id));
             $this->characterRepository->remove($character);
             $this->characterRepository->flush();
         }
