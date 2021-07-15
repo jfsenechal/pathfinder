@@ -56,12 +56,14 @@ class SpellSelectionController extends AbstractController
                 $data['level']
             );
         }
-
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $characterSpells2 = [];
-        foreach ($characterSpells as $characterSpell) {
-            $characterSpells2[$characterSpell->getSpell()->getId()] = $characterSpell->getSpell();
-        }
+        $characterSpells2 = array_map(
+            function ($characterSpell) {
+                return $characterSpell->getSpell();
+            },
+            $characterSpells
+        );
+
         $selection = new SpellSelectionDto($character, $characterSpells2);
 
         $formSelection = $this->createForm(
@@ -77,7 +79,8 @@ class SpellSelectionController extends AbstractController
             $selection = $request->request->all();
             $this->handlerCharacterSelection->handle($character, $selection['spells']);
         }
-        dump($characterSpells2);
+
+        //  dump($characterSpells2);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_selection/index.html.twig',
