@@ -22,19 +22,25 @@
                 </tbody>
             </table>
 
-            <h4 class="text-success">Sorts sélectionnés</h4>
-            <ul class="list-group">
-                {% for level, data in spells %}
-                    <li class="list-group-item"><strong>Lvl {{ level }}</strong>
-                        <ul class="list-group">
-                            {% for spell in data %}
-                                <li class="list-group-item">{{ spell.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
+            {{ include('@AfmLibrePathfinder/character/spells_favorite.html.twig') }}
+
         </div>
     </div>
     {{ include('@AfmLibrePathfinder/character/_form_delete.html.twig') }}
+    {{ include('@AfmLibrePathfinder/character/_form_deselection.html.twig') }}
+{% endblock %}
+{% block scripts %}
+    <script>
+        var exampleModal = document.getElementById('deselectionModal')
+        exampleModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var recipient = button.getAttribute('data-bs-whatever')
+            var name = button.getAttribute('data-bs-spellname')
+            var modalTitle = exampleModal.querySelector('.modal-title')
+            modalTitle.textContent = 'Retirer ' + name
+            var modalBodyInput = exampleModal.querySelector('#characterspellid')
+
+            modalBodyInput.value = recipient
+        })
+    </script>
 {% endblock %}

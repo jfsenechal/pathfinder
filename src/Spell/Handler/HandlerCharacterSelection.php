@@ -33,11 +33,24 @@ class HandlerCharacterSelection
     public function handle(Character $character, array $spells)
     {
         foreach ($spells as $spell) {
-            if(!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell)) {
+            if (!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell)) {
                 $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
             }
         }
         $this->characterSpellRepository->flush();
+    }
+
+    public function delete(int $characterSpellId): ?Character
+    {
+        if ($characterSpell = $this->characterSpellRepository->find($characterSpellId)) {
+            $character = $characterSpell->getCharacterPlayer();
+            $this->characterSpellRepository->remove($characterSpell);
+            $this->characterSpellRepository->flush();
+
+            return $character;
+        }
+
+        return null;
     }
 
     private function createCharacterSpell(Character $character, Spell $spell): CharacterSpell

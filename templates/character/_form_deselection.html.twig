@@ -1,0 +1,24 @@
+<div class="modal fade" id="deselectionModal" tabindex="-1" role="dialog" aria-labelledby="deselectionModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deselectionModalLabel">Retirer de ma liste</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Retirer le sort de ma liste
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="{{ path('pathfinder_spell_selection_delete') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('deselection') }}">
+                    <input type="text" name="characterspellid" id="characterspellid"  >
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Annuler
+                    </button>
+                    <button type="submit" class="btn btn-danger">Retirer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,4 +61,9 @@ class CharacterSpellRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
+
+    public function remove(CharacterSpell $characterSpell)
+    {
+        $this->_em->remove($characterSpell);
+    }
 }
