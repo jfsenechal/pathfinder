@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,11 +15,7 @@ use AfmLibre\Pathfinder\Repository\RaceRepository;
 class Race
 {
     use IdTrait;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    protected ?string $name;
+    use NameTrait;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
@@ -37,6 +34,7 @@ class Race
 
     /**
      * @ORM\OneToMany(targetEntity=Character::class, mappedBy="race")
+     * @var Character[]
      */
     private iterable $characters;
 
@@ -49,18 +47,6 @@ class Race
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getReference(): ?string

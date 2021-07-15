@@ -4,7 +4,7 @@
 namespace AfmLibre\Pathfinder\Spell\Message;
 
 
-class SpellSelectionUpdated
+class SpellAvailableUpdated
 {
     private ?int $spellId;
 

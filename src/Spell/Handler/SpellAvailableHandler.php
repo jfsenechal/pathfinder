@@ -10,7 +10,7 @@ use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 
-class HandlerCharacterSelection
+class SpellAvailableHandler
 {
     private SpellClassRepository $spellClassRepository;
     private CharacterSpellRepository $characterSpellRepository;

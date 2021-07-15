@@ -39,38 +39,38 @@ class RaceTrait
     }
 
     public function getName(): ?string
-   {
-       return $this->name;
-   }
+    {
+        return $this->name;
+    }
 
-   public function setName(string $name): self
-   {
-       $this->name = $name;
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
-       return $this;
-   }
+        return $this;
+    }
 
-   public function getDescription(): ?string
-   {
-       return $this->description;
-   }
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
 
-   public function setDescription(?string $description): self
-   {
-       $this->description = $description;
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
-       return $this;
-   }
+        return $this;
+    }
 
-   public function getRace(): ?Race
-   {
-       return $this->race;
-   }
+    public function getRace(): ?Race
+    {
+        return $this->race;
+    }
 
-   public function setRace(?Race $race): self
-   {
-       $this->race = $race;
+    public function setRace(?Race $race): self
+    {
+        $this->race = $race;
 
-       return $this;
-   }
+        return $this;
+    }
 }

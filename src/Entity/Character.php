@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Entity;
 
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,11 +18,7 @@ use AfmLibre\Pathfinder\Repository\CharacterRepository;
 class Character
 {
     use IdTrait;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    protected ?string $name;
+    use NameTrait;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -65,8 +62,15 @@ class Character
 
     /**
      * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="character_player", orphanRemoval=true)
+     * @var CharacterSpell[]
      */
-    private iterable $character_spells;
+    private iterable $character_spells_available;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SpellProfile::class, mappedBy="character_player", orphanRemoval=true)
+     * @var SpellProfile[]
+     */
+    private iterable $character_spell_profiles;
 
     public function __construct()
     {
@@ -76,24 +80,13 @@ class Character
         $this->intelligence = 10;
         $this->wisdom = 10;
         $this->charisma = 10;
-        $this->character_spells = new ArrayCollection();
+        $this->character_spells_available = new ArrayCollection();
+        $this->character_spell_profiles = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -207,15 +200,15 @@ class Character
     /**
      * @return Collection|CharacterSpell[]
      */
-    public function getCharacterSpells(): Collection
+    public function getCharacterSpellsAvailable(): Collection
     {
-        return $this->character_spells;
+        return $this->character_spells_available;
     }
 
     public function addSpell(CharacterSpell $spell): self
     {
-        if (!$this->character_spells->contains($spell)) {
-            $this->character_spells[] = $spell;
+        if (!$this->character_spells_available->contains($spell)) {
+            $this->character_spells_available[] = $spell;
             $spell->setCharacterPlayer($this);
         }
 
@@ -224,10 +217,62 @@ class Character
 
     public function removeSpell(CharacterSpell $spell): self
     {
-        if ($this->character_spells->removeElement($spell)) {
+        if ($this->character_spells_available->removeElement($spell)) {
             // set the owning side to null (unless already changed)
             if ($spell->getCharacterPlayer() === $this) {
                 $spell->setCharacterPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addCharacterSpellsAvailable(CharacterSpell $characterSpellsAvailable): self
+    {
+        if (!$this->character_spells_available->contains($characterSpellsAvailable)) {
+            $this->character_spells_available[] = $characterSpellsAvailable;
+            $characterSpellsAvailable->setCharacterPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSpellsAvailable(CharacterSpell $characterSpellsAvailable): self
+    {
+        if ($this->character_spells_available->removeElement($characterSpellsAvailable)) {
+            // set the owning side to null (unless already changed)
+            if ($characterSpellsAvailable->getCharacterPlayer() === $this) {
+                $characterSpellsAvailable->setCharacterPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SpellProfile[]
+     */
+    public function getCharacterSpellProfiles(): Collection
+    {
+        return $this->character_spell_profiles;
+    }
+
+    public function addCharacterSpellProfile(SpellProfile $characterSpellProfile): self
+    {
+        if (!$this->character_spell_profiles->contains($characterSpellProfile)) {
+            $this->character_spell_profiles[] = $characterSpellProfile;
+            $characterSpellProfile->setCharacterPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSpellProfile(SpellProfile $characterSpellProfile): self
+    {
+        if ($this->character_spell_profiles->removeElement($characterSpellProfile)) {
+            // set the owning side to null (unless already changed)
+            if ($characterSpellProfile->getCharacterPlayer() === $this) {
+                $characterSpellProfile->setCharacterPlayer(null);
             }
         }
 

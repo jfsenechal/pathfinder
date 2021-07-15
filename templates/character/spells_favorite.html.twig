@@ -1,4 +1,4 @@
-<h4 class="text-success">Sorts sélectionnés</h4>
+<h4 class="text-success">Sorts disponibles</h4>
 <ul class="list-group">
     {% for level, data in characterSpells %}
         <li class="list-group-item"><strong>Lvl {{ level }}</strong>
@@ -6,7 +6,7 @@
                 {% for characterSpell in data %}
                     {% set spell = characterSpell.spell %}
                     <li class="list-group-item">
-                       <a href="{{ path('pathfinder_spell_show', {'id':  spell.id }) }}">{{ spell.name }}</a>
+                        <a href="{{ path('pathfinder_spell_show', {'id':  spell.id }) }}">{{ spell.name }}</a>
                         <button title="Déselectionné {{ spell.name }}"
                                 type="button"
                                 class="btn btn-danger btn-sm float-end"
@@ -19,6 +19,10 @@
                     </li>
                 {% endfor %}
             </ul>
+        </li>
+    {% else %}
+        <li class="list-group-item">
+            <a href="{{ path('pathfinder_spell_selection_index', {'id': character.id}) }}">Sélectionnez vos sorts</a>
         </li>
     {% endfor %}
 </ul>

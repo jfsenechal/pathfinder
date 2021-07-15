@@ -16,34 +16,34 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/spell/selection")
+ * @Route("/spell/available")
  */
-class SpellSelectionController extends AbstractController
+class SpellAvailableController extends AbstractController
 {
     private SpellRepository $spellRepository;
-    private SpellAvailableHandler $handlerCharacterSelection;
+    private SpellAvailableHandler $spellAvailableHandler;
     private FormFactory $formFactory;
     private SearchHelper $searchHelper;
 
     public function __construct(
         SpellRepository $spellRepository,
-        SpellAvailableHandler $handlerCharacterSelection,
+        SpellAvailableHandler $spellAvailableHandler,
         FormFactory $formFactory,
         SearchHelper $searchHelper
     ) {
         $this->spellRepository = $spellRepository;
-        $this->handlerCharacterSelection = $handlerCharacterSelection;
+        $this->spellAvailableHandler = $spellAvailableHandler;
         $this->formFactory = $formFactory;
         $this->searchHelper = $searchHelper;
     }
 
     /**
-     * @Route("/{id}/edit", name="pathfinder_spell_selection_index", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="pathfinder_spell_available_index", methods={"GET","POST"})
      */
-    public function edit(Request $request, Character $character)
+    public function index(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
-        $keySearch = 'selection_spells';
+        $keySearch = 'available_spells';
 
         $data = $this->searchHelper->getArgs($keySearch);
         if (count($data) === 0) {
@@ -59,40 +59,40 @@ class SpellSelectionController extends AbstractController
             $this->searchHelper->setArgs($keySearch, $data);
         }
 
-        $spellsForSelection = $this->spellRepository->searchByNameAndClassAndLevel(
+        $spellsForAvailable = $this->spellRepository->searchByNameAndClassAndLevel(
             $data['name'],
             $data['class'],
             $data['level']
         );
 
-        $formSelection = $this->formFactory->createFormSelectionSpells($character, $spellsForSelection);
-        $formSelection->handleRequest($request);
+        $formAvailable = $this->formFactory->createFormSelectionSpells($character, $spellsForAvailable);
+        $formAvailable->handleRequest($request);
 
-        if ($formSelection->isSubmitted() && $formSelection->isValid()) {
-            $selection = $formSelection->getData();
-            $this->handlerCharacterSelection->handle($character, $selection->getSpells());
+        if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
+            $available = $formAvailable->getData();
+            $this->spellAvailableHandler->handle($character, $available->getSpells());
             $this->dispatchMessage(new SpellAvailableUpdated());
 
-            return $this->redirectToRoute('pathfinder_spell_selection_index', ['id' => $character->getId()]);
+            return $this->redirectToRoute('pathfinder_spell_available_index', ['id' => $character->getId()]);
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/spell_selection/index.html.twig',
+            '@AfmLibrePathfinder/spell_available/index.html.twig',
             [
                 'character' => $character,
-                'spells' => $spellsForSelection,
+                'spells' => $spellsForAvailable,
                 'formSearch' => $form->createView(),
-                'formSelection' => $formSelection->createView(),
+                'formSelection' => $formAvailable->createView(),
             ]
         );
     }
 
     /**
-     * @Route("/delete", name="pathfinder_spell_selection_delete", methods={"POST"})
+     * @Route("/delete", name="pathfinder_spell_available_delete", methods={"POST"})
      */
-    public function validDeleteSelection(Request $request)
+    public function validDeleteAvailable(Request $request)
     {
-        if ($this->isCsrfTokenValid('deselection', $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('deavailable', $request->request->get('_token'))) {
 
             $characterSpellId = (int)$request->request->get('characterspellid');
 
@@ -102,7 +102,7 @@ class SpellSelectionController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if ($character = $this->handlerCharacterSelection->delete($characterSpellId)) {
+            if ($character = $this->spellAvailableHandler->delete($characterSpellId)) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);

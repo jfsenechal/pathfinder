@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,11 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Spell
 {
     use IdTrait;
+    use NameTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    protected ?string $name;
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -82,30 +80,19 @@ class Spell
 
     /**
      * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="spell", orphanRemoval=true)
+     * @var CharacterSpell[]
      */
-    private $characterSpells;
+    private $character_spells;
 
     public function __construct()
     {
         $this->spell_classes = new ArrayCollection();
-        $this->characterSpells = new ArrayCollection();
+        $this->character_spells = new ArrayCollection();
     }
 
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -299,13 +286,13 @@ class Spell
      */
     public function getCharacterSpells(): Collection
     {
-        return $this->characterSpells;
+        return $this->character_spells;
     }
 
     public function addCharacterSpell(CharacterSpell $characterSpell): self
     {
-        if (!$this->characterSpells->contains($characterSpell)) {
-            $this->characterSpells[] = $characterSpell;
+        if (!$this->character_spells->contains($characterSpell)) {
+            $this->character_spells[] = $characterSpell;
             $characterSpell->setSpell($this);
         }
 
@@ -314,7 +301,7 @@ class Spell
 
     public function removeCharacterSpell(CharacterSpell $characterSpell): self
     {
-        if ($this->characterSpells->removeElement($characterSpell)) {
+        if ($this->character_spells->removeElement($characterSpell)) {
             // set the owning side to null (unless already changed)
             if ($characterSpell->getSpell() === $this) {
                 $characterSpell->setSpell(null);

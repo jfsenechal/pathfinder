@@ -4,6 +4,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
 
@@ -13,11 +14,7 @@ use AfmLibre\Pathfinder\Repository\SchoolRepository;
 class School
 {
     use IdTrait;
-
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    protected ?string $name;
+    use NameTrait;
 
     public function __construct(string $name)
     {
@@ -27,17 +24,5 @@ class School
     public function __toString()
     {
         return $this->name;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 }

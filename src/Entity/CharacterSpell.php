@@ -19,13 +19,13 @@ class CharacterSpell
     use IdTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Character::class, inversedBy="character_spells")
+     * @ORM\ManyToOne(targetEntity=Character::class, inversedBy="character_spells_available")
      * @ORM\JoinColumn(name="character_id", nullable=false)
      */
     private ?Character $character_player;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Spell::class, inversedBy="characterSpells")
+     * @ORM\ManyToOne(targetEntity=Spell::class, inversedBy="character_spells")
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Spell $spell;
@@ -66,13 +66,15 @@ class CharacterSpell
         return $this;
     }
 
-    public function getLevel(): int
+    public function getLevel(): ?int
     {
         return $this->level;
     }
 
-    public function setLevel(int $level): void
+    public function setLevel(int $level): self
     {
         $this->level = $level;
+
+        return $this;
     }
 }
