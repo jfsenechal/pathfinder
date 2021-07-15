@@ -30,19 +30,19 @@ class CharacterRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string|null $name
+     * @param string|null $username
      * @return array|Character[]
      */
-    public function searchByUser(?string $name = null): array
+    public function searchByUser(?string $username = null): array
     {
         $qb = $this->createQueryBuilder('character')
             ->leftJoin('character.characterClass', 'characterClass', 'WITH')
             ->leftJoin('character.race', 'race', 'WITH')
             ->addSelect('characterClass', 'race');
 
-        if ($name) {
+        if ($username) {
             $qb->andWhere('character.name LIKE :name')
-                ->setParameter('name', '%'.$name.'%');
+                ->setParameter('name', '%'.$username.'%');
         }
 
         $qb->addOrderBy('character.name');

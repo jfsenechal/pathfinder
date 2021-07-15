@@ -112,7 +112,6 @@ class SpellProfileController extends AbstractController
         );
     }
 
-
     /**
      * @Route("/{id}/edit", name="pathfinder_spell_profile_edit", methods={"GET","POST"})
      */

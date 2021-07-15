@@ -31,7 +31,7 @@ class SpellProfileRepository extends ServiceEntityRepository
             ->leftJoin('spellProfile.character_player', 'character', 'WITH')
             ->leftJoin('spellProfile.character_spells', 'character_spells', 'WITH')
             ->addSelect('character', 'character_spells')
-            ->andWhere('character = :character')
+            ->andWhere('spellProfile.character_player = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spellProfile.name')
             ->getQuery()->getResult();
