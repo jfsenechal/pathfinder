@@ -1,17 +1,18 @@
 <h4 class="text-success">Sorts sélectionnés</h4>
 <ul class="list-group">
-    {% for level, data in spells %}
+    {% for level, data in characterSpells %}
         <li class="list-group-item"><strong>Lvl {{ level }}</strong>
             <ul class="list-group">
-                {% for spell in data %}
+                {% for characterSpell in data %}
+                    {% set spell = characterSpell.spell %}
                     <li class="list-group-item">
-                        {{ spell.name }}
+                       <a href="{{ path('pathfinder_spell_show', {'id':  spell.id }) }}">{{ spell.name }}</a>
                         <button title="Déselectionné {{ spell.name }}"
                                 type="button"
                                 class="btn btn-danger btn-sm float-end"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deselectionModal"
-                                data-bs-whatever="{{ spell.id }}"
+                                data-bs-whatever="{{ characterSpell.id }}"
                                 data-bs-spellname="{{ spell.name }}">
                             <i class="far fa-trash-alt"></i>
                         </button>

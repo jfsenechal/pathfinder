@@ -5,21 +5,22 @@ namespace AfmLibre\Pathfinder\Spell\Utils;
 
 
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
-use AfmLibre\Pathfinder\Entity\Spell;
 
 class SpellUtils
 {
     /**
      * @param array|CharacterSpell[] $characterSpells
-     * @return array|Spell[]
+     * @return array|CharacterSpell[]
      */
     public static function groupByLevel(array $characterSpells): array
     {
-        $spells = [];
+        $data = [];
         foreach ($characterSpells as $characterSpell) {
-            $spells[$characterSpell->getLevel()][] = $characterSpell->getSpell();
+            $data[$characterSpell->getLevel()][] = $characterSpell;
         }
 
-        return $spells;
+         ksort($data);
+
+        return $data;
     }
 }

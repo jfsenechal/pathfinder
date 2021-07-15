@@ -13,11 +13,19 @@
                 <tbody>
                 <tr>
                     <th>Race</th>
-                    <td>{{ character.race }}</td>
+                    <td>
+                        <a href="{{ path('pathfinder_race_show', {'id': character.race.id}) }}">
+                            {{ character.race }}
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th>Classe</th>
-                    <td>{{ character.characterClass }}</td>
+                    <td>
+                        <a href="{{ path('pathfinder_class_show', {'id': character.characterClass.id}) }}">
+                            {{ character.characterClass }}
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

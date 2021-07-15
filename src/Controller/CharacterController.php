@@ -75,13 +75,13 @@ class CharacterController extends AbstractController
     public function show(Character $character): Response
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $spells = SpellUtils::groupByLevel($characterSpells);
+        $characterSpells= SpellUtils::groupByLevel($characterSpells);
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
                 'character' => $character,
-                'spells' => $spells,
+                'characterSpells' => $characterSpells,
             ]
         );
     }

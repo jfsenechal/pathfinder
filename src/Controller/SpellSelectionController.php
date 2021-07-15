@@ -11,7 +11,6 @@ use AfmLibre\Pathfinder\Spell\Handler\HandlerCharacterSelection;
 use AfmLibre\Pathfinder\Spell\Message\SpellSelectionUpdated;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -39,7 +38,7 @@ class SpellSelectionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="pathfinder_spell_selection_index", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="pathfinder_spell_selection_index", methods={"GET","POST"})
      */
     public function index(Request $request, Character $character)
     {
@@ -91,7 +90,7 @@ class SpellSelectionController extends AbstractController
     /**
      * @Route("/delete", name="pathfinder_spell_selection_delete", methods={"POST"})
      */
-    public function validSelection(Request $request)
+    public function validDeleteSelection(Request $request)
     {
         if ($this->isCsrfTokenValid('deselection', $request->request->get('_token'))) {
 
