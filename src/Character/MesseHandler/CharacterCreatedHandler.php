@@ -4,7 +4,7 @@
 namespace AfmLibre\Pathfinder\Character\MesseHandler;
 
 
-use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
+use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -17,7 +17,7 @@ class CharacterCreatedHandler implements MessageHandlerInterface
         $this->flashBag = $flashBag;
     }
 
-    public function __invoke(CharacterUpdated $characterUpdated): void
+    public function __invoke(CharacterCreated $characterUpdated): void
     {
         $this->flashBag->add('success', "Le personnage a bien été créé");
     }

@@ -22,7 +22,7 @@
         </li>
     {% else %}
         <li class="list-group-item">
-            <a href="{{ path('pathfinder_spell_selection_index', {'id': character.id}) }}">Sélectionnez vos sorts</a>
+            <a href="{{ path('pathfinder_spell_available_edit', {'id': character.id}) }}">Sélectionnez vos sorts</a>
         </li>
     {% endfor %}
 </ul>

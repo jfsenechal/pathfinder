@@ -38,9 +38,9 @@ class SpellAvailableController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="pathfinder_spell_available_index", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="pathfinder_spell_available_edit", methods={"GET","POST"})
      */
-    public function index(Request $request, Character $character)
+    public function edit(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
         $keySearch = 'available_spells';
