@@ -1,0 +1,41 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Pathfinder{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Profiles des sorts de
+                <a href="{{ path('pathfinder_character_show', {'id': character.id}) }}">{{ character }}</a>
+            </h3>
+        </div>
+        <div class="card-body">
+
+            <a href="{{ path('pathfinder_spell_profile_new', {'id': character.id}) }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Ajouter un profil
+            </a>
+
+            <table class="table table-bordered table-striped mt-3">
+                <tr>
+                    <th>Nom</th>
+                    <th></th>
+                </tr>
+                {% for profile in profiles %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('pathfinder_spell_profile_show', {'id': profile.id}) }}">{{ profile.name }}</a>
+                        </td>
+                        <td>{{ profile.description | u.truncate(120, '...') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

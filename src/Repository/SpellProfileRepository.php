@@ -23,19 +23,17 @@ class SpellProfileRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string|null $name
-     * @param \AfmLibre\Pathfinder\Entity\CharacterClass|null $class
      * @return array|SpellProfile[]
      */
     public function searchByCharacter(Character $character): array
     {
         return $this->createQueryBuilder('spellProfile')
-            ->leftJoin('spellProfile.spell', 'spell', 'WITH')
-            ->leftJoin('spellClass.characterClass', 'characterClass', 'WITH')
-            ->addSelect('characterClass', 'spell')
-            ->andWhere('spellClass.characterClass = :class2')
-            ->setParameter('class2', $character)
-            ->addOrderBy('spell.name')
+            ->leftJoin('spellProfile.character_player', 'character', 'WITH')
+            ->leftJoin('spellProfile.character_spells', 'character_spells', 'WITH')
+            ->addSelect('character', 'character_spells')
+            ->andWhere('character = :character')
+            ->setParameter('character', $character)
+            ->addOrderBy('spellProfile.name')
             ->getQuery()->getResult();
     }
 

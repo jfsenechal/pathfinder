@@ -9,10 +9,10 @@ use AfmLibre\Pathfinder\Entity\CharacterSpell;
 class SpellUtils
 {
     /**
-     * @param array|CharacterSpell[] $characterSpells
+     * @param iterable|CharacterSpell[] $characterSpells
      * @return array|CharacterSpell[]
      */
-    public static function groupByLevel(array $characterSpells): array
+    public static function groupByLevel(iterable $characterSpells): array
     {
         $data = [];
         foreach ($characterSpells as $characterSpell) {

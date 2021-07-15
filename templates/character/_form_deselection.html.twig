@@ -10,7 +10,7 @@
                 Retirer le sort de ma liste
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('pathfinder_spell_selection_delete') }}">
+                <form method="post" action="{{ path('pathfinder_spell_available_delete') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token('deselection') }}">
                     <input type="text" name="characterspellid" id="characterspellid"  >
                     <button type="button" class="btn btn-secondary"

@@ -1,0 +1,13 @@
+<a href="{{ path('pathfinder_spell_profile_edit', { 'id': spellProfile.id }) }}" role="button"
+   class="btn btn-primary"><i
+            class="far fa-edit"></i> Sélections des sorts</a>
+
+<a href="{{ path('pathfinder_spell_profile_index', {'id': character.id}) }}" class="btn btn-primary" role='button'><i
+            class="fas fa-list"></i>
+    Retour à la Liste</a>
+
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+    <i class="fas fa-trash"></i> Supprimer
+</button>
+
+<br/><br/>
