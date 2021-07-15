@@ -12,7 +12,7 @@
         <div class="card-body">
             {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' with {'form': formSearch} %}
 
-            {% if spells | length > 0 %}
+
                 {{ form_start(formSelection, { 'attr': {'class': 'form-inline'}}) }}
                 {{ form_errors(formSelection) }}
 
@@ -39,7 +39,7 @@
                     Valider ma sélection
                 </button>
                 {{ form_end(formSelection) }}
-            {% endif %}
+
         </div>
     </div>
 

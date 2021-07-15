@@ -27,15 +27,15 @@ class HandlerCharacterSelection
     }
 
     /**
-     * @param \AfmLibre\Pathfinder\Entity\Character $character
-     * @param array|int[] $spellIds
+     * @param Character $character
+     * @param array|Spell[] $spells
      */
-    public function handle(Character $character, array $spellIds)
+    public function handle(Character $character, array $spells)
     {
-        foreach ($spellIds as $spellId) {
-            $spell = $this->spellRepository->find($spellId);
-            $characterSpell = $this->createCharacterSpell($character, $spell);
-            $this->characterSpellRepository->persist($characterSpell);
+        foreach ($spells as $spell) {
+            if(!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell)) {
+                $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
+            }
         }
         $this->characterSpellRepository->flush();
     }

@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\SearchHelper;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
@@ -21,15 +22,18 @@ class SpellSelectionController extends AbstractController
     private SpellRepository $spellRepository;
     private HandlerCharacterSelection $handlerCharacterSelection;
     private FormFactory $formFactory;
+    private SearchHelper $searchHelper;
 
     public function __construct(
         SpellRepository $spellRepository,
         HandlerCharacterSelection $handlerCharacterSelection,
-        FormFactory $formFactory
+        FormFactory $formFactory,
+        SearchHelper $searchHelper
     ) {
         $this->spellRepository = $spellRepository;
         $this->handlerCharacterSelection = $handlerCharacterSelection;
         $this->formFactory = $formFactory;
+        $this->searchHelper = $searchHelper;
     }
 
     /**
@@ -38,27 +42,39 @@ class SpellSelectionController extends AbstractController
     public function index(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
-        $spellsForSelection = [];
+        $keySearch = 'selection_spells';
 
-        $form = $this->createForm(SearchSpellType::class, ['class' => $class]);
+        $data = $this->searchHelper->getArgs($keySearch);
+        if (count($data) === 0) {
+            $data = ['name' => null, 'class' => $class, 'level' => null];
+        }
+
+        $form = $this->createForm(SearchSpellType::class, $data);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $spellsForSelection = $this->spellRepository->searchByNameAndClassAndLevel(
-                $data['name'],
-                $data['class'],
-                $data['level']
-            );
+            $this->searchHelper->setArgs($keySearch, $data);
         }
+
+        dump($data);
+        $spellsForSelection = $this->spellRepository->searchByNameAndClassAndLevel(
+            $data['name'],
+            $data['class'],
+            $data['level']
+        );
 
         $formSelection = $this->formFactory->createFormSelectionSpells($character, $spellsForSelection);
         $formSelection->handleRequest($request);
 
         if ($formSelection->isSubmitted() && $formSelection->isValid()) {
-            $selection = $request->request->all();
-            $this->handlerCharacterSelection->handle($character, $selection['spells']);
+            $selection = $formSelection->getData();
+            $this->handlerCharacterSelection->handle($character, $selection->getSpells());
+
+            //     return $this->redirectToRoute('pathfinder_spell_selection_index', ['id' => $character->getId()]);
+        } else {
+            dump($formSelection);
         }
 
         return $this->render(
@@ -71,4 +87,13 @@ class SpellSelectionController extends AbstractController
             ]
         );
     }
+
+    /**
+     * Route("/{id}", name="pathfinder_spell_selection_index")
+     */
+    public function validSelection(Request $request, Character $character)
+    {
+
+    }
+
 }

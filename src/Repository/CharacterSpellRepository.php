@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
+use AfmLibre\Pathfinder\Entity\Spell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,6 +35,21 @@ class CharacterSpellRepository extends ServiceEntityRepository
             ->orderBy('spell.name', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByCharacterAndSpell(Character $character, Spell $spell): ?CharacterSpell
+    {
+        return $this->createQueryBuilder('character_spell')
+            ->leftJoin('character_spell.spell', 'spell', 'WITH')
+            ->leftJoin('character_spell.character_player', 'character_player', 'WITH')
+            ->addSelect('spell', 'character_player')
+            ->andWhere('character_spell.character_player = :character')
+            ->setParameter('character', $character)
+            ->andWhere('spell = :spell')
+            ->setParameter('spell', $spell)
+            ->orderBy('spell.name', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function persist(CharacterSpell $characterSpell)

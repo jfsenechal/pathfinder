@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CharacterClassRepository::class)
  */
-class CharacterClass
+class CharacterClass implements \JsonSerializable
 {
     use IdTrait;
     use NameTrait;
@@ -135,4 +135,8 @@ class CharacterClass
         return $this;
     }
 
+    public function jsonSerialize()
+    {
+        return ['id' => $this->id];
+    }
 }
