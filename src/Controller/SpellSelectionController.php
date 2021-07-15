@@ -3,14 +3,10 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
-use AfmLibre\Pathfinder\Form\SelectionType;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
-use AfmLibre\Pathfinder\Spell\Dto\SpellSelectionDto;
+use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Handler\HandlerCharacterSelection;
-use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,16 +20,16 @@ class SpellSelectionController extends AbstractController
 {
     private SpellRepository $spellRepository;
     private HandlerCharacterSelection $handlerCharacterSelection;
-    private CharacterSpellRepository $characterSpellRepository;
+    private FormFactory $formFactory;
 
     public function __construct(
         SpellRepository $spellRepository,
         HandlerCharacterSelection $handlerCharacterSelection,
-        CharacterSpellRepository $characterSpellRepository
+        FormFactory $formFactory
     ) {
         $this->spellRepository = $spellRepository;
         $this->handlerCharacterSelection = $handlerCharacterSelection;
-        $this->characterSpellRepository = $characterSpellRepository;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -56,31 +52,14 @@ class SpellSelectionController extends AbstractController
                 $data['level']
             );
         }
-        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $characterSpells2 = array_map(
-            function ($characterSpell) {
-                return $characterSpell->getSpell();
-            },
-            $characterSpells
-        );
 
-        $selection = new SpellSelectionDto($character, $characterSpells2);
-
-        $formSelection = $this->createForm(
-            SelectionType::class,
-            $selection,
-            [
-                'spells' => $spellsForSelection,
-            ]
-        );
+        $formSelection = $this->formFactory->createFormSelectionSpells($character, $spellsForSelection);
         $formSelection->handleRequest($request);
 
         if ($formSelection->isSubmitted() && $formSelection->isValid()) {
             $selection = $request->request->all();
             $this->handlerCharacterSelection->handle($character, $selection['spells']);
         }
-
-        //  dump($characterSpells2);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_selection/index.html.twig',
