@@ -6,38 +6,39 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Sélection des sorts de {{ character }}</h3>
+            <h3>Sélection des sorts de <a
+                        href="{{ path('pathfinder_character_show', {'id': character.id}) }}">{{ character }}</a></h3>
         </div>
         <div class="card-body">
-            {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' %}
+            {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' with {'form': formSearch} %}
 
             {% if spells | length > 0 %}
-                {{ form_start(form_selection, { 'attr': {'class': 'form-inline'}}) }}
-                {{ form_errors(form_selection) }}
+                {{ form_start(formSelection, { 'attr': {'class': 'form-inline'}}) }}
+                {{ form_errors(formSelection) }}
 
-                <button class="btn btn-primary mr-1 mt-3 mb-3" type="submit"><i class="fas fa-check"></i> Valider ma sélection
+                <button class="btn btn-secondary mr-1 mt-3 mb-3" type="submit"><i class="fas fa-check"></i>
+                    Valider ma sélection
                 </button>
 
                 <table class="table table-bordered table-striped mt-3">
                     <tr>
-                        <th> </th>
                         <th>Nom</th>
                     </tr>
-                    {% for spell in spells %}
+                    {% for spellRow in formSelection.spells %}
                         <tr>
                             <td>
-                                <input type="checkbox" name="spells[]" value="{{ spell.id }}">
-                            </td>
-                            <td>
-                                {{ spell.name }}
+                                {{ form_label(spellRow) }}
+                                {{ form_errors(spellRow) }}
+                                {{ form_widget(spellRow) }}
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
 
-                <button class="btn btn-primary mr-1" type="submit"><i class="fas fa-check"></i> Valider ma sélection
+                <button class="btn btn-secondary mr-1" type="submit"><i class="fas fa-check"></i>
+                    Valider ma sélection
                 </button>
-                {{ form_end(form_selection) }}
+                {{ form_end(formSelection) }}
             {% endif %}
         </div>
     </div>

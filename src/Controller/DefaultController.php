@@ -2,7 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Form\SearchFormType;
+use AfmLibre\Pathfinder\Form\SearchHeaderNameType;
+use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@ class DefaultController extends AbstractController
     public function searchForm(): Response
     {
         $form = $this->createForm(
-            SearchFormType::class,
+            SearchHeaderNameType::class,
             [],
             [
                 'method' => 'GET',

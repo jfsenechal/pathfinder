@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SearchFormType extends AbstractType
+class SearchNameType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $formBuilder
@@ -20,13 +20,13 @@ class SearchFormType extends AbstractType
     {
         $formBuilder
             ->add(
-                'nom',
+                'name',
                 SearchType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'Rechercher...',
+                        'placeholder' => 'Nom',
                         'autocomplete' => 'off',
                     ],
                 ]

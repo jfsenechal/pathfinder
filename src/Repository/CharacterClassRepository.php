@@ -53,15 +53,14 @@ class CharacterClassRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $name
      * @return array|CharacterClass[]
      */
     public function searchByName(?string $name = null): array
     {
         $qb = $this->createQueryBuilder('character_class');
         if ($name) {
-            $qb->andWhere('character_class.name = :name')
-                ->setParameter('name', $name);
+            $qb->andWhere('character_class.name LIKE :name')
+                ->setParameter('name', '%'.$name.'%');
         }
         $qb->orderBy('character_class.name');
 

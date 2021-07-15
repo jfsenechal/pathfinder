@@ -6,12 +6,12 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Classes</h3>
+            <h3>Classes {{ characterClasses|length }}</h3>
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/class/_form_search.html.twig' %}
 
-            <table class="table table-bordered">
+            <table class="table table-bordered mt-3">
                 <tr>
                     <th>Nom</th>
                 </tr>

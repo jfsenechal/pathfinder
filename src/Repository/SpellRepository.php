@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Spell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -60,5 +61,21 @@ class SpellRepository extends ServiceEntityRepository
         $qb->addOrderBy('spell.name');
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return array|Spell[]
+     */
+    public function findByCharacter(
+        ?Character $character = null
+    ): array {
+        return $this->createQueryBuilder('spell')
+            ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
+            ->leftJoin('spell.characterSpells', 'character', 'WITH')
+            ->addSelect('spell_classes', 'character')
+            ->andWhere('character.id = :character')
+            ->setParameter('character', $character)
+            ->addOrderBy('spell.name')
+            ->getQuery()->getResult();
     }
 }

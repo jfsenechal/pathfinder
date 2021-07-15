@@ -6,8 +6,11 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Form\SelectionType;
+use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Spell\Dto\SpellSelectionDto;
 use AfmLibre\Pathfinder\Spell\Handler\HandlerCharacterSelection;
+use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +22,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SpellSelectionController extends AbstractController
 {
-    private $spellRepository;
+    private SpellRepository $spellRepository;
     private HandlerCharacterSelection $handlerCharacterSelection;
+    private CharacterSpellRepository $characterSpellRepository;
 
-    public function __construct(SpellRepository $spellRepository, HandlerCharacterSelection $handlerCharacterSelection)
-    {
+    public function __construct(
+        SpellRepository $spellRepository,
+        HandlerCharacterSelection $handlerCharacterSelection,
+        CharacterSpellRepository $characterSpellRepository
+    ) {
         $this->spellRepository = $spellRepository;
         $this->handlerCharacterSelection = $handlerCharacterSelection;
+        $this->characterSpellRepository = $characterSpellRepository;
     }
 
     /**
@@ -34,36 +42,51 @@ class SpellSelectionController extends AbstractController
     public function index(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
+        $spellsForSelection = [];
+
         $form = $this->createForm(SearchSpellType::class, ['class' => $class]);
-        $formSelection = $this->createForm(SelectionType::class);
-        $spells = [];
 
         $form->handleRequest($request);
-        $formSelection->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $spells = $this->spellRepository->searchByNameAndClassAndLevel(
+            $spellsForSelection = $this->spellRepository->searchByNameAndClassAndLevel(
                 $data['name'],
                 $data['class'],
                 $data['level']
             );
         }
 
+        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+        $characterSpells2 = [];
+        foreach ($characterSpells as $characterSpell) {
+            $characterSpells2[$characterSpell->getSpell()->getId()] = $characterSpell->getSpell();
+        }
+        $selection = new SpellSelectionDto($character, $characterSpells2);
+
+        $formSelection = $this->createForm(
+            SelectionType::class,
+            $selection,
+            [
+                'spells' => $spellsForSelection,
+            ]
+        );
+        $formSelection->handleRequest($request);
+
         if ($formSelection->isSubmitted() && $formSelection->isValid()) {
             $selection = $request->request->all();
             $this->handlerCharacterSelection->handle($character, $selection['spells']);
         }
+        dump($characterSpells2);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_selection/index.html.twig',
             [
                 'character' => $character,
-                'spells' => $spells,
-                'form' => $form->createView(),
-                'form_selection' => $formSelection->createView(),
+                'spells' => $spellsForSelection,
+                'formSearch' => $form->createView(),
+                'formSelection' => $formSelection->createView(),
             ]
         );
     }
-
 }

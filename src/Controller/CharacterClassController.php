@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Spell;
+use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
@@ -22,8 +23,10 @@ class CharacterClassController extends AbstractController
     private CharacterClassRepository $characterClassRepository;
     private SpellClassRepository $spellClassRepository;
 
-    public function __construct(CharacterClassRepository $characterClassRepository, SpellClassRepository $spellClassRepository)
-    {
+    public function __construct(
+        CharacterClassRepository $characterClassRepository,
+        SpellClassRepository $spellClassRepository
+    ) {
         $this->characterClassRepository = $characterClassRepository;
         $this->spellClassRepository = $spellClassRepository;
     }
@@ -33,15 +36,17 @@ class CharacterClassController extends AbstractController
      */
     public function index(Request $request)
     {
-        $form = $this->createForm(SearchSpellType::class);
-        $characterClasses = [];
+        $form = $this->createForm(SearchNameType::class);
+        $name = null;
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $characterClasses = $this->characterClassRepository->searchByName($data['name']);
+            $name = $data['name'];
         }
+
+        $characterClasses = $this->characterClassRepository->searchByName($name);
 
         return $this->render(
             '@AfmLibrePathfinder/class/index.html.twig',
