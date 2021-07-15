@@ -6,6 +6,7 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassImportHandler
 {
@@ -16,15 +17,16 @@ class CharacterClassImportHandler
         $this->characterClassRepository = $characterClassRepository;
     }
 
-    public function call(array $classes)
+    public function call(SymfonyStyle $io,array $classes)
     {
         foreach ($classes as $classData) {
-            if (!$class = $this->characterClassRepository->findByName($classData['Nom'])) {
-                $class = new CharacterClass();
-                $class->setName($classData['Nom']);
+            if (!$this->characterClassRepository->findByName($classData['Nom'])) {
+                $characterClass = new CharacterClass();
+                $characterClass->setName($classData['Nom']);
                 $die = preg_replace('/[^0-9]/', '', $classData['DésDeVie']);
-                $class->setDieOfLive($die);
-                $this->characterClassRepository->persist($class);
+                $characterClass->setDieOfLive($die);
+                $this->characterClassRepository->persist($characterClass);
+                $io->writeln($characterClass->getName());
             }
         }
         $this->characterClassRepository->flush();

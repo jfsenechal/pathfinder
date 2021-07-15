@@ -13,7 +13,6 @@ use AfmLibre\Pathfinder\Repository\CharacterRepository;
 
 /**
  * @ORM\Entity(repositoryClass=CharacterRepository::class)
- * @ORM\Table(name="characters")
  */
 class Character
 {

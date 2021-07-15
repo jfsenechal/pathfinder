@@ -54,7 +54,7 @@ class ImportCommand extends Command
         switch ($argument) {
             case 'classes':
                 $classes = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
-                $this->characterClassImportHandler->call($classes);
+                $this->characterClassImportHandler->call($io, $classes);
                 break;
             case 'spells':
                 $spells = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
@@ -65,8 +65,6 @@ class ImportCommand extends Command
                 $this->raceImportHandler->call($io, $races);
                 break;
         }
-
-        //   $this->characterClassRepository->flush();
 
         return Command::SUCCESS;
     }
