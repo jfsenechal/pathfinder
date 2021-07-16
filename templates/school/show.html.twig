@@ -1,0 +1,17 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Race{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ school }}</h3>
+        </div>
+        <div class="card-body">
+            {% for trait in traits %}
+                <h5 class="text-success mt-3">{{ trait.name }}</h5>
+                {{ trait.description }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

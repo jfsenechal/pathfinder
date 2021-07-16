@@ -10,8 +10,8 @@
                 Supprimer {{ spellProfile }} ?
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('pathfinder_spell_profile_delete', {'id': spellProfile.id}) }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ spellProfile.id) }}">
+                <form method="post" action="{{ path('pathfinder_spell_profile_delete', {'uuid': spellProfile.uuid}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ spellProfile.uuid) }}">
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Annuler
                     </button>
