@@ -17,12 +17,12 @@ class SpellProfileSelectionType extends AbstractType
         dump($options['spells']);
         $builder
             ->add(
-                'character_spells',
+                'spell_profile_character_spells',
                 EntityType::class,
                 [
                     'class' => CharacterSpell::class,
                     'multiple' => true,
-                       'choices' => $options['spells'],
+                    'choices' => $options['spells'],
                 ]
             );
     }

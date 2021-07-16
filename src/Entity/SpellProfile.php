@@ -46,20 +46,22 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
 
     /**
      * @ORM\OneToMany(targetEntity=SpellProfileCharacterSpell::class, mappedBy="spell_profile")
-     * @var CharacterSpell[]
+     * @var SpellProfileCharacterSpell[]
      */
-    private iterable $character_spells;
+    private iterable $spell_profile_character_spells;
 
     /**
-     * @ORM\OneToMany(targetEntity=SpellProfileCharacterSpell::class, mappedBy="spell_profile")
+     * @ORM\ManyToMany(targetEntity=CharacterSpell::class)
+     * @\Doctrine\ORM\Mapping\JoinTable(name="titi")
      * @var CharacterSpell[]
      */
-    private iterable $character_spells;
+    private iterable $character_spells22;
 
     public function __construct(Character $character)
     {
-        $this->character_spells = new ArrayCollection();
+        $this->spell_profile_character_spells = new ArrayCollection();
         $this->character_player = $character;
+        $this->character_spells22 = new ArrayCollection();
     }
 
     public function __toString()
@@ -87,9 +89,9 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     /**
      * @return Collection|CharacterSpell[]
      */
-    public function setCharacterSpells(iterable $characterSpells): self
+    public function setSpellprofileCharacterSpells(iterable $characterSpells): self
     {
-        $this->character_spells = $characterSpells;
+        $this->spell_profile_character_spells = $characterSpells;
 
         return $this;
     }
@@ -97,15 +99,15 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     /**
      * @return Collection|SpellProfileCharacterSpell[]
      */
-    public function getCharacterSpells(): Collection
+    public function getSpellProfileCharacterSpells(): Collection
     {
-        return $this->character_spells;
+        return $this->spell_profile_character_spells;
     }
 
     public function addCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
     {
-        if (!$this->character_spells->contains($characterSpell)) {
-            $this->character_spells[] = $characterSpell;
+        if (!$this->spell_profile_character_spells->contains($characterSpell)) {
+            $this->spell_profile_character_spells[] = $characterSpell;
             $characterSpell->setSpellProfile($this);
         }
 
@@ -114,7 +116,7 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
 
     public function removeCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
     {
-        if ($this->character_spells->removeElement($characterSpell)) {
+        if ($this->spell_profile_character_spells->removeElement($characterSpell)) {
             // set the owning side to null (unless already changed)
             if ($characterSpell->getSpellProfile() === $this) {
                 $characterSpell->setSpellProfile(null);
@@ -132,6 +134,52 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CharacterSpell[]
+     */
+    public function getCharacterSpells22(): Collection
+    {
+        return $this->character_spells22;
+    }
+
+    public function addCharacterSpells22(CharacterSpell $characterSpells22): self
+    {
+        if (!$this->character_spells22->contains($characterSpells22)) {
+            $this->character_spells22[] = $characterSpells22;
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterSpells22(CharacterSpell $characterSpells22): self
+    {
+        $this->character_spells22->removeElement($characterSpells22);
+
+        return $this;
+    }
+
+    public function addSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
+    {
+        if (!$this->spell_profile_character_spells->contains($spellProfileCharacterSpell)) {
+            $this->spell_profile_character_spells[] = $spellProfileCharacterSpell;
+            $spellProfileCharacterSpell->setSpellProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
+    {
+        if ($this->spell_profile_character_spells->removeElement($spellProfileCharacterSpell)) {
+            // set the owning side to null (unless already changed)
+            if ($spellProfileCharacterSpell->getSpellProfile() === $this) {
+                $spellProfileCharacterSpell->setSpellProfile(null);
+            }
+        }
 
         return $this;
     }

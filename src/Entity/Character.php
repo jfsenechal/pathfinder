@@ -104,7 +104,6 @@ class Character implements SluggableInterface, TimestampableInterface
         return true;
     }
 
-
     public function getDescription(): ?string
     {
         return $this->description;

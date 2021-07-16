@@ -99,7 +99,7 @@ class SpellProfileController extends AbstractController
     public function show(SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $characterSpells = $spellProfile->getCharacterSpells();
+        $characterSpells = $spellProfile->getSpellprofileCharacterSpells();
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
 
         return $this->render(
@@ -131,16 +131,19 @@ class SpellProfileController extends AbstractController
         $formAvailable->handleRequest($request);
 
         if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
-            $available = $formAvailable->getData();
-            $this->spellAvailableHandler->handle($character, $available->getSpells());
-            $this->dispatchMessage(new SpellAvailableUpdated());
+            $data = $formAvailable->getData();
+            dump($data);
+            $this->spellProfileRepository->flush();
+            //  $this->spellAvailableHandler->handle($character, $available->getSpells());
+            //    $this->dispatchMessage(new SpellAvailableUpdated());
 
-            return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
+            //    return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(
             '@AfmLibrePathfinder/spell_profile/edit.html.twig',
             [
+                'spellProfile' => $spellProfile,
                 'character' => $character,
                 'spells' => $spellsForAvailable,
                 'form' => $formAvailable->createView(),
