@@ -53,7 +53,7 @@ class SpellRepository extends ServiceEntityRepository
                 ->setParameter('class2', $class);
         }
 
-        if ($level) {
+        if ($level !== null) {
             $qb->andWhere('spell_classes.level = :level')
                 ->setParameter('level', $level);
         }
