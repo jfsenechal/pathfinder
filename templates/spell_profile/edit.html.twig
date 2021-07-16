@@ -12,7 +12,32 @@
             </h3>
         </div>
         <div class="card-body">
-            {{ form(form) }}
+            {{ form_start(formSelection, { 'attr': {'class': 'form-inline'}}) }}
+            {{ form_errors(formSelection) }}
+
+            <button class="btn btn-secondary mr-1 mt-3 mb-3" type="submit"><i class="fas fa-check"></i>
+                Valider ma sélection
+            </button>
+
+            <table class="table table-bordered table-striped mt-3">
+                <tr>
+                    <th>Nom</th>
+                </tr>
+                {% for spellRow in formSelection.spells %}
+                    <tr>
+                        <td>
+                            {{ form_label(spellRow) }}
+                            {{ form_errors(spellRow) }}
+                            {{ form_widget(spellRow) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <button class="btn btn-secondary mr-1" type="submit"><i class="fas fa-check"></i>
+                Valider ma sélection
+            </button>
+            {{ form_end(formSelection) }}
         </div>
     </div>
 

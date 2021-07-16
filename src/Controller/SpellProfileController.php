@@ -118,26 +118,32 @@ class SpellProfileController extends AbstractController
     public function edit(Request $request, SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $spellProfile->setCharacterSpells(new ArrayCollection($characterSpells));
-        $characterSpells = SpellUtils::groupByLevel($characterSpells);
 
-        $form = $this->createForm(SpellProfileSelectionType::class, $spellProfile);
-        $form->handleRequest($request);
+        $characterSells = $this->characterSpellRepository->findByCharacter($character);
+        $spellsForAvailable = array_map(
+            function ($characterSpell) {
+                return $characterSpell->getSpell();
+            },
+            $characterSells
+        );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $profile = $form->getData();
-            $this->handlerCharacterProfile->handle($character, $profile->getSpells());
+        $formAvailable = $this->formFactory->createFormSelectionSpells($character, $spellsForAvailable);
+        $formAvailable->handleRequest($request);
+
+        if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
+            $available = $formAvailable->getData();
+            $this->spellAvailableHandler->handle($character, $available->getSpells());
             $this->dispatchMessage(new SpellAvailableUpdated());
 
-            return $this->redirectToRoute('pathfinder_spell_profile_index', ['uuid' => $character->getUuid()]);
+            return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(
             '@AfmLibrePathfinder/spell_profile/edit.html.twig',
             [
                 'character' => $character,
-                'form' => $form->createView(),
+                'spells' => $spellsForAvailable,
+                'formSelection' => $formAvailable->createView(),
             ]
         );
     }
