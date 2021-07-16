@@ -10,8 +10,8 @@
                 Supprimer {{ character }} ?
             </div>
             <div class="modal-footer">
-                <form method="post" action="{{ path('pathfinder_character_delete', {'id': character.id}) }}">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ character.id) }}">
+                <form method="post" action="{{ path('pathfinder_character_delete', {'id': character.uuid}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ character.uuid) }}">
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Annuler
                     </button>

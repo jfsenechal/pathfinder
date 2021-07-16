@@ -1,4 +1,4 @@
-<h4 class="text-success">Sorts disponibles</h4>
+<h4 class="text-success">Sorts disponibles <span class="badge bg-dark">{{ countSpells }}</span></h4>
 <ul class="list-group">
     {% for level, data in characterSpells %}
         <li class="list-group-item"><strong>Lvl {{ level }}</strong>
@@ -22,7 +22,7 @@
         </li>
     {% else %}
         <li class="list-group-item">
-            <a href="{{ path('pathfinder_spell_available_edit', {'id': character.id}) }}">Sélectionnez vos sorts</a>
+            <a href="{{ path('pathfinder_spell_available_edit', {'uuid': character.uuid}) }}">Sélectionnez vos sorts</a>
         </li>
     {% endfor %}
 </ul>

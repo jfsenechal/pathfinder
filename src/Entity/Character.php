@@ -6,19 +6,29 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
+use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
+use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 /**
  * @ORM\Entity(repositoryClass=CharacterRepository::class)
  * @ORM\Table(name="characters")
  */
-class Character
+class Character implements SluggableInterface, TimestampableInterface
 {
     use IdTrait;
     use NameTrait;
+    use UuidTrait;
+    use SluggableTrait;
+    use TimestampableTrait;
+    use SlugTrait;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -88,6 +98,12 @@ class Character
     {
         return $this->name;
     }
+
+    public function shouldGenerateUniqueSlugs(): bool
+    {
+        return true;
+    }
+
 
     public function getDescription(): ?string
     {

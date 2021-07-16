@@ -6,32 +6,33 @@ use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AfmLibre\Pathfinder\Repository\SpellProfileCharacterRepository;
 
 /**
  * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(columns={"character_id", "spell_id"})
+ *     @ORM\UniqueConstraint(columns={"spell_profile_id", "character_spell_id"})
  * })
- * @ORM\Entity(repositoryClass=CharacterSpellRepository::class)
- * @UniqueEntity(fields={"character_player", "spell"}, message="Sort déjà dans votre sélection")
+ * @ORM\Entity(repositoryClass=SpellProfileCharacterRepository::class)
+ * @UniqueEntity(fields={"spell_profile", "character_spell"}, message="Sort déjà dans votre sélection")
  */
-class CharacterSpell
+class SpellProfileCharacterSpell
 {
     use IdTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Character::class, inversedBy="character_spells_available")
-     * @ORM\JoinColumn(name="character_id", nullable=false)
-     */
-    private ?Character $character_player;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Spell::class, inversedBy="character_spells")
+     * @ORM\ManyToOne(targetEntity=SpellProfile::class, inversedBy="character_spells")
      * @ORM\JoinColumn(nullable=false)
      */
-    private ?Spell $spell;
+    private ?SpellProfile $spell_profile;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\ManyToOne(targetEntity=CharacterSpell::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private ?CharacterSpell $character_spell;
+
+    /**
+     * @\Doctrine\ORM\Mapping\Column(type="smallint")
      */
     private int $level;
 
@@ -74,6 +75,30 @@ class CharacterSpell
     public function setLevel(int $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getSpellProfile(): ?SpellProfile
+    {
+        return $this->spell_profile;
+    }
+
+    public function setSpellProfile(?SpellProfile $spell_profile): self
+    {
+        $this->spell_profile = $spell_profile;
+
+        return $this;
+    }
+
+    public function getCharacterSpell(): ?CharacterSpell
+    {
+        return $this->character_spell;
+    }
+
+    public function setCharacterSpell(?CharacterSpell $character_spell): self
+    {
+        $this->character_spell = $character_spell;
 
         return $this;
     }

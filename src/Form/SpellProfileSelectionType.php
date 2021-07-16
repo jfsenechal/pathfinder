@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Form;
 
-use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
+use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,9 +16,10 @@ class SpellProfileSelectionType extends AbstractType
         $builder
             ->add(
                 'character_spells',
-                CollectionType::class,
+                EntityType::class,
                 [
-                    'entry_type' => CharacterSpell::class,
+                    'class' => SpellProfileCharacterSpell::class,
+                    'multiple' => true,
                 ]
             );
     }

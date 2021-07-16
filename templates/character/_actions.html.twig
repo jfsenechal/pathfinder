@@ -1,12 +1,12 @@
-<a href="{{ path('pathfinder_character_edit', { 'id': character.id }) }}" role="button"
+<a href="{{ path('pathfinder_character_edit', { 'uuid': character.uuid }) }}" role="button"
    class="btn btn-primary"><i
             class="far fa-edit"></i> Editer</a>
 
-<a href="{{ path('pathfinder_spell_profile_index', { 'id': character.id }) }}" role="button"
+<a href="{{ path('pathfinder_spell_profile_index', { 'uuid': character.uuid }) }}" role="button"
    class="btn btn-primary"><i
             class="fas fa-lock"></i> Profile des sorts</a>
 
-<a href="{{ path('pathfinder_spell_available_edit', { 'id': character.id }) }}" role="button"
+<a href="{{ path('pathfinder_spell_available_edit', { 'uuid': character.uuid }) }}" role="button"
    class="btn btn-primary"><i
             class="fas fa-lock"></i> Sorts disponibles</a>
 

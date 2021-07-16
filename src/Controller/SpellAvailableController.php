@@ -38,7 +38,7 @@ class SpellAvailableController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="pathfinder_spell_available_edit", methods={"GET","POST"})
+     * @Route("/{uuid}/edit", name="pathfinder_spell_available_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Character $character)
     {
@@ -73,7 +73,7 @@ class SpellAvailableController extends AbstractController
             $this->spellAvailableHandler->handle($character, $available->getSpells());
             $this->dispatchMessage(new SpellAvailableUpdated());
 
-            return $this->redirectToRoute('pathfinder_spell_available_index', ['id' => $character->getId()]);
+            return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(
@@ -105,7 +105,7 @@ class SpellAvailableController extends AbstractController
             if ($character = $this->spellAvailableHandler->delete($characterSpellId)) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
-                return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
+                return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
 
             }
         }

@@ -5,10 +5,16 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
+use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
+use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -18,10 +24,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=SpellProfileRepository::class)
  * UniqueEntity(fields={"character_player", "spell"}, message="Sort déjà dans votre sélection")
  */
-class SpellProfile
+class SpellProfile implements SluggableInterface, TimestampableInterface
 {
     use IdTrait;
     use NameTrait;
+    use UuidTrait;
+    use SluggableTrait;
+    use TimestampableTrait;
+    use SlugTrait;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -35,14 +45,10 @@ class SpellProfile
     private ?Character $character_player;
 
     /**
-     * @ORM\ManyToMany(targetEntity=CharacterSpell::class)
+     * @ORM\OneToMany(targetEntity=SpellProfileCharacterSpell::class, mappedBy="spell_profile")
      * @var CharacterSpell[]
      */
     private iterable $character_spells;
-    /**
-     * @var \AfmLibre\Pathfinder\Entity\Character
-     */
-    private Character $character;
 
     public function __construct(Character $character)
     {
@@ -53,6 +59,11 @@ class SpellProfile
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function shouldGenerateUniqueSlugs(): bool
+    {
+        return true;
     }
 
     public function getCharacterPlayer(): ?Character
@@ -78,25 +89,31 @@ class SpellProfile
     }
 
     /**
-     * @return Collection|CharacterSpell[]
+     * @return Collection|SpellProfileCharacterSpell[]
      */
     public function getCharacterSpells(): Collection
     {
         return $this->character_spells;
     }
 
-    public function addCharacterSpell(CharacterSpell $characterSpell): self
+    public function addCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
     {
         if (!$this->character_spells->contains($characterSpell)) {
             $this->character_spells[] = $characterSpell;
+            $characterSpell->setSpellProfile($this);
         }
 
         return $this;
     }
 
-    public function removeCharacterSpell(CharacterSpell $characterSpell): self
+    public function removeCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
     {
-        $this->character_spells->removeElement($characterSpell);
+        if ($this->character_spells->removeElement($characterSpell)) {
+            // set the owning side to null (unless already changed)
+            if ($characterSpell->getSpellProfile() === $this) {
+                $characterSpell->setSpellProfile(null);
+            }
+        }
 
         return $this;
     }

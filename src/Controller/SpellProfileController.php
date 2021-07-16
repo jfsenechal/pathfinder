@@ -51,7 +51,7 @@ class SpellProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/index", name="pathfinder_spell_profile_index", methods={"GET","POST"})
+     * @Route("/{uuid}/index", name="pathfinder_spell_profile_index", methods={"GET","POST"})
      */
     public function index(Character $character)
     {
@@ -67,7 +67,7 @@ class SpellProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/new", name="pathfinder_spell_profile_new", methods={"GET","POST"})
+     * @Route("/{uuid}/new", name="pathfinder_spell_profile_new", methods={"GET","POST"})
      */
     public function new(Request $request, Character $character)
     {
@@ -82,7 +82,7 @@ class SpellProfileController extends AbstractController
             $this->spellProfileRepository->persist($spellProfile);
             $this->spellProfileRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_spell_profile_index', ['id' => $character->getId()]);
+            return $this->redirectToRoute('pathfinder_spell_profile_index', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(
@@ -94,7 +94,7 @@ class SpellProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/show", name="pathfinder_spell_profile_show", methods={"GET"})
+     * @Route("/{uuid}/show", name="pathfinder_spell_profile_show", methods={"GET"})
      */
     public function show(SpellProfile $spellProfile)
     {
@@ -113,7 +113,7 @@ class SpellProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="pathfinder_spell_profile_edit", methods={"GET","POST"})
+     * @Route("/{uuid}/edit", name="pathfinder_spell_profile_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, SpellProfile $spellProfile)
     {
@@ -130,7 +130,7 @@ class SpellProfileController extends AbstractController
             $this->handlerCharacterProfile->handle($character, $profile->getSpells());
             $this->dispatchMessage(new SpellAvailableUpdated());
 
-            return $this->redirectToRoute('pathfinder_spell_profile_index', ['id' => $character->getId()]);
+            return $this->redirectToRoute('pathfinder_spell_profile_index', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(
@@ -143,7 +143,7 @@ class SpellProfileController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/delete", name="pathfinder_spell_profile_delete", methods={"POST"})
+     * @Route("/{uuid}/delete", name="pathfinder_spell_profile_delete", methods={"POST"})
      */
     public function delete(Request $request, SpellProfile $spellProfile)
     {
@@ -160,7 +160,7 @@ class SpellProfileController extends AbstractController
             if ($character = $this->handlerCharacterProfile->delete($characterSpellId)) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
-                return $this->redirectToRoute('pathfinder_character_show', ['id' => $character->getId()]);
+                return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
 
             }
         }

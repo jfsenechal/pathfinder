@@ -24,7 +24,7 @@
                 {% for character in characters %}
                     <tr>
                         <td>
-                            <a href="{{ path('pathfinder_character_show', {'id': character.id}) }}">
+                            <a href="{{ path('pathfinder_character_show', {'uuid': character.uuid}) }}">
                                 {{ character.name }}
                             </a>
                         </td>
