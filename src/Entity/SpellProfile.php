@@ -50,6 +50,12 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
      */
     private iterable $character_spells;
 
+    /**
+     * @ORM\OneToMany(targetEntity=SpellProfileCharacterSpell::class, mappedBy="spell_profile")
+     * @var CharacterSpell[]
+     */
+    private iterable $character_spells;
+
     public function __construct(Character $character)
     {
         $this->character_spells = new ArrayCollection();

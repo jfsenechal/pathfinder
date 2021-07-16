@@ -127,7 +127,7 @@ class SpellProfileController extends AbstractController
             $characterSells
         );
 
-        $formAvailable = $this->formFactory->createFormSelectionSpells($character, $spellsForAvailable);
+        $formAvailable = $this->formFactory->createFormProfileSpells($spellProfile, $characterSells);
         $formAvailable->handleRequest($request);
 
         if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
@@ -143,7 +143,7 @@ class SpellProfileController extends AbstractController
             [
                 'character' => $character,
                 'spells' => $spellsForAvailable,
-                'formSelection' => $formAvailable->createView(),
+                'form' => $formAvailable->createView(),
             ]
         );
     }

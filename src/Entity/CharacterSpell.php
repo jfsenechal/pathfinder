@@ -42,6 +42,11 @@ class CharacterSpell
         $this->level = $level;
     }
 
+    public function __toString()
+    {
+        return $this->spell->getName();
+    }
+
     public function getCharacterPlayer(): ?Character
     {
         return $this->character_player;
