@@ -56,7 +56,7 @@ class FormFactory
            );
 
            $selection = new SpellSelectionDto($character, $characterSpells2);*/
-        dump($characterSpells);
+
 
         return $this->formFactory->create(
             SpellProfileSelectionType::class,

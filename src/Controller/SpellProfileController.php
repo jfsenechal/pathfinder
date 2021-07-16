@@ -13,6 +13,7 @@ use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Handler\SpellAvailableHandler;
+use AfmLibre\Pathfinder\Spell\Handler\SpellProfileHandler;
 use AfmLibre\Pathfinder\Spell\Message\SpellAvailableUpdated;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,25 +28,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SpellProfileController extends AbstractController
 {
-    private SpellRepository $spellRepository;
-    private SpellAvailableHandler $handlerCharacterProfile;
+    private SpellProfileHandler $spellProfileHandler;
     private FormFactory $formFactory;
-    private SearchHelper $searchHelper;
     private SpellProfileRepository $spellProfileRepository;
     private CharacterSpellRepository $characterSpellRepository;
 
     public function __construct(
-        SpellRepository $spellRepository,
         SpellProfileRepository $spellProfileRepository,
-        SpellAvailableHandler $handlerCharacterProfile,
+        SpellProfileHandler $spellProfileHandler,
         CharacterSpellRepository $characterSpellRepository,
-        FormFactory $formFactory,
-        SearchHelper $searchHelper
+        FormFactory $formFactory
     ) {
-        $this->spellRepository = $spellRepository;
-        $this->handlerCharacterProfile = $handlerCharacterProfile;
+        $this->spellProfileHandler = $spellProfileHandler;
         $this->formFactory = $formFactory;
-        $this->searchHelper = $searchHelper;
         $this->spellProfileRepository = $spellProfileRepository;
         $this->characterSpellRepository = $characterSpellRepository;
     }
@@ -118,6 +113,7 @@ class SpellProfileController extends AbstractController
     public function edit(Request $request, SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
+        $spellProfile->init();
 
         $characterSells = $this->characterSpellRepository->findByCharacter($character);
         $spellsForAvailable = array_map(
@@ -132,9 +128,7 @@ class SpellProfileController extends AbstractController
 
         if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
             $data = $formAvailable->getData();
-            dump($data);
-            $this->spellProfileRepository->flush();
-            //  $this->spellAvailableHandler->handle($character, $available->getSpells());
+            $this->spellProfileHandler->handle($spellProfile);
             //    $this->dispatchMessage(new SpellAvailableUpdated());
 
             //    return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
@@ -166,7 +160,7 @@ class SpellProfileController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if ($character = $this->handlerCharacterProfile->delete($characterSpellId)) {
+            if ($character = $this->spellProfileHandler->delete($characterSpellId)) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);

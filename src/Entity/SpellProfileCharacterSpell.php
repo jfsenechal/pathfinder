@@ -31,6 +31,12 @@ class SpellProfileCharacterSpell
      */
     private ?CharacterSpell $character_spell;
 
+    public function __construct(SpellProfile $spellProfile, CharacterSpell $characterSpell)
+    {
+        $this->spell_profile = $spellProfile;
+        $this->character_spell = $characterSpell;
+    }
+
     public function getSpellProfile(): ?SpellProfile
     {
         return $this->spell_profile;

@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Entity\Traits\CharacterSpellsTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
@@ -32,6 +33,7 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     use SluggableTrait;
     use TimestampableTrait;
     use SlugTrait;
+    use CharacterSpellsTrait;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -50,18 +52,11 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
      */
     private iterable $spell_profile_character_spells;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=CharacterSpell::class)
-     * @\Doctrine\ORM\Mapping\JoinTable(name="titi")
-     * @var CharacterSpell[]
-     */
-    private iterable $character_spells22;
-
     public function __construct(Character $character)
     {
         $this->spell_profile_character_spells = new ArrayCollection();
         $this->character_player = $character;
-        $this->character_spells22 = new ArrayCollection();
+        $this->character_spells = new ArrayCollection();
     }
 
     public function __toString()
@@ -72,6 +67,18 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     public function shouldGenerateUniqueSlugs(): bool
     {
         return true;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     public function getCharacterPlayer(): ?Character
@@ -87,79 +94,11 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     }
 
     /**
-     * @return Collection|CharacterSpell[]
-     */
-    public function setSpellprofileCharacterSpells(iterable $characterSpells): self
-    {
-        $this->spell_profile_character_spells = $characterSpells;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|SpellProfileCharacterSpell[]
      */
     public function getSpellProfileCharacterSpells(): Collection
     {
         return $this->spell_profile_character_spells;
-    }
-
-    public function addCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
-    {
-        if (!$this->spell_profile_character_spells->contains($characterSpell)) {
-            $this->spell_profile_character_spells[] = $characterSpell;
-            $characterSpell->setSpellProfile($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterSpell(SpellProfileCharacterSpell $characterSpell): self
-    {
-        if ($this->spell_profile_character_spells->removeElement($characterSpell)) {
-            // set the owning side to null (unless already changed)
-            if ($characterSpell->getSpellProfile() === $this) {
-                $characterSpell->setSpellProfile(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CharacterSpell[]
-     */
-    public function getCharacterSpells22(): Collection
-    {
-        return $this->character_spells22;
-    }
-
-    public function addCharacterSpells22(CharacterSpell $characterSpells22): self
-    {
-        if (!$this->character_spells22->contains($characterSpells22)) {
-            $this->character_spells22[] = $characterSpells22;
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterSpells22(CharacterSpell $characterSpells22): self
-    {
-        $this->character_spells22->removeElement($characterSpells22);
-
-        return $this;
     }
 
     public function addSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
@@ -183,4 +122,6 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
 
         return $this;
     }
+
+
 }

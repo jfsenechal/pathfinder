@@ -14,10 +14,10 @@ class SpellProfileSelectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options['spells']);
+      //  dump($options['spells']);
         $builder
             ->add(
-                'spell_profile_character_spells',
+                'character_spells',
                 EntityType::class,
                 [
                     'class' => CharacterSpell::class,

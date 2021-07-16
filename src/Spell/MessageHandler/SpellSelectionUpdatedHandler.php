@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AfmLibre\Pathfinder\Spell\MesseHandler;
+namespace AfmLibre\Pathfinder\Spell\MessageHandler;
 
 
 use AfmLibre\Pathfinder\Spell\Message\SpellAvailableUpdated;
