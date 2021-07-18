@@ -13,7 +13,6 @@ class SpellProfileSelectionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        //  dump($options['spells']);
         $builder
             ->add(
                 'character_spells',
@@ -23,6 +22,11 @@ class SpellProfileSelectionType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
+                    'group_by' => 'level',
+                    'choice_label' => function (?CharacterSpell $characterSpell) {
+                        return $characterSpell ? $characterSpell->getSpell()->getName(
+                        ).' ('.$characterSpell->getLevel().')' : '';
+                    },
                 ]
             );
     }

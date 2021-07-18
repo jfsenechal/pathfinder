@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
+use AfmLibre\Pathfinder\Entity\SpellProfile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -32,7 +33,8 @@ class CharacterSpellRepository extends ServiceEntityRepository
             ->addSelect('spell', 'character_player')
             ->andWhere('character_spell.character_player = :character')
             ->setParameter('character', $character)
-            ->orderBy('spell.name', 'ASC')
+            ->addOrderBy('character_spell.level', 'ASC')
+            ->addOrderBy('spell.name', 'ASC')
             ->getQuery()
             ->getResult();
     }

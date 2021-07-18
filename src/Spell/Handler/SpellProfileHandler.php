@@ -11,6 +11,7 @@ use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileCharacterRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 
 class SpellProfileHandler
 {
