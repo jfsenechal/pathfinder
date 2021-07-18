@@ -35,6 +35,21 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    public function findByProfileAndCharacterSpell(
+        SpellProfile $spellProfile,
+        $characterSpell
+    ): ?SpellProfileCharacterSpell {
+        return $this->createQueryBuilder('spell_profile_character')
+            ->leftJoin('spell_profile_character.spell_profile', 'spell_profile', 'WITH')
+            ->leftJoin('spell_profile_character.character_spell', 'character_spell', 'WITH')
+            ->addSelect('spell_profile', 'character_spell')
+            ->andWhere('character_spell = :character')
+            ->setParameter('character', $characterSpell)
+            ->andWhere('spell_profile = :profile')
+            ->setParameter('profile', $spellProfile)
+            ->getQuery()->getOneOrNullResult();
+    }
+
     public function persist(SpellProfileCharacterSpell $spellClass)
     {
         $this->_em->persist($spellClass);
@@ -43,5 +58,10 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
     public function flush()
     {
         $this->_em->flush();
+    }
+
+    public function getOriginalEntityData(SpellProfile $spellProfile)
+    {
+        return $this->_em->getUnitOfWork()->getOriginalEntityData($spellProfile);
     }
 }

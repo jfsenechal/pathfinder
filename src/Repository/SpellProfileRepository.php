@@ -29,8 +29,8 @@ class SpellProfileRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('spellProfile')
             ->leftJoin('spellProfile.character_player', 'character', 'WITH')
-            ->leftJoin('spellProfile.character_spells', 'character_spells', 'WITH')
-            ->addSelect('character', 'character_spells')
+            ->leftJoin('spellProfile.spell_profile_character_spells', 'spell_profile_character_spells', 'WITH')
+            ->addSelect('character', 'spell_profile_character_spells')
             ->andWhere('spellProfile.character_player = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spellProfile.name')

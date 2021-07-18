@@ -47,17 +47,6 @@ class FormFactory
 
     public function createFormProfileSpells(SpellProfile $spellProfile, array $characterSpells): FormInterface
     {
-        /*   $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-           $characterSpells2 = array_map(
-               function ($characterSpell) {
-                   return $characterSpell->getSpell();
-               },
-               $characterSpells
-           );
-
-           $selection = new SpellSelectionDto($character, $characterSpells2);*/
-
-
         return $this->formFactory->create(
             SpellProfileSelectionType::class,
             $spellProfile,

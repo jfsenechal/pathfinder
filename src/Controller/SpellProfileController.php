@@ -94,7 +94,14 @@ class SpellProfileController extends AbstractController
     public function show(SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $characterSpells = $spellProfile->getSpellprofileCharacterSpells();
+        $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+
+        $characterSpells = array_map(
+            function ($spellProfileCharacterSpell) {
+                return $spellProfileCharacterSpell->getCharacterSpell();
+            },
+            $spellProfileCharacterSpells->toArray()
+        );
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
 
         return $this->render(
@@ -113,9 +120,8 @@ class SpellProfileController extends AbstractController
     public function edit(Request $request, SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $spellProfile->init();
-
         $characterSells = $this->characterSpellRepository->findByCharacter($character);
+        $spellProfile->init($spellProfile);
         $spellsForAvailable = array_map(
             function ($characterSpell) {
                 return $characterSpell->getSpell();

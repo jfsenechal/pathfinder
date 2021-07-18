@@ -5,19 +5,27 @@ namespace AfmLibre\Pathfinder\Entity\Traits;
 
 
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
+use AfmLibre\Pathfinder\Entity\SpellProfile;
 use Doctrine\Common\Collections\ArrayCollection;
 
 trait CharacterSpellsTrait
 {
     /**
-     * ORM\ManyToMany(targetEntity=CharacterSpell::class)
-     * \Doctrine\ORM\Mapping\JoinTable(name="titi")
      * @var CharacterSpell[]|\Doctrine\Common\Collections\ArrayCollection
      */
     private iterable $character_spells;
 
-    public function init() {
-        $this->character_spells= new ArrayCollection();
+    public function init(SpellProfile $spellProfile) {
+               $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+
+        $characterSpells = array_map(
+            function ($spellProfileCharacterSpell) {
+                return $spellProfileCharacterSpell->getCharacterSpell();
+            },
+            $spellProfileCharacterSpells->toArray()
+        );
+
+        $this->character_spells= new ArrayCollection($characterSpells);
     }
 
     /**

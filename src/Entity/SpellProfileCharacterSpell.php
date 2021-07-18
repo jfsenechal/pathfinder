@@ -3,16 +3,15 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AfmLibre\Pathfinder\Repository\SpellProfileCharacterRepository;
 
 /**
  * @ORM\Table(uniqueConstraints={
  *     @ORM\UniqueConstraint(columns={"spell_profile_id", "character_spell_id"})
  * })
- * @ORM\Entity(repositoryClass=SpellProfileCharacterRepository::class)
+ * @ORM\Entity(repositoryClass=SpellProfileCharacterSpellRepository::class)
  * @UniqueEntity(fields={"spell_profile", "character_spell"}, message="Sort déjà dans votre sélection")
  */
 class SpellProfileCharacterSpell
