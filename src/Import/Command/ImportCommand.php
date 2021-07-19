@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Import\Command;
 
+use AfmLibre\Pathfinder\Import\Handler\CharacterClassFeatureImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\RaceImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SpellImportHandler;
@@ -24,19 +25,22 @@ class ImportCommand extends Command
     private CharacterClassImportHandler $characterClassImportHandler;
     private SpellImportHandler $spellImportHandler;
     private RaceImportHandler $raceImportHandler;
+    private CharacterClassFeatureImportHandler $characterClassFeatureImportHandler;
 
     public function __construct(
         string $name = null,
         CharacterClassRepository $characterClassRepository,
         CharacterClassImportHandler $characterClassImportHandler,
         SpellImportHandler $spellImportHandler,
-        RaceImportHandler $raceImportHandler
+        RaceImportHandler $raceImportHandler,
+        CharacterClassFeatureImportHandler $characterClassFeatureImportHandler
     ) {
         parent::__construct($name);
         $this->characterClassRepository = $characterClassRepository;
         $this->characterClassImportHandler = $characterClassImportHandler;
         $this->spellImportHandler = $spellImportHandler;
         $this->raceImportHandler = $raceImportHandler;
+        $this->characterClassFeatureImportHandler = $characterClassFeatureImportHandler;
     }
 
     protected function configure()
@@ -56,6 +60,10 @@ class ImportCommand extends Command
                 $classes = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
                 $this->characterClassImportHandler->call($io, $classes);
                 break;
+            case 'classfeatures':
+                $classes = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
+                $this->characterClassImportHandler->call($io, $classes);
+                break;
             case 'spells':
                 $spells = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
                 $this->spellImportHandler->call($io, $spells);
@@ -64,6 +72,8 @@ class ImportCommand extends Command
                 $races = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
                 $this->raceImportHandler->call($io, $races);
                 break;
+            default:
+                $io->error('Valeurs possibles: classes classfeatures spells races');
         }
 
         return Command::SUCCESS;

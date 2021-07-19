@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,27 @@ class ClassFeatureRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, ClassFeature::class);
     }
 
-    // /**
-    //  * @return ClassFeature[] Returns an array of ClassFeature objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return ClassFeature[]
+     */
+    public function findByCharacterClass(CharacterClass $characterClass)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.character_class = :val')
+            ->setParameter('val', $characterClass)
+            ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ClassFeature
+    public function persist(ClassFeature $classFeature)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->_em->persist($classFeature);
     }
-    */
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
 }
