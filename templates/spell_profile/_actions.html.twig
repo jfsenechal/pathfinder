@@ -1,8 +1,17 @@
+<a href="{{ path('pathfinder_spell_profile_spells_edit', { 'uuid': spellProfile.uuid }) }}" role="button"
+   class="btn btn-primary"><i
+            class="far fa-edit"></i> Sorts</a>
+
+<a href="{{ path('pathfinder_spell_profile_print', { 'uuid': spellProfile.uuid }) }}" role="button"
+   class="btn btn-primary"><i
+            class="fas fa-print"></i> Imprimer</a>
+
 <a href="{{ path('pathfinder_spell_profile_edit', { 'uuid': spellProfile.uuid }) }}" role="button"
    class="btn btn-primary"><i
-            class="far fa-edit"></i> Sélections des sorts</a>
+            class="far fa-edit"></i> Renommer</a>
 
-<a href="{{ path('pathfinder_spell_profile_index', {'uuid': character.uuid}) }}" class="btn btn-primary" role='button'><i
+<a href="{{ path('pathfinder_spell_profile_index', {'uuid': character.uuid}) }}" class="btn btn-primary"
+   role='button'><i
             class="fas fa-list"></i>
     Retour à la Liste</a>
 

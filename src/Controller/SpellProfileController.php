@@ -119,6 +119,29 @@ class SpellProfileController extends AbstractController
      */
     public function edit(Request $request, SpellProfile $spellProfile)
     {
+        $form = $this->createForm(SpellProfileType::class, $spellProfile);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->spellProfileRepository->flush();
+
+            return $this->redirectToRoute('pathfinder_spell_profile_show', ['uuid' => $spellProfile->getUuid()]);
+        }
+
+        return $this->render(
+            '@AfmLibrePathfinder/spell_profile/edit.html.twig',
+            [
+                'spellProfile' => $spellProfile,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{uuid}/spells", name="pathfinder_spell_profile_spells_edit", methods={"GET","POST"})
+     */
+    public function editSpells(Request $request, SpellProfile $spellProfile)
+    {
         $character = $spellProfile->getCharacterPlayer();
         $characterSells = $this->characterSpellRepository->findByCharacter($character);
         $spellProfile->init($spellProfile);
@@ -140,7 +163,7 @@ class SpellProfileController extends AbstractController
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/spell_profile/edit.html.twig',
+            '@AfmLibrePathfinder/spell_profile/spells.html.twig',
             [
                 'spellProfile' => $spellProfile,
                 'character' => $character,
@@ -174,6 +197,31 @@ class SpellProfileController extends AbstractController
         }
 
         return $this->redirectToRoute('pathfinder_home');
+    }
+
+    /**
+     * @Route("/{uuid}/print", name="pathfinder_spell_profile_print", methods={"GET","POST"})
+     */
+    public function print(Request $request, SpellProfile $spellProfile)
+    {
+        $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+
+        $characterSpells = array_map(
+            function ($spellProfileCharacterSpell) {
+                return $spellProfileCharacterSpell->getCharacterSpell();
+            },
+            $spellProfileCharacterSpells->toArray()
+        );
+        $characterSpells = SpellUtils::groupByLevel($characterSpells);
+
+        return $this->render(
+            '@AfmLibrePathfinder/spell_profile/print.html.twig',
+            [
+                'spellProfile' => $spellProfile,
+                'characterSpells' => $characterSpells,
+            ]
+        );
+
     }
 
 }
