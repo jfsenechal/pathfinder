@@ -133,11 +133,10 @@ class SpellProfileController extends AbstractController
         $formAvailable->handleRequest($request);
 
         if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
-            $data = $formAvailable->getData();
             $this->spellProfileHandler->handle($spellProfile);
-            //    $this->dispatchMessage(new SpellAvailableUpdated());
+            $this->dispatchMessage(new SpellAvailableUpdated());
 
-            //    return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
+            return $this->redirectToRoute('pathfinder_spell_profile_show', ['uuid' => $character->getUuid()]);
         }
 
         return $this->render(

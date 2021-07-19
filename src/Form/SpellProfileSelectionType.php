@@ -18,14 +18,15 @@ class SpellProfileSelectionType extends AbstractType
                 'character_spells',
                 EntityType::class,
                 [
+                    'label' => 'Sorts',
                     'class' => CharacterSpell::class,
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
                     'group_by' => 'level',
                     'choice_label' => function (?CharacterSpell $characterSpell) {
-                        return $characterSpell ? $characterSpell->getSpell()->getName(
-                        ).' ('.$characterSpell->getLevel().')' : '';
+                        return $characterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
+                            ).')' : '';
                     },
                 ]
             );
