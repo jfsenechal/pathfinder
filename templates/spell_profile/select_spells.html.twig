@@ -16,9 +16,18 @@
         <div class="card-body">
             {{ form_start(form) }}
             {{ form_errors(form) }}
-            {{ form_row(form.character_spells) }}
-            <button class="btn btn-primary mr-1 mb-2" type="submit"><i class="far fa-save" aria-hidden="true"></i>
-                Sauvegarder
+            {% for spell in form.spells %}
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(spell) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.quantities[loop.index0]) }}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" name="valider" class="btn btn-primary">
+                Valider
             </button>
             {{ form_end(form) }}
         </div>

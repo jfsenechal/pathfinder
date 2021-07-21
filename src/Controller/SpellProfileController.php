@@ -2,21 +2,17 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Character\SearchHelper;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
-use AfmLibre\Pathfinder\Form\SearchSpellType;
-use AfmLibre\Pathfinder\Form\SpellProfileSelectionType;
 use AfmLibre\Pathfinder\Form\SpellProfileType;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
+use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
-use AfmLibre\Pathfinder\Spell\Handler\SpellAvailableHandler;
+use AfmLibre\Pathfinder\Spell\Form\SpellProfileSelectionFormType;
 use AfmLibre\Pathfinder\Spell\Handler\SpellProfileHandler;
-use AfmLibre\Pathfinder\Spell\Message\SpellAvailableUpdated;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -143,32 +139,36 @@ class SpellProfileController extends AbstractController
     public function editSpells(Request $request, SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $characterSells = $this->characterSpellRepository->findByCharacter($character);
-        $spellProfile->init($spellProfile);
-        $spellsForAvailable = array_map(
-            function ($characterSpell) {
-                return $characterSpell->getSpell();
-            },
-            $characterSells
+        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+
+        $spellProfileSelection = new SpellProfileSelectionDto();
+
+        foreach ($characterSpells as $characterSpell) {
+            $tag1 = new QuantityDto($characterSpell->getId());
+            $spellProfileSelection->getQuantities()->add($tag1);
+        }
+
+        $form = $this->createForm(
+            SpellProfileSelectionFormType::class,
+            $spellProfileSelection,
+            [
+                'spells' => $characterSpells,
+            ]
         );
 
-        $formAvailable = $this->formFactory->createFormProfileSpells($spellProfile, $characterSells);
-        $formAvailable->handleRequest($request);
+        $form->handleRequest($request);
 
-        if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
-            $this->spellProfileHandler->handle($spellProfile);
-            $this->dispatchMessage(new SpellAvailableUpdated());
-
-            return $this->redirectToRoute('pathfinder_spell_profile_show', ['uuid' => $character->getUuid()]);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            dump($data);
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/spell_profile/spells.html.twig',
+            '@AfmLibrePathfinder/spell_profile/select_spells.html.twig',
             [
                 'spellProfile' => $spellProfile,
                 'character' => $character,
-                'spells' => $spellsForAvailable,
-                'form' => $formAvailable->createView(),
+                'form' => $form->createView(),
             ]
         );
     }

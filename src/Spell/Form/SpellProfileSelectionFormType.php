@@ -1,56 +1,56 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Form;
+
+namespace AfmLibre\Pathfinder\Spell\Form;
+
 
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
-use AfmLibre\Pathfinder\Entity\SpellProfile;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SpellProfileSelectionType extends AbstractType
+class SpellProfileSelectionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(
-                'spell_profile_character_spells',
-                CollectionType::class,
+                'spells',
+                ChoiceType::class,
                 [
-                    'entry_type' => SpellProfileSpellType::class,
-                    'entry_options' => ['label' => false],
-                ]
-            )/*       ->add(
-                'character_spells',
-                EntityType::class,
-                [
-                    'label' => 'Sorts',
-                    'class' => CharacterSpell::class,
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
-                    'group_by' => 'level',
                     'choice_label' => function (?CharacterSpell $characterSpell) {
                         return $characterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
                             ).')' : '';
                     },
                 ]
-            )*/
-        ;
+            )
+            ->add(
+                'quantities',
+                CollectionType::class,
+                [
+                    'entry_type' => QuantityFormType::class,
+                    'entry_options' => ['label' => false],
+                ]
+            );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefaults(
                 [
-                    'data_class' => SpellProfile::class,
+                    'data_class' => SpellProfileSelectionDto::class,
                     'spells' => [],
                 ]
             )
             ->addAllowedTypes('spells', ['array', 'AfmLibre\Pathfinder\Entity\CharacterSpell[]'])
             ->setRequired('spells');
     }
+
 }

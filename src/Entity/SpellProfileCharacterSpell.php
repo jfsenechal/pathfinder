@@ -30,10 +30,16 @@ class SpellProfileCharacterSpell
      */
     private ?CharacterSpell $character_spell;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $quantity;
+
     public function __construct(SpellProfile $spellProfile, CharacterSpell $characterSpell)
     {
         $this->spell_profile = $spellProfile;
         $this->character_spell = $characterSpell;
+        $this->quantity = 0;
     }
 
     public function getSpellProfile(): ?SpellProfile
@@ -56,6 +62,18 @@ class SpellProfileCharacterSpell
     public function setCharacterSpell(?CharacterSpell $character_spell): self
     {
         $this->character_spell = $character_spell;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
