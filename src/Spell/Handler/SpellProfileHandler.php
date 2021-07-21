@@ -45,15 +45,7 @@ class SpellProfileHandler
             $spellProfileCharacterSpells
         );
 
-        $spellProfileSelectionDto = new SpellProfileSelectionDto($characterSpells, $characterSpellsAvailable);
-        //$spellProfileSelectionDto->setSpells($characterSpells);
-
-        foreach ($characterSpellsAvailable as $characterSpell) {
-            $tag1 = new QuantityDto($characterSpell->getId());
-            $spellProfileSelectionDto->getQuantities()->add($tag1);
-        }
-
-        return $spellProfileSelectionDto;
+        return new SpellProfileSelectionDto($characterSpells, $characterSpellsAvailable);
     }
 
     /**

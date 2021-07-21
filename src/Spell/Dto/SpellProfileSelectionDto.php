@@ -23,9 +23,9 @@ class SpellProfileSelectionDto
 
     private function initQuantities()
     {
-        foreach ($this->spells as $characterSpell) {
-            $tag1 = new QuantityDto($characterSpell->getId());
-            $this->getQuantities()->add($tag1);
+        foreach ($this->spellsAvailable as $characterSpell) {
+            $quantityDto = new QuantityDto($characterSpell->getId());
+            $this->getQuantities()->add($quantityDto);
         }
     }
 

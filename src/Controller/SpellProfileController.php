@@ -5,12 +5,7 @@ namespace AfmLibre\Pathfinder\Controller;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Form\SpellProfileType;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
-use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
-use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
-use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
-use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Form\SpellProfileSelectionFormType;
 use AfmLibre\Pathfinder\Spell\Handler\SpellProfileHandler;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
@@ -26,23 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpellProfileController extends AbstractController
 {
     private SpellProfileHandler $spellProfileHandler;
-    private FormFactory $formFactory;
     private SpellProfileRepository $spellProfileRepository;
-    private CharacterSpellRepository $characterSpellRepository;
-    private SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository;
 
     public function __construct(
         SpellProfileRepository $spellProfileRepository,
-        SpellProfileHandler $spellProfileHandler,
-        CharacterSpellRepository $characterSpellRepository,
-        FormFactory $formFactory,
-        SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository
+        SpellProfileHandler $spellProfileHandler
     ) {
         $this->spellProfileHandler = $spellProfileHandler;
-        $this->formFactory = $formFactory;
         $this->spellProfileRepository = $spellProfileRepository;
-        $this->characterSpellRepository = $characterSpellRepository;
-        $this->spellProfileCharacterSpellRepository = $spellProfileCharacterSpellRepository;
     }
 
     /**
