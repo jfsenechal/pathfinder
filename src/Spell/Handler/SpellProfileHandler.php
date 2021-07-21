@@ -10,6 +10,8 @@ use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileCharacterRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
+use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
+use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\ChoiceList\ChoiceList;
 
@@ -27,6 +29,31 @@ class SpellProfileHandler
         $this->characterSpellRepository = $characterSpellRepository;
         $this->spellProfileCharacterRepository = $spellProfileCharacterRepository;
         $this->spellProfileCharacterSpellRepository = $spellProfileCharacterSpellRepository;
+    }
+
+    public function init(SpellProfile $spellProfile): SpellProfileSelectionDto
+    {
+        $character = $spellProfile->getCharacterPlayer();
+        $characterSpellsAvailable = $this->characterSpellRepository->findByCharacter($character);
+
+        $spellProfileCharacterSpells = $this->spellProfileCharacterSpellRepository->findBySpellProfile($spellProfile);
+
+        $characterSpells = array_map(
+            function ($spellProfileCharacterSpell) {
+                return $spellProfileCharacterSpell->getCharacterSpell();
+            },
+            $spellProfileCharacterSpells
+        );
+
+        $spellProfileSelectionDto = new SpellProfileSelectionDto($characterSpells, $characterSpellsAvailable);
+        //$spellProfileSelectionDto->setSpells($characterSpells);
+
+        foreach ($characterSpellsAvailable as $characterSpell) {
+            $tag1 = new QuantityDto($characterSpell->getId());
+            $spellProfileSelectionDto->getQuantities()->add($tag1);
+        }
+
+        return $spellProfileSelectionDto;
     }
 
     /**

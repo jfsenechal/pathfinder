@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Form\SpellProfileType;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
 use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
 use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
@@ -28,17 +29,20 @@ class SpellProfileController extends AbstractController
     private FormFactory $formFactory;
     private SpellProfileRepository $spellProfileRepository;
     private CharacterSpellRepository $characterSpellRepository;
+    private SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository;
 
     public function __construct(
         SpellProfileRepository $spellProfileRepository,
         SpellProfileHandler $spellProfileHandler,
         CharacterSpellRepository $characterSpellRepository,
-        FormFactory $formFactory
+        FormFactory $formFactory,
+        SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository
     ) {
         $this->spellProfileHandler = $spellProfileHandler;
         $this->formFactory = $formFactory;
         $this->spellProfileRepository = $spellProfileRepository;
         $this->characterSpellRepository = $characterSpellRepository;
+        $this->spellProfileCharacterSpellRepository = $spellProfileCharacterSpellRepository;
     }
 
     /**
@@ -139,20 +143,14 @@ class SpellProfileController extends AbstractController
     public function editSpells(Request $request, SpellProfile $spellProfile)
     {
         $character = $spellProfile->getCharacterPlayer();
-        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
 
-        $spellProfileSelection = new SpellProfileSelectionDto();
-
-        foreach ($characterSpells as $characterSpell) {
-            $tag1 = new QuantityDto($characterSpell->getId());
-            $spellProfileSelection->getQuantities()->add($tag1);
-        }
+        $spellProfileSelectionDto = $this->spellProfileHandler->init($spellProfile);
 
         $form = $this->createForm(
             SpellProfileSelectionFormType::class,
-            $spellProfileSelection,
+            $spellProfileSelectionDto,
             [
-                'spells' => $characterSpells,
+                'spells' => $spellProfileSelectionDto->getSpellsAvailable(),
             ]
         );
 

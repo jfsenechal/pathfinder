@@ -4,6 +4,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 
+use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,6 +22,21 @@ class SpellProfileCharacterSpellRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, SpellProfileCharacterSpell::class);
     }
 
+    /**
+     * @return SpellProfileCharacterSpell[]
+     */
+    public function findBySpellProfile(SpellProfile $spellProfile): array
+    {
+        return $this->createQueryBuilder('spcs')
+            ->leftJoin('spcs.spell_profile', 'spellProfile')
+            ->addSelect('spellProfile')
+            ->andWhere('spcs.spell_profile = :profile')
+            ->setParameter('profile', $spellProfile)
+            ->addOrderBy('spcs.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function persist(SpellProfileCharacterSpell $spellProfileCharacterSpell)
     {
         $this->_em->persist($spellProfileCharacterSpell);
@@ -35,6 +51,5 @@ class SpellProfileCharacterSpellRepository extends ServiceEntityRepository
     {
         $this->_em->flush();
     }
-
 
 }
