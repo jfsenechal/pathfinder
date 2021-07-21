@@ -145,6 +145,7 @@ class SpellProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             dump($data);
+         //   $this->spellProfileHandler->handle($spellProfile);
         }
 
         return $this->render(

@@ -67,6 +67,7 @@ class SpellProfileHandler
                 $spellProfileCharacterSpell = new SpellProfileCharacterSpell($spellProfile, $characterSpell);
                 $this->spellProfileCharacterRepository->persist($spellProfileCharacterSpell);
             }
+            $spellProfileCharacterSpell->setQuantity();
         }
         $this->spellProfileCharacterRepository->flush();
     }
