@@ -47,7 +47,7 @@ class ImportCommand extends Command
     {
         $this
             ->setDescription('Add a short description for your command')
-            ->addArgument('name', InputArgument::REQUIRED, 'classes, spells');
+            ->addArgument('name', InputArgument::OPTIONAL, 'classes, spells');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -57,25 +57,26 @@ class ImportCommand extends Command
 
         switch ($argument) {
             case 'classes':
-                $classes = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
-                $this->characterClassImportHandler->call($io, $classes);
+                $this->characterClassImportHandler->call($io, $this->readFile($argument));
                 break;
             case 'classfeatures':
-                $classes = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
-                $this->characterClassImportHandler->call($io, $classes);
+                $this->characterClassFeatureImportHandler->call($io, $this->readFile($argument));
                 break;
             case 'spells':
-                $spells = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
-                $this->spellImportHandler->call($io, $spells);
+                $this->spellImportHandler->call($io, $this->readFile($argument));
                 break;
             case 'races':
-                $races = Yaml::parseFile(__DIR__.'/../../../../../../data/'.$argument.'.yml');
-                $this->raceImportHandler->call($io, $races);
+                $this->raceImportHandler->call($io, $this->readFile($argument));
                 break;
             default:
                 $io->error('Valeurs possibles: classes classfeatures spells races');
         }
 
         return Command::SUCCESS;
+    }
+
+    private function readFile(string $fileName): array
+    {
+        return Yaml::parseFile(__DIR__.'/../../../../../../data/'.$fileName.'.yml');
     }
 }

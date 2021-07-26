@@ -31,11 +31,15 @@ class CharacterClassFeatureImportHandler
                 $classeFeature->setReference($data['Référence']);
                 $classeFeature->setSource($data['Source']);
                 $classeFeature->setLevel($data['Niveau']);
-                $classeFeature->setAuto((bool)$data['Auto']);
+                if (isset($data['Auto'])) {
+                    $classeFeature->setAuto((bool)$data['Auto']);
+                }
                 $this->classFeatureRepository->persist($classeFeature);
                 $io->writeln($classeFeature->getName());
+            } else {
+                $io->error('Classe non trouvee '.$data['Nom']);
             }
         }
-        $this->classFeatureRepository->flush();
+            $this->classFeatureRepository->flush();
     }
 }

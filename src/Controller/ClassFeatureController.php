@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
@@ -14,9 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/class")
+ * @Route("/class/feature")
  */
-class CharacterClassController extends AbstractController
+class ClassFeatureController extends AbstractController
 {
     private CharacterClassRepository $characterClassRepository;
     private SpellClassRepository $spellClassRepository;
@@ -33,7 +34,7 @@ class CharacterClassController extends AbstractController
     }
 
     /**
-     * @Route("/", name="pathfinder_class_index")
+     * @Route("/", name="pathfinder_class_feature_index")
      */
     public function index(Request $request)
     {
@@ -59,19 +60,14 @@ class CharacterClassController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="pathfinder_class_show")
+     * @Route("/{id}", name="pathfinder_class_feature_show")
      */
-    public function show(CharacterClass $characterClass)
+    public function show(ClassFeature $classFeature)
     {
-        $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);
-        $classFeatures = $this->classFeatureRepository->findByCharacterClass($characterClass);
-
         return $this->render(
-            '@AfmLibrePathfinder/class/show.html.twig',
+            '@AfmLibrePathfinder/class_feature/show.html.twig',
             [
-                'characterClass' => $characterClass,
-                'spellsClass' => $spellsClass,
-                'classFeatures' => $classFeatures,
+                'classFeature' => $classFeature,
             ]
         );
     }

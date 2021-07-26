@@ -15,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CharacterClassRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, CharacterClass::class);
@@ -34,16 +36,6 @@ class CharacterClassRepository extends ServiceEntityRepository
             ->andWhere('character_class.name = :name')
             ->setParameter('name', $name)
             ->getQuery()->getOneOrNullResult();
-    }
-
-    public function persist(CharacterClass $class)
-    {
-        $this->_em->persist($class);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 
     public function getQl(): QueryBuilder

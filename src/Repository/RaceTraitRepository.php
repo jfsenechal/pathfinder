@@ -15,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RaceTraitRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Race::class);
@@ -48,14 +50,4 @@ class RaceTraitRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    public function persist(RaceTrait $raceTrait)
-    {
-        $this->_em->persist($raceTrait);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
 }

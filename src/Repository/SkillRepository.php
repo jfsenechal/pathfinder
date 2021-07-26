@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SkillRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Skill::class);

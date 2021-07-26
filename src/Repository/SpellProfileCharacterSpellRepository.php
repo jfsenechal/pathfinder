@@ -17,6 +17,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SpellProfileCharacterSpellRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, SpellProfileCharacterSpell::class);
@@ -36,20 +38,4 @@ class SpellProfileCharacterSpellRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function persist(SpellProfileCharacterSpell $spellProfileCharacterSpell)
-    {
-        $this->_em->persist($spellProfileCharacterSpell);
-    }
-
-    public function remove(SpellProfileCharacterSpell $spellProfileCharacterSpell)
-    {
-        $this->_em->remove($spellProfileCharacterSpell);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
 }

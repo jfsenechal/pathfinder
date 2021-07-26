@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SchoolRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, School::class);
@@ -29,15 +31,4 @@ class SchoolRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    public function persist(School $school)
-    {
-        $this->_em->persist($school);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
 }

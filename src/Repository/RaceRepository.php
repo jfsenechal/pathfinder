@@ -15,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RaceRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Race::class);
@@ -24,16 +26,6 @@ class RaceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->orderBy('r.name', 'ASC');
-    }
-
-    public function persist(Race $race)
-    {
-        $this->_em->persist($race);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 
     /**

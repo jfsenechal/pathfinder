@@ -8,6 +8,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,13 +22,16 @@ class CharacterController extends AbstractController
 {
     private CharacterRepository $characterRepository;
     private CharacterSpellRepository $characterSpellRepository;
+    private ClassFeatureRepository $classFeatureRepository;
 
     public function __construct(
         CharacterRepository $characterRepository,
-        CharacterSpellRepository $characterSpellRepository
+        CharacterSpellRepository $characterSpellRepository,
+        ClassFeatureRepository $classFeatureRepository
     ) {
         $this->characterRepository = $characterRepository;
         $this->characterSpellRepository = $characterSpellRepository;
+        $this->classFeatureRepository = $classFeatureRepository;
     }
 
     /**
@@ -77,6 +81,7 @@ class CharacterController extends AbstractController
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $countSpells = count($characterSpells);
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
+        $classFeatures = $this->classFeatureRepository->findByCharacterClass($character->getCharacterClass());
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -84,6 +89,7 @@ class CharacterController extends AbstractController
                 'character' => $character,
                 'characterSpells' => $characterSpells,
                 'countSpells' => $countSpells,
+                'classFeatures' => $classFeatures,
             ]
         );
     }

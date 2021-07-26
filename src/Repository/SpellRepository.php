@@ -16,19 +16,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SpellRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Spell::class);
-    }
-
-    public function persist(Spell $spell)
-    {
-        $this->_em->persist($spell);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 
     /**

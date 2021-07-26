@@ -16,23 +16,10 @@
 
             </table>
             <h4>Sorts</h4>
-            <table class="table table-bordered">
-                <tr>
-                    <th>Nom</th>
-                    <th>Level</th>
-                </tr>
-                {% for spellClass in spellsClass %}
-                    <tr>
-                        <td>
-                            <a href="{{ path('pathfinder_spell_show', {'id': spellClass.spell.id}) }}">
-                                {{ spellClass.spell.name }}
-                            </a>
-                        </td>
-                        <td>{{ spellClass.level }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {% include '@AfmLibrePathfinder/class/_spells.html.twig' %}
 
+            <h4>Class features</h4>
+            {% include '@AfmLibrePathfinder/class/_class_features.html.twig' %}
             <br/>
         </div>
     </div>

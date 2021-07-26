@@ -4,8 +4,8 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
-use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ClassFeatureRepository::class)
@@ -26,7 +26,7 @@ class ClassFeature
     protected ?string $description;
 
     /**
-     * @ORM\Column(type="string", length=150, nullable=true)
+     * @ORM\Column(type="string", length=250, nullable=true)
      */
     protected ?string $reference;
     /**
@@ -47,6 +47,11 @@ class ClassFeature
     public function __construct(CharacterClass $characterClass)
     {
         $this->character_class = $characterClass;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getLevel(): ?int

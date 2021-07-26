@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Level</th>
+    </tr>
+    {% for classFeature in classFeatures %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_class_feature_show', {'id': classFeature.id}) }}">
+                    {{ classFeature.name }}
+                </a>
+            </td>
+            <td>{{ classFeature.level }}</td>
+        </tr>
+    {% endfor %}
+</table>

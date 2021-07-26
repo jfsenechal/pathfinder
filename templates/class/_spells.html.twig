@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Level</th>
+    </tr>
+    {% for spellClass in spellsClass %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_spell_show', {'id': spellClass.spell.id}) }}">
+                    {{ spellClass.spell.name }}
+                </a>
+            </td>
+            <td>{{ spellClass.level }}</td>
+        </tr>
+    {% endfor %}
+</table>

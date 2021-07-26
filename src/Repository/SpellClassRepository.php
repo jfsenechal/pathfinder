@@ -16,6 +16,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SpellClassRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, SpellClass::class);
@@ -59,15 +61,5 @@ class SpellClassRepository extends ServiceEntityRepository
         $qb->addOrderBy('spell.name');
 
         return $qb->getQuery()->getResult();
-    }
-
-    public function persist(SpellClass $spellClass)
-    {
-        $this->_em->persist($spellClass);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 }

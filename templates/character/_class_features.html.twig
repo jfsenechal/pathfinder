@@ -1,0 +1,10 @@
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+    </tr>
+    {% for classFeature in classFeatures %}
+        <tr>
+            <td>{{ classFeature.name }}</td>
+        </tr>
+    {% endfor %}
+</table>

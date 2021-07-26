@@ -14,19 +14,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CharacterRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Character::class);
-    }
-
-    public function persist(Character $character)
-    {
-        $this->_em->persist($character);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 
     /**

@@ -15,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ClassFeatureRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, ClassFeature::class);
@@ -30,17 +32,6 @@ class ClassFeatureRepository extends ServiceEntityRepository
             ->setParameter('val', $characterClass)
             ->orderBy('c.name', 'ASC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
-
-    public function persist(ClassFeature $classFeature)
-    {
-        $this->_em->persist($classFeature);
-    }
-    public function flush()
-    {
-        $this->_em->flush();
-    }
-
 }

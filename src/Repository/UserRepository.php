@@ -14,23 +14,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+    use OrmCrudTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-    }
-
-    public function persist(User $user)
-    {
-        $this->_em->persist($user);
-    }
-
-    public function remove(User $user)
-    {
-        $this->_em->remove($user);
-    }
-
-    public function flush()
-    {
-        $this->_em->flush();
     }
 }
