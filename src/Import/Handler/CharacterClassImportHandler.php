@@ -17,7 +17,7 @@ class CharacterClassImportHandler
     public function call(SymfonyStyle $io,array $classes)
     {
         foreach ($classes as $classData) {
-            if (!$this->characterClassRepository->findByName($classData['Nom'])) {
+            if (!$this->characterClassRepository->findByName($classData['Nom']) instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
                 $characterClass = new CharacterClass();
                 $characterClass->setName($classData['Nom']);
                 $die = preg_replace('/[^0-9]/', '', (string) $classData['DésDeVie']);

@@ -93,7 +93,7 @@ class SpellImportHandler
 
     private function findSchool(?string $schoolName): School
     {
-        if (!$school = $this->schoolRepository->findOneBy(['name' => $schoolName])) {
+        if (!($school = $this->schoolRepository->findOneBy(['name' => $schoolName])) instanceof \AfmLibre\Pathfinder\Entity\School) {
             $school = new School($schoolName);
             $this->schoolRepository->persist($school);
             $this->schoolRepository->flush();

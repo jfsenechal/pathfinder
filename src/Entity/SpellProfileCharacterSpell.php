@@ -16,7 +16,7 @@ class SpellProfileCharacterSpell
     use IdTrait;
 
     #[ORM\Column(type: 'integer')]
-    private int $quantity;
+    private int $quantity = 0;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: SpellProfile::class, inversedBy: 'spell_profile_character_spells')]
     #[ORM\JoinColumn(nullable: false)]
@@ -24,7 +24,6 @@ class SpellProfileCharacterSpell
     #[ORM\JoinColumn(nullable: false)]
     private ?CharacterSpell $character_spell)
     {
-        $this->quantity = 0;
     }
 
     public function getSpellProfile(): ?SpellProfile

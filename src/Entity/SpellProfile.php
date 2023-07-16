@@ -105,11 +105,9 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
 
     public function removeSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
     {
-        if ($this->spell_profile_character_spells->removeElement($spellProfileCharacterSpell)) {
-            // set the owning side to null (unless already changed)
-            if ($spellProfileCharacterSpell->getSpellProfile() === $this) {
-                $spellProfileCharacterSpell->setSpellProfile(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->spell_profile_character_spells->removeElement($spellProfileCharacterSpell) && $spellProfileCharacterSpell->getSpellProfile() === $this) {
+            $spellProfileCharacterSpell->setSpellProfile(null);
         }
 
         return $this;

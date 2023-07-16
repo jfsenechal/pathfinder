@@ -40,7 +40,7 @@ class SpellRepository extends ServiceEntityRepository
                 ->setParameter('name', '%'.$name.'%');
         }
 
-        if ($class) {
+        if ($class instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
             $qb->andWhere('spell_classes.characterClass = :class2')
                 ->setParameter('class2', $class);
         }

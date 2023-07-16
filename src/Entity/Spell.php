@@ -231,11 +231,9 @@ class Spell implements \Stringable
 
     public function removeSpellClass(SpellClass $spellClass): self
     {
-        if ($this->spell_classes->removeElement($spellClass)) {
-            // set the owning side to null (unless already changed)
-            if ($spellClass->getSpell() === $this) {
-                $spellClass->setSpell(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->spell_classes->removeElement($spellClass) && $spellClass->getSpell() === $this) {
+            $spellClass->setSpell(null);
         }
 
         return $this;
@@ -273,11 +271,9 @@ class Spell implements \Stringable
 
     public function removeCharacterSpell(CharacterSpell $characterSpell): self
     {
-        if ($this->character_spells->removeElement($characterSpell)) {
-            // set the owning side to null (unless already changed)
-            if ($characterSpell->getSpell() === $this) {
-                $characterSpell->setSpell(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->character_spells->removeElement($characterSpell) && $characterSpell->getSpell() === $this) {
+            $characterSpell->setSpell(null);
         }
 
         return $this;

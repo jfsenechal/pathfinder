@@ -154,7 +154,7 @@ class SpellProfileController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if ($character = $this->spellProfileHandler->delete($characterSpellId)) {
+            if (($character = $this->spellProfileHandler->delete($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);

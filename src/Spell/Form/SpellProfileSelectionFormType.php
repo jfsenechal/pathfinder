@@ -24,7 +24,7 @@ class SpellProfileSelectionFormType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
-                    'choice_label' => fn(?CharacterSpell $characterSpell) => $characterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
+                    'choice_label' => fn(?CharacterSpell $characterSpell) => $characterSpell instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
                         ).')' : '',
                 ]
             )

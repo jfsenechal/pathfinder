@@ -13,6 +13,10 @@ use Doctrine\ORM\Mapping\Column;
 #[ORM\Entity(repositoryClass: CharacterClassRepository::class)]
 class CharacterClass implements \JsonSerializable, \Stringable
 {
+    /**
+     * @var Spell[] $spells
+     */
+    public array|ArrayCollection $spells;
     use IdTrait;
     use NameTrait;
 
@@ -43,7 +47,7 @@ class CharacterClass implements \JsonSerializable, \Stringable
 
     public function __toString(): string
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     public function getShortName(): ?string
@@ -90,11 +94,9 @@ class CharacterClass implements \JsonSerializable, \Stringable
 
     public function removeSpellClass(SpellClass $spellClass): self
     {
-        if ($this->spell_classes->removeElement($spellClass)) {
-            // set the owning side to null (unless already changed)
-            if ($spellClass->getCharacterClass() === $this) {
-                $spellClass->setCharacterClass(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->spell_classes->removeElement($spellClass) && $spellClass->getCharacterClass() === $this) {
+            $spellClass->setCharacterClass(null);
         }
 
         return $this;
@@ -120,11 +122,9 @@ class CharacterClass implements \JsonSerializable, \Stringable
 
     public function removeCharacter(Character $character): self
     {
-        if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
-            if ($character->getCharacterClass() === $this) {
-                $character->setCharacterClass(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->characters->removeElement($character) && $character->getCharacterClass() === $this) {
+            $character->setCharacterClass(null);
         }
 
         return $this;

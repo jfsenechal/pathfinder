@@ -51,7 +51,7 @@ class SpellClassRepository extends ServiceEntityRepository
                 ->setParameter('name', '%'.$name.'%');
         }
 
-        if ($class) {
+        if ($class instanceof CharacterClass) {
             $qb->andWhere('spellClass.characterClass = :class2')
                 ->setParameter('class2', $class);
         }

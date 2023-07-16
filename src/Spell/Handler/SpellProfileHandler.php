@@ -45,10 +45,10 @@ class SpellProfileHandler
         $this->toRemove($spellProfileCharacterSpellsOrigine, $spellProfile->getCharacterSpells());
 
         foreach ($spellProfile->getCharacterSpells() as $characterSpell) {
-            if (!$spellProfileCharacterSpell = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
+            if (!($spellProfileCharacterSpell = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
                 $spellProfile,
                 $characterSpell
-            )) {
+            )) instanceof \AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell) {
                 $spellProfileCharacterSpell = new SpellProfileCharacterSpell($spellProfile, $characterSpell);
                 $this->spellProfileCharacterRepository->persist($spellProfileCharacterSpell);
             }
@@ -59,7 +59,7 @@ class SpellProfileHandler
 
     public function delete(int $characterSpellId): ?Character
     {
-        if ($characterSpell = $this->characterSpellRepository->find($characterSpellId)) {
+        if (($characterSpell = $this->characterSpellRepository->find($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
             $character = $characterSpell->getCharacterPlayer();
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();

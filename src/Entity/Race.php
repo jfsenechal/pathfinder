@@ -87,11 +87,9 @@ class Race implements \Stringable
 
     public function removeTrait(RaceTrait $trait): self
     {
-        if ($this->traits->removeElement($trait)) {
-            // set the owning side to null (unless already changed)
-            if ($trait->getRace() === $this) {
-                $trait->setRace(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->traits->removeElement($trait) && $trait->getRace() === $this) {
+            $trait->setRace(null);
         }
 
         return $this;
@@ -124,11 +122,9 @@ class Race implements \Stringable
 
     public function removeCharacter(Character $character): self
     {
-        if ($this->characters->removeElement($character)) {
-            // set the owning side to null (unless already changed)
-            if ($character->getRace() === $this) {
-                $character->setRace(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->characters->removeElement($character) && $character->getRace() === $this) {
+            $character->setRace(null);
         }
 
         return $this;

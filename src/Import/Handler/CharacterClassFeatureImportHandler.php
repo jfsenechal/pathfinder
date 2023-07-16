@@ -17,7 +17,7 @@ class CharacterClassFeatureImportHandler
     public function call(SymfonyStyle $io, array $classeFeatures)
     {
         foreach ($classeFeatures as $data) {
-            if ($characterClass = $this->characterClassRepository->findByName($data['Classe'])) {
+            if (($characterClass = $this->characterClassRepository->findByName($data['Classe'])) instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
                 $classeFeature = new ClassFeature($characterClass);
                 $classeFeature->setName($data['Nom']);
                 $classeFeature->setDescription($data['Description']);

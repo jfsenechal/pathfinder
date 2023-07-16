@@ -7,6 +7,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class HistoryUtils
 {
+    public $ficheRepository;
+    public $historyRepository;
+    public $pathUtils;
     public function __construct(private readonly SerializerInterface $serializer, private readonly Security $security)
     {
     }
@@ -23,7 +26,7 @@ class HistoryUtils
         foreach ($changes as $property => $change) {
             $this->createForFiche($fiche, $username, $property, $originalData[$property], $change);
         }
-        if (count($changes) > 0) {
+        if ($changes !== []) {
             $this->historyRepository->flush();
         }
     }
@@ -31,15 +34,14 @@ class HistoryUtils
     private function ficheToArray(Fiche $fiche): array
     {
         $data = $this->serializer->serialize($fiche, 'json', ['groups' => 'group1']);
-        $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
-        return $data;
+        return json_decode($data, true, 512, JSON_THROW_ON_ERROR);
     }
 
     private function getUsername(): ?string
     {
         $username = null;
-        if ($user = $this->security->getUser()) {
+        if (($user = $this->security->getUser()) instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             $username = $user->getUserIdentifier();
         }
 
@@ -61,7 +63,7 @@ class HistoryUtils
     {
         $username = $this->getUsername();
         $path = $this->pathUtils->getPath($category);
-        $classementPath = join(' > ', $path);
+        $classementPath = implode(' > ', $path);
         $this->createForFiche($fiche, $username, 'classement', $action, $classementPath);
         $this->historyRepository->flush();
     }

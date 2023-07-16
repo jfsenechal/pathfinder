@@ -35,7 +35,7 @@ class SpellAvailableController extends AbstractController
         $keySearch = 'available_spells';
 
         $data = $this->searchHelper->getArgs($keySearch);
-        if (count($data) === 0) {
+        if ($data === []) {
             $data = ['name' => null, 'class' => $class, 'level' => null];
         }
 
@@ -89,7 +89,7 @@ class SpellAvailableController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if ($character = $this->spellAvailableHandler->delete($characterSpellId)) {
+            if (($character = $this->spellAvailableHandler->delete($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);

@@ -32,17 +32,17 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     protected ?string $description = null;
 
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $strength;
+    protected int $strength = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $dexterity;
+    protected int $dexterity = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $constitution;
+    protected int $constitution = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $intelligence;
+    protected int $intelligence = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $wisdom;
+    protected int $wisdom = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $charisma;
+    protected int $charisma = 10;
 
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
     private ?Race $race = null;
@@ -64,12 +64,6 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public function __construct()
     {
-        $this->strength = 10;
-        $this->dexterity = 10;
-        $this->constitution = 10;
-        $this->intelligence = 10;
-        $this->wisdom = 10;
-        $this->charisma = 10;
         $this->character_spells_available = new ArrayCollection();
         $this->character_spell_profiles = new ArrayCollection();
     }
@@ -212,11 +206,9 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public function removeSpell(CharacterSpell $spell): self
     {
-        if ($this->character_spells_available->removeElement($spell)) {
-            // set the owning side to null (unless already changed)
-            if ($spell->getCharacterPlayer() === $this) {
-                $spell->setCharacterPlayer(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->character_spells_available->removeElement($spell) && $spell->getCharacterPlayer() === $this) {
+            $spell->setCharacterPlayer(null);
         }
 
         return $this;
@@ -234,11 +226,9 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public function removeCharacterSpellsAvailable(CharacterSpell $characterSpellsAvailable): self
     {
-        if ($this->character_spells_available->removeElement($characterSpellsAvailable)) {
-            // set the owning side to null (unless already changed)
-            if ($characterSpellsAvailable->getCharacterPlayer() === $this) {
-                $characterSpellsAvailable->setCharacterPlayer(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->character_spells_available->removeElement($characterSpellsAvailable) && $characterSpellsAvailable->getCharacterPlayer() === $this) {
+            $characterSpellsAvailable->setCharacterPlayer(null);
         }
 
         return $this;
@@ -264,11 +254,9 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public function removeCharacterSpellProfile(SpellProfile $characterSpellProfile): self
     {
-        if ($this->character_spell_profiles->removeElement($characterSpellProfile)) {
-            // set the owning side to null (unless already changed)
-            if ($characterSpellProfile->getCharacterPlayer() === $this) {
-                $characterSpellProfile->setCharacterPlayer(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->character_spell_profiles->removeElement($characterSpellProfile) && $characterSpellProfile->getCharacterPlayer() === $this) {
+            $characterSpellProfile->setCharacterPlayer(null);
         }
 
         return $this;

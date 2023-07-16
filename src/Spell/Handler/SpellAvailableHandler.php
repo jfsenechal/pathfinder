@@ -22,7 +22,7 @@ class SpellAvailableHandler
     public function handle(Character $character, array $spells)
     {
         foreach ($spells as $spell) {
-            if (!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell)) {
+            if (!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
                 $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
             }
         }
@@ -31,7 +31,7 @@ class SpellAvailableHandler
 
     public function delete(int $characterSpellId): ?Character
     {
-        if ($characterSpell = $this->characterSpellRepository->find($characterSpellId)) {
+        if (($characterSpell = $this->characterSpellRepository->find($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
             $character = $characterSpell->getCharacterPlayer();
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();
@@ -46,13 +46,11 @@ class SpellAvailableHandler
     {
         $class = $character->getCharacterClass();
         $level = 0;
-        if ($spellLevel = $this->spellClassRepository->searchByClassAndSpell($class, $spell)) {
+        if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell($class, $spell)) instanceof \AfmLibre\Pathfinder\Entity\SpellClass) {
             $level = $spellLevel->getLevel();
         }
 
-        $characterSpell = new CharacterSpell($character, $spell, $level);
-
-        return $characterSpell;
+        return new CharacterSpell($character, $spell, $level);
     }
 
 }
