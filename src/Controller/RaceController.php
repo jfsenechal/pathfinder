@@ -11,20 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class RaceController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/race")
  */
+#[Route(path: '/race')]
 class RaceController extends AbstractController
 {
-    private $raceRepository;
-
-    public function __construct(RaceRepository $raceRepository)
+    public function __construct(private readonly RaceRepository $raceRepository)
     {
-        $this->raceRepository = $raceRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_race_index")
-     */
+    #[Route(path: '/', name: 'pathfinder_race_index')]
     public function index(Request $request)
     {
         $races = $this->raceRepository->findAllOrdered();
@@ -37,9 +32,7 @@ class RaceController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_race_show")
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_race_show')]
     public function show(Race $race)
     {
         return $this->render(

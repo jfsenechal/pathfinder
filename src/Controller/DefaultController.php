@@ -3,7 +3,6 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Form\SearchHeaderNameType;
-use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,18 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    private $spellRepository;
-    private $characterClassRepository;
-
-    public function __construct(SpellRepository $spellRepository, CharacterClassRepository $characterClassRepository)
-    {
-        $this->spellRepository = $spellRepository;
-        $this->characterClassRepository = $characterClassRepository;
+    public function __construct(
+        private readonly SpellRepository $spellRepository,
+        private readonly CharacterClassRepository $characterClassRepository
+    ) {
     }
 
-    /**
-     * @Route("/", name="pathfinder_home")
-     */
+    #[Route(path: '/', name: 'pathfinder_home')]
     public function index()
     {
         return $this->render(
@@ -33,9 +27,7 @@ class DefaultController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/search/form", name="pathfinder_search_form")
-     */
+    #[Route(path: '/search/form', name: 'pathfinder_search_form')]
     public function searchForm(): Response
     {
         $form = $this->createForm(

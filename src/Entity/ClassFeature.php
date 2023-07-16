@@ -7,51 +7,34 @@ use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ClassFeatureRepository::class)
- */
-class ClassFeature
+#[ORM\Entity(repositoryClass: ClassFeatureRepository::class)]
+class ClassFeature implements \Stringable
 {
     use IdTrait;
     use NameTrait;
 
-    /**
-     * @\Doctrine\ORM\Mapping\Column(type="smallint")
-     */
+    #[\Doctrine\ORM\Mapping\Column(type: 'smallint')]
     private int $level;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=250, nullable=true)
-     */
-    protected ?string $reference;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    protected ?string $source;
+    #[ORM\Column(type: 'string', length: 250, nullable: true)]
+    protected ?string $reference = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    protected ?string $source = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     protected bool $auto = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=CharacterClass::class)
-     */
-    protected ?CharacterClass $character_class;
-
-    public function __construct(CharacterClass $characterClass)
+    public function __construct(#[ORM\ManyToOne(targetEntity: CharacterClass::class)]
+    protected ?CharacterClass $character_class)
     {
-        $this->character_class = $characterClass;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getLevel(): ?int

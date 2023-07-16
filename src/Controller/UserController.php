@@ -12,25 +12,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/user")
- */
+#[Route(path: '/user')]
 class UserController extends AbstractController
 {
-    private UserRepository $userRepository;
-    private UserPasswordHasherInterface $userPasswordHasher;
-
     public function __construct(
-        UserRepository $userRepository,
-        UserPasswordHasherInterface $userPasswordHasher
+        private readonly UserRepository $userRepository,
+        private readonly UserPasswordHasherInterface $userPasswordHasher
     ) {
-        $this->userRepository = $userRepository;
-        $this->userPasswordHasher = $userPasswordHasher;
     }
 
-    /**
-     * @Route("/", name="pathfinder_user_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'pathfinder_user_index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render(
@@ -41,9 +32,7 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/new", name="pathfinder_user_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'pathfinder_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $user = new User();
@@ -70,9 +59,7 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_user_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
         return $this->render(
@@ -83,9 +70,7 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}/edit", name="pathfinder_user_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'pathfinder_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserEditType::class, $user);
@@ -106,9 +91,7 @@ class UserController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_user_delete", methods={"POST"})
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {

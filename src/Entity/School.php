@@ -8,10 +8,8 @@ use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
 
-/**
- * @ORM\Entity(repositoryClass=SchoolRepository::class)
- */
-class School
+#[ORM\Entity(repositoryClass: SchoolRepository::class)]
+class School implements \Stringable
 {
     use IdTrait;
     use NameTrait;
@@ -21,8 +19,8 @@ class School
         $this->name = $name;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

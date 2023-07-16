@@ -8,8 +8,8 @@ use AfmLibre\Pathfinder\Repository\SkillRepository;
 
 /**
  * Competence
- * @ORM\Entity(repositoryClass=SkillRepository::class)
  */
+#[ORM\Entity(repositoryClass: SkillRepository::class)]
 class Skill
 {
     use IdTrait;

@@ -15,28 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/character")
- */
+#[Route(path: '/character')]
 class CharacterController extends AbstractController
 {
-    private CharacterRepository $characterRepository;
-    private CharacterSpellRepository $characterSpellRepository;
-    private ClassFeatureRepository $classFeatureRepository;
-
     public function __construct(
-        CharacterRepository $characterRepository,
-        CharacterSpellRepository $characterSpellRepository,
-        ClassFeatureRepository $classFeatureRepository
+        private readonly CharacterRepository $characterRepository,
+        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly ClassFeatureRepository $classFeatureRepository
     ) {
-        $this->characterRepository = $characterRepository;
-        $this->characterSpellRepository = $characterSpellRepository;
-        $this->classFeatureRepository = $classFeatureRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_character_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'pathfinder_character_index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render(
@@ -47,9 +36,7 @@ class CharacterController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/new", name="pathfinder_character_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'pathfinder_character_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $character = new Character();
@@ -73,9 +60,7 @@ class CharacterController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{uuid}", name="pathfinder_character_show", methods={"GET"})
-     */
+    #[Route(path: '/{uuid}', name: 'pathfinder_character_show', methods: ['GET'])]
     public function show(Character $character): Response
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
@@ -94,9 +79,7 @@ class CharacterController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{uuid}/edit", name="pathfinder_character_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{uuid}/edit', name: 'pathfinder_character_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character): Response
     {
         $form = $this->createForm(CharacterType::class, $character);
@@ -118,9 +101,7 @@ class CharacterController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{uuid}", name="pathfinder_character_delete", methods={"POST"})
-     */
+    #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character): Response
     {
         if ($this->isCsrfTokenValid('delete'.$character->getUuid(), $request->request->get('_token'))) {

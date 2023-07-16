@@ -14,15 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RaceImportHandler
 {
-    private RaceRepository $raceRepository;
-    private RaceTraitRepository $raceTraitRepository;
-
-    public function __construct(
-        RaceRepository $raceRepository,
-        RaceTraitRepository $raceTraitRepository
-    ) {
-        $this->raceRepository = $raceRepository;
-        $this->raceTraitRepository = $raceTraitRepository;
+    public function __construct(private readonly RaceRepository $raceRepository, private readonly RaceTraitRepository $raceTraitRepository)
+    {
     }
 
     public function call(SymfonyStyle $io, array $races)

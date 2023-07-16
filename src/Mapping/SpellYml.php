@@ -11,18 +11,18 @@ namespace AfmLibre\Pathfinder\Mapping;
 
 class SpellYml
 {
-    public  const  YAML_NAME = "Nom";
-    public  const YAML_DESC = "Description";
-    public  const YAML_REFERENCE = "Référence";
-    public  const YAML_SOURCE = "Source";
-    public  const YAML_SCHOOL = "École";
-    public  const YAML_LEVEL = "Niveau";
-    public  const YAML_CASTING = "Temps d’incantation";
-    public  const YAML_COMPONENTS = "Composantes";
-    public  const YAML_RANGE = "Portée";
-    public  const YAML_TARGET = "Cible ou zone d'effet";
-    public  const YAML_DURATION = "Durée";
-    public  const YAML_SAVING = "Jet de sauvegarde";
-    public  const YAML_SPELL_RES = "Résistance à la magie";
-    const YAML_DESCHTML = "DescriptionHtml";
+    final public const  YAML_NAME = "Nom";
+    final public const YAML_DESC = "Description";
+    final public const YAML_REFERENCE = "Référence";
+    final public const YAML_SOURCE = "Source";
+    final public const YAML_SCHOOL = "École";
+    final public const YAML_LEVEL = "Niveau";
+    final public const YAML_CASTING = "Temps d’incantation";
+    final public const YAML_COMPONENTS = "Composantes";
+    final public const YAML_RANGE = "Portée";
+    final public const YAML_TARGET = "Cible ou zone d'effet";
+    final public const YAML_DURATION = "Durée";
+    final public const YAML_SAVING = "Jet de sauvegarde";
+    final public const YAML_SPELL_RES = "Résistance à la magie";
+    final public const YAML_DESCHTML = "DescriptionHtml";
 }

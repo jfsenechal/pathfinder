@@ -6,36 +6,25 @@ use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 
-/**
- * @ORM\Entity(repositoryClass=RaceTraitRepository::class)
- */
-class RaceTrait
+#[ORM\Entity(repositoryClass: RaceTraitRepository::class)]
+class RaceTrait implements \Stringable
 {
     use IdTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    protected ?string $name;
+    #[ORM\Column(type: 'string', length: 150)]
+    protected ?string $name = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AfmLibre\Pathfinder\Entity\Race", inversedBy="traits")
-     */
-   private ?Race $race;
-
-   public function __construct(Race $race)
+   public function __construct(#[ORM\ManyToOne(targetEntity: \AfmLibre\Pathfinder\Entity\Race::class, inversedBy: 'traits')]
+   private ?Race $race)
    {
-       $this->race = $race;
    }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getName(): ?string

@@ -1,23 +1,8 @@
 <?php
 
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Config\TwigConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->extension(
-        'twig',
-        [
-            'form_themes' => [
-                'bootstrap_5_layout.html.twig',
-            ],
-        ]
-    );
-
-    $containerConfigurator->extension(
-        'twig',
-        [
-            'paths' => [
-                '%kernel.project_dir%/src/AfmLibre/Pathfinder/templates' => 'AfmLibrePathfinder',
-            ],
-        ]
-    );
+return static function (TwigConfig $twig) {
+    $twig
+        ->path('%kernel.project_dir%/src/AfmLibre/Pathfinder/templates', 'AfmLibrePathfinder');
 };

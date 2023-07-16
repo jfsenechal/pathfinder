@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
@@ -15,27 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/class/feature")
  */
+#[Route(path: '/class/feature')]
 class ClassFeatureController extends AbstractController
 {
-    private CharacterClassRepository $characterClassRepository;
-    private SpellClassRepository $spellClassRepository;
-    private ClassFeatureRepository $classFeatureRepository;
-
     public function __construct(
-        CharacterClassRepository $characterClassRepository,
-        SpellClassRepository $spellClassRepository,
-        ClassFeatureRepository $classFeatureRepository
+        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly SpellClassRepository $spellClassRepository,
+        private readonly ClassFeatureRepository $classFeatureRepository
     ) {
-        $this->characterClassRepository = $characterClassRepository;
-        $this->spellClassRepository = $spellClassRepository;
-        $this->classFeatureRepository = $classFeatureRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_class_feature_index")
-     */
+    #[Route(path: '/', name: 'pathfinder_class_feature_index')]
     public function index(Request $request)
     {
         $form = $this->createForm(SearchNameType::class);
@@ -59,9 +49,7 @@ class ClassFeatureController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_class_feature_show")
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_class_feature_show')]
     public function show(ClassFeature $classFeature)
     {
         return $this->render(

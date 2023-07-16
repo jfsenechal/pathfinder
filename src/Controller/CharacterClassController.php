@@ -14,27 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/class")
  */
+#[Route(path: '/class')]
 class CharacterClassController extends AbstractController
 {
-    private CharacterClassRepository $characterClassRepository;
-    private SpellClassRepository $spellClassRepository;
-    private ClassFeatureRepository $classFeatureRepository;
-
     public function __construct(
-        CharacterClassRepository $characterClassRepository,
-        SpellClassRepository $spellClassRepository,
-        ClassFeatureRepository $classFeatureRepository
+        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly SpellClassRepository $spellClassRepository,
+        private readonly ClassFeatureRepository $classFeatureRepository
     ) {
-        $this->characterClassRepository = $characterClassRepository;
-        $this->spellClassRepository = $spellClassRepository;
-        $this->classFeatureRepository = $classFeatureRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_class_index")
-     */
+    #[Route(path: '/', name: 'pathfinder_class_index')]
     public function index(Request $request)
     {
         $form = $this->createForm(SearchNameType::class);
@@ -58,9 +49,7 @@ class CharacterClassController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_class_show")
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_class_show')]
     public function show(CharacterClass $characterClass)
     {
         $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);

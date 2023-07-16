@@ -7,15 +7,8 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class HistoryUtils
 {
-    private SerializerInterface $serializer;
-    private Security $security;
-
-    public function __construct(
-        SerializerInterface $serializer,
-        Security $security
-    ) {
-        $this->serializer = $serializer;
-        $this->security = $security;
+    public function __construct(private readonly SerializerInterface $serializer, private readonly Security $security)
+    {
     }
 
     public function diffFiche(Fiche $fiche)
@@ -38,7 +31,7 @@ class HistoryUtils
     private function ficheToArray(Fiche $fiche): array
     {
         $data = $this->serializer->serialize($fiche, 'json', ['groups' => 'group1']);
-        $data = json_decode($data, true);
+        $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
 
         return $data;
     }

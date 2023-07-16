@@ -17,11 +17,9 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
-/**
- * @ORM\Entity(repositoryClass=CharacterRepository::class)
- * @ORM\Table(name="characters")
- */
-class Character implements SluggableInterface, TimestampableInterface
+#[ORM\Table(name: 'characters')]
+#[ORM\Entity(repositoryClass: CharacterRepository::class)]
+class Character implements SluggableInterface, TimestampableInterface, \Stringable
 {
     use IdTrait;
     use NameTrait;
@@ -30,56 +28,38 @@ class Character implements SluggableInterface, TimestampableInterface
     use TimestampableTrait;
     use SlugTrait;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $strength;
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $dexterity;
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $constitution;
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $intelligence;
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $wisdom;
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
+    #[ORM\Column(type: 'smallint', nullable: false)]
     protected int $charisma;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Race::class, inversedBy="characters")
-     */
-    private ?Race $race;
+    #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
+    private ?Race $race = null;
+
+    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'characters')]
+    private ?CharacterClass $characterClass = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=CharacterClass::class, inversedBy="characters")
-     */
-    private ?CharacterClass $characterClass;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="character_player", orphanRemoval=true)
      * @var CharacterSpell[]
      */
+    #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character_player', orphanRemoval: true)]
     private iterable $character_spells_available;
 
     /**
-     * @ORM\OneToMany(targetEntity=SpellProfile::class, mappedBy="character_player", orphanRemoval=true)
      * @var SpellProfile[]
      */
+    #[ORM\OneToMany(targetEntity: SpellProfile::class, mappedBy: 'character_player', orphanRemoval: true)]
     private iterable $character_spell_profiles;
 
     public function __construct()
@@ -94,9 +74,9 @@ class Character implements SluggableInterface, TimestampableInterface
         $this->character_spell_profiles = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function shouldGenerateUniqueSlugs(): bool

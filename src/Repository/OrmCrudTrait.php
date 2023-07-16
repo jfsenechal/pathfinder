@@ -29,7 +29,7 @@ trait OrmCrudTrait
         $this->_em->remove($object);
     }
 
-    public function getOriginalEntityData(SpellProfile $spellProfile)
+    public function getOriginalEntityData(object $spellProfile)
     {
         return $this->_em->getUnitOfWork()->getOriginalEntityData($spellProfile);
     }

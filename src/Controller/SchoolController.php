@@ -11,20 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SchoolController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/school")
  */
+#[Route(path: '/school')]
 class SchoolController extends AbstractController
 {
-    private $schoolRepository;
-
-    public function __construct(SchoolRepository $schoolRepository)
+    public function __construct(private readonly SchoolRepository $schoolRepository)
     {
-        $this->schoolRepository = $schoolRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_school_index")
-     */
+    #[Route(path: '/', name: 'pathfinder_school_index')]
     public function index(Request $request)
     {
         $schools = $this->schoolRepository->findAllOrdered();
@@ -37,9 +32,7 @@ class SchoolController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_school_show")
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_school_show')]
     public function show(School $school)
     {
         return $this->render(

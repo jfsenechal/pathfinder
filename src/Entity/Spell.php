@@ -9,80 +9,52 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SpellRepository::class)
- */
-class Spell
+#[ORM\Entity(repositoryClass: SpellRepository::class)]
+class Spell implements \Stringable
 {
     use IdTrait;
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $description;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $descriptionHtml;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    protected ?string $reference;
-    /**
-     * @ORM\Column(name="sourcet", type="string", length=150, nullable=true)
-     */
-    protected ?string $source;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $castringTime;
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $components;
-    /**
-     * @ORM\Column(name="ranget", type="string", length=150, nullable=true)
-     */
-    private ?string $range;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $target;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $duration;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $savingThrow;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $spellResistance;
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $area;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $descriptionHtml = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    protected ?string $reference = null;
+    #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
+    protected ?string $source = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private ?string $castringTime = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $components = null;
+    #[ORM\Column(name: 'ranget', type: 'string', length: 150, nullable: true)]
+    private ?string $range = null;
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $target = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private ?string $duration = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private ?string $savingThrow = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private ?string $spellResistance = null;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    private ?string $area = null;
+
+    #[ORM\ManyToOne(targetEntity: School::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?School $school = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=School::class)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private ?School $school;
-
-    /**
-     * @ORM\OneToMany(targetEntity=SpellClass::class, mappedBy="spell")
      * @var SpellClass[]
      */
+    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'spell')]
     private iterable $spell_classes;
 
     /**
-     * @ORM\OneToMany(targetEntity=CharacterSpell::class, mappedBy="spell", orphanRemoval=true)
      * @var CharacterSpell[]
      */
-    private $character_spells;
+    #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'spell', orphanRemoval: true)]
+    private \Doctrine\Common\Collections\ArrayCollection|array $character_spells;
 
     public function __construct()
     {
@@ -90,9 +62,9 @@ class Spell
         $this->character_spells = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getDescription(): ?string

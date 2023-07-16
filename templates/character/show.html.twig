@@ -29,10 +29,9 @@
                 </tr>
                 </tbody>
             </table>
-
-            {{ include('@AfmLibrePathfinder/class/_class_features.html.twig') }}
             {{ include('@AfmLibrePathfinder/character/_spells_favorite.html.twig') }}
-
+            <h4>Class features</h4>
+            {{ include('@AfmLibrePathfinder/class/_class_features.html.twig') }}
         </div>
     </div>
     {{ include('@AfmLibrePathfinder/character/_form_delete.html.twig') }}
@@ -48,7 +47,6 @@
             var modalTitle = exampleModal.querySelector('.modal-title')
             modalTitle.textContent = 'Retirer ' + name
             var modalBodyInput = exampleModal.querySelector('#characterspellid')
-
             modalBodyInput.value = recipient
         })
     </script>

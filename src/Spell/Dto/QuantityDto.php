@@ -7,11 +7,9 @@ namespace AfmLibre\Pathfinder\Spell\Dto;
 class QuantityDto
 {
     private int $quantity = 1;
-    private int $spellId;
 
-    public function __construct(int $spellId)
+    public function __construct(private int $spellId)
     {
-        $this->spellId = $spellId;
     }
 
     public function getQuantity(): int

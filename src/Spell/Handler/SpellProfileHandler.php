@@ -17,18 +17,8 @@ use Symfony\Component\Form\ChoiceList\ChoiceList;
 
 class SpellProfileHandler
 {
-    private CharacterSpellRepository $characterSpellRepository;
-    private SpellProfileCharacterRepository $spellProfileCharacterRepository;
-    private SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository;
-
-    public function __construct(
-        CharacterSpellRepository $characterSpellRepository,
-        SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository,
-        SpellProfileCharacterRepository $spellProfileCharacterRepository
-    ) {
-        $this->characterSpellRepository = $characterSpellRepository;
-        $this->spellProfileCharacterRepository = $spellProfileCharacterRepository;
-        $this->spellProfileCharacterSpellRepository = $spellProfileCharacterSpellRepository;
+    public function __construct(private readonly CharacterSpellRepository $characterSpellRepository, private readonly SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository, private readonly SpellProfileCharacterRepository $spellProfileCharacterRepository)
+    {
     }
 
     public function init(SpellProfile $spellProfile): SpellProfileSelectionDto
@@ -39,18 +29,13 @@ class SpellProfileHandler
         $spellProfileCharacterSpells = $this->spellProfileCharacterSpellRepository->findBySpellProfile($spellProfile);
 
         $characterSpells = array_map(
-            function ($spellProfileCharacterSpell) {
-                return $spellProfileCharacterSpell->getCharacterSpell();
-            },
+            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
             $spellProfileCharacterSpells
         );
 
         return new SpellProfileSelectionDto($characterSpells, $characterSpellsAvailable);
     }
 
-    /**
-     * @param \AfmLibre\Pathfinder\Entity\SpellProfile $spellProfile
-     */
     public function handle(SpellProfile $spellProfile)
     {
         $originalData = $this->spellProfileCharacterRepository->getOriginalEntityData($spellProfile);
@@ -92,9 +77,7 @@ class SpellProfileHandler
     private function toRemove(iterable $spellProfileCharacterSpellsOrigine, iterable $characterSpellsSelection): void
     {
         $idsSelection = array_map(
-            function ($characterSpellSelection) {
-                return $characterSpellSelection->getSpell()->getId();
-            },
+            fn($characterSpellSelection) => $characterSpellSelection->getSpell()->getId(),
             $characterSpellsSelection->toArray()
         );
 

@@ -8,35 +8,30 @@ use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
 
-/**
- * @ORM\Entity(repositoryClass=CharacterClassRepository::class)
- */
-class CharacterClass implements \JsonSerializable
+#[ORM\Entity(repositoryClass: CharacterClassRepository::class)]
+class CharacterClass implements \JsonSerializable, \Stringable
 {
     use IdTrait;
     use NameTrait;
 
-    /**
-     * @\Doctrine\ORM\Mapping\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $short_name;
+    #[Column(type: 'string', length: 100, nullable: true)]
+    private ?string $short_name = null;
+
+    #[Column(type: 'smallint')]
+    private ?int $die_of_live = null;
 
     /**
-     * @\Doctrine\ORM\Mapping\Column(type="smallint")
-     */
-    private ?int $die_of_live;
-
-    /**
-     * @ORM\OneToMany(targetEntity=SpellClass::class, mappedBy="characterClass")
      * @var SpellClass[]
      */
+    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'characterClass')]
     private iterable $spell_classes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="characterClass")
      * @var Character[]
      */
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
     private iterable $characters;
 
     public function __construct()
@@ -46,9 +41,9 @@ class CharacterClass implements \JsonSerializable
         $this->characters = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getShortName(): ?string

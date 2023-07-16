@@ -12,20 +12,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/spell")
  */
+#[Route(path: '/spell')]
 class SpellController extends AbstractController
 {
-    private $spellRepository;
-
-    public function __construct(SpellRepository $spellRepository)
+    public function __construct(private readonly SpellRepository $spellRepository)
     {
-        $this->spellRepository = $spellRepository;
     }
 
-    /**
-     * @Route("/", name="pathfinder_spell_index")
-     */
+    #[Route(path: '/', name: 'pathfinder_spell_index')]
     public function index(Request $request)
     {
         $form = $this->createForm(SearchSpellType::class);
@@ -47,9 +42,7 @@ class SpellController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/{id}", name="pathfinder_spell_show")
-     */
+    #[Route(path: '/{id}', name: 'pathfinder_spell_show')]
     public function show(Spell $spell)
     {
         return $this->render(

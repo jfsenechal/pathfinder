@@ -8,7 +8,6 @@ class ClassParser
 {
     /**
      * Bar 1, Ens/Mag 1, Prê/Ora 1, Psy 1, Rôd 1
-     * @param string $classShort
      */
     public static function getClassName(string $classShort): ?string
     {
@@ -80,7 +79,7 @@ class ClassParser
             '' => 'Vengeur sacré',
         ];
 
-        return isset($names[$classShort]) ? $names[$classShort] : null;
+        return $names[$classShort] ?? null;
     }
 
 }

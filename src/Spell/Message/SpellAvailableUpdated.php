@@ -6,11 +6,8 @@ namespace AfmLibre\Pathfinder\Spell\Message;
 
 class SpellAvailableUpdated
 {
-    private ?int $spellId;
-
-    public function __construct(?int $spellId = null)
+    public function __construct(private readonly ?int $spellId = null)
     {
-        $this->spellId = $spellId;
     }
 
     public function getSpellId(): int

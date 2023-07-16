@@ -7,38 +7,23 @@ use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Table(uniqueConstraints={
- *     @ORM\UniqueConstraint(columns={"spell_profile_id", "character_spell_id"})
- * })
- * @ORM\Entity(repositoryClass=SpellProfileCharacterSpellRepository::class)
- * @UniqueEntity(fields={"spell_profile", "character_spell"}, message="Sort déjà dans votre sélection")
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(columns: ['spell_profile_id', 'character_spell_id'])]
+#[ORM\Entity(repositoryClass: SpellProfileCharacterSpellRepository::class)]
+#[UniqueEntity(fields: ['spell_profile', 'character_spell'], message: 'Sort déjà dans votre sélection')]
 class SpellProfileCharacterSpell
 {
     use IdTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=SpellProfile::class, inversedBy="spell_profile_character_spells")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private ?SpellProfile $spell_profile;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=CharacterSpell::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private ?CharacterSpell $character_spell;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $quantity;
 
-    public function __construct(SpellProfile $spellProfile, CharacterSpell $characterSpell)
+    public function __construct(#[ORM\ManyToOne(targetEntity: SpellProfile::class, inversedBy: 'spell_profile_character_spells')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SpellProfile $spell_profile, #[ORM\ManyToOne(targetEntity: CharacterSpell::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CharacterSpell $character_spell)
     {
-        $this->spell_profile = $spellProfile;
-        $this->character_spell = $characterSpell;
         $this->quantity = 0;
     }
 

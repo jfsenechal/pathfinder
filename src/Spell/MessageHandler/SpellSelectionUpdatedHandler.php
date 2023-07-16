@@ -10,11 +10,8 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class SpellSelectionUpdatedHandler implements MessageHandlerInterface
 {
-    private FlashBagInterface $flashBag;
-
-    public function __construct(FlashBagInterface $flashBag)
+    public function __construct(private readonly FlashBagInterface $flashBag)
     {
-        $this->flashBag = $flashBag;
     }
 
     public function __invoke(SpellAvailableUpdated $spellSelectionUpdated): void

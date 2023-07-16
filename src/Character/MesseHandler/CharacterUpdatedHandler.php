@@ -10,11 +10,8 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class CharacterUpdatedHandler implements MessageHandlerInterface
 {
-    private FlashBagInterface $flashBag;
-
-    public function __construct(FlashBagInterface $flashBag)
+    public function __construct(private readonly FlashBagInterface $flashBag)
     {
-        $this->flashBag = $flashBag;
     }
 
     public function __invoke(CharacterUpdated $characterUpdated): void

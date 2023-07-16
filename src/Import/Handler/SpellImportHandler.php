@@ -16,21 +16,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SpellImportHandler
 {
-    private SpellRepository $spellRepository;
-    private LevelParser $levelParser;
-    private SpellClassRepository $spellClassRepository;
-    private SchoolRepository $schoolRepository;
-
-    public function __construct(
-        SpellRepository $spellRepository,
-        SpellClassRepository $spellClassRepository,
-        SchoolRepository $schoolRepository,
-        LevelParser $levelParser
-    ) {
-        $this->spellRepository = $spellRepository;
-        $this->levelParser = $levelParser;
-        $this->spellClassRepository = $spellClassRepository;
-        $this->schoolRepository = $schoolRepository;
+    public function __construct(private readonly SpellRepository $spellRepository, private readonly SpellClassRepository $spellClassRepository, private readonly SchoolRepository $schoolRepository, private readonly LevelParser $levelParser)
+    {
     }
 
     public function call(SymfonyStyle $io, array $spells)

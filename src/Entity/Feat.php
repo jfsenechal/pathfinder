@@ -8,32 +8,22 @@ use AfmLibre\Pathfinder\Repository\FeatRepository;
 
 /**
  * Exploit
- * @ORM\Entity(repositoryClass=FeatRepository::class)
  */
+#[ORM\Entity(repositoryClass: FeatRepository::class)]
 class Feat
 {
     use IdTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $category;
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $conditions;
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $advantage;
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $special;
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $normal;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $category = null;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $conditions = null;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $advantage = null;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $special = null;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $normal = null;
 
     public function getId(): ?int
     {

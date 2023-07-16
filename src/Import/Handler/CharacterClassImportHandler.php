@@ -10,11 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassImportHandler
 {
-    private CharacterClassRepository $characterClassRepository;
-
-    public function __construct(CharacterClassRepository $characterClassRepository)
+    public function __construct(private readonly CharacterClassRepository $characterClassRepository)
     {
-        $this->characterClassRepository = $characterClassRepository;
     }
 
     public function call(SymfonyStyle $io,array $classes)
@@ -23,7 +20,7 @@ class CharacterClassImportHandler
             if (!$this->characterClassRepository->findByName($classData['Nom'])) {
                 $characterClass = new CharacterClass();
                 $characterClass->setName($classData['Nom']);
-                $die = preg_replace('/[^0-9]/', '', $classData['DésDeVie']);
+                $die = preg_replace('/[^0-9]/', '', (string) $classData['DésDeVie']);
                 $characterClass->setDieOfLive($die);
                 $this->characterClassRepository->persist($characterClass);
                 $io->writeln($characterClass->getName());

@@ -9,13 +9,8 @@ use AfmLibre\Pathfinder\Entity\Spell;
 
 class SpellSelectionDto
 {
-    private Character $character_player;
-    private array $spells;
-
-    public function __construct(Character $character, array $spells)
+    public function __construct(private Character $character_player, private array $spells)
     {
-        $this->character_player = $character;
-        $this->spells = $spells;
     }
 
     public function getCharacterPlayer(): Character

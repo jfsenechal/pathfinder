@@ -9,33 +9,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 
-/**
- * @ORM\Entity(repositoryClass=RaceRepository::class)
- */
-class Race
+#[ORM\Entity(repositoryClass: RaceRepository::class)]
+class Race implements \Stringable
 {
     use IdTrait;
     use NameTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    protected ?string $reference;
-    /**
-     * @ORM\Column(name="sourcet", type="string", length=150, nullable=true)
-     */
-    protected ?string $source;
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    protected ?string $reference = null;
+    #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
+    protected ?string $source = null;
 
     /**
      * @var RaceTrait[]
-     * @ORM\OneToMany(targetEntity=RaceTrait::class, mappedBy="race")
      */
+    #[ORM\OneToMany(targetEntity: RaceTrait::class, mappedBy: 'race')]
     protected $traits;
 
     /**
-     * @ORM\OneToMany(targetEntity=Character::class, mappedBy="race")
      * @var Character[]
      */
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'race')]
     private iterable $characters;
 
     public function __construct()
@@ -44,9 +38,9 @@ class Race
         $this->characters = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getReference(): ?string

@@ -6,9 +6,7 @@ use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 
-/**
- * @ORM\Entity(repositoryClass=LevelRepository::class)
- */
+#[ORM\Entity(repositoryClass: LevelRepository::class)]
 class Level
 {
     use IdTrait;

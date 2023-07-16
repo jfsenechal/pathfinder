@@ -37,8 +37,6 @@ class SpellClassRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string|null $name
-     * @param \AfmLibre\Pathfinder\Entity\CharacterClass|null $class
      * @return array|SpellClass[]
      */
     public function searchByNameAndClass(?string $name = null, ?CharacterClass $class = null): array

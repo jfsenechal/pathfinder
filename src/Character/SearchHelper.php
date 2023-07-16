@@ -7,22 +7,15 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SearchHelper
 {
-    private SessionInterface $session;
-    private CharacterClassRepository $characterClassRepository;
-
-    public function __construct(
-        SessionInterface $session,
-        CharacterClassRepository $characterClassRepository
-    ) {
-        $this->session = $session;
-        $this->characterClassRepository = $characterClassRepository;
+    public function __construct(private readonly SessionInterface $session, private readonly CharacterClassRepository $characterClassRepository)
+    {
     }
 
     public function getArgs(string $key): array
     {
         $data = [];
         if ($this->session->has($key)) {
-            $data = json_decode($this->session->get($key), true);
+            $data = json_decode((string) $this->session->get($key), true, 512, JSON_THROW_ON_ERROR);
 
             return $this->resolveObjects($data);
         }
@@ -32,7 +25,7 @@ class SearchHelper
 
     public function setArgs(string $key, $data): void
     {
-        $this->session->set($key, json_encode($data));
+        $this->session->set($key, json_encode($data, JSON_THROW_ON_ERROR));
     }
 
     public function removeArgs(string $key): void

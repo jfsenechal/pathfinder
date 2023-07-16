@@ -9,16 +9,12 @@ use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 
 class LevelParser
 {
-    private CharacterClassRepository $characterClassRepository;
-
-    public function __construct(CharacterClassRepository $characterClassRepository)
+    public function __construct(private readonly CharacterClassRepository $characterClassRepository)
     {
-        $this->characterClassRepository = $characterClassRepository;
     }
 
     /**
      * "Niveau" => "Bar 1, Ens/Mag 1, Prê/Ora 1, Psy 1, Rôd 1"
-     * @param string $text
      * @return LevelDto[]
      * @throws \Exception
      */
@@ -30,7 +26,7 @@ class LevelParser
         }
         $data = explode(', ', $text);
         foreach ($data as $level) {
-            list($shortName, $level) = explode(' ', $level);
+            [$shortName, $level] = explode(' ', $level);
             $name = ClassParser::getClassName($shortName);
             $character = $this->characterClassRepository->findByName($name);
             // dump($character->getName());

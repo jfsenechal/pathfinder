@@ -16,30 +16,19 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SpellController
  * @package AfmLibre\Pathfinder\Controller
- * @Route("/spell/available")
  */
+#[Route(path: '/spell/available')]
 class SpellAvailableController extends AbstractController
 {
-    private SpellRepository $spellRepository;
-    private SpellAvailableHandler $spellAvailableHandler;
-    private FormFactory $formFactory;
-    private SearchHelper $searchHelper;
-
     public function __construct(
-        SpellRepository $spellRepository,
-        SpellAvailableHandler $spellAvailableHandler,
-        FormFactory $formFactory,
-        SearchHelper $searchHelper
+        private readonly SpellRepository $spellRepository,
+        private readonly SpellAvailableHandler $spellAvailableHandler,
+        private readonly FormFactory $formFactory,
+        private readonly SearchHelper $searchHelper
     ) {
-        $this->spellRepository = $spellRepository;
-        $this->spellAvailableHandler = $spellAvailableHandler;
-        $this->formFactory = $formFactory;
-        $this->searchHelper = $searchHelper;
     }
 
-    /**
-     * @Route("/{uuid}/edit", name="pathfinder_spell_available_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{uuid}/edit', name: 'pathfinder_spell_available_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
@@ -87,9 +76,7 @@ class SpellAvailableController extends AbstractController
         );
     }
 
-    /**
-     * @Route("/delete", name="pathfinder_spell_available_delete", methods={"POST"})
-     */
+    #[Route(path: '/delete', name: 'pathfinder_spell_available_delete', methods: ['POST'])]
     public function validDeleteAvailable(Request $request)
     {
         if ($this->isCsrfTokenValid('deavailable', $request->request->get('_token'))) {

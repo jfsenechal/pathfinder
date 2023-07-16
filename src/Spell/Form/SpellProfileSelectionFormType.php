@@ -24,10 +24,8 @@ class SpellProfileSelectionFormType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
-                    'choice_label' => function (?CharacterSpell $characterSpell) {
-                        return $characterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
-                            ).')' : '';
-                    },
+                    'choice_label' => fn(?CharacterSpell $characterSpell) => $characterSpell ? $characterSpell->getSpell()->getName().' ('.$characterSpell->getLevel(
+                        ).')' : '',
                 ]
             )
             ->add(

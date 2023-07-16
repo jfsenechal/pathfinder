@@ -19,9 +19,7 @@ trait CharacterSpellsTrait
                $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
 
         $characterSpells = array_map(
-            function ($spellProfileCharacterSpell) {
-                return $spellProfileCharacterSpell->getCharacterSpell();
-            },
+            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
             $spellProfileCharacterSpells->toArray()
         );
 

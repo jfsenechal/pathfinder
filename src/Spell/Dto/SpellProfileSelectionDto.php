@@ -9,15 +9,11 @@ use Doctrine\Common\Collections\Collection;
 
 class SpellProfileSelectionDto
 {
-    private iterable $quantities;
-    private iterable $spells;
-    private iterable $spellsAvailable;
+    private readonly iterable $quantities;
 
-    public function __construct(array $characterSpells, array $characterSpellsAvailable)
+    public function __construct(private iterable $spells, private iterable $spellsAvailable)
     {
         $this->quantities = new ArrayCollection();
-        $this->spells = $characterSpells;
-        $this->spellsAvailable = $characterSpellsAvailable;
         $this->initQuantities();
     }
 

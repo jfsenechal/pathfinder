@@ -12,22 +12,11 @@ use AfmLibre\Pathfinder\Repository\SpellRepository;
 
 class SpellAvailableHandler
 {
-    private SpellClassRepository $spellClassRepository;
-    private CharacterSpellRepository $characterSpellRepository;
-    private SpellRepository $spellRepository;
-
-    public function __construct(
-        CharacterSpellRepository $characterSpellRepository,
-        SpellClassRepository $spellClassRepository,
-        SpellRepository $spellRepository
-    ) {
-        $this->spellClassRepository = $spellClassRepository;
-        $this->characterSpellRepository = $characterSpellRepository;
-        $this->spellRepository = $spellRepository;
+    public function __construct(private readonly CharacterSpellRepository $characterSpellRepository, private readonly SpellClassRepository $spellClassRepository, private readonly SpellRepository $spellRepository)
+    {
     }
 
     /**
-     * @param Character $character
      * @param array|Spell[] $spells
      */
     public function handle(Character $character, array $spells)

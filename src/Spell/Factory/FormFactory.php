@@ -15,22 +15,15 @@ use Symfony\Component\Form\FormInterface;
 
 class FormFactory
 {
-    private CharacterSpellRepository $characterSpellRepository;
-    private FormFactoryInterface $formFactory;
-
-    public function __construct(CharacterSpellRepository $characterSpellRepository, FormFactoryInterface $formFactory)
+    public function __construct(private readonly CharacterSpellRepository $characterSpellRepository, private readonly FormFactoryInterface $formFactory)
     {
-        $this->characterSpellRepository = $characterSpellRepository;
-        $this->formFactory = $formFactory;
     }
 
     public function createFormSelectionSpells(Character $character, array $spellsForSelection): FormInterface
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $characterSpells2 = array_map(
-            function ($characterSpell) {
-                return $characterSpell->getSpell();
-            },
+            fn($characterSpell) => $characterSpell->getSpell(),
             $characterSpells
         );
 

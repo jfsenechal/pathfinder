@@ -21,26 +21,15 @@ class ImportCommand extends Command
 {
     protected static $defaultName = 'pathfinder:import';
 
-    private CharacterClassRepository $characterClassRepository;
-    private CharacterClassImportHandler $characterClassImportHandler;
-    private SpellImportHandler $spellImportHandler;
-    private RaceImportHandler $raceImportHandler;
-    private CharacterClassFeatureImportHandler $characterClassFeatureImportHandler;
-
     public function __construct(
-        string $name = null,
-        CharacterClassRepository $characterClassRepository,
-        CharacterClassImportHandler $characterClassImportHandler,
-        SpellImportHandler $spellImportHandler,
-        RaceImportHandler $raceImportHandler,
-        CharacterClassFeatureImportHandler $characterClassFeatureImportHandler
+        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly CharacterClassImportHandler $characterClassImportHandler,
+        private readonly SpellImportHandler $spellImportHandler,
+        private readonly RaceImportHandler $raceImportHandler,
+        private readonly CharacterClassFeatureImportHandler $characterClassFeatureImportHandler,
+        string $name = null
     ) {
         parent::__construct($name);
-        $this->characterClassRepository = $characterClassRepository;
-        $this->characterClassImportHandler = $characterClassImportHandler;
-        $this->spellImportHandler = $spellImportHandler;
-        $this->raceImportHandler = $raceImportHandler;
-        $this->characterClassFeatureImportHandler = $characterClassFeatureImportHandler;
     }
 
     protected function configure()
@@ -55,22 +44,13 @@ class ImportCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $argument = $input->getArgument('name');
 
-        switch ($argument) {
-            case 'classes':
-                $this->characterClassImportHandler->call($io, $this->readFile($argument));
-                break;
-            case 'classfeatures':
-                $this->characterClassFeatureImportHandler->call($io, $this->readFile($argument));
-                break;
-            case 'spells':
-                $this->spellImportHandler->call($io, $this->readFile($argument));
-                break;
-            case 'races':
-                $this->raceImportHandler->call($io, $this->readFile($argument));
-                break;
-            default:
-                $io->error('Valeurs possibles: classes classfeatures spells races');
-        }
+        match ($argument) {
+            'classes' => $this->characterClassImportHandler->call($io, $this->readFile($argument)),
+            'classfeatures' => $this->characterClassFeatureImportHandler->call($io, $this->readFile($argument)),
+            'spells' => $this->spellImportHandler->call($io, $this->readFile($argument)),
+            'races' => $this->raceImportHandler->call($io, $this->readFile($argument)),
+            default => $io->error('Valeurs possibles: classes classfeatures spells races'),
+        };
 
         return Command::SUCCESS;
     }

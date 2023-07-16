@@ -10,15 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassFeatureImportHandler
 {
-    private CharacterClassRepository $characterClassRepository;
-    private ClassFeatureRepository $classFeatureRepository;
-
-    public function __construct(
-        CharacterClassRepository $characterClassRepository,
-        ClassFeatureRepository $classFeatureRepository
-    ) {
-        $this->characterClassRepository = $characterClassRepository;
-        $this->classFeatureRepository = $classFeatureRepository;
+    public function __construct(private readonly CharacterClassRepository $characterClassRepository, private readonly ClassFeatureRepository $classFeatureRepository)
+    {
     }
 
     public function call(SymfonyStyle $io, array $classeFeatures)

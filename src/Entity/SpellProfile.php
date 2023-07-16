@@ -22,10 +22,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * ORM\Table(uniqueConstraints={
  *     ORM\UniqueConstraint(columns={"character_id", "spell_id"})
  * })
- * @ORM\Entity(repositoryClass=SpellProfileRepository::class)
- * UniqueEntity(fields={"character_player", "spell"}, message="Sort déjà dans votre sélection")
  */
-class SpellProfile implements SluggableInterface, TimestampableInterface
+#[ORM\Entity(repositoryClass: SpellProfileRepository::class)]
+class SpellProfile implements SluggableInterface, TimestampableInterface, \Stringable
 {
     use IdTrait;
     use NameTrait;
@@ -35,33 +34,26 @@ class SpellProfile implements SluggableInterface, TimestampableInterface
     use SlugTrait;
     use CharacterSpellsTrait;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected ?string $description;
+    #[ORM\Column(type: 'text', nullable: true)]
+    protected ?string $description = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Character::class, inversedBy="character_spell_profiles")
-     * @ORM\JoinColumn(name="character_id", nullable=false)
-     */
-    private ?Character $character_player;
-
-    /**
-     * @ORM\OneToMany(targetEntity=SpellProfileCharacterSpell::class, mappedBy="spell_profile")
      * @var SpellProfileCharacterSpell[]
      */
+    #[ORM\OneToMany(targetEntity: SpellProfileCharacterSpell::class, mappedBy: 'spell_profile')]
     private iterable $spell_profile_character_spells;
 
-    public function __construct(Character $character)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
+    #[ORM\JoinColumn(name: 'character_id', nullable: false)]
+    private ?Character $character_player)
     {
         $this->spell_profile_character_spells = new ArrayCollection();
-        $this->character_player = $character;
         $this->character_spells = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function shouldGenerateUniqueSlugs(): bool
