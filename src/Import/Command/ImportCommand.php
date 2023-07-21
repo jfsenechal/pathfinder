@@ -12,30 +12,33 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Console\Attribute\AsCommand;
 
 /**
  * source https://github.com/SvenWerlen/pathfinderfr-data/
  */
+#[AsCommand(
+    name: 'pathfinder:import',
+    description: 'Add a short description for your command',
+)]
 class ImportCommand extends Command
 {
-    protected static $defaultName = 'pathfinder:import';
-
     public function __construct(
         private readonly CharacterClassRepository $characterClassRepository,
         private readonly CharacterClassImportHandler $characterClassImportHandler,
         private readonly SpellImportHandler $spellImportHandler,
         private readonly RaceImportHandler $raceImportHandler,
         private readonly CharacterClassFeatureImportHandler $characterClassFeatureImportHandler,
-        string $name = null
+        private readonly ParameterBagInterface $parameterBag
     ) {
-        parent::__construct($name);
+        parent::__construct();
     }
 
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
             ->addArgument('name', InputArgument::OPTIONAL, 'classes, spells');
     }
 
@@ -57,6 +60,6 @@ class ImportCommand extends Command
 
     private function readFile(string $fileName): array
     {
-        return Yaml::parseFile(__DIR__.'/../../../../../../data/'.$fileName.'.yml');
+        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir').'/data/'.$fileName.'.yml');
     }
 }

@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
@@ -17,7 +18,7 @@ class CharacterClassFeatureImportHandler
     public function call(SymfonyStyle $io, array $classeFeatures)
     {
         foreach ($classeFeatures as $data) {
-            if (($characterClass = $this->characterClassRepository->findByName($data['Classe'])) instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
+            if (($characterClass = $this->characterClassRepository->findByName($data['Classe'])) instanceof CharacterClass) {
                 $classeFeature = new ClassFeature($characterClass);
                 $classeFeature->setName($data['Nom']);
                 $classeFeature->setDescription($data['Description']);
