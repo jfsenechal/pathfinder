@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Spell;

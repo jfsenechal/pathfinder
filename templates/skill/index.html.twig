@@ -1,0 +1,35 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Pathfinder{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Les {{ skills|length }} compétences</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                    <th>Caractéristique</th>
+                    <th>Formation nécessaire ?</th>
+                </tr>
+                {% for skill in skills %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('pathfinder_skill_show', {'id': skill.id}) }}">
+                                {{ skill.name }}
+                            </a>
+                        </td>
+                        <td>{{ skill.ability }}</td>
+                        <td>
+                            {{ skill.training == true ? 'Oui' : 'Non' }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

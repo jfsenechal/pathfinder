@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

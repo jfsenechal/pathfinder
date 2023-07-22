@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Race;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;

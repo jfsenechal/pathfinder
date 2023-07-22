@@ -1,0 +1,29 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Compétence{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ skill.name }}</h3>
+        </div>
+        <div class="card-body">
+            <h5 class="text-success mt-3">
+                Caractéristique liée
+            </h5>
+            {{ skill.ability }}
+            <h5 class="text-success mt-3">
+                Formation nécessaire
+            </h5>
+            {{ skill.training ? 'Oui' : 'Non' }}
+
+            <div class="text-muted">
+                {{ skill.descriptionHtml|raw }}
+            </div>
+
+        </div>
+        <div class="card-footer">
+            Source: <a href="{{ skill.source }}">{{ skill.source }}</a>
+        </div>
+    </div>
+{% endblock %}

@@ -14,13 +14,15 @@ class CharacterClassImportHandler
     {
     }
 
-    public function call(SymfonyStyle $io,array $classes)
+    public function call(SymfonyStyle $io, array $classes)
     {
         foreach ($classes as $classData) {
-            if (!$this->characterClassRepository->findByName($classData['Nom']) instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
+            if (!$this->characterClassRepository->findByName(
+                    $classData['Nom']
+                ) instanceof CharacterClass) {
                 $characterClass = new CharacterClass();
                 $characterClass->setName($classData['Nom']);
-                $die = preg_replace('/[^0-9]/', '', (string) $classData['DésDeVie']);
+                $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
                 $characterClass->setDieOfLive($die);
                 $this->characterClassRepository->persist($characterClass);
                 $io->writeln($characterClass->getName());

@@ -1,8 +1,27 @@
 {% set action = app.request.attributes.get("_route") %}
 
-<li><a href="{{ path('pathfinder_character_index') }}" class="nav-link px-2 link-dark"><i class="fa fa-search"></i> Personnages</a>
-<li><a href="{{ path('pathfinder_race_index') }}" class="nav-link px-2 link-dark"><i class="fa fa-search"></i> Races</a>
-<li><a href="{{ path('pathfinder_class_index') }}" class="nav-link px-2 link-dark"><i class="fa fa-search"></i> Classes</a>
-<li><a href="{{ path('pathfinder_spell_index') }}" class="nav-link px-2 link-dark"><i class="fa fa-search"></i> Sorts</a>
-<li><a href="{{ path('pathfinder_user_index') }}" class="nav-link px-2 link-dark"><i class="fa fa-search"></i> Utilisateurs</a>
+<li>
+    <a href="{{ path('pathfinder_character_index') }}" class="nav-link px-2 link-dark">
+        Personnages
+    </a>
+<li>
+    <a href="{{ path('pathfinder_race_index') }}" class="nav-link px-2 link-dark">
+        Races
+    </a>
+<li>
+    <a href="{{ path('pathfinder_class_index') }}" class="nav-link px-2 link-dark">
+        Classes
+    </a>
+<li>
+    <a href="{{ path('pathfinder_skill_index') }}" class="nav-link px-2 link-dark">
+        Compétences
+    </a>
+<li>
+    <a href="{{ path('pathfinder_spell_index') }}" class="nav-link px-2 link-dark">
+        Sorts
+    </a>
+<li>
+    <a href="{{ path('pathfinder_user_index') }}" class="nav-link px-2 link-dark">
+        Utilisateurs
+    </a>
 </li>

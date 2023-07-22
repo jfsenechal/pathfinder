@@ -2,7 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
-use AfmLibre\Pathfinder\Entity\ClassFeature;
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Feat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

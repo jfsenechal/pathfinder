@@ -4,10 +4,10 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
+use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use AfmLibre\Pathfinder\Repository\RaceRepository;
 
 #[ORM\Entity(repositoryClass: RaceRepository::class)]
 class Race implements \Stringable
@@ -24,7 +24,7 @@ class Race implements \Stringable
      * @var RaceTrait[]
      */
     #[ORM\OneToMany(targetEntity: RaceTrait::class, mappedBy: 'race')]
-    protected $traits;
+    protected ArrayCollection|iterable $traits;
 
     /**
      * @var Character[]
@@ -40,7 +40,7 @@ class Race implements \Stringable
 
     public function __toString(): string
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     public function getReference(): ?string

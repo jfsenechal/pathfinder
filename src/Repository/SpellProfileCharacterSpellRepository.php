@@ -3,7 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
-
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Race;
-use AfmLibre\Pathfinder\Entity\RaceTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

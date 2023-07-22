@@ -13,6 +13,7 @@ use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/character')]
@@ -21,7 +22,8 @@ class CharacterController extends AbstractController
     public function __construct(
         private readonly CharacterRepository $characterRepository,
         private readonly CharacterSpellRepository $characterSpellRepository,
-        private readonly ClassFeatureRepository $classFeatureRepository
+        private readonly ClassFeatureRepository $classFeatureRepository,
+        private readonly MessageBusInterface $dispatcher
     ) {
     }
 
@@ -46,16 +48,16 @@ class CharacterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
-            $this->dispatchMessage(new CharacterCreated($character->getUuid()));
+            $this->dispatcher->dispatch(new CharacterCreated($character->getUuid()));
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
         }
 
-        return $this->renderForm(
+        return $this->render(
             '@AfmLibrePathfinder/character/new.html.twig',
             [
                 'character' => $character,
-                'form' => $form,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -87,16 +89,16 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
-            $this->dispatchMessage(new CharacterUpdated($character->getUuid()));
+            $this->dispatcher->dispatch(new CharacterUpdated($character->getUuid()));
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
         }
 
-        return $this->renderForm(
+        return $this->render(
             '@AfmLibrePathfinder/character/edit.html.twig',
             [
                 'character' => $character,
-                'form' => $form,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -106,7 +108,7 @@ class CharacterController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$character->getUuid(), $request->request->get('_token'))) {
             $id = $character->getUuid();
-            $this->dispatchMessage(new CharacterUpdated($id));
+            $this->$this->dispatcher->dispatch(new CharacterUpdated($id));
             $this->characterRepository->remove($character);
             $this->characterRepository->flush();
         }

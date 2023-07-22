@@ -11,6 +11,7 @@ use AfmLibre\Pathfinder\Spell\Handler\SpellAvailableHandler;
 use AfmLibre\Pathfinder\Spell\Message\SpellAvailableUpdated;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -24,7 +25,8 @@ class SpellAvailableController extends AbstractController
         private readonly SpellRepository $spellRepository,
         private readonly SpellAvailableHandler $spellAvailableHandler,
         private readonly FormFactory $formFactory,
-        private readonly SearchHelper $searchHelper
+        private readonly SearchHelper $searchHelper,
+        private readonly MessageBusInterface $dispatcher
     ) {
     }
 
@@ -60,7 +62,7 @@ class SpellAvailableController extends AbstractController
         if ($formAvailable->isSubmitted() && $formAvailable->isValid()) {
             $available = $formAvailable->getData();
             $this->spellAvailableHandler->handle($character, $available->getSpells());
-            $this->dispatchMessage(new SpellAvailableUpdated());
+            $this->$this->dispatcher->dispatch(new SpellAvailableUpdated());
 
             return $this->redirectToRoute('pathfinder_spell_available_edit', ['uuid' => $character->getUuid()]);
         }
@@ -89,7 +91,9 @@ class SpellAvailableController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if (($character = $this->spellAvailableHandler->delete($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\Character) {
+            if (($character = $this->spellAvailableHandler->delete(
+                    $characterSpellId
+                )) instanceof Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);

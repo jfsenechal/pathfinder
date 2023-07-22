@@ -11,14 +11,18 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassFeatureImportHandler
 {
-    public function __construct(private readonly CharacterClassRepository $characterClassRepository, private readonly ClassFeatureRepository $classFeatureRepository)
-    {
+    public function __construct(
+        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly ClassFeatureRepository $classFeatureRepository
+    ) {
     }
 
     public function call(SymfonyStyle $io, array $classeFeatures)
     {
         foreach ($classeFeatures as $data) {
-            if (($characterClass = $this->characterClassRepository->findByName($data['Classe'])) instanceof CharacterClass) {
+            if (($characterClass = $this->characterClassRepository->findByName(
+                    $data['Classe']
+                )) instanceof CharacterClass) {
                 $classeFeature = new ClassFeature($characterClass);
                 $classeFeature->setName($data['Nom']);
                 $classeFeature->setDescription($data['Description']);
@@ -34,6 +38,6 @@ class CharacterClassFeatureImportHandler
                 $io->error('Classe non trouvee '.$data['Nom']);
             }
         }
-            $this->classFeatureRepository->flush();
+        $this->classFeatureRepository->flush();
     }
 }

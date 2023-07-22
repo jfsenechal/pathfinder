@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\SpellProfile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -2,8 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Repository;
 
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,32 +23,14 @@ class SkillRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, Skill::class);
     }
 
-    // /**
-    //  * @return Skill[] Returns an array of Skill objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Skill[]
+     */
+    public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('skill')
+            ->addOrderBy('skill.name', Criteria::ASC)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Skill
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

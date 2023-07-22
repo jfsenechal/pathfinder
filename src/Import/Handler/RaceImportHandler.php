@@ -10,12 +10,13 @@ use AfmLibre\Pathfinder\Repository\RaceRepository;
 use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-;
 
 class RaceImportHandler
 {
-    public function __construct(private readonly RaceRepository $raceRepository, private readonly RaceTraitRepository $raceTraitRepository)
-    {
+    public function __construct(
+        private readonly RaceRepository $raceRepository,
+        private readonly RaceTraitRepository $raceTraitRepository
+    ) {
     }
 
     public function call(SymfonyStyle $io, array $races)

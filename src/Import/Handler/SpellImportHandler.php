@@ -16,8 +16,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SpellImportHandler
 {
-    public function __construct(private readonly SpellRepository $spellRepository, private readonly SpellClassRepository $spellClassRepository, private readonly SchoolRepository $schoolRepository, private readonly LevelParser $levelParser)
-    {
+    public function __construct(
+        private readonly SpellRepository $spellRepository,
+        private readonly SpellClassRepository $spellClassRepository,
+        private readonly SchoolRepository $schoolRepository,
+        private readonly LevelParser $levelParser
+    ) {
     }
 
     public function call(SymfonyStyle $io, array $spells)
@@ -93,7 +97,8 @@ class SpellImportHandler
 
     private function findSchool(?string $schoolName): School
     {
-        if (!($school = $this->schoolRepository->findOneBy(['name' => $schoolName])) instanceof \AfmLibre\Pathfinder\Entity\School) {
+        if (!($school = $this->schoolRepository->findOneBy(['name' => $schoolName]
+            )) instanceof \AfmLibre\Pathfinder\Entity\School) {
             $school = new School($schoolName);
             $this->schoolRepository->persist($school);
             $this->schoolRepository->flush();

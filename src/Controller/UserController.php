@@ -50,7 +50,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('pathfinder_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm(
+        return $this->render(
             '@AfmLibrePathfinder/user/new.html.twig',
             [
                 'user' => $user,
@@ -82,7 +82,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('pathfinder_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm(
+        return $this->render(
             '@AfmLibrePathfinder/user/edit.html.twig',
             [
                 'user' => $user,
