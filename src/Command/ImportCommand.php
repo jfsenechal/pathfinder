@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Command;
 
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassFeatureImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassImportHandler;
+use AfmLibre\Pathfinder\Import\Handler\FeatImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\RaceImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SkillImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SpellImportHandler;
@@ -30,6 +31,7 @@ class ImportCommand extends Command
         private readonly SpellImportHandler $spellImportHandler,
         private readonly RaceImportHandler $raceImportHandler,
         private readonly SkillImportHandler $skillImportHandler,
+        private readonly FeatImportHandler $featImportHandler,
         private readonly CharacterClassFeatureImportHandler $characterClassFeatureImportHandler,
         private readonly ParameterBagInterface $parameterBag
     ) {
@@ -53,6 +55,7 @@ class ImportCommand extends Command
             'spells' => $this->spellImportHandler->call($io, $this->readFile($argument)),
             'races' => $this->raceImportHandler->call($io, $this->readFile($argument)),
             'skills' => $this->skillImportHandler->call($io, $this->readFile($argument)),
+            'feats' => $this->featImportHandler->call($io, $this->readFile($argument)),
             default => $io->error('Valeurs possibles: classes classfeatures spells races'),
         };
 

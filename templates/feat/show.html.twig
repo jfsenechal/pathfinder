@@ -1,0 +1,61 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Compétence{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                {{ feat.name }} {% if feat.category %} <strong>({{ feat.category }})</strong>{% endif %}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% if feat.summary %}
+                <p class="text-muted">{{ feat.summary }}</p>
+            {% endif %}
+
+            {% if feat.normal %}
+                <h5 class="text-success mt-3">
+                    Normal
+                </h5>
+                {{ feat.normal }}
+            {% endif %}
+
+            {% if feat.special %}
+                <h5 class="text-success mt-3">
+                    Spécial
+                </h5>
+                {{ feat.special }}
+            {% endif %}
+
+            {% if feat.requires|length > 0 %}
+                <h5 class="text-success mt-3">
+                    Prérequis
+                </h5>
+                {% for require in feat.requires %}
+                    {{ require }}
+                {% endfor %}
+            {% endif %}
+
+            {% if feat.conditions %}
+                <h5 class="text-success mt-3">
+                    Conditions
+                </h5>
+                {{ feat.conditions }}
+            {% endif %}
+
+            <div class="text-muted mt-3">
+                {% if feat.advantageHtml %}
+                    {{ feat.advantageHtml|raw }}
+                {% elseif feat.advantage %}
+                    {{ feat.advantage|nl2br }}
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="card-footer">
+            Source: {{ feat.source }} /
+            Référence: <a href="{{ feat.reference }}">{{ feat.reference }}</a>
+        </div>
+    </div>
+{% endblock %}

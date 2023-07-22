@@ -3,90 +3,44 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use Doctrine\ORM\Mapping as ORM;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\FeatRepository;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Exploit
- */
 #[ORM\Entity(repositoryClass: FeatRepository::class)]
 class Feat
 {
-    use IdTrait;
+    use IdTrait, NameTrait;
 
-    #[ORM\Column(type: 'string', length: 150)]
-    private ?string $category = null;
-    #[ORM\Column(type: 'string', length: 150)]
-    private ?string $conditions = null;
-    #[ORM\Column(type: 'string', length: 150)]
-    private ?string $advantage = null;
-    #[ORM\Column(type: 'string', length: 150)]
-    private ?string $special = null;
-    #[ORM\Column(type: 'string', length: 150)]
-    private ?string $normal = null;
+    #[ORM\Column(length: 255,nullable: true)]
+    public ?string $summary;
+    #[ORM\Column(length: 150,nullable: true)]
+    public ?string $category = null;
+    #[ORM\Column(type: 'text',nullable: true)]
+    public ?string $conditions = null;
+    #[ORM\Column(type: 'text',nullable: true)]
+    public ?string $advantage = null;
+    #[ORM\Column(type: 'text',nullable: true)]
+    public ?string $advantageHtml = null;
+    #[ORM\Column(type: 'text',nullable: true)]
+    public ?string $special = null;
+    #[ORM\Column(type: 'text',nullable: true)]
+    public ?string $normal = null;
+    #[ORM\Column(name: 'sourcet', length: 150, nullable: true)]
+    public ?string $source = null;
+    #[ORM\Column()]
+    public ?string $reference = null;
+    #[ORM\Column(type: 'json')]
+    public array $requires;
 
-    public function getId(): ?int
+    // only used during YAML import
+    //private List<String> requiresRef;
+    // only used in specific view
+    //private int depth;
+
+
+    public function __toString(): string
     {
-        return $this->id;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getConditions(): ?string
-    {
-        return $this->conditions;
-    }
-
-    public function setConditions(string $conditions): self
-    {
-        $this->conditions = $conditions;
-
-        return $this;
-    }
-
-    public function getAdvantage(): ?string
-    {
-        return $this->advantage;
-    }
-
-    public function setAdvantage(string $advantage): self
-    {
-        $this->advantage = $advantage;
-
-        return $this;
-    }
-
-    public function getSpecial(): ?string
-    {
-        return $this->special;
-    }
-
-    public function setSpecial(string $special): self
-    {
-        $this->special = $special;
-
-        return $this;
-    }
-
-    public function getNormal(): ?string
-    {
-        return $this->normal;
-    }
-
-    public function setNormal(string $normal): self
-    {
-        $this->normal = $normal;
-
-        return $this;
+        return $this->name;
     }
 }
