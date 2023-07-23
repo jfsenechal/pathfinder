@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AfmLibre\Pathfinder\Entity\Traits;
+namespace AfmLibre\Pathfinder\Ability;
 
 
-class Ability
+enum AbilityEnum
 {
     final   public const ABILITY_STRENGH = 0;
     final   public const   ABILITY_DEXTERITY = 1;

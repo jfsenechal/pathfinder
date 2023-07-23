@@ -9,10 +9,12 @@
             <h3>Les {{ feats|length }} dons</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" {{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder')}) }}>
                 <tr>
                     <th>Nom</th>
                     <th>Catégorie</th>
+                    <th>Campaigns</th>
+                    <th>Set campaign</th>
                 </tr>
                 {% for feat in feats %}
                     <tr>
@@ -22,6 +24,18 @@
                             </a>
                         </td>
                         <td>{{ feat.category }}</td>
+                        <td id="result-{{ feat.id }}">
+                            {% if feat.campaings %}
+                                {{ feat.campaings|join('') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"
+                                    data-action="click->hello#greet"
+                                    data-id="{{ feat.id }}">
+                                Greet
+                            </button>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
