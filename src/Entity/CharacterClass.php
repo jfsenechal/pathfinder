@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
@@ -17,7 +18,7 @@ class CharacterClass implements \JsonSerializable, \Stringable
      * @var Spell[] $spells
      */
     public array|ArrayCollection $spells;
-    use IdTrait;
+    use IdTrait,CampaingTrait;
     use NameTrait;
 
     #[Column(type: 'string', length: 100, nullable: true)]

@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 class Skill
 {
-    use IdTrait;
+    use IdTrait,CampaingTrait;
     use NameTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]

@@ -11,9 +11,11 @@
         <div class="card-body">
             {% include '@AfmLibrePathfinder/class/_form_search.html.twig' %}
 
-            <table class="table table-bordered mt-3">
+            <table class="table table-bordered mt-3" {{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder'),'type':'class'}) }}>
                 <tr>
                     <th>Nom</th>
+                    <th>Campagnes</th>
+                    <th>Set</th>
                 </tr>
                 {% for characterClass in characterClasses %}
                     <tr>
@@ -22,7 +24,18 @@
                                 {{ characterClass.name }}
                             </a>
                         </td>
-                        <td></td>
+                        <td id="result-{{ characterClass.id }}">
+                            {% if characterClass.campaings %}
+                                {{ characterClass.campaings|join('') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"
+                                    data-action="click->hello#greet"
+                                    data-id="{{ characterClass.id }}">
+                                Greet
+                            </button>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

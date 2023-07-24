@@ -1,17 +1,19 @@
 {% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}Pathfinder{% endblock %}
+{% block title %}Races{% endblock %}
 
 {% block body %}
 
     <div class="card">
         <div class="card-header">
-            <h3>Les races {{ races|length }}</h3>
+            <h3>Les {{ races|length }} races</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" {{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder'),'type':'race'}) }}>
                 <tr>
                     <th>Nom</th>
+                    <th>Campagne</th>
+                    <th>Set</th>
                 </tr>
                 {% for race in races %}
                     <tr>
@@ -19,6 +21,18 @@
                             <a href="{{ path('pathfinder_race_show', {'id': race.id}) }}">
                                 {{ race.name }}
                             </a>
+                        </td>
+                        <td id="result-{{ race.id }}">
+                            {% if race.campaings %}
+                                {{ race.campaings|join('') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"
+                                    data-action="click->hello#greet"
+                                    data-id="{{ race.id }}">
+                                Greet
+                            </button>
                         </td>
                     </tr>
                 {% endfor %}

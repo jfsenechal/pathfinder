@@ -2,7 +2,11 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Repository\FeatRepository;
+use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\Feat;
+use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Entity\Spell;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/api')]
 class ApiController extends AbstractController
 {
-    public function __construct(private FeatRepository $featRepository)
+    public function __construct(private ManagerRegistry $managerRegistry)
     {
     }
 
@@ -19,15 +23,32 @@ class ApiController extends AbstractController
     public function index(Request $request): JsonResponse
     {
         $id = $request->get('id');
-        if ($feat = $this->featRepository->find($id)) {
-            if ($feat->campaings && count($feat->campaings) > 0) {
-                $feat->campaings = [];
-            } else {
-                $feat->campaings = ['pathfinder-1'];
-            }
-            $this->featRepository->flush();
+        $type = $request->get('type');
 
-            return $this->json($feat->campaings);
+        $class = match ($type) {
+            'feat' => Feat::class,
+            'race' => Race::class,
+            'class' => CharacterClass::class,
+            'spell' => Spell::class,
+            default => null
+
+        };
+
+        if ($class === null) {
+            return $this->json(['not found']);
+        }
+
+        $manager = $this->managerRegistry->getRepository($class);
+
+        if ($object = $manager->find($id)) {
+            if ($object->campaings && count($object->campaings) > 0) {
+                $object->campaings = [];
+            } else {
+                $object->campaings = ['pathfinder-1'];
+            }
+            $manager->flush();
+
+            return $this->json($object->campaings);
         }
 
         return $this->json(['oups']);

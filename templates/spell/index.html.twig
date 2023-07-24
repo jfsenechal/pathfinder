@@ -11,10 +11,11 @@
         <div class="card-body">
             {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' %}
 
-            <table class="table table-bordered mt-3">
+            <table class="table table-bordered mt-3"{{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder'),'type':'spell'}) }}>
                 <tr>
                     <th>Nom</th>
-                    <th>Class</th>
+                    <th>Campagnes</th>
+                    <th>Set</th>
                 </tr>
                 {% for spell in spells %}
                     <tr>
@@ -23,7 +24,18 @@
                                 {{ spell.name }}
                             </a>
                         </td>
-                        <td></td>
+                        <td id="result-{{ spell.id }}">
+                            {% if spell.campaings %}
+                                {{ spell.campaings|join('') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm"
+                                    data-action="click->hello#greet"
+                                    data-id="{{ spell.id }}">
+                                Greet
+                            </button>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
