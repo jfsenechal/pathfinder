@@ -8,8 +8,13 @@
 
         <main class="form-signin">
             <form method="post" action="{{ path('app_login') }}">
-                <img class="mb-4" src="{{ asset('bundles/afmlibrepathfinder/images/logo_Pathfinder.png') }}" alt="Adl" width="200">
+                <img class="mb-4" src="{{ asset('bundles/afmlibrepathfinder/images/logo_Pathfinder.png') }}" alt="Adl"
+                     width="200">
                 <h1 class="h3 mb-3 fw-normal">Authentifiez vous</h1>
+
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
 
                 <div class="form-floating">
                     <input type="email" value="{{ last_username }}" name="email" class="form-control"
