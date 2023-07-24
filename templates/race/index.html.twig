@@ -28,11 +28,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm"
-                                    data-action="click->hello#greet"
-                                    data-id="{{ race.id }}">
-                                Greet
-                            </button>
+                            {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': race } %}
                         </td>
                     </tr>
                 {% endfor %}

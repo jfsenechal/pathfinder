@@ -23,7 +23,12 @@ class CharacterClassImportHandler
                 $characterClass = new CharacterClass();
                 $characterClass->setName($classData['Nom']);
                 $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
-                $characterClass->setDieOfLive($die);
+                $characterClass->dieOfLive = $die;
+                $characterClass->description = $classData['Description'];
+                $characterClass->source = $classData['Source'];
+                $characterClass->reference = $classData['Référence'];
+                $characterClass->ranksPerLevel = $classData['RangsParNiveau'];
+                $characterClass->alignment = $classData['Alignement'];
                 $this->characterClassRepository->persist($characterClass);
                 $io->writeln($characterClass->getName());
             }

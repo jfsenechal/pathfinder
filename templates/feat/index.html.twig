@@ -30,11 +30,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm"
-                                    data-action="click->hello#greet"
-                                    data-id="{{ feat.id }}">
-                                Greet
-                            </button>
+                            {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': feat } %}
                         </td>
                     </tr>
                 {% endfor %}

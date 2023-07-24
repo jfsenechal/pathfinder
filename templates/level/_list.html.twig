@@ -1,0 +1,28 @@
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Niveau
+        </th>
+        <th>
+            Réflexes
+        </th>
+        <th>
+            Vigueur
+        </th>
+        <th>
+            Volonté
+        </th>
+        <th>
+            Spécial
+        </th>
+    </tr>
+    {% for level in levels %}
+    <tr>
+        <td>{{ level.bab }}</td>
+        <td>{{ level.reflex }}</td>
+        <td>{{ level.will }}</td>
+        <td>{{ level.fortitude }}</td>
+        <td>{{ level.maxSpellLvl }}</td>
+    </tr>
+    {% endfor %}
+</table>

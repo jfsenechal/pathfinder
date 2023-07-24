@@ -3,8 +3,9 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
 
 #[ORM\Table(name: 'spell_class')]
 #[ORM\Entity(repositoryClass: SpellClassRepository::class)]
@@ -12,11 +13,20 @@ class SpellClass
 {
     use IdTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'spell_classes')]
-    private ?Spell $spell, #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'spell_classes')]
-    private ?CharacterClass $characterClass, #[\Doctrine\ORM\Mapping\Column(type: 'smallint')]
-    private int $level)
-    {
+    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'spell_classes')]
+    public ?Spell $spell;
+    
+    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'spell_classes')]
+    public ?CharacterClass $characterClass;
+    
+    #[Column(type: 'smallint')]
+    public int $level = 0;
+
+    public function __construct(
+        ?Spell $spell,
+        $characterClass,
+        int $level
+    ) {
     }
 
     public function getId(): ?int

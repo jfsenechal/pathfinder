@@ -3,33 +3,29 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LevelRepository::class)]
 class Level
 {
     use IdTrait;
 
-    /**
-     * @var int[]
-     */
-    private $bab; // base attack bonus
-    /**
-     * @var int
-     */
-    private $fortitude;
-    /**
-     * @var int
-     */
-    private $reflex;
-    /**
-     * @var int
-     */
-    private $will;
-    /**
-     * @var int
-     */
-    private $maxSpellLvl;
+    #[ORM\Column(nullable: false)]
+    public int $bab = 0; // base attack bonus
 
+    #[ORM\Column(nullable: false)]
+    public int $fortitude = 0;
+
+    #[ORM\Column(nullable: false)]
+    public int $reflex = 0;
+
+    #[ORM\Column(nullable: false)]
+    public int $will = 0;
+
+    #[ORM\Column(nullable: false)]
+    public int $maxSpellLvl = 0;
+
+    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'levels')]
+    public ?CharacterClass $characterClass;
 }

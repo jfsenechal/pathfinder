@@ -8,20 +8,38 @@
             <h3>{{ characterClass }}</h3>
         </div>
         <div class="card-body">
-            {{ dump(characterClass) }}
+
+            <p class="text-muted">{{ characterClass.description }}</p>
+
             <table class="table table-bordered">
                 <tr>
                     <th>Dé de vie</th>
                     <td>{{ characterClass.dieOfLive }}</td>
                 </tr>
-
+                <tr>
+                    <th>Alignement</th>
+                    <td>{{ characterClass.alignment }}</td>
+                </tr>
+                <tr>
+                    <th>Rank par niveau</th>
+                    <td>{{ characterClass.ranksPerLevel }}</td>
+                </tr>
             </table>
-            <h4>Sorts</h4>
+
+            <h4 class="text-success">Sorts</h4>
             {% include '@AfmLibrePathfinder/class/_spells.html.twig' %}
 
-            <h4>Class features</h4>
+            <h4 class="text-success">Class features</h4>
             {% include '@AfmLibrePathfinder/class/_class_features.html.twig' %}
+
+            <h4 class="text-success">Levels</h4>
+            {% include '@AfmLibrePathfinder/level/_list.html.twig' with {'levels':characterClass.levels} %}
             <br/>
+
+        </div>
+        <div class="card-footer">
+            Source: {{ characterClass.source }} /
+            Référence: <a href="{{ characterClass.reference }}">{{ characterClass.reference }}</a>
         </div>
     </div>
 {% endblock %}

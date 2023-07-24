@@ -11,10 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SpellController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/class')]
 class CharacterClassController extends AbstractController
 {

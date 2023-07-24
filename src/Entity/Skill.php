@@ -28,6 +28,9 @@ class Skill
     #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
     public ?string $source = null;
 
+    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'skills')]
+    public ?CharacterClass $characterClass;
+
     public function __toString(): string
     {
         return $this->name;

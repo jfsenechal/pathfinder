@@ -29,38 +29,38 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     use SlugTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    protected ?string $description = null;
+    public ?string $description = null;
 
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $strength = 10;
+    public int $strength = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $dexterity = 10;
+    public int $dexterity = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $constitution = 10;
+    public int $constitution = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $intelligence = 10;
+    public int $intelligence = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $wisdom = 10;
+    public int $wisdom = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
-    protected int $charisma = 10;
+    public int $charisma = 10;
 
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
-    private ?Race $race = null;
+    public ?Race $race = null;
 
     #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'characters')]
-    private ?CharacterClass $characterClass = null;
+    public ?CharacterClass $characterClass = null;
 
     /**
      * @var CharacterSpell[]
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character_player', orphanRemoval: true)]
-    private iterable $character_spells_available;
+    public iterable $character_spells_available;
 
     /**
      * @var SpellProfile[]
      */
     #[ORM\OneToMany(targetEntity: SpellProfile::class, mappedBy: 'character_player', orphanRemoval: true)]
-    private iterable $character_spell_profiles;
+    public iterable $character_spell_profiles;
 
     public function __construct()
     {

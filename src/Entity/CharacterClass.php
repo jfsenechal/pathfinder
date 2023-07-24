@@ -18,14 +18,34 @@ class CharacterClass implements \JsonSerializable, \Stringable
      * @var Spell[] $spells
      */
     public array|ArrayCollection $spells;
-    use IdTrait,CampaingTrait;
+    use IdTrait, CampaingTrait;
     use NameTrait;
 
-    #[Column(type: 'string', length: 100, nullable: true)]
-    private ?string $short_name = null;
+    #[Column( length: 100, nullable: true)]
+    public ?string $shortName = null;
 
     #[Column(type: 'smallint')]
-    private ?int $die_of_live = null;
+    public ?int $dieOfLive = null;
+
+    #[ORM\Column( length: 150, nullable: true)]
+    public ?string $reference = null;
+    #[ORM\Column(name: 'sourcet',  length: 150, nullable: true)]
+    public ?string $source = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $description = null;
+
+    #[ORM\Column(nullable: false)]
+    public int $ranksPerLevel;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?string $alignment;
+
+    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]
+    public iterable $skills;
+    
+    #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'characterClass')]
+    public iterable $levels;
 
     /**
      * @var SpellClass[]
@@ -44,37 +64,15 @@ class CharacterClass implements \JsonSerializable, \Stringable
         $this->spells = new ArrayCollection();
         $this->spell_classes = new ArrayCollection();
         $this->characters = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->levels = new ArrayCollection();
     }
 
     public function __toString(): string
     {
         return (string)$this->name;
     }
-
-    public function getShortName(): ?string
-    {
-        return $this->short_name;
-    }
-
-    public function setShortName(?string $short_name): self
-    {
-        $this->short_name = $short_name;
-
-        return $this;
-    }
-
-    public function getDieOfLive(): ?int
-    {
-        return $this->die_of_live;
-    }
-
-    public function setDieOfLive(int $die_of_live): self
-    {
-        $this->die_of_live = $die_of_live;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection|SpellClass[]
      */
