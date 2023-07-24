@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
+use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +21,17 @@ class LevelRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $managerRegistry)
     {
         parent::__construct($managerRegistry, Level::class);
+    }
+
+    public function findByClassAndLevel(CharacterClass $characterClass, int $level): ?Spell
+    {
+        return $this->createQueryBuilder('level')
+            ->andWhere('level.characterClass = :charclass')
+            ->setParameter('charclass', $characterClass)
+            ->andWhere('level.lvl = :lvl')
+            ->setParameter('lvl', $level)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 

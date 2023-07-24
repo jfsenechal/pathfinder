@@ -26,6 +26,8 @@ use Symfony\Component\Yaml\Yaml;
 )]
 class ImportCommand extends Command
 {
+    private SymfonyStyle $io;
+
     public function __construct(
         private readonly CharacterClassImportHandler $characterClassImportHandler,
         private readonly SpellImportHandler $spellImportHandler,
@@ -46,17 +48,18 @@ class ImportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $this->io = new SymfonyStyle($input, $output);
         $argument = $input->getArgument('name');
 
         match ($argument) {
-            'classes' => $this->characterClassImportHandler->call($io, $this->readFile($argument)),
-            'classfeatures' => $this->characterClassFeatureImportHandler->call($io, $this->readFile($argument)),
-            'spells' => $this->spellImportHandler->call($io, $this->readFile($argument)),
-            'races' => $this->raceImportHandler->call($io, $this->readFile($argument)),
-            'skills' => $this->skillImportHandler->call($io, $this->readFile($argument)),
-            'feats' => $this->featImportHandler->call($io, $this->readFile($argument)),
-            default => $io->error('Valeurs possibles: classes classfeatures spells races'),
+            'classes' => $this->characterClassImportHandler->call($this->io, $this->readFile($argument)),
+            'classfeatures' => $this->characterClassFeatureImportHandler->call($this->io, $this->readFile($argument)),
+            'spells' => $this->spellImportHandler->call($this->io, $this->readFile($argument)),
+            'races' => $this->raceImportHandler->call($this->io, $this->readFile($argument)),
+            'skills' => $this->skillImportHandler->call($this->io, $this->readFile($argument)),
+            'feats' => $this->featImportHandler->call($this->io, $this->readFile($argument)),
+            'all' => $this->importAll(),
+            default => $this->io->error('Valeurs possibles: classes classfeatures spells races'),
         };
 
         return Command::SUCCESS;
@@ -65,5 +68,15 @@ class ImportCommand extends Command
     private function readFile(string $fileName): array
     {
         return Yaml::parseFile($this->parameterBag->get('kernel.project_dir').'/data/'.$fileName.'.yml');
+    }
+
+    private function importAll()
+    {
+        $this->characterClassImportHandler->call($this->io, $this->readFile('classes'));
+        $this->characterClassFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
+        $this->spellImportHandler->call($this->io, $this->readFile('spells'));
+        $this->raceImportHandler->call($this->io, $this->readFile('races'));
+        $this->skillImportHandler->call($this->io, $this->readFile('skills'));
+        $this->featImportHandler->call($this->io, $this->readFile('feats'));
     }
 }
