@@ -9,7 +9,7 @@
             <h3>Les {{ races|length }} races</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered" {{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder'),'type':'race'}) }}>
+            <table class="table table-bordered" {{ stimulus_controller('campaign',{'url':url('pathfinder_api_set_pathfinder'),'type':'race'}) }}>
                 <tr>
                     <th>Nom</th>
                     <th>Campagne</th>

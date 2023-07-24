@@ -11,7 +11,7 @@
         <div class="card-body">
             {% include '@AfmLibrePathfinder/class/_form_search.html.twig' %}
 
-            <table class="table table-bordered mt-3" {{ stimulus_controller('hello',{'url':url('pathfinder_api_set_pathfinder'),'type':'class'}) }}>
+            <table class="table table-bordered mt-3" {{ stimulus_controller('campaign',{'url':url('pathfinder_api_set_pathfinder'),'type':'class'}) }}>
                 <tr>
                     <th>Nom</th>
                     <th>Campagnes</th>
