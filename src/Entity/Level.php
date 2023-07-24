@@ -12,6 +12,9 @@ class Level
     use IdTrait;
 
     #[ORM\Column(nullable: false)]
+    public int $lvl = 0;
+
+    #[ORM\Column(nullable: false)]
     public int $bab = 0; // base attack bonus
 
     #[ORM\Column(nullable: false)]
@@ -28,4 +31,9 @@ class Level
 
     #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'levels')]
     public ?CharacterClass $characterClass;
+
+    public function __construct(CharacterClass $characterClass)
+    {
+        $this->characterClass = $characterClass;
+    }
 }
