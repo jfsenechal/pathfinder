@@ -97,7 +97,7 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
-            $this->dispatcher->dispatch(new CharacterUpdated($character->uuid));
+            $this->dispatcher->dispatch(new CharacterUpdated($character->id));
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }

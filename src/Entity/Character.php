@@ -4,6 +4,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 
+use AfmLibre\Pathfinder\Ability\AbilityEnum;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
@@ -71,6 +72,11 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     public function __toString(): string
     {
         return (string)$this->name;
+    }
+
+    public static function getValueModifier(int $value): int
+    {
+        return AbilityEnum::getValueModifier($value);
     }
 
     public function shouldGenerateUniqueSlugs(): bool
