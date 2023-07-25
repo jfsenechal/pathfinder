@@ -13,10 +13,6 @@ use Doctrine\ORM\Mapping\Column;
 #[ORM\Entity(repositoryClass: ClassRepository::class)]
 class ClassT implements \JsonSerializable, \Stringable
 {
-    /**
-     * @var Spell[] $spells
-     */
-    public array|ArrayCollection $spells;
     use IdTrait, CampaingTrait;
     use NameTrait;
 
@@ -57,6 +53,11 @@ class ClassT implements \JsonSerializable, \Stringable
      */
     #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'classT')]
     public iterable $characters;
+
+    /**
+     * @var Spell[] $spells
+     */
+    public array|ArrayCollection $spells;
 
     public function __construct()
     {

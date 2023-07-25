@@ -8,7 +8,7 @@ use AfmLibre\Pathfinder\Entity\Level;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CharacterClassImportHandler
+class ClassImportHandler
 {
     public function __construct(private readonly ClassRepository $classTRepository)
     {

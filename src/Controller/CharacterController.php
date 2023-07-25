@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
@@ -53,6 +54,10 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $character->uuid = $character->generateUuid();
+            $character->current_level = $this->levelRepository->findByClassAndLevel(
+                $character->classT,
+                $character->select_level
+            );
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
             $this->dispatcher->dispatch(new CharacterCreated($character->getId()));
@@ -81,6 +86,24 @@ class CharacterController extends AbstractController
         }
 
         $modifiers = $this->raceTraitRepository->findByRaceAndName($character->race, "Caractéristiques");
+        $currentLevel = $character->current_level;
+
+        $abilities = [];
+        $abilities[] = new AbilityDto(
+            'Réflexe',
+            $currentLevel->reflex,
+            Character::getValueModifier($character->dexterity)
+        );
+        $abilities[] = new AbilityDto(
+            'Vigueur',
+            $currentLevel->fortitude,
+            Character::getValueModifier($character->constitution)
+        );
+        $abilities[] = new AbilityDto(
+            'Volonté',
+            $currentLevel->will,
+            Character::getValueModifier($character->wisdom)
+        );
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -88,7 +111,9 @@ class CharacterController extends AbstractController
                 'character' => $character,
                 'spells' => $spells,
                 'levels' => $levels,
+                'currentLevel' => $currentLevel,
                 'modifiers' => $modifiers,
+                'abilities' => $abilities,
             ]
         );
     }
@@ -118,7 +143,7 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $character->uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$character->uuid, $request->request->get('_token'))) {
             $id = $character->uuid;
             $this->$this->dispatcher->dispatch(new CharacterUpdated($id));
             $this->characterRepository->remove($character);

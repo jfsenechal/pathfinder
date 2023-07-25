@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +46,11 @@ class LevelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getQl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('level')
+            ->orderBy('level.lvl', 'ASC');
+    }
+
 }

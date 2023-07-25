@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Command;
 
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassFeatureImportHandler;
-use AfmLibre\Pathfinder\Import\Handler\CharacterClassImportHandler;
+use AfmLibre\Pathfinder\Import\Handler\ClassImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\FeatImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\RaceImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SkillImportHandler;
@@ -29,7 +29,7 @@ class ImportCommand extends Command
     private SymfonyStyle $io;
 
     public function __construct(
-        private readonly CharacterClassImportHandler $classTImportHandler,
+        private readonly ClassImportHandler $classTImportHandler,
         private readonly SpellImportHandler $spellImportHandler,
         private readonly RaceImportHandler $raceImportHandler,
         private readonly SkillImportHandler $skillImportHandler,

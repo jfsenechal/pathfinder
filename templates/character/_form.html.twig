@@ -3,24 +3,32 @@
 <div class="row">
     <div class="col-6">
         {{ form_row(form.name) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.select_level) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        {{ form_row(form.race) }}
+    </div>
+    <div class="col-6">
+        {{ form_row(form.classT) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
         {{ form_row(form.strength) }}
         {{ form_row(form.dexterity) }}
         {{ form_row(form.constitution) }}
+    </div>
+    <div class="col-6">
         {{ form_row(form.intelligence) }}
         {{ form_row(form.wisdom) }}
         {{ form_row(form.charisma) }}
     </div>
-    <div class="col-6">
-        {{ form_row(form.race) }}
-        {{ form_row(form.classT) }}
-        {{ form_row(form.description) }}
-    </div>
-    <div class="col-6">
-    </div>
-    <div class="col-6">
-
-    </div>
 </div>
+{{ form_row(form.description) }}
 <button class="btn btn-primary mr-1 mb-2" type="submit"><i class="far fa-save" aria-hidden="true"></i>
     Sauvegarder
 </button>

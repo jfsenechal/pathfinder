@@ -10,7 +10,6 @@ use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -45,9 +44,11 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     public int $charisma = 10;
 
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
+    #[ORM\JoinColumn(nullable: false)]
     public ?Race $race = null;
 
     #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'characters')]
+    #[ORM\JoinColumn(nullable: false)]
     public ?ClassT $classT = null;
 
     /**
@@ -61,6 +62,12 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
      */
     #[ORM\OneToMany(targetEntity: SpellProfile::class, mappedBy: 'character', orphanRemoval: true)]
     public iterable $character_spell_profiles;
+
+    #[ORM\ManyToOne(targetEntity: Level::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    public ?Level $current_level = null;
+
+    public int $select_level;
 
     public function __construct()
     {
@@ -117,8 +124,8 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     {
         // set the owning side to null (unless already changed)
         if ($this->character_spells_selection->removeElement(
-            $characterSpellsSelection
-        ) && $characterSpellsSelection->character === $this) {
+                $characterSpellsSelection
+            ) && $characterSpellsSelection->character === $this) {
             $characterSpellsSelection->character = null;
         }
 
@@ -139,8 +146,8 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     {
         // set the owning side to null (unless already changed)
         if ($this->character_spell_profiles->removeElement(
-            $characterSpellProfile
-        ) && $characterSpellProfile->character === $this) {
+                $characterSpellProfile
+            ) && $characterSpellProfile->character === $this) {
             $characterSpellProfile->character = null;
         }
 

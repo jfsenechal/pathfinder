@@ -1,0 +1,16 @@
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Total</th>
+        <th>Base</th>
+        <th>Caractéristique</th>
+    </tr>
+    {% for ability in abilities %}
+        <tr>
+            <th>{{ ability.name }}</th>
+            <td>{{ ability.total }}</td>
+            <td>{{ ability.base }}</td>
+            <td>{{ ability.caracteristic }}</td>
+        </tr>
+    {% endfor %}
+</table>

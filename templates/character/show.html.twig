@@ -5,7 +5,7 @@
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3>{{ character }}</h3>
+            <h3>{{ character }} / Niveau {{ character.current_level.lvl }}</h3>
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/character/_actions.html.twig' %}
@@ -29,10 +29,17 @@
                 </tr>
                 </tbody>
             </table>
-
-            <h4 class="text-success">Charactéristiques</h4>
+            <div class="row">
+                <div class="col-6">
+                    <h4 class="text-success">Charactéristiques</h4>
+                    {{ include('@AfmLibrePathfinder/characteristic/_list.html.twig') }}
+                </div>
+                <div class="col-6">
+                    <h4 class="text-success">Résistence</h4>
+                    {{ include('@AfmLibrePathfinder/ability/_list.html.twig') }}
+                </div>
+            </div>
             {{ include('@AfmLibrePathfinder/character/_modifiers.html.twig') }}
-            {{ include('@AfmLibrePathfinder/characteristic/_list.html.twig') }}
 
             {{ include('@AfmLibrePathfinder/character/_spells_favorite.html.twig') }}
 

@@ -9,6 +9,7 @@ use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +39,7 @@ class CharacterType extends AbstractType
                 'strength',
                 IntegerType::class,
                 [
+                    'label' => 'Force',
                     'required' => true,
                 ]
             )
@@ -45,6 +47,7 @@ class CharacterType extends AbstractType
                 'dexterity',
                 IntegerType::class,
                 [
+                    'label' => 'Dextérité',
                     'required' => true,
                 ]
             )
@@ -52,6 +55,7 @@ class CharacterType extends AbstractType
                 'constitution',
                 IntegerType::class,
                 [
+                    'label' => 'Constitution',
                     'required' => true,
                 ]
             )
@@ -59,6 +63,7 @@ class CharacterType extends AbstractType
                 'intelligence',
                 IntegerType::class,
                 [
+                    'label' => 'Intelligence',
                     'required' => true,
                 ]
             )
@@ -66,6 +71,7 @@ class CharacterType extends AbstractType
                 'wisdom',
                 IntegerType::class,
                 [
+                    'label' => 'Sagesse',
                     'required' => true,
                 ]
             )
@@ -73,6 +79,7 @@ class CharacterType extends AbstractType
                 'charisma',
                 IntegerType::class,
                 [
+                    'label' => 'Charisme',
                     'required' => true,
                 ]
             )
@@ -82,18 +89,28 @@ class CharacterType extends AbstractType
                 [
                     'placeholder' => '',
                     'class' => Race::class,
-                    'query_builder' => fn (RaceRepository $raceRepository) => $raceRepository->getQl(),
+                    'query_builder' => fn(RaceRepository $raceRepository) => $raceRepository->getQl(),
                 ]
             )
             ->add(
                 'classT',
                 EntityType::class,
                 [
+                    'label' => 'Classe',
                     'placeholder' => '',
                     'class' => ClassT::class,
-                    'query_builder' => fn (
+                    'query_builder' => fn(
                         ClassRepository $classTRepository
                     ) => $classTRepository->getQl(),
+                ]
+            )
+            ->add(
+                'select_level',
+                ChoiceType::class,
+                [
+                    'label' => 'Niveau',
+                    'placeholder' => '',
+                    'choices' => array_combine(range(1, 20), range(1, 20)),
                 ]
             );
     }
