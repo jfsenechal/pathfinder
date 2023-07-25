@@ -29,7 +29,7 @@ class ClassFeatureRepository extends ServiceEntityRepository
     public function findByCharacterClass(CharacterClass $characterClass)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.character_class = :val')
+            ->andWhere('c.characterClass = :val')
             ->setParameter('val', $characterClass)
             ->orderBy('c.name', 'ASC')
             ->getQuery()

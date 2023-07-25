@@ -36,4 +36,9 @@ class Level
     {
         $this->characterClass = $characterClass;
     }
+
+    public function __toString(): string
+    {
+        return 'Level '.$this->lvl;
+    }
 }

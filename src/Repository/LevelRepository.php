@@ -23,7 +23,7 @@ class LevelRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, Level::class);
     }
 
-    public function findByClassAndLevel(CharacterClass $characterClass, int $level): ?Spell
+    public function findByClassAndLevel(CharacterClass $characterClass, int $level): ?Level
     {
         return $this->createQueryBuilder('level')
             ->andWhere('level.characterClass = :charclass')

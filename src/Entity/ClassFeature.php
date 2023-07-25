@@ -13,7 +13,7 @@ class ClassFeature implements \Stringable
     use IdTrait;
     use NameTrait;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type:'text', nullable: true)]
     public ?string $description = null;
 
     #[ORM\Column(type: 'string', length: 250, nullable: true)]
