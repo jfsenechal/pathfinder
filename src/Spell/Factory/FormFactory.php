@@ -38,16 +38,4 @@ class FormFactory
         );
     }
 
-    public function createFormProfileSpells(SpellProfile $spellProfile, array $characterSpells): FormInterface
-    {
-        dump($spellProfile->getSpellProfileCharacterSpells());
-
-        return $this->formFactory->create(
-            SpellProfileSelectionType::class,
-            $spellProfile,
-            [
-                'spells' => $characterSpells,
-            ]
-        );
-    }
 }

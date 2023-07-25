@@ -31,13 +31,12 @@ class SpellAvailableController extends AbstractController
 
         $spellsForAvailable = $this->spellRepository->findByClass($class);
         if (count($spellsForAvailable) == 0) {
-            dd($class->getId());
             $this->addFlash('warning', 'Aucun sort pour la classe '.$character->getCharacterClass());
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
         }
 
-        $data = [];
+        $data = ['name' => null, 'class' => $class, 'level' => null];
         $form = $this->createForm(SearchSpellType::class, $data);
 
         $form->handleRequest($request);
