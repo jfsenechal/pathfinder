@@ -11,7 +11,7 @@ class SpellProfileSelectionDto
 {
     private readonly iterable $quantities;
 
-    public function __construct(private iterable $spells, private iterable $spellsAvailable)
+    public function __construct(private iterable $spells, private iterable $spellsSelection)
     {
         $this->quantities = new ArrayCollection();
         $this->initQuantities();
@@ -19,7 +19,7 @@ class SpellProfileSelectionDto
 
     private function initQuantities()
     {
-        foreach ($this->spellsAvailable as $characterSpell) {
+        foreach ($this->spellsSelection as $characterSpell) {
             $quantityDto = new QuantityDto($characterSpell->getId());
             $this->getQuantities()->add($quantityDto);
         }
@@ -48,18 +48,18 @@ class SpellProfileSelectionDto
     /**
      * @return iterable|CharacterSpell[]
      */
-    public function getSpellsAvailable()
+    public function getSpellsSelection()
     {
-        return $this->spellsAvailable;
+        return $this->spellsSelection;
     }
 
     /**
-     * @param array|iterable $spellsAvailable
+     * @param array|iterable $spellsSelection
      * @return SpellProfileSelectionDto
      */
-    public function setSpellsAvailable($spellsAvailable)
+    public function setSpellsSelection($spellsSelection)
     {
-        $this->spellsAvailable = $spellsAvailable;
+        $this->spellsSelection = $spellsSelection;
 
         return $this;
     }

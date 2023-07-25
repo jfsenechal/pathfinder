@@ -35,40 +35,4 @@ class SpellClass
     {
         return $this->id;
     }
-
-    public function getLevel(): ?int
-    {
-        return $this->level;
-    }
-
-    public function setLevel(int $level): self
-    {
-        $this->level = $level;
-
-        return $this;
-    }
-
-    public function getSpell(): ?Spell
-    {
-        return $this->spell;
-    }
-
-    public function setSpell(?Spell $spell): self
-    {
-        $this->spell = $spell;
-
-        return $this;
-    }
-
-    public function getCharacterClass(): ?CharacterClass
-    {
-        return $this->characterClass;
-    }
-
-    public function setCharacterClass(?CharacterClass $characterClass): self
-    {
-        $this->characterClass = $characterClass;
-
-        return $this;
-    }
 }

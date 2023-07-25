@@ -28,7 +28,7 @@ class FeatImportHandler
     private function createFeat(array $data): Feat
     {
         $feat = new Feat();
-        $feat->setName($data['Nom']);
+        $feat->name =$data['Nom'];
         $feat->reference = $data['Référence'];
         $feat->source = $data['Source'];
         $feat->summary = $data['Résumé'] ?? null;

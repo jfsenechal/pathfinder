@@ -36,15 +36,15 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
      * @var SpellProfileCharacterSpell[]
      */
     #[ORM\OneToMany(targetEntity: SpellProfileCharacterSpell::class, mappedBy: 'spell_profile')]
-    private iterable $spell_profile_character_spells;
+    public iterable $spell_profile_character_spells;
 
     #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-    public ?Character $character_player;
+    public ?Character $character;
 
     public function __construct(Character $character)
     {
-        $this->character_player = $character;
+        $this->character = $character;
         $this->spell_profile_character_spells = new ArrayCollection();
         $this->character_spells = new ArrayCollection();
     }
@@ -57,14 +57,6 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     public function shouldGenerateUniqueSlugs(): bool
     {
         return true;
-    }
-
-    /**
-     * @return Collection|SpellProfileCharacterSpell[]
-     */
-    public function getSpellProfileCharacterSpells(): Collection
-    {
-        return $this->spell_profile_character_spells;
     }
 
     public function addSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self

@@ -8,10 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class RaceController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/race')]
 class RaceController extends AbstractController
 {
@@ -39,7 +35,7 @@ class RaceController extends AbstractController
             '@AfmLibrePathfinder/race/show.html.twig',
             [
                 'race' => $race,
-                'traits' => $race->getTraits(),
+                'traits' => $race->traits,
             ]
         );
     }

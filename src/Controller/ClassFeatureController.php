@@ -5,23 +5,15 @@ namespace AfmLibre\Pathfinder\Controller;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
-use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SpellController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/class/feature')]
 class ClassFeatureController extends AbstractController
 {
     public function __construct(
         private readonly CharacterClassRepository $characterClassRepository,
-        private readonly SpellClassRepository $spellClassRepository,
-        private readonly ClassFeatureRepository $classFeatureRepository
     ) {
     }
 

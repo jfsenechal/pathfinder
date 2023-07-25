@@ -22,7 +22,7 @@ class CharacterClassImportHandler
                 continue;
             }
             $characterClass = new CharacterClass();
-            $characterClass->setName($classData['Nom']);
+            $characterClass->name =$classData['Nom'];
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
             $characterClass->dieOfLive = $die;
             $characterClass->description = $classData['Description'];
@@ -32,7 +32,7 @@ class CharacterClassImportHandler
             $characterClass->alignment = $classData['Alignement'];
             $this->characterClassRepository->persist($characterClass);
             $this->addLevels($characterClass, $classData);
-            $io->writeln($characterClass->getName());
+            $io->writeln($characterClass->name);
         }
         $this->characterClassRepository->flush();
     }

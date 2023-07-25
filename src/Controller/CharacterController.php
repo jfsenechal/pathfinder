@@ -50,12 +50,12 @@ class CharacterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $character->setUuid($character->generateUuid());
+            $character->uuid = $character->generateUuid();
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
             $this->dispatcher->dispatch(new CharacterCreated($character->getId()));
 
-            return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
+            return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }
 
         return $this->render(
@@ -71,10 +71,9 @@ class CharacterController extends AbstractController
     public function show(Character $character): Response
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $characterClass = $character->getCharacterClass();
+        $characterClass = $character->characterClass;
         $countSpells = count($characterSpells);
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
-        $classFeatures = $this->classFeatureRepository->findByCharacterClass($character->getCharacterClass());
         foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
             $level->features = $this->classFeatureRepository->findByClassAndLevel($characterClass, $level);
         }
@@ -85,7 +84,6 @@ class CharacterController extends AbstractController
                 'character' => $character,
                 'characterSpells' => $characterSpells,
                 'countSpells' => $countSpells,
-                'classFeatures' => $classFeatures,
                 'levels' => $levels,
             ]
         );
@@ -99,9 +97,9 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->characterRepository->flush();
-            $this->dispatcher->dispatch(new CharacterUpdated($character->getUuid()));
+            $this->dispatcher->dispatch(new CharacterUpdated($character->uuid));
 
-            return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
+            return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }
 
         return $this->render(
@@ -116,8 +114,8 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$character->getUuid(), $request->request->get('_token'))) {
-            $id = $character->getUuid();
+        if ($this->isCsrfTokenValid('delete'.$character->uuid, $request->request->get('_token'))) {
+            $id = $character->uuid;
             $this->$this->dispatcher->dispatch(new CharacterUpdated($id));
             $this->characterRepository->remove($character);
             $this->characterRepository->flush();

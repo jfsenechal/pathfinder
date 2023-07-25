@@ -47,10 +47,11 @@ class SpellProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $spellProfile->uuid = $spellProfile->generateUuid();
             $this->spellProfileRepository->persist($spellProfile);
             $this->spellProfileRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_spell_profile_index', ['uuid' => $character->getUuid()]);
+            return $this->redirectToRoute('pathfinder_spell_profile_index', ['uuid' => $character->uuid]);
         }
 
         return $this->render(
@@ -64,8 +65,8 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/show', name: 'pathfinder_spell_profile_show', methods: ['GET'])]
     public function show(SpellProfile $spellProfile)
     {
-        $character = $spellProfile->ch();
-        $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+        $character = $spellProfile->character;
+        $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
 
         $characterSpells = array_map(
             fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
@@ -92,7 +93,7 @@ class SpellProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->spellProfileRepository->flush();
 
-            return $this->redirectToRoute('pathfinder_spell_profile_show', ['uuid' => $spellProfile->getUuid()]);
+            return $this->redirectToRoute('pathfinder_spell_profile_show', ['uuid' => $spellProfile->uuid]);
         }
 
         return $this->render(
@@ -107,7 +108,7 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/spells', name: 'pathfinder_spell_profile_spells_edit', methods: ['GET', 'POST'])]
     public function editSpells(Request $request, SpellProfile $spellProfile)
     {
-        $character = $spellProfile->getCharacterPlayer();
+        $character = $spellProfile->character;
 
         $spellProfileSelectionDto = $this->spellProfileHandler->init($spellProfile);
 
@@ -115,7 +116,7 @@ class SpellProfileController extends AbstractController
             SpellProfileSelectionFormType::class,
             $spellProfileSelectionDto,
             [
-                'spells' => $spellProfileSelectionDto->getSpellsAvailable(),
+                'spells' => $spellProfileSelectionDto->getSpellsSelection(),
             ]
         );
 
@@ -155,7 +156,7 @@ class SpellProfileController extends AbstractController
                 )) instanceof \AfmLibre\Pathfinder\Entity\Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
-                return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
+                return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
 
             }
         }
@@ -166,7 +167,7 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/print', name: 'pathfinder_spell_profile_print', methods: ['GET', 'POST'])]
     public function print(Request $request, SpellProfile $spellProfile)
     {
-        $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+        $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
 
         $characterSpells = array_map(
             fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),

@@ -51,13 +51,13 @@ class CharacterClass implements \JsonSerializable, \Stringable
      * @var SpellClass[]
      */
     #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'characterClass')]
-    private iterable $spell_classes;
+    public iterable $spell_classes;
 
     /**
      * @var Character[]
      */
     #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
-    private iterable $characters;
+    public iterable $characters;
 
     public function __construct()
     {
@@ -71,14 +71,6 @@ class CharacterClass implements \JsonSerializable, \Stringable
     public function __toString(): string
     {
         return (string)$this->name;
-    }
-    
-    /**
-     * @return Collection|SpellClass[]
-     */
-    public function getSpellClasses(): Collection
-    {
-        return $this->spell_classes;
     }
 
     public function addSpellClass(SpellClass $spellClass): self
@@ -101,19 +93,11 @@ class CharacterClass implements \JsonSerializable, \Stringable
         return $this;
     }
 
-    /**
-     * @return Collection|Character[]
-     */
-    public function getCharacters(): Collection
-    {
-        return $this->characters;
-    }
-
     public function addCharacter(Character $character): self
     {
         if (!$this->characters->contains($character)) {
             $this->characters[] = $character;
-            $character->setCharacterClass($this);
+            $character->characterClass = $this;
         }
 
         return $this;
@@ -122,8 +106,8 @@ class CharacterClass implements \JsonSerializable, \Stringable
     public function removeCharacter(Character $character): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->characters->removeElement($character) && $character->getCharacterClass() === $this) {
-            $character->setCharacterClass(null);
+        if ($this->characters->removeElement($character) && $character->characterClass === $this) {
+            $character->characterClass =null;
         }
 
         return $this;

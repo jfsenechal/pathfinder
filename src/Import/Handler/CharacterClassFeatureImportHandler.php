@@ -31,7 +31,7 @@ class CharacterClassFeatureImportHandler
                 continue;
             }
             $classeFeature = new ClassFeature($characterClass, $level);
-            $classeFeature->setName($data['Nom']);
+            $classeFeature->name =$data['Nom'];
             $classeFeature->description = $data['Description'];
             $classeFeature->reference = $data['Référence'];
             $classeFeature->source = $data['Source'];
@@ -39,7 +39,7 @@ class CharacterClassFeatureImportHandler
                 $classeFeature->auto = (bool)$data['Auto'];
             }
             $this->classFeatureRepository->persist($classeFeature);
-            $io->writeln($classeFeature->getName());
+            $io->writeln($classeFeature->name);
         }
         $this->classFeatureRepository->flush();
     }

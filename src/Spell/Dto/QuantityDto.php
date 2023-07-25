@@ -17,7 +17,7 @@ class QuantityDto
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): Quantity
+    public function setQuantity(int $quantity): QuantityDto
     {
         $this->quantity = $quantity;
 
@@ -29,7 +29,7 @@ class QuantityDto
         return $this->spellId;
     }
 
-    public function setSpellId(int $spellId): Quantity
+    public function setSpellId(int $spellId): QuantityDto
     {
         $this->spellId = $spellId;
 

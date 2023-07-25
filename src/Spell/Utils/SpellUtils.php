@@ -16,10 +16,10 @@ class SpellUtils
     {
         $data = [];
         foreach ($characterSpells as $characterSpell) {
-            $data[$characterSpell->getLevel()][] = $characterSpell;
+            $data[$characterSpell->level][] = $characterSpell;
         }
 
-         ksort($data);
+        ksort($data);
 
         return $data;
     }

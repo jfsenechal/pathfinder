@@ -13,10 +13,10 @@ trait CharacterSpellsTrait
     /**
      * @var CharacterSpell[]|\Doctrine\Common\Collections\ArrayCollection
      */
-    private iterable $character_spells;
+    public iterable $character_spells;
 
     public function init(SpellProfile $spellProfile) {
-               $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
+               $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
 
         $characterSpells = array_map(
             fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),

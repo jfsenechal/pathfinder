@@ -4,7 +4,7 @@
 namespace AfmLibre\Pathfinder\Spell\MessageHandler;
 
 
-use AfmLibre\Pathfinder\Spell\Message\SpellAvailableUpdated;
+use AfmLibre\Pathfinder\Spell\Message\SpellSelectionUpdated;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -19,7 +19,7 @@ class SpellSelectionUpdatedHandler
         $this->flashBag = $requestStack->getSession()?->getFlashBag();
     }
 
-    public function __invoke(SpellAvailableUpdated $characterUpdated): void
+    public function __invoke(SpellSelectionUpdated $selectionUpdated): void
     {
         $this->flashBag->add('success', "La séléction a bien été modifiée");
     }

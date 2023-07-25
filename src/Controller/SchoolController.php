@@ -8,10 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SchoolController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/school')]
 class SchoolController extends AbstractController
 {

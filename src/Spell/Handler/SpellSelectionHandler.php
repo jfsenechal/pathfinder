@@ -6,14 +6,16 @@ namespace AfmLibre\Pathfinder\Spell\Handler;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
+use AfmLibre\Pathfinder\Entity\SpellClass;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
 
-class SpellAvailableHandler
+class SpellSelectionHandler
 {
-    public function __construct(private readonly CharacterSpellRepository $characterSpellRepository, private readonly SpellClassRepository $spellClassRepository, private readonly SpellRepository $spellRepository)
-    {
+    public function __construct(
+        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly SpellClassRepository $spellClassRepository,
+    ) {
     }
 
     /**
@@ -22,7 +24,10 @@ class SpellAvailableHandler
     public function handle(Character $character, array $spells)
     {
         foreach ($spells as $spell) {
-            if (!$this->characterSpellRepository->findByCharacterAndSpell($character, $spell) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
+            if (!$this->characterSpellRepository->findByCharacterAndSpell(
+                    $character,
+                    $spell
+                ) instanceof CharacterSpell) {
                 $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
             }
         }
@@ -31,8 +36,10 @@ class SpellAvailableHandler
 
     public function delete(int $characterSpellId): ?Character
     {
-        if (($characterSpell = $this->characterSpellRepository->find($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
-            $character = $characterSpell->getCharacterPlayer();
+        if (($characterSpell = $this->characterSpellRepository->find(
+                $characterSpellId
+            )) instanceof CharacterSpell) {
+            $character = $characterSpell->character;
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();
 
@@ -44,10 +51,13 @@ class SpellAvailableHandler
 
     private function createCharacterSpell(Character $character, Spell $spell): CharacterSpell
     {
-        $class = $character->getCharacterClass();
+        $class = $character->characterClass;
         $level = 0;
-        if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell($class, $spell)) instanceof \AfmLibre\Pathfinder\Entity\SpellClass) {
-            $level = $spellLevel->getLevel();
+        if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell(
+                $class,
+                $spell
+            )) instanceof SpellClass) {
+            $level = $spellLevel->level;
         }
 
         return new CharacterSpell($character, $spell, $level);

@@ -7,31 +7,30 @@ use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RaceRepository::class)]
 class Race implements \Stringable
 {
-    use IdTrait,CampaingTrait;
+    use IdTrait, CampaingTrait;
     use NameTrait;
 
     #[ORM\Column(type: 'string', length: 150, nullable: true)]
-    protected ?string $reference = null;
+    public ?string $reference = null;
     #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
-    protected ?string $source = null;
+    public ?string $source = null;
 
     /**
      * @var RaceTrait[]
      */
     #[ORM\OneToMany(targetEntity: RaceTrait::class, mappedBy: 'race')]
-    protected ArrayCollection|iterable $traits;
+    public ArrayCollection|iterable $traits;
 
     /**
      * @var Character[]
      */
     #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'race')]
-    private iterable $characters;
+    public iterable $characters;
 
     public function __construct()
     {
@@ -42,38 +41,6 @@ class Race implements \Stringable
     public function __toString(): string
     {
         return (string)$this->name;
-    }
-
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    public function setReference(?string $reference): self
-    {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    public function getSource(): ?string
-    {
-        return $this->source;
-    }
-
-    public function setSource(?string $source): self
-    {
-        $this->source = $source;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|RaceTrait[]
-     */
-    public function getTraits(): Collection
-    {
-        return $this->traits;
     }
 
     public function addTrait(RaceTrait $trait): self
@@ -96,26 +63,11 @@ class Race implements \Stringable
         return $this;
     }
 
-    /**
-     * @return Collection|Character[]
-     */
-    public function getCharacters(): Collection
-    {
-        return $this->characters;
-    }
-
-    public function setCharacters(?Character $characters): self
-    {
-        $this->characters = $characters;
-
-        return $this;
-    }
-
     public function addCharacter(Character $character): self
     {
         if (!$this->characters->contains($character)) {
             $this->characters[] = $character;
-            $character->setRace($this);
+            $character->race = $this;
         }
 
         return $this;
@@ -124,8 +76,8 @@ class Race implements \Stringable
     public function removeCharacter(Character $character): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->characters->removeElement($character) && $character->getRace() === $this) {
-            $character->setRace(null);
+        if ($this->characters->removeElement($character) && $character->race === $this) {
+            $character->race = null;
         }
 
         return $this;

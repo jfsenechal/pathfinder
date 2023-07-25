@@ -16,21 +16,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
     use NameTrait;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private ?string $email = null;
+    public ?string $email = null;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = [];
+    public array $roles = [];
 
     #[ORM\Column(type: 'string', length: 180, nullable: true)]
-    private ?string $first_name = null;
+    public ?string $first_name = null;
 
     #[ORM\Column(type: 'string')]
-    private ?string $password = null;
+    public ?string $password = null;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
      */
-    protected ?string $plainPassword = null;
+    public ?string $plainPassword = null;
 
     public function getPlainPassword(): ?string
     {
@@ -121,35 +121,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
         return $this;
     }
 
-    /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
 
-    public function getFirstName(): ?string
-    {
-        return $this->first_name;
-    }
-
-    public function setFirstName(?string $first_name): self
-    {
-        $this->first_name = $first_name;
-
-        return $this;
     }
 }

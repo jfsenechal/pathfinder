@@ -62,34 +62,34 @@ class SpellImportHandler
     private function createSpell(array $data): Spell
     {
         $spell = new Spell();
-        $spell->setName($data[SpellYml::YAML_NAME]);
-        $spell->setDescription($data[SpellYml::YAML_DESC]);
+        $spell->name = $data[SpellYml::YAML_NAME];
+        $spell->description = $data[SpellYml::YAML_DESC];
         if (isset($data[SpellYml::YAML_DESCHTML])) {
-            $spell->setDescriptionHtml($data[SpellYml::YAML_DESCHTML]);
+            $spell->descriptionHtml = $data[SpellYml::YAML_DESCHTML];
         }
         if (isset($data[SpellYml::YAML_SCHOOL])) {
-            $spell->setSchool($this->findSchool($data[SpellYml::YAML_SCHOOL]));
+            $spell->school = $this->findSchool($data[SpellYml::YAML_SCHOOL]);
         }
-        $spell->setReference($data[SpellYml::YAML_REFERENCE]);
-        $spell->setSource($data[SpellYml::YAML_SOURCE]);
+        $spell->reference = $data[SpellYml::YAML_REFERENCE];
+        $spell->source = $data[SpellYml::YAML_SOURCE];
 
         if (isset($data[SpellYml::YAML_COMPONENTS])) {
-            $spell->setComponents($data[SpellYml::YAML_COMPONENTS]);
+            $spell->components = $data[SpellYml::YAML_COMPONENTS];
         }
         if (isset($data[SpellYml::YAML_RANGE])) {
-            $spell->setRange($data[SpellYml::YAML_RANGE]);
+            $spell->range = $data[SpellYml::YAML_RANGE];
         }
         if (isset($data[SpellYml::YAML_TARGET])) {
-            $spell->setTarget($data[SpellYml::YAML_TARGET]);
+            $spell->target = $data[SpellYml::YAML_TARGET];
         }
         if (isset($data[SpellYml::YAML_DURATION])) {
-            $spell->setDuration($data[SpellYml::YAML_DURATION]);
+            $spell->duration = $data[SpellYml::YAML_DURATION];
         }
         if (isset($data[SpellYml::YAML_SAVING])) {
-            $spell->setSavingThrow($data[SpellYml::YAML_SAVING]);
+            $spell->savingThrow = $data[SpellYml::YAML_SAVING];
         }
         if (isset($data[SpellYml::YAML_SPELL_RES])) {
-            $spell->setSpellResistance($data[SpellYml::YAML_SPELL_RES]);
+            $spell->spellResistance = $data[SpellYml::YAML_SPELL_RES];
         }
 
         return $spell;
@@ -97,12 +97,14 @@ class SpellImportHandler
 
     private function findSchool(?string $schoolName): School
     {
-        if (!($school = $this->schoolRepository->findOneBy(['name' => $schoolName]
-            )) instanceof \AfmLibre\Pathfinder\Entity\School) {
-            $school = new School($schoolName);
-            $this->schoolRepository->persist($school);
-            $this->schoolRepository->flush();
+        $school = $this->schoolRepository->findOneBy(['name' => $schoolName]);
+        if ($school instanceof School) {
+            return $school;
         }
+
+        $school = new School($schoolName);
+        $this->schoolRepository->persist($school);
+        $this->schoolRepository->flush();
 
         return $school;
     }

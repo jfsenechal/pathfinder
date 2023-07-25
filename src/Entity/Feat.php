@@ -35,9 +35,9 @@ class Feat
     public array $requires;
 
     // only used during YAML import
-    //private List<String> requiresRef;
+    //public List<String> requiresRef;
     // only used in specific view
-    //private int depth;
+    //public int depth;
 
 
     public function __toString(): string

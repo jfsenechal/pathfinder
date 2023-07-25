@@ -27,8 +27,8 @@ class RaceImportHandler
             $this->raceRepository->persist($race);
             foreach ($raceData['Traits'] as $row) {
                 $raceTrait = new RaceTrait($race);
-                $raceTrait->setName($row['Nom']);
-                $raceTrait->setDescription($row['Description']);
+                $raceTrait->name = $row['Nom'];
+                $raceTrait->description = $row['Description'];
                 $this->raceTraitRepository->persist($raceTrait);
             }
         }
@@ -39,9 +39,9 @@ class RaceImportHandler
     private function createRace(array $data): Race
     {
         $race = new Race();
-        $race->setName($data['Nom']);
-        $race->setReference($data['Référence']);
-        $race->setSource($data['Source']);
+        $race->name = $data['Nom'];
+        $race->reference = $data['Référence'];
+        $race->source = $data['Source'];
 
         return $race;
     }

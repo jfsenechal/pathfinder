@@ -15,53 +15,27 @@ class CharacterSpell implements \Stringable
 {
     use IdTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spells_available')]
+    #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spells_selection')]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-    private ?Character $character_player, #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'character_spells')]
+    public ?Character $character;
+
+    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'character_spells')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Spell $spell, #[ORM\Column(type: 'smallint')]
-    private int $level)
+    public ?Spell $spell;
+
+    #[ORM\Column(type: 'smallint')]
+    public int $level;
+
+    public function __construct(Character $character, Spell $spell, int $level)
     {
+        $this->character = $character;
+        $this->spell = $spell;
+        $this->level = $level;
     }
 
     public function __toString(): string
     {
-        return (string) $this->spell->getName();
+        return (string)$this->spell->name;
     }
 
-    public function getCharacterPlayer(): ?Character
-    {
-        return $this->character_player;
-    }
-
-    public function setCharacterPlayer(?Character $character_player): self
-    {
-        $this->character_player = $character_player;
-
-        return $this;
-    }
-
-    public function getSpell(): ?Spell
-    {
-        return $this->spell;
-    }
-
-    public function setSpell(?Spell $spell): self
-    {
-        $this->spell = $spell;
-
-        return $this;
-    }
-
-    public function getLevel(): ?int
-    {
-        return $this->level;
-    }
-
-    public function setLevel(int $level): self
-    {
-        $this->level = $level;
-
-        return $this;
-    }
 }

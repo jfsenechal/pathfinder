@@ -23,17 +23,17 @@ class SpellProfileHandler
 
     public function init(SpellProfile $spellProfile): SpellProfileSelectionDto
     {
-        $character = $spellProfile->getCharacterPlayer();
-        $characterSpellsAvailable = $this->characterSpellRepository->findByCharacter($character);
+        $character = $spellProfile->character;
+        $characterSpellsSelection = $this->characterSpellRepository->findByCharacter($character);
 
         $spellProfileCharacterSpells = $this->spellProfileCharacterSpellRepository->findBySpellProfile($spellProfile);
 
         $characterSpells = array_map(
-            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
+            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->character_spell,
             $spellProfileCharacterSpells
         );
 
-        return new SpellProfileSelectionDto($characterSpells, $characterSpellsAvailable);
+        return new SpellProfileSelectionDto($characterSpells, $characterSpellsSelection);
     }
 
     public function handle(SpellProfile $spellProfile)
@@ -48,19 +48,18 @@ class SpellProfileHandler
             if (!($spellProfileCharacterSpell = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
                 $spellProfile,
                 $characterSpell
-            )) instanceof \AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell) {
+            )) instanceof SpellProfileCharacterSpell) {
                 $spellProfileCharacterSpell = new SpellProfileCharacterSpell($spellProfile, $characterSpell);
                 $this->spellProfileCharacterRepository->persist($spellProfileCharacterSpell);
             }
-            $spellProfileCharacterSpell->setQuantity();
         }
         $this->spellProfileCharacterRepository->flush();
     }
 
     public function delete(int $characterSpellId): ?Character
     {
-        if (($characterSpell = $this->characterSpellRepository->find($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\CharacterSpell) {
-            $character = $characterSpell->getCharacterPlayer();
+        if (($characterSpell = $this->characterSpellRepository->find($characterSpellId)) instanceof CharacterSpell) {
+            $character = $characterSpell->character;
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();
 
