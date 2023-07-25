@@ -6,19 +6,18 @@ namespace AfmLibre\Pathfinder\Spell\Handler;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
-use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
+use AfmLibre\Pathfinder\Entity\SpellProfileCharacter;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellProfileCharacterRepository;
-use AfmLibre\Pathfinder\Repository\SpellProfileCharacterSpellRepository;
-use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
 use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Form\ChoiceList\ChoiceList;
 
 class SpellProfileHandler
 {
-    public function __construct(private readonly CharacterSpellRepository $characterSpellRepository, private readonly SpellProfileCharacterSpellRepository $spellProfileCharacterSpellRepository, private readonly SpellProfileCharacterRepository $spellProfileCharacterRepository)
-    {
+    public function __construct(
+        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly SpellProfileCharacterRepository $spellProfileCharacterRepository,
+    ) {
     }
 
     public function init(SpellProfile $spellProfile): SpellProfileSelectionDto
@@ -26,11 +25,11 @@ class SpellProfileHandler
         $character = $spellProfile->character;
         $characterSpellsSelection = $this->characterSpellRepository->findByCharacter($character);
 
-        $spellProfileCharacterSpells = $this->spellProfileCharacterSpellRepository->findBySpellProfile($spellProfile);
+        $spellProfileCharacters = $this->spellProfileCharacterRepository->findBySpellProfile($spellProfile);
 
         $characterSpells = array_map(
-            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->character_spell,
-            $spellProfileCharacterSpells
+            fn($spellProfileCharacter) => $spellProfileCharacter->character_spell,
+            $spellProfileCharacters
         );
 
         return new SpellProfileSelectionDto($characterSpells, $characterSpellsSelection);
@@ -39,19 +38,20 @@ class SpellProfileHandler
     public function handle(SpellProfile $spellProfile)
     {
         $originalData = $this->spellProfileCharacterRepository->getOriginalEntityData($spellProfile);
-        $spellProfileCharacterSpellsOrigine = $originalData['spell_profile_character_spells'];
+        $spellProfileCharactersOrigine = $originalData['spell_profile_character_spells'];
 
         // $changes = array_diff_assoc($toArrayEntity, $originalData);
-        $this->toRemove($spellProfileCharacterSpellsOrigine, $spellProfile->getCharacterSpells());
+        $this->toRemove($spellProfileCharactersOrigine, $spellProfile->getCharacterSpells());
 
         foreach ($spellProfile->getCharacterSpells() as $characterSpell) {
-            if (!($spellProfileCharacterSpell = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
-                $spellProfile,
-                $characterSpell
-            )) instanceof SpellProfileCharacterSpell) {
-                $spellProfileCharacterSpell = new SpellProfileCharacterSpell($spellProfile, $characterSpell);
-                $this->spellProfileCharacterRepository->persist($spellProfileCharacterSpell);
+            if (!($spellProfileCharacter = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
+                    $spellProfile,
+                    $characterSpell
+                )) instanceof SpellProfileCharacter) {
+                $spellProfileCharacter = new SpellProfileCharacter($spellProfile, $characterSpell);
+                $this->spellProfileCharacterRepository->persist($spellProfileCharacter);
             }
+            $spellProfileCharacter->quantity = 5;
         }
         $this->spellProfileCharacterRepository->flush();
     }
@@ -70,21 +70,21 @@ class SpellProfileHandler
     }
 
     /**
-     * @param array|SpellProfileCharacterSpell[] $spellProfileCharacterSpellsOrigine
+     * @param array|SpellProfileCharacter[] $spellProfileCharactersOrigine
      * @param array|CharacterSpell[]|ArrayCollection $characterSpellsSelection
      */
-    private function toRemove(iterable $spellProfileCharacterSpellsOrigine, iterable $characterSpellsSelection): void
+    private function toRemove(iterable $spellProfileCharactersOrigine, iterable $characterSpellsSelection): void
     {
         $idsSelection = array_map(
             fn($characterSpellSelection) => $characterSpellSelection->getSpell()->getId(),
             $characterSpellsSelection->toArray()
         );
 
-        foreach ($spellProfileCharacterSpellsOrigine as $item) {
+        foreach ($spellProfileCharactersOrigine as $item) {
             $characterSpell = $item->getCharacterSpell();
             if (!in_array($characterSpell->getSpell()->getId(), $idsSelection)) {
                 $toRemove[] = $item->getId();
-                $this->spellProfileCharacterSpellRepository->remove($item);
+                $this->spellProfileCharacterRepository->remove($item);
             }
         }
     }

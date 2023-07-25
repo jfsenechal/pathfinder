@@ -16,11 +16,11 @@ trait CharacterSpellsTrait
     public iterable $character_spells;
 
     public function init(SpellProfile $spellProfile) {
-               $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
+               $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
-            $spellProfileCharacterSpells->toArray()
+            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            $spellProfileCharacters->toArray()
         );
 
         $this->character_spells= new ArrayCollection($characterSpells);

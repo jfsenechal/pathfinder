@@ -10,7 +10,6 @@ use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Repository\SpellProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -33,10 +32,10 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     public ?string $description = null;
 
     /**
-     * @var SpellProfileCharacterSpell[]
+     * @var SpellProfileCharacter[]
      */
-    #[ORM\OneToMany(targetEntity: SpellProfileCharacterSpell::class, mappedBy: 'spell_profile')]
-    public iterable $spell_profile_character_spells;
+    #[ORM\OneToMany(targetEntity: SpellProfileCharacter::class, mappedBy: 'spell_profile')]
+    public iterable $spells_profile_character;
 
     #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
@@ -45,7 +44,7 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     public function __construct(Character $character)
     {
         $this->character = $character;
-        $this->spell_profile_character_spells = new ArrayCollection();
+        $this->spells_profile_character = new ArrayCollection();
         $this->character_spells = new ArrayCollection();
     }
 
@@ -59,23 +58,23 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
         return true;
     }
 
-    public function addSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
+    public function addSpellProfileCharacter(SpellProfileCharacter $spellProfileCharacter): self
     {
-        if (!$this->spell_profile_character_spells->contains($spellProfileCharacterSpell)) {
-            $this->spell_profile_character_spells[] = $spellProfileCharacterSpell;
-            $spellProfileCharacterSpell->setSpellProfile($this);
+        if (!$this->spells_profile_character->contains($spellProfileCharacter)) {
+            $this->spells_profile_character[] = $spellProfileCharacter;
+            $spellProfileCharacter->spell_profile = $this;
         }
 
         return $this;
     }
 
-    public function removeSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
+    public function removeSpellProfileCharacter(SpellProfileCharacter $spellProfileCharacter): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->spell_profile_character_spells->removeElement(
-                $spellProfileCharacterSpell
-            ) && $spellProfileCharacterSpell->getSpellProfile() === $this) {
-            $spellProfileCharacterSpell->setSpellProfile(null);
+        if ($this->spells_profile_character->removeElement(
+                $spellProfileCharacter
+            ) && $spellProfileCharacter->spell_profile === $this) {
+            $spellProfileCharacter->spell_profile = null;
         }
 
         return $this;

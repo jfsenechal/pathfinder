@@ -26,12 +26,12 @@ class SpellProfileRepository extends ServiceEntityRepository
     /**
      * @return array|SpellProfile[]
      */
-    public function searchByCharacter(Character $character): array
+    public function findByCharacter(Character $character): array
     {
         return $this->createQueryBuilder('spellProfile')
             ->leftJoin('spellProfile.character', 'character', 'WITH')
-            ->leftJoin('spellProfile.spell_profile_character_spells', 'spell_profile_character_spells', 'WITH')
-            ->addSelect('character', 'spell_profile_character_spells')
+            ->leftJoin('spellProfile.spells_profile_character', 'spells_profile_character', 'WITH')
+            ->addSelect('character', 'spells_profile_character')
             ->andWhere('spellProfile.character = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spellProfile.name')

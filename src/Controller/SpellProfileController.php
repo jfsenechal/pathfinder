@@ -25,7 +25,7 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/index', name: 'pathfinder_spell_profile_index', methods: ['GET', 'POST'])]
     public function index(Character $character)
     {
-        $profiles = $this->spellProfileRepository->searchByCharacter($character);
+        $profiles = $this->spellProfileRepository->findByCharacter($character);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_profile/index.html.twig',
@@ -66,11 +66,11 @@ class SpellProfileController extends AbstractController
     public function show(SpellProfile $spellProfile)
     {
         $character = $spellProfile->character;
-        $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
+        $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
-            $spellProfileCharacterSpells->toArray()
+            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            $spellProfileCharacters->toArray()
         );
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
 
@@ -124,8 +124,8 @@ class SpellProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            dump($data);
-            //   $this->spellProfileHandler->handle($spellProfile);
+            dd($data);
+            $this->spellProfileHandler->handle($spellProfile);
         }
 
         return $this->render(
@@ -167,11 +167,11 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/print', name: 'pathfinder_spell_profile_print', methods: ['GET', 'POST'])]
     public function print(Request $request, SpellProfile $spellProfile)
     {
-        $spellProfileCharacterSpells = $spellProfile->spell_profile_character_spells;
+        $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacterSpell) => $spellProfileCharacterSpell->getCharacterSpell(),
-            $spellProfileCharacterSpells->toArray()
+            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            $spellProfileCharacters->toArray()
         );
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
 

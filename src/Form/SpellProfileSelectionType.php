@@ -16,7 +16,7 @@ class SpellProfileSelectionType extends AbstractType
     {
         $builder
             ->add(
-                'spell_profile_character_spells',
+                'spells_profile_character',
                 CollectionType::class,
                 [
                     'entry_type' => SpellProfileSpellType::class,

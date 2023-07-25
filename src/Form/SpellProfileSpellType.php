@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Form;
 
 
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
-use AfmLibre\Pathfinder\Entity\SpellProfileCharacterSpell;
+use AfmLibre\Pathfinder\Entity\SpellProfileCharacter;
 use AfmLibre\Pathfinder\Spell\CharacterSpellToBoolTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -49,7 +49,7 @@ class SpellProfileSpellType extends AbstractType
     {
         $optionsResolver->setDefaults(
             [
-                'data_class' => SpellProfileCharacterSpell::class,
+                'data_class' => SpellProfileCharacter::class,
             ]
         );
     }
