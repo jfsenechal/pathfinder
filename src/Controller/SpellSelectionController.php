@@ -31,7 +31,7 @@ class SpellSelectionController extends AbstractController
 
         $spellsForSelection = $this->spellRepository->findByClass($class);
         if (count($spellsForSelection) == 0) {
-            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->classT);
+            $this->addFlash('warning', 'Aucun sort pour la classe ' . $character->classT);
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }
@@ -77,7 +77,6 @@ class SpellSelectionController extends AbstractController
     public function validDeleteSelection(Request $request)
     {
         if ($this->isCsrfTokenValid('deselection', $request->request->get('_token'))) {
-
             $characterSpellId = (int)$request->request->get('characterspellid');
 
             if (null === $characterSpellId) {
@@ -87,16 +86,14 @@ class SpellSelectionController extends AbstractController
             }
 
             if (($character = $this->spellSelectionHandler->delete(
-                    $characterSpellId
-                )) instanceof Character) {
+                $characterSpellId
+            )) instanceof Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
-
             }
         }
 
         return $this->redirectToRoute('pathfinder_home');
     }
-
 }

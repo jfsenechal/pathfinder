@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Character\Message;
 
-
 class CharacterCreated
 {
     public function __construct(private readonly int $characterId)

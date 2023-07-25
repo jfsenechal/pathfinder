@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Message;
 
-
 class SpellSelectionUpdated
 {
     public function __construct(private readonly ?int $spellId = null)

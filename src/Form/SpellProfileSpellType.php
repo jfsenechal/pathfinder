@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Form;
 
-
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\SpellProfileCharacter;
 use AfmLibre\Pathfinder\Spell\CharacterSpellToBoolTransformer;

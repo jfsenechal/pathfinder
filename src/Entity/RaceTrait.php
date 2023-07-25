@@ -27,5 +27,4 @@ class RaceTrait implements \Stringable
     {
         return (string)$this->name;
     }
-
 }

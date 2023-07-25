@@ -8,10 +8,9 @@
 
 namespace AfmLibre\Pathfinder\Mapping;
 
-
 class SpellYml
 {
-    final public const  YAML_NAME = "Nom";
+    final public const YAML_NAME = "Nom";
     final public const YAML_DESC = "Description";
     final public const YAML_REFERENCE = "Référence";
     final public const YAML_SOURCE = "Source";

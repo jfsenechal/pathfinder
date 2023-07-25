@@ -25,7 +25,7 @@ class SchoolRepository extends ServiceEntityRepository
     /**
      * @return array|School[]
      */
-    public function findAllOrdered():array
+    public function findAllOrdered(): array
     {
         return $this->createQueryBuilder('s')
             ->orderBy('s.name', 'ASC')

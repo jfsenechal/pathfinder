@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Level;
 
-
 class LevelUtils
 {
     /**
@@ -11,6 +10,6 @@ class LevelUtils
      */
     public static function getSpellLevels(): array
     {
-        return range(0,9);
+        return range(0, 9);
     }
 }

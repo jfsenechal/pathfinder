@@ -3,16 +3,15 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-
 use AfmLibre\Pathfinder\Ability\AbilityEnum;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
+use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
@@ -118,8 +117,8 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     {
         // set the owning side to null (unless already changed)
         if ($this->character_spells_selection->removeElement(
-                $characterSpellsSelection
-            ) && $characterSpellsSelection->character === $this) {
+            $characterSpellsSelection
+        ) && $characterSpellsSelection->character === $this) {
             $characterSpellsSelection->character = null;
         }
 
@@ -140,12 +139,11 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     {
         // set the owning side to null (unless already changed)
         if ($this->character_spell_profiles->removeElement(
-                $characterSpellProfile
-            ) && $characterSpellProfile->character === $this) {
+            $characterSpellProfile
+        ) && $characterSpellProfile->character === $this) {
             $characterSpellProfile->character = null;
         }
 
         return $this;
     }
-
 }

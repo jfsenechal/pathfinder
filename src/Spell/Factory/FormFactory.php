@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Factory;
 
-
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Form\SelectionType;
@@ -23,7 +22,7 @@ class FormFactory
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $characterSpells2 = array_map(
-            fn($characterSpell) => $characterSpell->spell,
+            fn ($characterSpell) => $characterSpell->spell,
             $characterSpells
         );
 
@@ -37,5 +36,4 @@ class FormFactory
             ]
         );
     }
-
 }

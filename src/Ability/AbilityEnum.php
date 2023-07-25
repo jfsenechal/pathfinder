@@ -3,15 +3,14 @@
 
 namespace AfmLibre\Pathfinder\Ability;
 
-
 enum AbilityEnum
 {
-    final   public const   ABILITY_STRENGH = 0;
-    final   public const   ABILITY_DEXTERITY = 1;
-    final   public const   ABILITY_CONSTITUTION = 2;
-    final   public const   ABILITY_INTELLIGENCE = 3;
-    final   public const   ABILITY_WISDOM = 4;
-    final   public const   ABILITY_CHARISMA = 5;
+    final public const ABILITY_STRENGH = 0;
+    final public const ABILITY_DEXTERITY = 1;
+    final public const ABILITY_CONSTITUTION = 2;
+    final public const ABILITY_INTELLIGENCE = 3;
+    final public const ABILITY_WISDOM = 4;
+    final public const ABILITY_CHARISMA = 5;
 
     public static function getValueModifier(int $val): int
     {
@@ -28,5 +27,4 @@ enum AbilityEnum
             18, 19 => +4,
         };
     }
-
 }

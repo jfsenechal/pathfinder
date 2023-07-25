@@ -34,5 +34,4 @@ enum ModifierSizeEnum
             self::SIZE_COLO_LONG => -8,
         };
     }
-
 }

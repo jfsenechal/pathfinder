@@ -44,6 +44,6 @@ class Level
 
     public function __toString(): string
     {
-        return 'Level '.$this->lvl;
+        return 'Level ' . $this->lvl;
     }
 }

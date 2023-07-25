@@ -37,5 +37,4 @@ class CharacterSpell implements \Stringable
     {
         return (string)$this->spell->name;
     }
-
 }

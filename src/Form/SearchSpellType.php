@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Form;
 
-
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Level\LevelUtils;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
@@ -43,7 +42,7 @@ class SearchSpellType extends AbstractType
                     'required' => false,
                     'placeholder' => 'Sélectionnez une classe',
                     'query_builder' =>
-                        fn(ClassRepository $classTRepository) => $classTRepository->getQl(),
+                        fn (ClassRepository $classTRepository) => $classTRepository->getQl(),
                 ]
             )
             ->add(

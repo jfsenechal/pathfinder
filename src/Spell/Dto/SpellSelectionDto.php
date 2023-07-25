@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Dto;
 
-
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Spell;
 
@@ -38,5 +37,4 @@ class SpellSelectionDto
     {
         $this->spells = $spells;
     }
-
 }

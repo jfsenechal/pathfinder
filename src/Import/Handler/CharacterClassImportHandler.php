@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
@@ -22,7 +21,7 @@ class CharacterClassImportHandler
                 continue;
             }
             $classT = new ClassT();
-            $classT->name =$classData['Nom'];
+            $classT->name = $classData['Nom'];
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
             $classT->dieOfLive = $die;
             $classT->description = $classData['Description'];

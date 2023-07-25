@@ -4,7 +4,6 @@
 use Symfony\Config\DoctrineConfig;
 
 return static function (DoctrineConfig $doctrine) {
-
     $emMda = $doctrine->orm()->entityManager('default');
     $emMda->mapping('AfmLibrePathfinder')
         ->isBundle(false)

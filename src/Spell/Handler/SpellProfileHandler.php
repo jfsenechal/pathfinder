@@ -28,7 +28,7 @@ class SpellProfileHandler
         $spellProfileCharacters = $this->spellProfileCharacterRepository->findBySpellProfile($spellProfile);
 
         $characterSpells = array_map(
-            fn($spellProfileCharacter) => $spellProfileCharacter->character_spell,
+            fn ($spellProfileCharacter) => $spellProfileCharacter->character_spell,
             $spellProfileCharacters
         );
 
@@ -45,9 +45,9 @@ class SpellProfileHandler
 
         foreach ($spellProfile->getCharacterSpells() as $characterSpell) {
             if (!($spellProfileCharacter = $this->spellProfileCharacterRepository->findByProfileAndCharacterSpell(
-                    $spellProfile,
-                    $characterSpell
-                )) instanceof SpellProfileCharacter) {
+                $spellProfile,
+                $characterSpell
+            )) instanceof SpellProfileCharacter) {
                 $spellProfileCharacter = new SpellProfileCharacter($spellProfile, $characterSpell);
                 $this->spellProfileCharacterRepository->persist($spellProfileCharacter);
             }
@@ -76,7 +76,7 @@ class SpellProfileHandler
     private function toRemove(iterable $spellProfileCharactersOrigine, iterable $characterSpellsSelection): void
     {
         $idsSelection = array_map(
-            fn($characterSpellSelection) => $characterSpellSelection->getSpell()->getId(),
+            fn ($characterSpellSelection) => $characterSpellSelection->getSpell()->getId(),
             $characterSpellsSelection->toArray()
         );
 

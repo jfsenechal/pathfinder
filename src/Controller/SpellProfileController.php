@@ -46,7 +46,6 @@ class SpellProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $spellProfile->uuid = $spellProfile->generateUuid();
             $this->spellProfileRepository->persist($spellProfile);
             $this->spellProfileRepository->flush();
@@ -69,7 +68,7 @@ class SpellProfileController extends AbstractController
         $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            fn ($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
             $spellProfileCharacters->toArray()
         );
 
@@ -143,7 +142,6 @@ class SpellProfileController extends AbstractController
     public function delete(Request $request, SpellProfile $spellProfile)
     {
         if ($this->isCsrfTokenValid('deprofile', $request->request->get('_token'))) {
-
             $characterSpellId = (int)$request->request->get('characterspellid');
 
             if (null === $characterSpellId) {
@@ -153,12 +151,11 @@ class SpellProfileController extends AbstractController
             }
 
             if (($character = $this->spellProfileHandler->delete(
-                    $characterSpellId
-                )) instanceof \AfmLibre\Pathfinder\Entity\Character) {
+                $characterSpellId
+            )) instanceof \AfmLibre\Pathfinder\Entity\Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
-
             }
         }
 
@@ -171,7 +168,7 @@ class SpellProfileController extends AbstractController
         $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            fn ($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
             $spellProfileCharacters->toArray()
         );
         $spells = SpellUtils::groupByLevel($characterSpells);
@@ -183,7 +180,5 @@ class SpellProfileController extends AbstractController
                 'spells' => $spells,
             ]
         );
-
     }
-
 }

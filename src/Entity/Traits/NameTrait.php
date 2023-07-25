@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Entity\Traits;
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 trait NameTrait

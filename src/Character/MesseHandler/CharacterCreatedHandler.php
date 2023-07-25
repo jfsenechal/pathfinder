@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Character\MesseHandler;
 
+use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 
 #[AsMessageHandler()]
 class CharacterCreatedHandler
@@ -22,4 +22,3 @@ class CharacterCreatedHandler
         $this->flashBag->add('success', "Le personnage a bien été créé");
     }
 }
-

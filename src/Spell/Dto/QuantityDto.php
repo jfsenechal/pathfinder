@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Dto;
 
-
 class QuantityDto
 {
     private int $quantity = 1;
@@ -35,5 +34,4 @@ class QuantityDto
 
         return $this;
     }
-
 }

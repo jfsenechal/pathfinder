@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-
 use AfmLibre\Pathfinder\Entity\School;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\SpellClass;
@@ -36,7 +35,7 @@ class SpellImportHandler
                     $this->spellClassRepository->persist($spellClass);
                 }
             } catch (\Exception $e) {
-                $io->error($e->getMessage().$spellData['Nom']);
+                $io->error($e->getMessage() . $spellData['Nom']);
             }
         }
         $this->spellRepository->flush();
@@ -108,5 +107,4 @@ class SpellImportHandler
 
         return $school;
     }
-
 }

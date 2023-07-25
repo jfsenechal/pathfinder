@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Entity\Traits;
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 trait IdTrait
@@ -17,5 +16,4 @@ trait IdTrait
     {
         return $this->id;
     }
-
 }

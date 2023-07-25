@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Entity\Traits;
 
-
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,15 +14,16 @@ trait CharacterSpellsTrait
      */
     public iterable $character_spells;
 
-    public function init(SpellProfile $spellProfile) {
-               $spellProfileCharacters = $spellProfile->spells_profile_character;
+    public function init(SpellProfile $spellProfile)
+    {
+        $spellProfileCharacters = $spellProfile->spells_profile_character;
 
         $characterSpells = array_map(
-            fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
+            fn ($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
             $spellProfileCharacters->toArray()
         );
 
-        $this->character_spells= new ArrayCollection($characterSpells);
+        $this->character_spells = new ArrayCollection($characterSpells);
     }
 
     /**

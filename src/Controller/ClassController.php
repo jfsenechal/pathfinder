@@ -4,8 +4,8 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Form\SearchNameType;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;

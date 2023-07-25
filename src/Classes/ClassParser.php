@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Classes;
 
-
 class ClassParser
 {
     /**
@@ -81,5 +80,4 @@ class ClassParser
 
         return $names[$classShort] ?? null;
     }
-
 }

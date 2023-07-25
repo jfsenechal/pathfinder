@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Character\MesseHandler;
 
-
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -23,5 +22,4 @@ class CharacterDeletedHandler
     {
         $this->flashBag->add('success', "Le personnage a bien été supprimé");
     }
-
 }

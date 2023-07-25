@@ -45,6 +45,4 @@ class LevelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-
 }

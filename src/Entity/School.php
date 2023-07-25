@@ -5,8 +5,8 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
-use Doctrine\ORM\Mapping as ORM;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SchoolRepository::class)]
 class School implements \Stringable

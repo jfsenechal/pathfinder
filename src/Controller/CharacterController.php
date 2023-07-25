@@ -6,10 +6,10 @@ use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
@@ -118,7 +118,7 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$character->uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $character->uuid, $request->request->get('_token'))) {
             $id = $character->uuid;
             $this->$this->dispatcher->dispatch(new CharacterUpdated($id));
             $this->characterRepository->remove($character);

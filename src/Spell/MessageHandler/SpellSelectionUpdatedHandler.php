@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\MessageHandler;
 
-
 use AfmLibre\Pathfinder\Spell\Message\SpellSelectionUpdated;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -23,5 +22,4 @@ class SpellSelectionUpdatedHandler
     {
         $this->flashBag->add('success', "La séléction a bien été modifiée");
     }
-
 }

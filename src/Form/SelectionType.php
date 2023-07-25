@@ -19,7 +19,7 @@ class SelectionType extends AbstractType
             [
                 'class' => Spell::class,
                 'choices' => $options['spells'],
-                'choice_label' => fn(Spell $spell) => $spell->name,
+                'choice_label' => fn (Spell $spell) => $spell->name,
                 'multiple' => true,
                 'expanded' => true,
             ]

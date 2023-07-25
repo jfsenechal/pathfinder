@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Level;
 
-
 use AfmLibre\Pathfinder\Classes\ClassParser;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 
@@ -22,7 +21,7 @@ class LevelParser
     {
         $levels = [];
         if ($text == '') {
-            throw new \Exception('level not found '.$text);
+            throw new \Exception('level not found ' . $text);
         }
         $data = explode(', ', $text);
         foreach ($data as $level) {

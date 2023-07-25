@@ -64,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function __toString(): string
     {
-        return $this->name.' '.$this->first_name;
+        return $this->name . ' ' . $this->first_name;
     }
 
     public function getEmail(): ?string
@@ -123,6 +123,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \String
 
     public function eraseCredentials()
     {
-
     }
 }

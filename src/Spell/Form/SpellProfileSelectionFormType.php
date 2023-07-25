@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Form;
 
-
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Spell\Dto\SpellProfileSelectionDto;
 use Symfony\Component\Form\AbstractType;
@@ -24,8 +23,9 @@ class SpellProfileSelectionFormType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choices' => $options['spells'],
-                    'choice_label' => fn(?CharacterSpell $characterSpell
-                    ) => $characterSpell instanceof CharacterSpell ? $characterSpell->spell->name.' ('.$characterSpell->level.')' : '',
+                    'choice_label' => fn (
+                        ?CharacterSpell $characterSpell
+                    ) => $characterSpell instanceof CharacterSpell ? $characterSpell->spell->name . ' (' . $characterSpell->level . ')' : '',
                 ]
             )
             ->add(
@@ -50,5 +50,4 @@ class SpellProfileSelectionFormType extends AbstractType
             ->addAllowedTypes('spells', ['array', 'AfmLibre\Pathfinder\Entity\CharacterSpell[]'])
             ->setRequired('spells');
     }
-
 }

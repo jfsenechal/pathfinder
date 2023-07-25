@@ -31,7 +31,6 @@ class ApiController extends AbstractController
             'class' => ClassT::class,
             'spell' => Spell::class,
             default => null
-
         };
 
         if ($class === null) {

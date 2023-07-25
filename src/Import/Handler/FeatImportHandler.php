@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Repository\FeatRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -28,7 +27,7 @@ class FeatImportHandler
     private function createFeat(array $data): Feat
     {
         $feat = new Feat();
-        $feat->name =$data['Nom'];
+        $feat->name = $data['Nom'];
         $feat->reference = $data['Référence'];
         $feat->source = $data['Source'];
         $feat->summary = $data['Résumé'] ?? null;
@@ -42,5 +41,4 @@ class FeatImportHandler
 
         return $feat;
     }
-
 }

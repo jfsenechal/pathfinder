@@ -63,5 +63,4 @@ class SpellProfileSelectionDto
 
         return $this;
     }
-
 }

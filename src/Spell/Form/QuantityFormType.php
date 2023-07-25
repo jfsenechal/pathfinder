@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Form;
 
-
 use AfmLibre\Pathfinder\Spell\Dto\QuantityDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;

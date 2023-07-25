@@ -72,13 +72,11 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     {
         // set the owning side to null (unless already changed)
         if ($this->spells_profile_character->removeElement(
-                $spellProfileCharacter
-            ) && $spellProfileCharacter->spell_profile === $this) {
+            $spellProfileCharacter
+        ) && $spellProfileCharacter->spell_profile === $this) {
             $spellProfileCharacter->spell_profile = null;
         }
 
         return $this;
     }
-
-
 }

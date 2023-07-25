@@ -13,8 +13,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->autoconfigure()
         ->private();
 
-    $services->load('AfmLibre\Pathfinder\\', __DIR__.'/../src/*')
-        ->exclude([__DIR__.'/../src/{Entity,Tests2}']);
-
-
+    $services->load('AfmLibre\Pathfinder\\', __DIR__ . '/../src/*')
+        ->exclude([__DIR__ . '/../src/{Entity,Tests2}']);
 };

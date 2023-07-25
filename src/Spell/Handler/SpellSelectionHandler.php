@@ -25,9 +25,9 @@ class SpellSelectionHandler
     {
         foreach ($spells as $spell) {
             if (!$this->characterSpellRepository->findByCharacterAndSpell(
-                    $character,
-                    $spell
-                ) instanceof CharacterSpell) {
+                $character,
+                $spell
+            ) instanceof CharacterSpell) {
                 $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
             }
         }
@@ -37,8 +37,8 @@ class SpellSelectionHandler
     public function delete(int $characterSpellId): ?Character
     {
         if (($characterSpell = $this->characterSpellRepository->find(
-                $characterSpellId
-            )) instanceof CharacterSpell) {
+            $characterSpellId
+        )) instanceof CharacterSpell) {
             $character = $characterSpell->character;
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();
@@ -54,13 +54,12 @@ class SpellSelectionHandler
         $class = $character->classT;
         $level = 0;
         if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell(
-                $class,
-                $spell
-            )) instanceof SpellClass) {
+            $class,
+            $spell
+        )) instanceof SpellClass) {
             $level = $spellLevel->level;
         }
 
         return new CharacterSpell($character, $spell, $level);
     }
-
 }

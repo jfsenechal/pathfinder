@@ -67,7 +67,7 @@ class ImportCommand extends Command
 
     private function readFile(string $fileName): array
     {
-        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir').'/data/'.$fileName.'.yml');
+        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir') . '/data/' . $fileName . '.yml');
     }
 
     private function importAll()

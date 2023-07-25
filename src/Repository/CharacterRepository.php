@@ -34,7 +34,7 @@ class CharacterRepository extends ServiceEntityRepository
 
         if ($username) {
             $qb->andWhere('character.name LIKE :name')
-                ->setParameter('name', '%'.$username.'%');
+                ->setParameter('name', '%' . $username . '%');
         }
 
         $qb->addOrderBy('character.name');

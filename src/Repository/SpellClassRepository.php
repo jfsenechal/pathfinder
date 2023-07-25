@@ -49,7 +49,7 @@ class SpellClassRepository extends ServiceEntityRepository
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
-                ->setParameter('name', '%'.$name.'%');
+                ->setParameter('name', '%' . $name . '%');
         }
 
         if ($class instanceof ClassT) {

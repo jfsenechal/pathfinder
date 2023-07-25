@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Spell\Utils;
 
-
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 

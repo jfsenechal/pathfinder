@@ -31,5 +31,4 @@ class SpellProfileCharacter
         $this->spell_profile = $spellProfile;
         $this->character_spell = $characterSpell;
     }
-
 }
