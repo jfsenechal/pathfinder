@@ -3,16 +3,14 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RaceTraitRepository::class)]
 class RaceTrait implements \Stringable
 {
-    use IdTrait;
-
-    #[ORM\Column(type: 'string', length: 150)]
-    public ?string $name = null;
+    use NameTrait, IdTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;

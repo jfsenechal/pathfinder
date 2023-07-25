@@ -4,14 +4,15 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Entity\RaceTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Race|null find($id, $lockMode = null, $lockVersion = null)
- * @method Race|null findOneBy(array $criteria, array $orderBy = null)
- * @method Race[]    findAll()
- * @method Race[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RaceTrait|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RaceTrait|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RaceTrait[]    findAll()
+ * @method RaceTrait[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class RaceTraitRepository extends ServiceEntityRepository
 {
@@ -19,35 +20,32 @@ class RaceTraitRepository extends ServiceEntityRepository
 
     public function __construct(ManagerRegistry $managerRegistry)
     {
-        parent::__construct($managerRegistry, Race::class);
+        parent::__construct($managerRegistry, RaceTrait::class);
     }
 
-    // /**
-    //  * @return RaceTrait[] Returns an array of RaceTrait objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return RaceTrait[]
+     */
+    public function findByRace(Race $race): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('race_trait')
+            ->andWhere('race_trait.race = :race')
+            ->setParameter('race', $race)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?RaceTrait
+    /**
+     * @return RaceTrait[]
+     */
+    public function findByRaceAndName(Race $race, string $name): array
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->createQueryBuilder('race_trait')
+            ->andWhere('race_trait.race = :race')
+            ->setParameter('race', $race)
+            ->andWhere('race_trait.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

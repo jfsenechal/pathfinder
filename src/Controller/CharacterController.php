@@ -11,6 +11,7 @@ use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
+use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +28,7 @@ class CharacterController extends AbstractController
         private readonly CharacterClassRepository $characterClassRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
+        private readonly RaceTraitRepository $raceTraitRepository,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -71,20 +73,22 @@ class CharacterController extends AbstractController
     public function show(Character $character): Response
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+        $spells = SpellUtils::groupByLevel($characterSpells);
+
         $characterClass = $character->characterClass;
-        $countSpells = count($characterSpells);
-        $characterSpells = SpellUtils::groupByLevel($characterSpells);
         foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
             $level->features = $this->classFeatureRepository->findByClassAndLevel($characterClass, $level);
         }
+
+        $modifiers = $this->raceTraitRepository->findByRaceAndName($character->race, "Caractéristiques");
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
                 'character' => $character,
-                'characterSpells' => $characterSpells,
-                'countSpells' => $countSpells,
+                'spells' => $spells,
                 'levels' => $levels,
+                'modifiers' => $modifiers,
             ]
         );
     }

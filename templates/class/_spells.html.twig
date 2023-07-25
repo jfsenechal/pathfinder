@@ -1,16 +1,12 @@
-<table class="table table-bordered">
-    <tr>
-        <th>Nom</th>
-        <th>Level</th>
-    </tr>
-    {% for spellClass in spellsClass %}
-        <tr>
-            <td>
-                <a href="{{ path('pathfinder_spell_show', {'id': spellClass.spell.id}) }}">
-                    {{ spellClass.spell.name }}
+{% for level, data in spells %}
+    <h5 class="text-warning"><strong>Lvl {{ level }}</strong></h5>
+    <ul class="list-group">
+        {% for spell in data %}
+            <li class="list-group-item">
+                <a href="{{ path('pathfinder_spell_show', {'id':  spell.id }) }}">
+                    {{ spell.name }}
                 </a>
-            </td>
-            <td>{{ spellClass.level }}</td>
-        </tr>
-    {% endfor %}
-</table>
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}

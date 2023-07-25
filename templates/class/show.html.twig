@@ -26,11 +26,12 @@
                 </tr>
             </table>
 
-            <h4 class="text-success">Sorts</h4>
-            {% include '@AfmLibrePathfinder/class/_spells.html.twig' %}
-
-            <h4 class="text-success">Levels</h4>
+            <h4 class="text-success">Evolution</h4>
             {% include '@AfmLibrePathfinder/level/_list.html.twig' %}
+
+            <h4 class="text-success">Sorts</h4>
+            {{ include('@AfmLibrePathfinder/class/_spells.html.twig') }}
+
             <br/>
 
         </div>

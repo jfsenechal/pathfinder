@@ -72,14 +72,15 @@ class SpellProfileController extends AbstractController
             fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
             $spellProfileCharacters->toArray()
         );
-        $characterSpells = SpellUtils::groupByLevel($characterSpells);
+
+        $spells = SpellUtils::groupByLevel($characterSpells);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_profile/show.html.twig',
             [
                 'spellProfile' => $spellProfile,
                 'character' => $character,
-                'characterSpells' => $characterSpells,
+                'spells' => $spells,
             ]
         );
     }
@@ -173,13 +174,13 @@ class SpellProfileController extends AbstractController
             fn($spellProfileCharacter) => $spellProfileCharacter->getCharacterSpell(),
             $spellProfileCharacters->toArray()
         );
-        $characterSpells = SpellUtils::groupByLevel($characterSpells);
+        $spells = SpellUtils::groupByLevel($characterSpells);
 
         return $this->render(
             '@AfmLibrePathfinder/spell_profile/print.html.twig',
             [
                 'spellProfile' => $spellProfile,
-                'characterSpells' => $characterSpells,
+                'spells' => $spells,
             ]
         );
 

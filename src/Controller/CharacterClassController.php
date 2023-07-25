@@ -8,6 +8,7 @@ use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,14 +52,19 @@ class CharacterClassController extends AbstractController
     public function show(CharacterClass $characterClass)
     {
         $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);
+        $countSpells = count($spellsClass);
         foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
-            $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($characterClass, $level,'MJ');
+            $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($characterClass, $level, 'MJ');
         }
+
+        $spells = SpellUtils::groupByLevel($spellsClass);
+
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',
             [
                 'characterClass' => $characterClass,
-                'spellsClass' => $spellsClass,
+                'spells' => $spells,
+                'countSpells' => $countSpells,
                 'levels' => $levels,
             ]
         );
