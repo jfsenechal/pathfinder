@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Spell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -30,7 +30,7 @@ class SpellRepository extends ServiceEntityRepository
      */
     public function searchByNameAndClassAndLevel(
         ?string $name = null,
-        ?CharacterClass $class = null,
+        ?ClassT $class = null,
         ?int $level = null
     ): array {
         $qb = $this->createQbl();
@@ -40,8 +40,8 @@ class SpellRepository extends ServiceEntityRepository
                 ->setParameter('name', '%'.$name.'%');
         }
 
-        if ($class instanceof CharacterClass) {
-            $qb->andWhere('spell_classes.characterClass = :class2')
+        if ($class instanceof ClassT) {
+            $qb->andWhere('spell_classes.classT = :class2')
                 ->setParameter('class2', $class);
         }
 
@@ -71,10 +71,10 @@ class SpellRepository extends ServiceEntityRepository
     /**
      * @return Spell[]
      */
-    public function findByClass(CharacterClass $class): array
+    public function findByClass(ClassT $class): array
     {
         return $this->createQbl()
-            ->andWhere('spell_classes.characterClass = :class')
+            ->andWhere('spell_classes.classT = :class')
             ->setParameter('class', $class)
             ->getQuery()->getResult();
     }

@@ -25,15 +25,15 @@ class ClassFeature implements \Stringable
     #[ORM\Column(type: 'boolean')]
     public bool $auto = false;
 
-    #[ORM\ManyToOne(targetEntity: CharacterClass::class)]
-    public ?CharacterClass $characterClass;
+    #[ORM\ManyToOne(targetEntity: ClassT::class)]
+    public ?ClassT $classT;
 
     #[ORM\ManyToOne(targetEntity: Level::class)]
     public ?Level $level;
 
-    public function __construct(CharacterClass $characterClass, Level $level)
+    public function __construct(ClassT $classT, Level $level)
     {
-        $this->characterClass = $characterClass;
+        $this->classT = $classT;
         $this->level = $level;
     }
 

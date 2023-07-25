@@ -5,24 +5,24 @@
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3>{{ characterClass }}</h3>
+            <h3>{{ classT }}</h3>
         </div>
         <div class="card-body">
 
-            <p class="text-muted">{{ characterClass.description }}</p>
+            <p class="text-muted">{{ classT.description }}</p>
 
             <table class="table table-bordered">
                 <tr>
                     <th>Dé de vie</th>
-                    <td>{{ characterClass.dieOfLive }}</td>
+                    <td>{{ classT.dieOfLive }}</td>
                 </tr>
                 <tr>
                     <th>Alignement</th>
-                    <td>{{ characterClass.alignment }}</td>
+                    <td>{{ classT.alignment }}</td>
                 </tr>
                 <tr>
                     <th>Rank par niveau</th>
-                    <td>{{ characterClass.ranksPerLevel }}</td>
+                    <td>{{ classT.ranksPerLevel }}</td>
                 </tr>
             </table>
 
@@ -36,8 +36,8 @@
 
         </div>
         <div class="card-footer">
-            Source: {{ characterClass.source }} /
-            Référence: <a href="{{ characterClass.reference }}">{{ characterClass.reference }}</a>
+            Source: {{ classT.source }} /
+            Référence: <a href="{{ classT.reference }}">{{ classT.reference }}</a>
         </div>
     </div>
 {% endblock %}

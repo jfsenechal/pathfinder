@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -27,11 +27,11 @@ class ClassFeatureRepository extends ServiceEntityRepository
     /**
      * @return ClassFeature[]
      */
-    public function findByCharacterClass(CharacterClass $characterClass): array
+    public function findByCharacterClass(ClassT $classT): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.characterClass = :val')
-            ->setParameter('val', $characterClass)
+            ->andWhere('c.classT = :val')
+            ->setParameter('val', $classT)
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
@@ -40,11 +40,11 @@ class ClassFeatureRepository extends ServiceEntityRepository
     /**
      * @return ClassFeature[]
      */
-    public function findByClassAndLevel(CharacterClass $characterClass, Level $level): array
+    public function findByClassAndLevel(ClassT $classT, Level $level): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.characterClass = :val')
-            ->setParameter('val', $characterClass)
+            ->andWhere('c.classT = :val')
+            ->setParameter('val', $classT)
             ->andWhere('c.level = :lvl')
             ->setParameter('lvl', $level)
             ->orderBy('c.name', 'ASC')
@@ -55,11 +55,11 @@ class ClassFeatureRepository extends ServiceEntityRepository
     /**
      * @return ClassFeature[]
      */
-    public function findByClassLevelAndSrc(CharacterClass $characterClass, Level $level, string $src): array
+    public function findByClassLevelAndSrc(ClassT $classT, Level $level, string $src): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.characterClass = :val')
-            ->setParameter('val', $characterClass)
+            ->andWhere('c.classT = :val')
+            ->setParameter('val', $classT)
             ->andWhere('c.level = :lvl')
             ->setParameter('lvl', $level)
             ->andWhere('c.source = :src')

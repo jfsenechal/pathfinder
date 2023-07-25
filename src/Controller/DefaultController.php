@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Form\SearchHeaderNameType;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     public function __construct(
-        private readonly CharacterClassRepository $characterClassRepository
+        private readonly ClassRepository $classTRepository
     ) {
     }
 
@@ -59,6 +59,6 @@ class DefaultController extends AbstractController
 
     private function getPretre()
     {
-        $this->characterClassRepository->findBy(['name' => 'Prêtre']);
+        $this->classTRepository->findBy(['name' => 'Prêtre']);
     }
 }

@@ -3,9 +3,9 @@
 namespace AfmLibre\Pathfinder\Form;
 
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Race;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -86,13 +86,13 @@ class CharacterType extends AbstractType
                 ]
             )
             ->add(
-                'characterClass',
+                'classT',
                 EntityType::class,
                 [
                     'placeholder' => '',
-                    'class' => CharacterClass::class,
-                    'query_builder' => fn(CharacterClassRepository $characterClassRepository
-                    ) => $characterClassRepository->getQl(),
+                    'class' => ClassT::class,
+                    'query_builder' => fn(ClassRepository $classTRepository
+                    ) => $classTRepository->getQl(),
                 ]
             );
     }

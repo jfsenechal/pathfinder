@@ -28,8 +28,8 @@ class Skill
     #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
     public ?string $source = null;
 
-    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'skills')]
-    public ?CharacterClass $characterClass;
+    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'skills')]
+    public ?ClassT $classT;
 
     public function __toString(): string
     {

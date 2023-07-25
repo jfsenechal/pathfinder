@@ -27,11 +27,11 @@ class SpellSelectionController extends AbstractController
     #[Route(path: '/{uuid}/edit', name: 'pathfinder_spell_selection_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character)
     {
-        $class = $character->characterClass;
+        $class = $character->classT;
 
         $spellsForSelection = $this->spellRepository->findByClass($class);
         if (count($spellsForSelection) == 0) {
-            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->characterClass);
+            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->classT);
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }

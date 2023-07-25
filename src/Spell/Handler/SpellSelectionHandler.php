@@ -51,7 +51,7 @@ class SpellSelectionHandler
 
     private function createCharacterSpell(Character $character, Spell $spell): CharacterSpell
     {
-        $class = $character->characterClass;
+        $class = $character->classT;
         $level = 0;
         if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell(
                 $class,

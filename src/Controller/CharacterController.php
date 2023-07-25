@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
@@ -25,7 +25,7 @@ class CharacterController extends AbstractController
     public function __construct(
         private readonly CharacterRepository $characterRepository,
         private readonly CharacterSpellRepository $characterSpellRepository,
-        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly ClassRepository $classTRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
         private readonly RaceTraitRepository $raceTraitRepository,
@@ -75,9 +75,9 @@ class CharacterController extends AbstractController
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $spells = SpellUtils::groupByLevel($characterSpells);
 
-        $characterClass = $character->characterClass;
-        foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
-            $level->features = $this->classFeatureRepository->findByClassAndLevel($characterClass, $level);
+        $classT = $character->classT;
+        foreach ($levels = $this->levelRepository->findByClass($classT) as $level) {
+            $level->features = $this->classFeatureRepository->findByClassAndLevel($classT, $level);
         }
 
         $modifiers = $this->raceTraitRepository->findByRaceAndName($character->race, "Caractéristiques");

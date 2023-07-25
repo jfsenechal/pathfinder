@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\SpellClass;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,15 +24,15 @@ class SpellClassRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, SpellClass::class);
     }
 
-    public function searchByClassAndSpell(?CharacterClass $class, Spell $spell): ?SpellClass
+    public function searchByClassAndSpell(?ClassT $class, Spell $spell): ?SpellClass
     {
         return $this->createQueryBuilder('spellClass')
             ->leftJoin('spellClass.spell', 'spell', 'WITH')
-            ->leftJoin('spellClass.characterClass', 'characterClass', 'WITH')
-            ->addSelect('characterClass', 'spell')
+            ->leftJoin('spellClass.classT', 'classT', 'WITH')
+            ->addSelect('classT', 'spell')
             ->andWhere('spell = :spell')
             ->setParameter('spell', $spell)
-            ->andWhere('spellClass.characterClass = :class2')
+            ->andWhere('spellClass.classT = :class2')
             ->setParameter('class2', $class)
             ->getQuery()->getOneOrNullResult();
     }
@@ -40,20 +40,20 @@ class SpellClassRepository extends ServiceEntityRepository
     /**
      * @return array|SpellClass[]
      */
-    public function searchByNameAndClass(?string $name = null, ?CharacterClass $class = null): array
+    public function searchByNameAndClass(?string $name = null, ?ClassT $class = null): array
     {
         $qb = $this->createQueryBuilder('spellClass')
             ->leftJoin('spellClass.spell', 'spell', 'WITH')
-            ->leftJoin('spellClass.characterClass', 'characterClass', 'WITH')
-            ->addSelect('characterClass', 'spell');
+            ->leftJoin('spellClass.classT', 'classT', 'WITH')
+            ->addSelect('classT', 'spell');
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
                 ->setParameter('name', '%'.$name.'%');
         }
 
-        if ($class instanceof CharacterClass) {
-            $qb->andWhere('spellClass.characterClass = :class2')
+        if ($class instanceof ClassT) {
+            $qb->andWhere('spellClass.classT = :class2')
                 ->setParameter('class2', $class);
         }
 

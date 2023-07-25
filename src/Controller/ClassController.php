@@ -2,9 +2,9 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Form\SearchNameType;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/class')]
-class CharacterClassController extends AbstractController
+class ClassController extends AbstractController
 {
     public function __construct(
-        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly ClassRepository $classTRepository,
         private readonly SpellClassRepository $spellClassRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository
@@ -37,24 +37,24 @@ class CharacterClassController extends AbstractController
             $name = $data['name'];
         }
 
-        $characterClasses = $this->characterClassRepository->searchByName($name);
+        $classTes = $this->classTRepository->searchByName($name);
 
         return $this->render(
             '@AfmLibrePathfinder/class/index.html.twig',
             [
-                'characterClasses' => $characterClasses,
+                'classTes' => $classTes,
                 'form' => $form->createView(),
             ]
         );
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_class_show')]
-    public function show(CharacterClass $characterClass)
+    public function show(ClassT $classT)
     {
-        $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);
+        $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $classT);
         $countSpells = count($spellsClass);
-        foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
-            $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($characterClass, $level, 'MJ');
+        foreach ($levels = $this->levelRepository->findByClass($classT) as $level) {
+            $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($classT, $level, 'MJ');
         }
 
         $spells = SpellUtils::groupByLevel($spellsClass);
@@ -62,7 +62,7 @@ class CharacterClassController extends AbstractController
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',
             [
-                'characterClass' => $characterClass,
+                'classT' => $classT,
                 'spells' => $spells,
                 'countSpells' => $countSpells,
                 'levels' => $levels,

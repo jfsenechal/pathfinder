@@ -29,17 +29,17 @@ class Level
     #[ORM\Column(nullable: false)]
     public int $maxSpellLvl = 0;
 
-    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'levels')]
-    public ?CharacterClass $characterClass;
+    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'levels')]
+    public ?ClassT $classT;
 
     /**
      * @var ClassFeature[] $features
      */
     public array $features = [];
 
-    public function __construct(CharacterClass $characterClass)
+    public function __construct(ClassT $classT)
     {
-        $this->characterClass = $characterClass;
+        $this->classT = $classT;
     }
 
     public function __toString(): string

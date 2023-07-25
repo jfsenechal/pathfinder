@@ -2,9 +2,9 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CharacterClassFeatureImportHandler
 {
     public function __construct(
-        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly ClassRepository $classTRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository
     ) {
@@ -21,16 +21,16 @@ class CharacterClassFeatureImportHandler
     public function call(SymfonyStyle $io, array $classeFeatures)
     {
         foreach ($classeFeatures as $data) {
-            $characterClass = $this->characterClassRepository->findByName($data['Classe']);
-            if (!$characterClass instanceof CharacterClass) {
+            $classT = $this->classTRepository->findByName($data['Classe']);
+            if (!$classT instanceof ClassT) {
                 $io->error('Classe non trouvee '.$data['Nom']);
                 continue;
             }
-            if (!$level = $this->levelRepository->findByClassAndLevel($characterClass, $data['Niveau'])) {
+            if (!$level = $this->levelRepository->findByClassAndLevel($classT, $data['Niveau'])) {
                 $io->error('Level non trouvee '.$data['Nom']);
                 continue;
             }
-            $classeFeature = new ClassFeature($characterClass, $level);
+            $classeFeature = new ClassFeature($classT, $level);
             $classeFeature->name =$data['Nom'];
             $classeFeature->description = $data['Description'];
             $classeFeature->reference = $data['Référence'];

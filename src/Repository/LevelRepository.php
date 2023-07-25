@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,11 +23,11 @@ class LevelRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, Level::class);
     }
 
-    public function findByClassAndLevel(CharacterClass $characterClass, int $level): ?Level
+    public function findByClassAndLevel(ClassT $classT, int $level): ?Level
     {
         return $this->createQueryBuilder('level')
-            ->andWhere('level.characterClass = :charclass')
-            ->setParameter('charclass', $characterClass)
+            ->andWhere('level.classT = :charclass')
+            ->setParameter('charclass', $classT)
             ->andWhere('level.lvl = :lvl')
             ->setParameter('lvl', $level)
             ->getQuery()
@@ -37,11 +37,11 @@ class LevelRepository extends ServiceEntityRepository
     /**
      * @return Level[]
      */
-    public function findByClass(CharacterClass $characterClass): array
+    public function findByClass(ClassT $classT): array
     {
         return $this->createQueryBuilder('level')
-            ->andWhere('level.characterClass = :charclass')
-            ->setParameter('charclass', $characterClass)
+            ->andWhere('level.classT = :charclass')
+            ->setParameter('charclass', $classT)
             ->getQuery()
             ->getResult();
     }

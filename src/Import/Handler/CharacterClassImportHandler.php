@@ -4,40 +4,40 @@
 namespace AfmLibre\Pathfinder\Import\Handler;
 
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassImportHandler
 {
-    public function __construct(private readonly CharacterClassRepository $characterClassRepository)
+    public function __construct(private readonly ClassRepository $classTRepository)
     {
     }
 
     public function call(SymfonyStyle $io, array $classes)
     {
         foreach ($classes as $classData) {
-            if ($this->characterClassRepository->findByName($classData['Nom']) instanceof CharacterClass) {
+            if ($this->classTRepository->findByName($classData['Nom']) instanceof ClassT) {
                 continue;
             }
-            $characterClass = new CharacterClass();
-            $characterClass->name =$classData['Nom'];
+            $classT = new ClassT();
+            $classT->name =$classData['Nom'];
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
-            $characterClass->dieOfLive = $die;
-            $characterClass->description = $classData['Description'];
-            $characterClass->source = $classData['Source'];
-            $characterClass->reference = $classData['Référence'];
-            $characterClass->ranksPerLevel = $classData['RangsParNiveau'];
-            $characterClass->alignment = $classData['Alignement'];
-            $this->characterClassRepository->persist($characterClass);
-            $this->addLevels($characterClass, $classData);
-            $io->writeln($characterClass->name);
+            $classT->dieOfLive = $die;
+            $classT->description = $classData['Description'];
+            $classT->source = $classData['Source'];
+            $classT->reference = $classData['Référence'];
+            $classT->ranksPerLevel = $classData['RangsParNiveau'];
+            $classT->alignment = $classData['Alignement'];
+            $this->classTRepository->persist($classT);
+            $this->addLevels($classT, $classData);
+            $io->writeln($classT->name);
         }
-        $this->characterClassRepository->flush();
+        $this->classTRepository->flush();
     }
 
-    private function addLevels(CharacterClass $class, array $classData)
+    private function addLevels(ClassT $class, array $classData)
     {
         foreach ($classData['Progression'] as $levelData) {
             $level = new Level($class);
@@ -48,7 +48,7 @@ class CharacterClassImportHandler
             $level->reflex = (int)$levelData['Réflexes'];
             $level->maxSpellLvl = (int)$levelData['SortMax'];
 
-            $this->characterClassRepository->persist($level);
+            $this->classTRepository->persist($level);
         }
     }
 }

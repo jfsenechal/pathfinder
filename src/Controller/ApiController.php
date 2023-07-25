@@ -2,7 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Spell;
@@ -28,7 +28,7 @@ class ApiController extends AbstractController
         $class = match ($type) {
             'feat' => Feat::class,
             'race' => Race::class,
-            'class' => CharacterClass::class,
+            'class' => ClassT::class,
             'spell' => Spell::class,
             default => null
 

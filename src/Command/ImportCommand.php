@@ -29,12 +29,12 @@ class ImportCommand extends Command
     private SymfonyStyle $io;
 
     public function __construct(
-        private readonly CharacterClassImportHandler $characterClassImportHandler,
+        private readonly CharacterClassImportHandler $classTImportHandler,
         private readonly SpellImportHandler $spellImportHandler,
         private readonly RaceImportHandler $raceImportHandler,
         private readonly SkillImportHandler $skillImportHandler,
         private readonly FeatImportHandler $featImportHandler,
-        private readonly CharacterClassFeatureImportHandler $characterClassFeatureImportHandler,
+        private readonly CharacterClassFeatureImportHandler $classTFeatureImportHandler,
         private readonly ParameterBagInterface $parameterBag
     ) {
         parent::__construct();
@@ -52,8 +52,8 @@ class ImportCommand extends Command
         $argument = $input->getArgument('name');
 
         match ($argument) {
-            'classes' => $this->characterClassImportHandler->call($this->io, $this->readFile($argument)),
-            'classfeatures' => $this->characterClassFeatureImportHandler->call($this->io, $this->readFile($argument)),
+            'classes' => $this->classTImportHandler->call($this->io, $this->readFile($argument)),
+            'classfeatures' => $this->classTFeatureImportHandler->call($this->io, $this->readFile($argument)),
             'spells' => $this->spellImportHandler->call($this->io, $this->readFile($argument)),
             'races' => $this->raceImportHandler->call($this->io, $this->readFile($argument)),
             'skills' => $this->skillImportHandler->call($this->io, $this->readFile($argument)),
@@ -72,8 +72,8 @@ class ImportCommand extends Command
 
     private function importAll()
     {
-        $this->characterClassImportHandler->call($this->io, $this->readFile('classes'));
-        $this->characterClassFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
+        $this->classTImportHandler->call($this->io, $this->readFile('classes'));
+        $this->classTFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
         $this->spellImportHandler->call($this->io, $this->readFile('spells'));
         $this->raceImportHandler->call($this->io, $this->readFile('races'));
         $this->skillImportHandler->call($this->io, $this->readFile('skills'));

@@ -5,11 +5,11 @@ namespace AfmLibre\Pathfinder\Level;
 
 
 use AfmLibre\Pathfinder\Classes\ClassParser;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 
 class LevelParser
 {
-    public function __construct(private readonly CharacterClassRepository $characterClassRepository)
+    public function __construct(private readonly ClassRepository $classTRepository)
     {
     }
 
@@ -28,7 +28,7 @@ class LevelParser
         foreach ($data as $level) {
             [$shortName, $level] = explode(' ', $level);
             $name = ClassParser::getClassName($shortName);
-            $character = $this->characterClassRepository->findByName($name);
+            $character = $this->classTRepository->findByName($name);
             // dump($character->getName());
             $levels[] = new LevelDto($character, $level);
         }

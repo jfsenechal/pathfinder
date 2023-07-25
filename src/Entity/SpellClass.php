@@ -17,17 +17,17 @@ class SpellClass
     #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
 
-    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'spell_classes')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'spell_classes')]
     #[ORM\JoinColumn(nullable: false)]
-    public ?CharacterClass $characterClass;
+    public ?ClassT $classT;
 
     #[Column(type: 'smallint')]
     public int $level = 0;
 
-    public function __construct(Spell $spell, CharacterClass $characterClass, int $level)
+    public function __construct(Spell $spell, ClassT $classT, int $level)
     {
         $this->spell = $spell;
-        $this->characterClass = $characterClass;
+        $this->classT = $classT;
         $this->level = $level;
     }
 

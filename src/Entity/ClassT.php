@@ -5,14 +5,13 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 
-#[ORM\Entity(repositoryClass: CharacterClassRepository::class)]
-class CharacterClass implements \JsonSerializable, \Stringable
+#[ORM\Entity(repositoryClass: ClassRepository::class)]
+class ClassT implements \JsonSerializable, \Stringable
 {
     /**
      * @var Spell[] $spells
@@ -21,15 +20,15 @@ class CharacterClass implements \JsonSerializable, \Stringable
     use IdTrait, CampaingTrait;
     use NameTrait;
 
-    #[Column( length: 100, nullable: true)]
+    #[Column(length: 100, nullable: true)]
     public ?string $shortName = null;
 
     #[Column(type: 'smallint')]
     public ?int $dieOfLive = null;
 
-    #[ORM\Column( length: 150, nullable: true)]
+    #[ORM\Column(length: 150, nullable: true)]
     public ?string $reference = null;
-    #[ORM\Column(name: 'sourcet',  length: 150, nullable: true)]
+    #[ORM\Column(name: 'sourcet', length: 150, nullable: true)]
     public ?string $source = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -41,22 +40,22 @@ class CharacterClass implements \JsonSerializable, \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $alignment;
 
-    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'characterClass')]
+    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'classT')]
     public iterable $skills;
-    
-    #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'characterClass')]
+
+    #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'classT')]
     public iterable $levels;
 
     /**
      * @var SpellClass[]
      */
-    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'characterClass')]
+    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'classT')]
     public iterable $spell_classes;
 
     /**
      * @var Character[]
      */
-    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'characterClass')]
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'classT')]
     public iterable $characters;
 
     public function __construct()
@@ -97,7 +96,7 @@ class CharacterClass implements \JsonSerializable, \Stringable
     {
         if (!$this->characters->contains($character)) {
             $this->characters[] = $character;
-            $character->characterClass = $this;
+            $character->classT = $this;
         }
 
         return $this;
@@ -106,8 +105,8 @@ class CharacterClass implements \JsonSerializable, \Stringable
     public function removeCharacter(Character $character): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->characters->removeElement($character) && $character->characterClass === $this) {
-            $character->characterClass =null;
+        if ($this->characters->removeElement($character) && $character->classT === $this) {
+            $character->classT = null;
         }
 
         return $this;

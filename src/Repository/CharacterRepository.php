@@ -28,9 +28,9 @@ class CharacterRepository extends ServiceEntityRepository
     public function searchByUser(?string $username = null): array
     {
         $qb = $this->createQueryBuilder('character')
-            ->leftJoin('character.characterClass', 'characterClass', 'WITH')
+            ->leftJoin('character.classT', 'classT', 'WITH')
             ->leftJoin('character.race', 'race', 'WITH')
-            ->addSelect('characterClass', 'race');
+            ->addSelect('classT', 'race');
 
         if ($username) {
             $qb->andWhere('character.name LIKE :name')

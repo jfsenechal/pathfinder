@@ -32,7 +32,7 @@ class SpellImportHandler
             try {
                 $levels = $this->levelParser->parse($spellData['Niveau']);
                 foreach ($levels as $levelDto) {
-                    $spellClass = new SpellClass($spell, $levelDto->characterClass, $levelDto->level);
+                    $spellClass = new SpellClass($spell, $levelDto->classT, $levelDto->level);
                     $this->spellClassRepository->persist($spellClass);
                 }
             } catch (\Exception $e) {

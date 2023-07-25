@@ -48,8 +48,8 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
     public ?Race $race = null;
 
-    #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'characters')]
-    public ?CharacterClass $characterClass = null;
+    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'characters')]
+    public ?ClassT $classT = null;
 
     /**
      * @var CharacterSpell[]

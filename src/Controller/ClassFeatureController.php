@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
-use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ClassFeatureController extends AbstractController
 {
     public function __construct(
-        private readonly CharacterClassRepository $characterClassRepository,
+        private readonly ClassRepository $classTRepository,
     ) {
     }
 
@@ -30,12 +30,12 @@ class ClassFeatureController extends AbstractController
             $name = $data['name'];
         }
 
-        $characterClasses = $this->characterClassRepository->searchByName($name);
+        $classTes = $this->classTRepository->searchByName($name);
 
         return $this->render(
             '@AfmLibrePathfinder/class/index.html.twig',
             [
-                'characterClasses' => $characterClasses,
+                'classTes' => $classTes,
                 'form' => $form->createView(),
             ]
         );

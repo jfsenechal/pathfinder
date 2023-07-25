@@ -4,12 +4,12 @@
 namespace AfmLibre\Pathfinder\Level;
 
 
-use AfmLibre\Pathfinder\Entity\CharacterClass;
+use AfmLibre\Pathfinder\Entity\ClassT;
 
 class LevelDto
 {
 
-    public function __construct(public CharacterClass $characterClass, public int $level)
+    public function __construct(public ClassT $classT, public int $level)
     {
     }
 }
