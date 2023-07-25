@@ -29,7 +29,12 @@
                 </tr>
                 </tbody>
             </table>
+
             {{ include('@AfmLibrePathfinder/character/_spells_favorite.html.twig') }}
+
+            <h4 class="text-success">Levels</h4>
+            {% include '@AfmLibrePathfinder/level/_list.html.twig' %}
+
             <h4>Class features</h4>
             {{ include('@AfmLibrePathfinder/class/_class_features.html.twig') }}
         </div>

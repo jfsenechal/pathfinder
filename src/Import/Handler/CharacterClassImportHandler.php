@@ -18,20 +18,21 @@ class CharacterClassImportHandler
     public function call(SymfonyStyle $io, array $classes)
     {
         foreach ($classes as $classData) {
-            if (!$this->characterClassRepository->findByName($classData['Nom']) instanceof CharacterClass) {
-                $characterClass = new CharacterClass();
-                $characterClass->setName($classData['Nom']);
-                $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
-                $characterClass->dieOfLive = $die;
-                $characterClass->description = $classData['Description'];
-                $characterClass->source = $classData['Source'];
-                $characterClass->reference = $classData['Référence'];
-                $characterClass->ranksPerLevel = $classData['RangsParNiveau'];
-                $characterClass->alignment = $classData['Alignement'];
-                $this->characterClassRepository->persist($characterClass);
-                $this->addLevels($characterClass, $classData);
-                $io->writeln($characterClass->getName());
+            if ($this->characterClassRepository->findByName($classData['Nom']) instanceof CharacterClass) {
+                continue;
             }
+            $characterClass = new CharacterClass();
+            $characterClass->setName($classData['Nom']);
+            $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
+            $characterClass->dieOfLive = $die;
+            $characterClass->description = $classData['Description'];
+            $characterClass->source = $classData['Source'];
+            $characterClass->reference = $classData['Référence'];
+            $characterClass->ranksPerLevel = $classData['RangsParNiveau'];
+            $characterClass->alignment = $classData['Alignement'];
+            $this->characterClassRepository->persist($characterClass);
+            $this->addLevels($characterClass, $classData);
+            $io->writeln($characterClass->getName());
         }
         $this->characterClassRepository->flush();
     }

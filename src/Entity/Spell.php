@@ -55,7 +55,7 @@ class Spell implements \Stringable
      * @var CharacterSpell[]
      */
     #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'spell', orphanRemoval: true)]
-    private \Doctrine\Common\Collections\ArrayCollection|array $character_spells;
+    private iterable $character_spells;
 
     public function __construct()
     {

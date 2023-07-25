@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Character\SearchHelper;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
@@ -14,10 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SpellController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/spell/available')]
 class SpellAvailableController extends AbstractController
 {
@@ -25,7 +20,6 @@ class SpellAvailableController extends AbstractController
         private readonly SpellRepository $spellRepository,
         private readonly SpellAvailableHandler $spellAvailableHandler,
         private readonly FormFactory $formFactory,
-        private readonly SearchHelper $searchHelper,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -34,20 +28,22 @@ class SpellAvailableController extends AbstractController
     public function edit(Request $request, Character $character)
     {
         $class = $character->getCharacterClass();
-        $keySearch = 'available_spells';
 
-        $data = $this->searchHelper->getArgs($keySearch);
-        if ($data === []) {
-            $data = ['name' => null, 'class' => $class, 'level' => null];
+        $spellsForAvailable = $this->spellRepository->findByClass($class);
+        if (count($spellsForAvailable) == 0) {
+            dd($class->getId());
+            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->getCharacterClass());
+
+            return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
         }
 
+        $data = [];
         $form = $this->createForm(SearchSpellType::class, $data);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->searchHelper->setArgs($keySearch, $data);
         }
 
         $spellsForAvailable = $this->spellRepository->searchByNameAndClassAndLevel(

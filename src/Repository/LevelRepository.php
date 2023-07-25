@@ -34,5 +34,17 @@ class LevelRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * @return Level[]
+     */
+    public function findByClass(CharacterClass $characterClass): array
+    {
+        return $this->createQueryBuilder('level')
+            ->andWhere('level.characterClass = :charclass')
+            ->setParameter('charclass', $characterClass)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 }

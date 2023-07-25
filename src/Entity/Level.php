@@ -32,6 +32,11 @@ class Level
     #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'levels')]
     public ?CharacterClass $characterClass;
 
+    /**
+     * @var ClassFeature[] $features
+     */
+    public array $features = [];
+
     public function __construct(CharacterClass $characterClass)
     {
         $this->characterClass = $characterClass;

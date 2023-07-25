@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,8 @@ class CharacterClassController extends AbstractController
     public function __construct(
         private readonly CharacterClassRepository $characterClassRepository,
         private readonly SpellClassRepository $spellClassRepository,
-        private readonly ClassFeatureRepository $classFeatureRepository
+        private readonly ClassFeatureRepository $classFeatureRepository,
+        private readonly LevelRepository $levelRepository
     ) {
     }
 
@@ -49,14 +51,15 @@ class CharacterClassController extends AbstractController
     public function show(CharacterClass $characterClass)
     {
         $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $characterClass);
-        $classFeatures = $this->classFeatureRepository->findByCharacterClass($characterClass);
-
+        foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
+            $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($characterClass, $level,'MJ');
+        }
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',
             [
                 'characterClass' => $characterClass,
                 'spellsClass' => $spellsClass,
-                'classFeatures' => $classFeatures,
+                'levels' => $levels,
             ]
         );
     }

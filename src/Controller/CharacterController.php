@@ -6,9 +6,11 @@ use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
+use AfmLibre\Pathfinder\Repository\CharacterClassRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,9 @@ class CharacterController extends AbstractController
     public function __construct(
         private readonly CharacterRepository $characterRepository,
         private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly CharacterClassRepository $characterClassRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
+        private readonly LevelRepository $levelRepository,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -46,9 +50,10 @@ class CharacterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $character->setUuid($character->generateUuid());
             $this->characterRepository->persist($character);
             $this->characterRepository->flush();
-            $this->dispatcher->dispatch(new CharacterCreated($character->getUuid()));
+            $this->dispatcher->dispatch(new CharacterCreated($character->getId()));
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);
         }
@@ -66,9 +71,13 @@ class CharacterController extends AbstractController
     public function show(Character $character): Response
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+        $characterClass = $character->getCharacterClass();
         $countSpells = count($characterSpells);
         $characterSpells = SpellUtils::groupByLevel($characterSpells);
         $classFeatures = $this->classFeatureRepository->findByCharacterClass($character->getCharacterClass());
+        foreach ($levels = $this->levelRepository->findByClass($characterClass) as $level) {
+            $level->features = $this->classFeatureRepository->findByClassAndLevel($characterClass, $level);
+        }
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -77,6 +86,7 @@ class CharacterController extends AbstractController
                 'characterSpells' => $characterSpells,
                 'countSpells' => $countSpells,
                 'classFeatures' => $classFeatures,
+                'levels' => $levels,
             ]
         );
     }

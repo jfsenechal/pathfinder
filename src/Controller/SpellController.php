@@ -9,10 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SpellController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/spell')]
 class SpellController extends AbstractController
 {

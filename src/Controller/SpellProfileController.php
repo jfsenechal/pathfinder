@@ -13,10 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class SpellController
- * @package AfmLibre\Pathfinder\Controller
- */
 #[Route(path: '/spell/profile')]
 class SpellProfileController extends AbstractController
 {
@@ -68,7 +64,7 @@ class SpellProfileController extends AbstractController
     #[Route(path: '/{uuid}/show', name: 'pathfinder_spell_profile_show', methods: ['GET'])]
     public function show(SpellProfile $spellProfile)
     {
-        $character = $spellProfile->getCharacterPlayer();
+        $character = $spellProfile->ch();
         $spellProfileCharacterSpells = $spellProfile->getSpellprofileCharacterSpells();
 
         $characterSpells = array_map(
@@ -154,7 +150,9 @@ class SpellProfileController extends AbstractController
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if (($character = $this->spellProfileHandler->delete($characterSpellId)) instanceof \AfmLibre\Pathfinder\Entity\Character) {
+            if (($character = $this->spellProfileHandler->delete(
+                    $characterSpellId
+                )) instanceof \AfmLibre\Pathfinder\Entity\Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->getUuid()]);

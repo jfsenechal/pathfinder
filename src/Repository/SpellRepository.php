@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterClass;
 use AfmLibre\Pathfinder\Entity\Spell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -32,16 +33,14 @@ class SpellRepository extends ServiceEntityRepository
         ?CharacterClass $class = null,
         ?int $level = null
     ): array {
-        $qb = $this->createQueryBuilder('spell')
-            ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
-            ->addSelect('spell_classes');
+        $qb = $this->createQbl();
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
                 ->setParameter('name', '%'.$name.'%');
         }
 
-        if ($class instanceof \AfmLibre\Pathfinder\Entity\CharacterClass) {
+        if ($class instanceof CharacterClass) {
             $qb->andWhere('spell_classes.characterClass = :class2')
                 ->setParameter('class2', $class);
         }
@@ -62,13 +61,30 @@ class SpellRepository extends ServiceEntityRepository
     public function findByCharacter(
         ?Character $character = null
     ): array {
-        return $this->createQueryBuilder('spell')
-            ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
-            ->leftJoin('spell.characterSpells', 'character', 'WITH')
-            ->addSelect('spell_classes', 'character')
+        return $this->createQbl()
             ->andWhere('character.id = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spell.name')
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @return Spell[]
+     */
+    public function findByClass(CharacterClass $class): array
+    {
+        return $this->createQbl()
+            ->andWhere('spell_classes.characterClass = :class')
+            ->setParameter('class', $class)
+            ->getQuery()->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('spell')
+            ->leftJoin('spell.character_spells', 'character_spells', 'WITH')
+            ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
+            ->addSelect('character_spells', 'spell_classes')
+            ->addOrderBy('spell.name');
     }
 }

@@ -4,6 +4,9 @@
             Niveau
         </th>
         <th>
+            Bba
+        </th>
+        <th>
             Réflexes
         </th>
         <th>
@@ -12,17 +15,27 @@
         <th>
             Volonté
         </th>
+        <th>Sorts max</th>
         <th>
             Spécial
         </th>
     </tr>
     {% for level in levels %}
-    <tr>
-        <td>{{ level.bab }}</td>
-        <td>{{ level.reflex }}</td>
-        <td>{{ level.will }}</td>
-        <td>{{ level.fortitude }}</td>
-        <td>{{ level.maxSpellLvl }}</td>
-    </tr>
+        <tr>
+            <td>{{ level.lvl }}</td>
+            <td>{{ level.bab }}</td>
+            <td>{{ level.reflex }}</td>
+            <td>{{ level.will }}</td>
+            <td>{{ level.fortitude }}</td>
+            <td>{{ level.maxSpellLvl }}</td>
+            <td>
+                {% for feature in level.features %}
+                    <a href="{{ path('pathfinder_class_feature_show', {'id': feature.id}) }}">
+                        {{ feature }}
+                    </a>
+                    <br/>
+                {% endfor %}
+            </td>
+        </tr>
     {% endfor %}
 </table>

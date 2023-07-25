@@ -16,14 +16,9 @@ use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * ORM\Table(uniqueConstraints={
- *     ORM\UniqueConstraint(columns={"character_id", "spell_id"})
- * })
- */
 #[ORM\Entity(repositoryClass: SpellProfileRepository::class)]
+//#[ORM\UniqueConstraint(columns: ['character_id', 'spell_id'])]
 class SpellProfile implements SluggableInterface, TimestampableInterface, \Stringable
 {
     use IdTrait;
@@ -35,7 +30,7 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     use CharacterSpellsTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    protected ?string $description = null;
+    public ?string $description = null;
 
     /**
      * @var SpellProfileCharacterSpell[]
@@ -43,46 +38,25 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     #[ORM\OneToMany(targetEntity: SpellProfileCharacterSpell::class, mappedBy: 'spell_profile')]
     private iterable $spell_profile_character_spells;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
+    #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-    private ?Character $character_player)
+    public ?Character $character_player;
+
+    public function __construct(Character $character)
     {
+        $this->character_player = $character;
         $this->spell_profile_character_spells = new ArrayCollection();
         $this->character_spells = new ArrayCollection();
     }
 
     public function __toString(): string
     {
-        return (string) $this->name;
+        return (string)$this->name;
     }
 
     public function shouldGenerateUniqueSlugs(): bool
     {
         return true;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCharacterPlayer(): ?Character
-    {
-        return $this->character_player;
-    }
-
-    public function setCharacterPlayer(?Character $character_player): self
-    {
-        $this->character_player = $character_player;
-
-        return $this;
     }
 
     /**
@@ -106,7 +80,9 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     public function removeSpellProfileCharacterSpell(SpellProfileCharacterSpell $spellProfileCharacterSpell): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->spell_profile_character_spells->removeElement($spellProfileCharacterSpell) && $spellProfileCharacterSpell->getSpellProfile() === $this) {
+        if ($this->spell_profile_character_spells->removeElement(
+                $spellProfileCharacterSpell
+            ) && $spellProfileCharacterSpell->getSpellProfile() === $this) {
             $spellProfileCharacterSpell->setSpellProfile(null);
         }
 
