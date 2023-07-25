@@ -14,19 +14,21 @@ class SpellClass
     use IdTrait;
 
     #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'spell_classes')]
+    #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
-    
+
     #[ORM\ManyToOne(targetEntity: CharacterClass::class, inversedBy: 'spell_classes')]
+    #[ORM\JoinColumn(nullable: false)]
     public ?CharacterClass $characterClass;
-    
+
     #[Column(type: 'smallint')]
     public int $level = 0;
 
-    public function __construct(
-        ?Spell $spell,
-        $characterClass,
-        int $level
-    ) {
+    public function __construct(Spell $spell, CharacterClass $characterClass, int $level)
+    {
+        $this->spell = $spell;
+        $this->characterClass = $characterClass;
+        $this->level = $level;
     }
 
     public function getId(): ?int
