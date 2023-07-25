@@ -15,7 +15,7 @@ class SpellSelectionUpdatedHandler
 
     public function __construct(RequestStack $requestStack)
     {
-        $this->flashBag = $requestStack->getSession()?->getFlashBag();
+        $this->flashBag = $requestStack->getSession()->getFlashBag();
     }
 
     public function __invoke(SpellSelectionUpdated $selectionUpdated): void
