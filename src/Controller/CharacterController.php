@@ -2,11 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Ability\AbilityCalculator;
 use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
+use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
@@ -30,6 +32,7 @@ class CharacterController extends AbstractController
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
         private readonly RaceTraitRepository $raceTraitRepository,
+        private readonly AbilityCalculator $abilityCalculator,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -105,6 +108,9 @@ class CharacterController extends AbstractController
             Character::getValueModifier($character->wisdom)
         );
 
+        $bmo = AbilityCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $dmd = AbilityCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
+
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
@@ -114,6 +120,8 @@ class CharacterController extends AbstractController
                 'currentLevel' => $currentLevel,
                 'modifiers' => $modifiers,
                 'abilities' => $abilities,
+                'bmo' => $bmo,
+                'dmd' => $dmd,
             ]
         );
     }
