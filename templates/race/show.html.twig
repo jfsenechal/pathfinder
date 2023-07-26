@@ -8,9 +8,14 @@
             <h3>{{ race }}</h3>
         </div>
         <div class="card-body">
+            <h4 class="text-warning">Traits raciaux</h4>
             {% for trait in traits %}
                 <h5 class="text-success mt-3">{{ trait.name }}</h5>
                 {{ trait.description }}
+                <div class="text-muted my-3">
+                    Source: {{ trait.source }} /
+                    Référence: <a href="{{ trait.reference }}">{{ trait.reference }}</a>
+                </div>
             {% endfor %}
         </div>
     </div>

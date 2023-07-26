@@ -18,6 +18,7 @@
                     <th>Nom</th>
                     <th>Race</th>
                     <th>Classe</th>
+                    <th>Niveau</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,9 @@
                         </td>
                         <td>{{ character.race ? character.race.name }}</td>
                         <td>{{ character.classT ? character.classT.name }}</td>
+                        <td>
+                            {{ character.current_level.lvl }}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

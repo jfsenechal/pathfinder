@@ -8,7 +8,7 @@ class AbilityDto
     {
     }
 
-    public function getTotal(): int
+    public function total(): int
     {
         return $this->base + $this->caracteristic;
     }

@@ -15,6 +15,15 @@ class RaceTrait implements \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    public ?iterable $replaces = [];
+
+    #[ORM\Column(type: 'string', length: 150, nullable: true)]
+    public ?string $reference = null;
+
+    #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
+    public ?string $source = null;
+
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'traits')]
     public ?Race $race;
 

@@ -27,6 +27,9 @@ class RaceImportHandler
                 $raceTrait = new RaceTrait($race);
                 $raceTrait->name = $row['Nom'];
                 $raceTrait->description = $row['Description'];
+                $raceTrait->replaces = $row['Remplace'];
+                $raceTrait->reference = $row['Référence'];
+                $raceTrait->source = $row['Source'];
                 $this->raceTraitRepository->persist($raceTrait);
             }
         }
