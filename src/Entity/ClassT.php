@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
+use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping\Column;
 #[ORM\Entity(repositoryClass: ClassRepository::class)]
 class ClassT implements \JsonSerializable, \Stringable
 {
-    use IdTrait, CampaingTrait;
+    use IdTrait, CampaingTrait, SourceTrait;
     use NameTrait;
 
     #[Column(length: 100, nullable: true)]
@@ -21,11 +22,6 @@ class ClassT implements \JsonSerializable, \Stringable
 
     #[Column(type: 'smallint')]
     public ?int $dieOfLive = null;
-
-    #[ORM\Column(length: 150, nullable: true)]
-    public ?string $reference = null;
-    #[ORM\Column(name: 'sourcet', length: 150, nullable: true)]
-    public ?string $source = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;

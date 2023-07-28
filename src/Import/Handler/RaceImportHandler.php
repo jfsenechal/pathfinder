@@ -29,7 +29,7 @@ class RaceImportHandler
                 $raceTrait->description = $row['Description'];
                 $raceTrait->replaces = $row['Remplace'];
                 $raceTrait->reference = $row['Référence'];
-                $raceTrait->source = $row['Source'];
+                $raceTrait->sourced = $row['Source'];
                 $this->raceTraitRepository->persist($raceTrait);
             }
         }
@@ -42,7 +42,7 @@ class RaceImportHandler
         $race = new Race();
         $race->name = $data['Nom'];
         $race->reference = $data['Référence'];
-        $race->source = $data['Source'];
+        $race->sourced = $data['Source'];
 
         return $race;
     }

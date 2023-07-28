@@ -29,7 +29,7 @@ class FeatImportHandler
         $feat = new Feat();
         $feat->name = $data['Nom'];
         $feat->reference = $data['Référence'];
-        $feat->source = $data['Source'];
+        $feat->sourced = $data['Source'];
         $feat->summary = $data['Résumé'] ?? null;
         $feat->category = $data['Catégorie'] ?? null;
         $feat->conditions = $data['Conditions'] ?? null;

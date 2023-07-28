@@ -5,17 +5,19 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
+use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 class Skill
 {
-    use IdTrait,CampaingTrait;
+    use IdTrait,CampaingTrait, SourceTrait;
     use NameTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;
+
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $descriptionHtml = null;
 
@@ -24,9 +26,6 @@ class Skill
 
     #[ORM\Column(type: 'text', nullable: true)]
     public bool $training;
-
-    #[ORM\Column(name: 'sourcet', type: 'string', length: 150, nullable: true)]
-    public ?string $source = null;
 
     #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'skills')]
     public ?ClassT $classT;

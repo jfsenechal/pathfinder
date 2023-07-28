@@ -2,12 +2,14 @@
 
 namespace AfmLibre\Pathfinder\Command;
 
+use AfmLibre\Pathfinder\Import\Handler\ArmorImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassFeatureImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\ClassImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\FeatImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\RaceImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SkillImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SpellImportHandler;
+use AfmLibre\Pathfinder\Import\Handler\WeaponImportHandler;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,7 +20,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * source https://github.com/SvenWerlen/pathfinderfr-data/
+ * sourced https://github.com/SvenWerlen/pathfinderfr-data/
  */
 #[AsCommand(
     name: 'pathfinder:import',
@@ -35,6 +37,8 @@ class ImportCommand extends Command
         private readonly SkillImportHandler $skillImportHandler,
         private readonly FeatImportHandler $featImportHandler,
         private readonly CharacterClassFeatureImportHandler $classTFeatureImportHandler,
+        private readonly ArmorImportHandler $armorImportHandler,
+        private readonly WeaponImportHandler $weaponImportHandler,
         private readonly ParameterBagInterface $parameterBag
     ) {
         parent::__construct();
@@ -58,6 +62,8 @@ class ImportCommand extends Command
             'races' => $this->raceImportHandler->call($this->io, $this->readFile($argument)),
             'skills' => $this->skillImportHandler->call($this->io, $this->readFile($argument)),
             'feats' => $this->featImportHandler->call($this->io, $this->readFile($argument)),
+            'armors' => $this->armorImportHandler->call($this->io, $this->readFile($argument)),
+            'weapons' => $this->weaponImportHandler->call($this->io, $this->readFile($argument)),
             'all' => $this->importAll(),
             default => $this->io->error('Valeurs possibles: classes classfeatures spells races'),
         };
@@ -67,7 +73,7 @@ class ImportCommand extends Command
 
     private function readFile(string $fileName): array
     {
-        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir') . '/data/' . $fileName . '.yml');
+        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir').'/data/'.$fileName.'.yml');
     }
 
     private function importAll()
@@ -78,5 +84,7 @@ class ImportCommand extends Command
         $this->raceImportHandler->call($this->io, $this->readFile('races'));
         $this->skillImportHandler->call($this->io, $this->readFile('skills'));
         $this->featImportHandler->call($this->io, $this->readFile('feats'));
+        $this->armorImportHandler->call($this->io, $this->readFile('armors'));
+        $this->weaponImportHandler->call($this->io, $this->readFile('weapons'));
     }
 }

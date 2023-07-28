@@ -31,7 +31,7 @@ class SkillImportHandler
         $skill->training = $data['Formation nécessaire'] == 'oui' ? true : false;
         $skill->descriptoin = $data['Description'];
         $skill->descriptionHtml = $data['DescriptionHTML'];
-        $skill->source = $data['Référence'];
+        $skill->sourced = $data['Référence'];
 
         return $skill;
     }

@@ -1,0 +1,35 @@
+<?php
+
+namespace AfmLibre\Pathfinder\Repository;
+
+use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
+use AfmLibre\Pathfinder\Entity\Armor;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method Armor|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Armor|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Armor[]    findAll()
+ * @method Armor[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class ArmorRepository extends ServiceEntityRepository
+{
+    use OrmCrudTrait;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Armor::class);
+    }
+
+    /**
+     * @return array|Armor[]
+     */
+    public function findAllOrdered(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+}

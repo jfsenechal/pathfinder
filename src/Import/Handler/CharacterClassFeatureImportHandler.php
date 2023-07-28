@@ -34,7 +34,7 @@ class CharacterClassFeatureImportHandler
             $classeFeature->name = $data['Nom'];
             $classeFeature->description = $data['Description'];
             $classeFeature->reference = $data['Référence'];
-            $classeFeature->source = $data['Source'];
+            $classeFeature->sourced = $data['Source'];
             if (isset($data['Auto'])) {
                 $classeFeature->auto = (bool)$data['Auto'];
             }

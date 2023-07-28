@@ -70,7 +70,7 @@ class SpellImportHandler
             $spell->school = $this->findSchool($data[SpellYml::YAML_SCHOOL]);
         }
         $spell->reference = $data[SpellYml::YAML_REFERENCE];
-        $spell->source = $data[SpellYml::YAML_SOURCE];
+        $spell->sourced = $data[SpellYml::YAML_SOURCE];
 
         if (isset($data[SpellYml::YAML_COMPONENTS])) {
             $spell->components = $data[SpellYml::YAML_COMPONENTS];

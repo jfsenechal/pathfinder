@@ -62,7 +62,7 @@ class ClassFeatureRepository extends ServiceEntityRepository
             ->setParameter('val', $classT)
             ->andWhere('c.level = :lvl')
             ->setParameter('lvl', $level)
-            ->andWhere('c.source = :src')
+            ->andWhere('c.sourced = :src')
             ->setParameter('src', $src)
             ->orderBy('c.name', 'ASC')
             ->getQuery()

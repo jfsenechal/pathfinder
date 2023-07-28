@@ -44,7 +44,7 @@ class FeatRepository extends ServiceEntityRepository
 
         if ($source) {
             $qb
-                ->andWhere('feat.source LIKE :src')
+                ->andWhere('feat.sourced LIKE :src')
                 ->setParameter('src', $source);
         }
 
@@ -59,7 +59,7 @@ class FeatRepository extends ServiceEntityRepository
     public function findAllOrdered(): array
     {
         return $this->createQueryBuilder('feat')
-            ->andWhere('feat.source LIKE :src')
+            ->andWhere('feat.sourced LIKE :src')
             ->setParameter('src', 'MJ')
             ->addOrderBy('feat.name', Criteria::ASC)
             ->getQuery()

@@ -25,7 +25,7 @@ class ClassImportHandler
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
             $classT->dieOfLive = $die;
             $classT->description = $classData['Description'];
-            $classT->source = $classData['Source'];
+            $classT->sourced = $classData['Source'];
             $classT->reference = $classData['Référence'];
             $classT->ranksPerLevel = $classData['RangsParNiveau'];
             $classT->alignment = $classData['Alignement'];
