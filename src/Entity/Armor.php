@@ -40,4 +40,9 @@ class Armor
     #[ORM\JoinColumn(nullable: true)]
     public ?ArmorCategory $category = null;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
 }

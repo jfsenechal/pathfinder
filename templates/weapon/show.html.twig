@@ -8,7 +8,58 @@
             <h3>{{ weapon }}</h3>
         </div>
         <div class="card-body">
-
+            <table class="table table-bordered">
+                <tr>
+                    <th>Dégât petit</th>
+                    <td>{{ weapon.damageSmall }}</td>
+                </tr>
+                <tr>
+                    <th>Dégât grand</th>
+                    <td>{{ weapon.damageMedium }}</td>
+                </tr>
+                <tr>
+                    <th>Allonge</th>
+                    <td>{{ weapon.ranged }}</td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td>{{ weapon.category }}</td>
+                </tr>
+                <tr>
+                    <th>Catégorie2</th>
+                    <td>{{ weapon.category2 }}</td>
+                </tr>
+                <tr>
+                    <th>Spéciale</th>
+                    <td>{{ weapon.special }}</td>
+                </tr>
+                <tr>
+                    <th>Coût</th>
+                    <td>{{ weapon.cost }}</td>
+                </tr>
+                <tr>
+                    <th>Critique</th>
+                    <td>{{ weapon.critical }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ weapon.typed }}</td>
+                </tr>
+                <tr>
+                    <th>Poids</th>
+                    <td>{{ weapon.weight }}</td>
+                </tr>
+            </table>
+            <p class="text-muted">
+                {{ weapon.description }}
+            </p>
+            <p class="text-muted">
+                {{ weapon.descriptionHtml }}
+            </p>
+        </div>
+        <div class="card-footer">
+            Source: {{ weapon.sourced }} /
+            Référence: <a href="{{ weapon.reference }}">{{ weapon.reference }}</a>
         </div>
     </div>
 {% endblock %}

@@ -31,6 +31,10 @@ class ArmorCategory implements Stringable
      * @var ArmorCategory[]
      */
     public array $children = [];
+    /**
+     * @var Armor[]
+     */
+    public array $armors = [];
 
     public function __construct(string $name)
     {

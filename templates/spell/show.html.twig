@@ -12,7 +12,7 @@
                 <tr>
                     <th>Niveau</th>
                     <td>
-                        {% for spellClasse in spell.spellClasses %}
+                        {% for spellClasse in spell.spell_classes %}
                             <a href="{{ path('pathfinder_class_show', {'id':  spellClasse.classT.id }) }}">
                                 {{ spellClasse.classT }}
                             </a>
@@ -41,10 +41,6 @@
                     <td>{{ spell.savingThrow }}</td>
                 </tr>
                 <tr>
-                    <th>Source</th>
-                    <td>{{ spell.sourced }}</td>
-                </tr>
-                <tr>
                     <th>Composante</th>
                     <td>{{ spell.components }}</td>
                 </tr>
@@ -52,16 +48,22 @@
                     <th>Temps d'incantation</th>
                     <td>{{ spell.castringTime }}</td>
                 </tr>
-                <tr>
-                    <th>Référence</th>
-                    <td><a href="{{ spell.reference }}" target="_pathfinder">{{ spell.reference }}</a></td>
-
-                </tr>
             </table>
 
-            {{ spell.description|nl2br }}
-            {{ spell.descriptionHtml|nl2br }}
+            <p class="text-muted">
+                {{ spell.description|nl2br }}
+            </p>
+
+
+            <p class="text-muted">
+                {{ spell.descriptionHtml|nl2br }}
+            </p>
+
             <br/>
+        </div>
+        <div class="card-footer">
+            Source: {{ spell.sourced }} /
+            Référence: <a href="{{ spell.reference }}">{{ spell.reference }}</a>
         </div>
     </div>
 {% endblock %}

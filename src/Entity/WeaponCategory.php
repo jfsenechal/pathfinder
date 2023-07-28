@@ -32,6 +32,11 @@ class WeaponCategory implements Stringable
      */
     public array $children = [];
 
+    /**
+     * @var Weapon[]
+     */
+    public array $weapons;
+
     public function __toString(): string
     {
         return (string)$this->name;

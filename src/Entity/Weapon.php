@@ -44,4 +44,9 @@ class Weapon
     #[ORM\JoinColumn(nullable: true)]
     public ?WeaponCategory $category = null;
 
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
 }

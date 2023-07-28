@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\ArmorCategory;
 use AfmLibre\Pathfinder\Repository\ArmorCategoryRepository;
+use AfmLibre\Pathfinder\Repository\ArmorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArmorCategoryController extends AbstractController
 {
     public function __construct(
-        private readonly ArmorCategoryRepository $armorCategoryRepository
+        private readonly ArmorCategoryRepository $armorCategoryRepository,
+        private readonly ArmorRepository $armorRepository
     ) {
     }
 
@@ -20,6 +22,9 @@ class ArmorCategoryController extends AbstractController
     public function index(): Response
     {
         $categories = $this->armorCategoryRepository->findAllOrdered();
+        foreach ($categories as $category) {
+            $category->armors = $this->armorRepository->findByCategory($category);
+        }
 
         return $this->render(
             '@AfmLibrePathfinder/armor_category/index.html.twig',
@@ -29,13 +34,13 @@ class ArmorCategoryController extends AbstractController
         );
     }
 
-    #[Route(path: '/{id}/show', name: 'pathfinder_armor_show')]
+    #[Route(path: '/{id}/show', name: 'pathfinder_armor_category_show')]
     public function show(ArmorCategory $armorCategory): Response
     {
         return $this->render(
             '@AfmLibrePathfinder/armor_category/show.html.twig',
             [
-                'armorCategory' => $armorCategory,
+                'category' => $armorCategory,
             ]
         );
     }

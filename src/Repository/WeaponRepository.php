@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Weapon;
+use AfmLibre\Pathfinder\Entity\WeaponCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -28,6 +29,19 @@ class WeaponRepository extends ServiceEntityRepository
     public function findAllOrdered(): array
     {
         return $this->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array|Weapon[]
+     */
+    public function findByCategory(WeaponCategory $category): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.category = :category')
+            ->setParameter('category', $category)
             ->orderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult();

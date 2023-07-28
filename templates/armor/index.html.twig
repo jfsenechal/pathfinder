@@ -9,24 +9,28 @@
             <h3>Les {{ armors|length }} armures</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered" >
+            <table class="table table-bordered">
                 <tr>
                     <th>Nom</th>
-                    <th>Campagne</th>
-                    <th>Set</th>
+                    <th>Bonus</th>
+                    <th>Vitesse 6M / 9M</th>
+                    <th>Dextérité maximum</th>
                 </tr>
                 {% for armor in armors %}
                     <tr>
                         <td>
-                            <a href="{{ path('pathfinder_race_show', {'id': armor.id}) }}">
+                            <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">
                                 {{ armor.name }}
                             </a>
                         </td>
                         <td>
-
+                            {{ armor.bonus }}
                         </td>
                         <td>
-
+                            {{ armor.speed6 }} / {{ armor.speed9 }}
+                        </td>
+                        <td>
+                            {{ armor.bonusDexMax }}
                         </td>
                     </tr>
                 {% endfor %}

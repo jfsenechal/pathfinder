@@ -18,20 +18,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Référence</th>
-                    <td><a href="{{ classFeature.reference }}" target="_pathfinder">{{ classFeature.reference }}</a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Source</th>
-                    <td>{{ classFeature.sourced }}</td>
-                </tr>
-                <tr>
                     <th>Auto</th>
                     <td>{{ classFeature.auto ? 'Oui' : 'Non' }}</td>
                 </tr>
             </table>
             {{ classFeature.description | nl2br }}
+        </div>
+        <div class="card-footer">
+            Source: {{ classFeature.sourced }} /
+            Référence: <a href="{{ classFeature.reference }}">{{ classFeature.reference }}</a>
         </div>
     </div>
 {% endblock %}

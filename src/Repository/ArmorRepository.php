@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Armor;
+use AfmLibre\Pathfinder\Entity\ArmorCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -28,6 +29,19 @@ class ArmorRepository extends ServiceEntityRepository
     public function findAllOrdered(): array
     {
         return $this->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return array|Armor[]
+     */
+    public function findByCategory(ArmorCategory $category): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.category = :category')
+            ->setParameter('category', $category)
             ->orderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult();

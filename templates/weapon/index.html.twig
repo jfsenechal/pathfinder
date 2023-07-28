@@ -9,24 +9,24 @@
             <h3>Les {{ weapons|length }} armes</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered" >
+            <table class="table table-bordered">
                 <tr>
                     <th>Nom</th>
-                    <th>Campagne</th>
-                    <th>Set</th>
+                    <th>Dégats petit / grand</th>
+                    <th>Range</th>
                 </tr>
                 {% for weapon in weapons %}
                     <tr>
                         <td>
-                            <a href="{{ path('pathfinder_race_show', {'id': weapon.id}) }}">
+                            <a href="{{ path('pathfinder_weapon_show', {'id': weapon.id}) }}">
                                 {{ weapon.name }}
                             </a>
                         </td>
                         <td>
-
+                            {{ weapon.damageSmall }} / {{ weapon.damageMedium }}
                         </td>
                         <td>
-
+                            {{ weapon.ranged }}
                         </td>
                     </tr>
                 {% endfor %}

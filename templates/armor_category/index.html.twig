@@ -6,27 +6,23 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Les {{ armors|length }} armures</h3>
+            <h3>Les catégories d' armures</h3>
         </div>
         <div class="card-body">
-            <table class="table table-bordered" >
+            <table class="table table-bordered">
                 <tr>
                     <th>Nom</th>
-                    <th>Campagne</th>
-                    <th>Set</th>
+                    <th>Nombre d'armures</th>
                 </tr>
-                {% for armor in armors %}
+                {% for category in categories %}
                     <tr>
                         <td>
-                            <a href="{{ path('pathfinder_race_show', {'id': armor.id}) }}">
-                                {{ armor.name }}
+                            <a href="{{ path('pathfinder_armor_category_show', {'id': category.id}) }}">
+                                {{ category.name }}
                             </a>
                         </td>
                         <td>
-
-                        </td>
-                        <td>
-
+                            {{ category.armors|length }}
                         </td>
                     </tr>
                 {% endfor %}
