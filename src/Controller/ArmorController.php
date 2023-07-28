@@ -3,8 +3,12 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Armor;
+use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Repository\ArmorRepository;
+use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
+use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArmorController extends AbstractController
 {
     public function __construct(
-        private readonly ArmorRepository $armorRepository
+        private readonly ArmorRepository $armorRepository,
+        private readonly CharacterArmorRepository $characterArmorRepository,
+        private readonly CharacterRepository $characterRepository
     ) {
     }
 
@@ -37,6 +43,25 @@ class ArmorController extends AbstractController
             [
                 'armor' => $armor,
             ]
+        );
+    }
+
+    #[Route(path: '/{id}/outfit', name: 'pathfinder_armor_outfit')]
+    public function outFit(Request $request, Armor $armor): Response
+    {
+        $characters = $this->characterRepository->findAll();
+        $character = $characters[0];
+
+        $item = new CharacterArmor($character, $armor);
+        $this->characterArmorRepository->persist($item);
+        $this->characterArmorRepository->flush();
+
+        $this->addFlash('success', 'Armure équipée');
+
+        return $this->redirectToRoute(
+            'pathfinder_character_show',
+            ['uuid' => $character->uuid],
+            Response::HTTP_SEE_OTHER
         );
     }
 }

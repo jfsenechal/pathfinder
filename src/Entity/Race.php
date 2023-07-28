@@ -22,16 +22,9 @@ class Race implements \Stringable
     #[ORM\OneToMany(targetEntity: RaceTrait::class, mappedBy: 'race')]
     public ArrayCollection|iterable $traits;
 
-    /**
-     * @var Character[]
-     */
-    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'race')]
-    public iterable $characters;
-
     public function __construct()
     {
         $this->traits = new ArrayCollection();
-        $this->characters = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -43,7 +36,7 @@ class Race implements \Stringable
     {
         if (!$this->traits->contains($trait)) {
             $this->traits[] = $trait;
-            $trait->setRace($this);
+            $trait->race = $this;
         }
 
         return $this;
@@ -52,28 +45,8 @@ class Race implements \Stringable
     public function removeTrait(RaceTrait $trait): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->traits->removeElement($trait) && $trait->getRace() === $this) {
-            $trait->setRace(null);
-        }
-
-        return $this;
-    }
-
-    public function addCharacter(Character $character): self
-    {
-        if (!$this->characters->contains($character)) {
-            $this->characters[] = $character;
-            $character->race = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeCharacter(Character $character): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->characters->removeElement($character) && $character->race === $this) {
-            $character->race = null;
+        if ($this->traits->removeElement($trait) && $trait->race === $this) {
+            $trait->race = null;
         }
 
         return $this;

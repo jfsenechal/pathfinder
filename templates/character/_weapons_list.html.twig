@@ -1,0 +1,17 @@
+<h5 class="text-success">Arme(s)</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Dégats</th>
+        <th>Critique</th>
+    </tr>
+    {% for weapon in weapons %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_weapon_show', {'id': weapon.id}) }}">{{ weapon.name }}</a>
+            </td>
+            <td>{{ weapon.damageMedium }}</td>
+            <td>{{ weapon.critical }}</td>
+        </tr>
+    {% endfor %}
+</table>

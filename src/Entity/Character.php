@@ -16,6 +16,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+#[ORM\Table(name: 'characters')]//!character reserved
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 class Character implements SluggableInterface, TimestampableInterface, \Stringable
 {
@@ -42,11 +43,11 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\Column(type: 'smallint', nullable: false)]
     public int $charisma = 10;
 
-    #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'characters')]
+    #[ORM\ManyToOne(targetEntity: Race::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?Race $race = null;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'characters')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?ClassT $classT = null;
 

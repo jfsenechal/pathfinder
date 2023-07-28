@@ -8,6 +8,13 @@
             <h3>{{ weapon }}</h3>
         </div>
         <div class="card-body">
+
+            <a href="{{ path('pathfinder_weapon_outfit', { 'id': weapon.id }) }}" role="button"
+               class="btn btn-primary mb-3">
+
+                <i class="ti ti-swords"></i> Equiper
+            </a>
+
             <table class="table table-bordered">
                 <tr>
                     <th>Dégât petit</th>

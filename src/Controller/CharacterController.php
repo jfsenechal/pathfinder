@@ -9,8 +9,10 @@ use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
+use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
@@ -32,6 +34,8 @@ class CharacterController extends AbstractController
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
         private readonly RaceTraitRepository $raceTraitRepository,
+        private readonly CharacterArmorRepository $characterArmorRepository,
+        private readonly CharacterWeaponRepository $characterWeaponRepository,
         private readonly AbilityCalculator $abilityCalculator,
         private readonly MessageBusInterface $dispatcher
     ) {
@@ -111,6 +115,11 @@ class CharacterController extends AbstractController
         $bmo = AbilityCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
         $dmd = AbilityCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
 
+        $armors = $this->characterArmorRepository->findByCharacter($character);
+        $armors = array_map(fn ($object) =>  $object->armor,$armors);
+        $weapons = $this->characterWeaponRepository->findByCharacter($character);
+        $weapons = array_map(fn ($object) =>  $object->weapon,$weapons);
+
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
@@ -120,6 +129,8 @@ class CharacterController extends AbstractController
                 'currentLevel' => $currentLevel,
                 'modifiers' => $modifiers,
                 'abilities' => $abilities,
+                'armors' => $armors,
+                'weapons' => $weapons,
                 'bmo' => $bmo,
                 'dmd' => $dmd,
             ]

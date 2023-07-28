@@ -8,7 +8,18 @@
             <h3>{{ armor }}</h3>
         </div>
         <div class="card-body">
+
+            <a href="{{ path('pathfinder_armor_outfit', { 'id': armor.id }) }}" role="button"
+               class="btn btn-primary mb-3"><i
+                        class="ti ti-shield-plus"></i> Equiper</a>
+
             <table class="table table-bordered">
+                <tr>
+                    <th>Type</th>
+                    <td>
+                        {{ armor.category }}
+                    </td>
+                </tr>
                 <tr>
                     <th>Bonus</th>
                     <td>
@@ -16,27 +27,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Vitesse 6m/9m</th>
-                    <td>
-                        {{ armor.speed6 }} / {{ armor.speed9 }}
-                    </td>
-                </tr>
-                <tr>
                     <th>Dextérité maximum</th>
                     <td>
                         {{ armor.bonusDexMax }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Poids</th>
-                    <td>
-                        {{ armor.weight }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Coût</th>
-                    <td>
-                        {{ armor.cost }}
                     </td>
                 </tr>
                 <tr>
@@ -49,6 +42,24 @@
                     <th>Malus</th>
                     <td>
                         {{ armor.malus }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Vitesse 6m/9m</th>
+                    <td>
+                        {{ armor.speed6 }} / {{ armor.speed9 }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Poids</th>
+                    <td>
+                        {{ armor.weight }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Coût</th>
+                    <td>
+                        {{ armor.cost }}
                     </td>
                 </tr>
             </table>

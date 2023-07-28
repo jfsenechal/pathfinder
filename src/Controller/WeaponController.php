@@ -2,9 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Entity\Weapon;
+use AfmLibre\Pathfinder\Repository\CharacterRepository;
+use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Repository\WeaponRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class WeaponController extends AbstractController
 {
     public function __construct(
-        private readonly WeaponRepository $weaponRepository
+        private readonly WeaponRepository $weaponRepository,
+        private readonly CharacterRepository $characterRepository,
+        private readonly CharacterWeaponRepository $characterWeaponRepository
     ) {
     }
 
@@ -37,6 +43,25 @@ class WeaponController extends AbstractController
             [
                 'weapon' => $weapon,
             ]
+        );
+    }
+
+    #[Route(path: '/{id}/outfit', name: 'pathfinder_weapon_outfit')]
+    public function outFit(Request $request, Weapon $weapon): Response
+    {
+        $characters = $this->characterRepository->findAll();
+        $character = $characters[0];
+
+        $item = new CharacterWeapon($character, $weapon);
+        $this->characterWeaponRepository->persist($item);
+        $this->characterWeaponRepository->flush();
+
+        $this->addFlash('success', 'Arme équipée');
+
+        return $this->redirectToRoute(
+            'pathfinder_character_show',
+            ['uuid' => $character->uuid],
+            Response::HTTP_SEE_OTHER
         );
     }
 

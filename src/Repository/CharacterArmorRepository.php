@@ -25,7 +25,7 @@ class CharacterArmorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return CharacterArmor[] Returns an array of CharacterArmor objects
+     * @return CharacterArmor[]
      */
     public function findByCharacter(Character $character): array
     {
@@ -35,24 +35,9 @@ class CharacterArmorRepository extends ServiceEntityRepository
             ->addSelect('armor', 'character')
             ->andWhere('character_armor.character = :character')
             ->setParameter('character', $character)
-            ->addOrderBy('character_armor.level', 'ASC')
             ->addOrderBy('armor.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function findByCharacterAndArmor(Character $character, Armor $armor): ?CharacterArmor
-    {
-        return $this->createQueryBuilder('character_armor')
-            ->leftJoin('character_armor.armor', 'armor', 'WITH')
-            ->leftJoin('character_armor.character', 'character', 'WITH')
-            ->addSelect('armor', 'character')
-            ->andWhere('character_armor.character = :character')
-            ->setParameter('character', $character)
-            ->andWhere('armor = :armor')
-            ->setParameter('armor', $armor)
-            ->orderBy('armor.name', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

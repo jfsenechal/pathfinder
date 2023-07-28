@@ -45,12 +45,6 @@ class ClassT implements \JsonSerializable, \Stringable
     public iterable $spell_classes;
 
     /**
-     * @var Character[]
-     */
-    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'classT')]
-    public iterable $characters;
-
-    /**
      * @var Spell[] $spells
      */
     public array|ArrayCollection $spells;
@@ -59,7 +53,6 @@ class ClassT implements \JsonSerializable, \Stringable
     {
         $this->spells = new ArrayCollection();
         $this->spell_classes = new ArrayCollection();
-        $this->characters = new ArrayCollection();
         $this->skills = new ArrayCollection();
         $this->levels = new ArrayCollection();
     }
@@ -73,7 +66,7 @@ class ClassT implements \JsonSerializable, \Stringable
     {
         if (!$this->spell_classes->contains($spellClass)) {
             $this->spell_classes[] = $spellClass;
-            $spellClass->setCharacterClass($this);
+            $spellClass->classT = $this;
         }
 
         return $this;
@@ -82,28 +75,8 @@ class ClassT implements \JsonSerializable, \Stringable
     public function removeSpellClass(SpellClass $spellClass): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->spell_classes->removeElement($spellClass) && $spellClass->getCharacterClass() === $this) {
-            $spellClass->setCharacterClass(null);
-        }
-
-        return $this;
-    }
-
-    public function addCharacter(Character $character): self
-    {
-        if (!$this->characters->contains($character)) {
-            $this->characters[] = $character;
-            $character->classT = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeCharacter(Character $character): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->characters->removeElement($character) && $character->classT === $this) {
-            $character->classT = null;
+        if ($this->spell_classes->removeElement($spellClass) && $spellClass->classT === $this) {
+            $spellClass->classT = null;
         }
 
         return $this;

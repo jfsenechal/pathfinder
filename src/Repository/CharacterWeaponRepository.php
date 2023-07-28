@@ -5,7 +5,6 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
-use AfmLibre\Pathfinder\Entity\Weapon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,7 +24,7 @@ class CharacterWeaponRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return CharacterWeapon[] Returns an array of CharacterWeapon objects
+     * @return CharacterWeapon[]
      */
     public function findByCharacter(Character $character): array
     {
@@ -35,24 +34,8 @@ class CharacterWeaponRepository extends ServiceEntityRepository
             ->addSelect('weapon', 'character')
             ->andWhere('character_weapon.character = :character')
             ->setParameter('character', $character)
-            ->addOrderBy('character_weapon.level', 'ASC')
             ->addOrderBy('weapon.name', 'ASC')
             ->getQuery()
             ->getResult();
-    }
-
-    public function findByCharacterAndWeapon(Character $character, Weapon $weapon): ?CharacterWeapon
-    {
-        return $this->createQueryBuilder('character_weapon')
-            ->leftJoin('character_weapon.weapon', 'weapon', 'WITH')
-            ->leftJoin('character_weapon.character', 'character', 'WITH')
-            ->addSelect('weapon', 'character')
-            ->andWhere('character_weapon.character = :character')
-            ->setParameter('character', $character)
-            ->andWhere('weapon = :weapon')
-            ->setParameter('weapon', $weapon)
-            ->orderBy('weapon.name', 'ASC')
-            ->getQuery()
-            ->getOneOrNullResult();
     }
 }

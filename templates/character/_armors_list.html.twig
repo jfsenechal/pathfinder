@@ -1,0 +1,17 @@
+<h5 class="text-success">Armure(s)</h5>
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Ca</th>
+        <th>Malus</th>
+    </tr>
+    {% for armor in armors %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">{{ armor.name }}</a>
+            </td>
+            <td>{{ armor.bonus }}</td>
+            <td>{{ armor.malus }}</td>
+        </tr>
+    {% endfor %}
+</table>
