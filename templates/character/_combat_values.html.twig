@@ -1,5 +1,21 @@
-<h5 class="text-success">Valeurs de combat</h5>
+<h4 class="text-success">Valeurs de combat</h4>
 <table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>TOTAL</th>
+        <th>Bonus d'armures</th>
+        <th>Dextérité</th>
+        <th>Taille</th>
+        <th colspan="2">Spéciale</th>
+    </tr>
+    <tr>
+        <td>CA</td>
+        <td>{{ ca.total }}</td>
+        <td>{{ ca.armorsCa }}</td>
+        <td>{{ ca.dexterity }}</td>
+        <td>{{ bmo.sizeModifier }}</td>
+        <td colspan="2"></td>
+    </tr>
     <tr>
         <th></th>
         <th>Bonus d'attaque</th>

@@ -9,8 +9,6 @@
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/character/_actions.html.twig' %}
-            {% include '@AfmLibrePathfinder/character/_armors_list.html.twig' %}
-            {% include '@AfmLibrePathfinder/character/_weapons_list.html.twig' %}
             <table class="table table-bordered">
                 <tbody>
                 <tr>
@@ -39,14 +37,18 @@
                 <div class="col-6">
                     <h4 class="text-success">Résistence</h4>
                     {{ include('@AfmLibrePathfinder/ability/_list.html.twig') }}
-                    {{ include('@AfmLibrePathfinder/character/_combat_values.html.twig') }}
+                    {{ include('@AfmLibrePathfinder/character/_modifiers.html.twig') }}
                 </div>
             </div>
-            {{ include('@AfmLibrePathfinder/character/_modifiers.html.twig') }}
+
+            {{ include('@AfmLibrePathfinder/character/_combat_values.html.twig') }}
+
+            {% include '@AfmLibrePathfinder/character/_armors_list.html.twig' %}
+            {% include '@AfmLibrePathfinder/character/_weapons_list.html.twig' %}
 
             {{ include('@AfmLibrePathfinder/character/_spells_favorite.html.twig') }}
 
-            <h4 class="text-success">Levels</h4>
+            <h4 class="text-success">Niveaux</h4>
             {% include '@AfmLibrePathfinder/level/_list.html.twig' %}
 
         </div>

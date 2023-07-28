@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Ability\AbilityCalculator;
 use AfmLibre\Pathfinder\Ability\AbilityDto;
+use AfmLibre\Pathfinder\Ability\CombatCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
@@ -112,13 +113,15 @@ class CharacterController extends AbstractController
             Character::getValueModifier($character->wisdom)
         );
 
-        $bmo = AbilityCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $dmd = AbilityCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
-
         $armors = $this->characterArmorRepository->findByCharacter($character);
-        $armors = array_map(fn ($object) =>  $object->armor,$armors);
+        $armors = array_map(fn($object) => $object->armor, $armors);
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
-        $weapons = array_map(fn ($object) =>  $object->weapon,$weapons);
+        $weapons = array_map(fn($object) => $object->weapon, $weapons);
+
+        $bmo = CombatCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $dmd = CombatCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $ca = CombatCalculator::createCa($character, $armors, ModifierSizeEnum::SIZE_MIDDLE);
+
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -133,6 +136,7 @@ class CharacterController extends AbstractController
                 'weapons' => $weapons,
                 'bmo' => $bmo,
                 'dmd' => $dmd,
+                'ca' => $ca,
             ]
         );
     }
