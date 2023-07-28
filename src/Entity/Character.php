@@ -16,7 +16,6 @@ use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
-#[ORM\Table(name: 'characters')]
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 class Character implements SluggableInterface, TimestampableInterface, \Stringable
 {
@@ -68,6 +67,16 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     public ?Level $current_level = null;
 
     public int $select_level;
+
+    /**
+     * @var Armor[]
+     */
+    public array $armors = [];
+
+    /**
+     * @var Weapon[]
+     */
+    public array $weapons = [];
 
     public function __construct()
     {

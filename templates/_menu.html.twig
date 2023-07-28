@@ -21,11 +21,6 @@
     </a>
 </li>
 <li>
-    <a href="{{ path('pathfinder_feat_index') }}" class="nav-link px-2 link-dark">
-        Dons
-    </a>
-</li>
-<li>
     <a href="{{ path('pathfinder_spell_index') }}" class="nav-link px-2 link-dark">
         Sorts
     </a>
@@ -40,14 +35,24 @@
         Armes
     </a>
 </li>
-<li>
-    <a href="https://www.pathfinder-fr.org/wiki/GetFile.aspx?File=%2fADJ%2fPathfinder-RPG%2fPFSheet.pdf"
-       class="nav-link px-2 link-dark">
-        Pdf
-    </a>
-</li>
-<li>
-    <a href="{{ path('pathfinder_user_index') }}" class="nav-link px-2 link-dark">
-        Utilisateurs
-    </a>
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+        <i class="fas fa-ellipsis-v"></i> <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="{{ path('pathfinder_feat_index') }}" class="dropdown-item">
+                Dons
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pathfinder_user_index') }}" class="dropdown-item">Les Utilisateurs</a>
+        </li>
+        <li>
+            <a href="https://www.pathfinder-fr.org/wiki/GetFile.aspx?File=%2fADJ%2fPathfinder-RPG%2fPFSheet.pdf"
+               class="dropdown-item">
+                Pdf
+            </a>
+        </li>
+
+    </ul>
 </li>

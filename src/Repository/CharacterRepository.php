@@ -23,7 +23,7 @@ class CharacterRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array|Character[]
+     * @return Character[]
      */
     public function searchByUser(?string $username = null): array
     {

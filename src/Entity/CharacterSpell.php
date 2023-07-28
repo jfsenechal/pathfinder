@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ORM\Table]
 #[ORM\UniqueConstraint(columns: ['character_id', 'spell_id'])]
 #[ORM\Entity(repositoryClass: CharacterSpellRepository::class)]
-#[UniqueEntity(fields: ['character_player', 'spell'], message: 'Sort déjà dans votre sélection')]
+#[UniqueEntity(fields: ['character', 'spell'], message: 'Sort déjà dans votre sélection')]
 class CharacterSpell implements \Stringable
 {
     use IdTrait;
