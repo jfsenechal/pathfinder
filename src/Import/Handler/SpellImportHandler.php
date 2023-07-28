@@ -76,7 +76,7 @@ class SpellImportHandler
             $spell->components = $data[SpellYml::YAML_COMPONENTS];
         }
         if (isset($data[SpellYml::YAML_RANGE])) {
-            $spell->range = $data[SpellYml::YAML_RANGE];
+            $spell->ranged = $data[SpellYml::YAML_RANGE];
         }
         if (isset($data[SpellYml::YAML_TARGET])) {
             $spell->target = $data[SpellYml::YAML_TARGET];
