@@ -27,14 +27,18 @@ class RaceImportHandler
                 $raceTrait = new RaceTrait($race);
                 $raceTrait->name = $row['Nom'];
                 $raceTrait->description = $row['Description'];
-                $raceTrait->replaces = $row['Remplace'];
-                $raceTrait->reference = $row['Référence'];
-                $raceTrait->sourced = $row['Source'];
+                $raceTrait->replaces = $row['Remplace'] ?? [];
                 $this->raceTraitRepository->persist($raceTrait);
+                try {
+                    $this->raceTraitRepository->flush();
+
+                } catch (\Exception $exception) {
+                    $io->error($exception->getMessage());
+                    dd($raceData);
+                }
             }
         }
         $this->raceRepository->flush();
-        $this->raceTraitRepository->flush();
     }
 
     private function createRace(array $data): Race

@@ -16,7 +16,7 @@ class RaceTrait implements \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: 'json', nullable: true)]
     public ?iterable $replaces = [];
 
     #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'traits')]
