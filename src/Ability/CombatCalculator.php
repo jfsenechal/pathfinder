@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Ability;
 
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 
 class CombatCalculator
@@ -43,8 +44,11 @@ class CombatCalculator
      * @param ModifierSizeEnum $modifier
      * @return ArmorAbility
      */
-    public static function createArmorAbility(Character $character, array $armors, ModifierSizeEnum $modifier): ArmorAbility
-    {
+    public static function createArmorAbility(
+        Character $character,
+        array $armors,
+        ModifierSizeEnum $modifier
+    ): ArmorAbility {
         $caArmors = 0;
         foreach ($armors as $armor) {
             $caArmors += $armor->bonus;
@@ -55,6 +59,42 @@ class CombatCalculator
             Character::getValueModifier($character->dexterity),
             $caArmors,
             $modifier->getModificateur()
+        );
+    }
+
+    public static function createAttackAbility(
+        Character $character,
+        Weapon $weapon,
+        ModifierSizeEnum $modifier
+    ): AttackAbility {
+
+        $caracteristic = $character->strength;
+
+        if ($weapon->distance) {
+            $caracteristic = $character->dexterity;
+        }
+
+        return new AttackAbility(
+            "ja",
+            $character->current_level->bab,
+            Character::getValueModifier($caracteristic),
+            $weapon->damageMedium,
+            $modifier->getModificateur()
+        );
+    }
+
+    public static function createDamageAbility(
+        Character $character,
+        Weapon $weapon,
+    ): DamageAbility {
+
+        return new DamageAbility(
+            "jd",
+            $character->current_level->bab,
+            $weapon->damageMedium,
+            Character::getValueModifier($character->strength),
+            true,
+            true
         );
     }
 }

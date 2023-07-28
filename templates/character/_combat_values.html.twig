@@ -26,10 +26,10 @@
     </tr>
     <tr>
         <td>BMO</td>
-        <td>{{ bmo.total }}</td>
-        <td>{{ bmo.bab }}</td>
-        <td>{{ bmo.fortitude }}</td>
-        <td>{{ bmo.sizeModifier }}</td>
+        <td>{{ bmoAbility.total }}</td>
+        <td>{{ bmoAbility.bab }}</td>
+        <td>{{ bmoAbility.fortitude }}</td>
+        <td>{{ bmoAbility.sizeModifier }}</td>
         <td colspan="2"></td>
     </tr>
     <tr>
@@ -43,11 +43,44 @@
     </tr>
     <tr>
         <td>DMD</td>
-        <td>{{ dmd.total }}</td>
-        <td>{{ dmd.bab }}</td>
-        <td>{{ dmd.fortitude }}</td>
-        <td>{{ dmd.dexterity }}</td>
+        <td>{{ dmdAbility.total }}</td>
+        <td>{{ dmdAbility.bab }}</td>
+        <td>{{ dmdAbility.fortitude }}</td>
+        <td>{{ dmdAbility.dexterity }}</td>
         <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>TOTAL</th>
+        <th>BBA</th>
+        <th>Force/Dex</th>
+        <th colspan="3">Arme</th>
+    </tr>
+    <tr>
+        <td>Jet de touch</td>
+        <td>{{ attackAbility.total }}</td>
+        <td>{{ attackAbility.bab }}</td>
+        <td>{{ attackAbility.caracteristic }}</td>
+        <td colspan="3">{{ attackAbility.weaponDamage }}</td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>TOTAL</th>
+        <th>BBA</th>
+        <th>Force</th>
+        <th>Arme</th>
+        <th>Main directrice</th>
+        <th>2 mains</th>
+    </tr>
+    <tr>
+        <td>Dégâts</td>
+        <td>{{ damageAbility.total }}</td>
+        <td>{{ damageAbility.bab }}</td>
+        <td>{{ damageAbility.strength }}</td>
+        <td>{{ damageAbility.weaponDamage }}</td>
+        <td>{{ damageAbility.leadingHand }}</td>
+        <td>{{ damageAbility.twoHanded }}</td>
         <td></td>
     </tr>
 </table>

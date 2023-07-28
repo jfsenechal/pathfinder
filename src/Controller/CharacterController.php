@@ -122,6 +122,8 @@ class CharacterController extends AbstractController
         $dmd = CombatCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
         $armorAbility = CombatCalculator::createArmorAbility($character, $armors, ModifierSizeEnum::SIZE_MIDDLE);
 
+        $attackAbility = CombatCalculator::createAttackAbility($character, $weapons[0], ModifierSizeEnum::SIZE_MIDDLE);
+        $damageAbility = CombatCalculator::createDamageAbility($character, $weapons[0]);
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -134,9 +136,11 @@ class CharacterController extends AbstractController
                 'abilities' => $abilities,
                 'armors' => $armors,
                 'weapons' => $weapons,
-                'bmo' => $bmo,
-                'dmd' => $dmd,
+                'bmoAbility' => $bmo,
+                'dmdAbility' => $dmd,
                 'armorAbility' => $armorAbility,
+                'attackAbility' => $attackAbility,
+                'damageAbility' => $damageAbility,
             ]
         );
     }

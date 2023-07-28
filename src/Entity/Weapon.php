@@ -36,13 +36,15 @@ class Weapon
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $descriptionHtml = null;
 
-
     #[ORM\Column(length: 150, nullable: true)]
     public string $category2;
 
     #[ORM\ManyToOne(targetEntity: WeaponCategory::class)]
     #[ORM\JoinColumn(nullable: true)]
     public ?WeaponCategory $category = null;
+
+    //todo determin
+    public $distance = false;
 
     public function __toString(): string
     {
