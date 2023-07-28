@@ -120,7 +120,7 @@ class CharacterController extends AbstractController
 
         $bmo = CombatCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
         $dmd = CombatCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $ca = CombatCalculator::createCa($character, $armors, ModifierSizeEnum::SIZE_MIDDLE);
+        $armorAbility = CombatCalculator::createArmorAbility($character, $armors, ModifierSizeEnum::SIZE_MIDDLE);
 
 
         return $this->render(
@@ -136,7 +136,7 @@ class CharacterController extends AbstractController
                 'weapons' => $weapons,
                 'bmo' => $bmo,
                 'dmd' => $dmd,
-                'ca' => $ca,
+                'armorAbility' => $armorAbility,
             ]
         );
     }

@@ -2,7 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Ability;
 
-class CaDto
+class ArmorAbility
 {
     public function __construct(
         readonly string $name,

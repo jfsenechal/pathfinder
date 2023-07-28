@@ -41,16 +41,16 @@ class CombatCalculator
      * @param Character $character
      * @param Armor[] $armors
      * @param ModifierSizeEnum $modifier
-     * @return CaDto
+     * @return ArmorAbility
      */
-    public static function createCa(Character $character, array $armors, ModifierSizeEnum $modifier): CaDto
+    public static function createArmorAbility(Character $character, array $armors, ModifierSizeEnum $modifier): ArmorAbility
     {
         $caArmors = 0;
         foreach ($armors as $armor) {
             $caArmors += $armor->bonus;
         }
 
-        return new CaDto(
+        return new ArmorAbility(
             "ca",
             Character::getValueModifier($character->dexterity),
             $caArmors,
