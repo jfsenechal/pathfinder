@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Ability\AttackAbility;
+use AfmLibre\Pathfinder\Ability\DamageAbility;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,10 +23,13 @@ class CharacterWeapon implements \Stringable
 
     #[ORM\ManyToOne(targetEntity: Weapon::class)]
     #[ORM\JoinColumn(nullable: false)]
-    public ?Weapon $weapon;
+    public Weapon $weapon;
 
     #[ORM\Column(nullable: true)]
     public ?string $emplacement;
+
+    public ?AttackAbility $attackAbility = null;
+    public ?DamageAbility $damageAbility = null;
 
     public function __construct(Character $character, Weapon $weapon)
     {

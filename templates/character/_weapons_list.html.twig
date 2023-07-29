@@ -2,16 +2,56 @@
 <table class="table table-bordered">
     <tr>
         <th>Nom</th>
-        <th>Dégats</th>
+        <th>Bonus dégats total</th>
+        <th>BBA</th>
+        <th>Dégâts</th>
+        <th>Force/Dex</th>
         <th>Critique</th>
+        <th>Main directrice</th>
+        <th>2 mains</th>
     </tr>
-    {% for weapon in weapons %}
+    {% for characterWeapon in characterWeapons %}
+        {% set weapon = characterWeapon.weapon %}
         <tr>
             <td>
                 <a href="{{ path('pathfinder_weapon_show', {'id': weapon.id}) }}">{{ weapon.name }}</a>
             </td>
+            <td>{{ characterWeapon.damageAbility.total }}</td>
+            <td>{{ characterWeapon.damageAbility.bab }}</td>
             <td>{{ weapon.damageMedium }}</td>
+            <td>{{ characterWeapon.damageAbility.strength }}</td>
             <td>{{ weapon.critical }}</td>
+            <td>
+                {% if  characterWeapon.damageAbility.leadingHand %}
+                    Oui
+                {% else %}
+                    Non <p class="text-muted">Force/2</p>
+                {% endif %}
+
+            </td>
+            <td>
+                {% if characterWeapon.damageAbility.twoHanded %}
+                    Oui  <span class="text-muted">(Force x 1.5)</span>
+                {% else %}
+                    Non
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
 </table>
+{#
+<tr>
+    <th></th>
+    <th>TOTAL</th>
+    <th>BBA</th>
+    <th>Force/Dex</th>
+    <th colspan="3">Arme</th>
+</tr>
+<tr>
+    <td>Jet de touch</td>
+    <td>{{ attackAbility.total }}</td>
+    <td>{{ attackAbility.bab }}</td>
+    <td>{{ attackAbility.caracteristic }}</td>
+    <td colspan="3">{{ attackAbility.weaponDamage }}</td>
+</tr>
+#}

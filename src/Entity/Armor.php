@@ -20,7 +20,7 @@ class Armor
     #[ORM\Column(nullable: true)]
     public ?string $bonusDexMax;
     #[ORM\Column(nullable: true)]
-    public ?string $malus;
+    public ?string $penalty;
     #[ORM\Column(nullable: true)]
     public ?string $castFail;
     #[ORM\Column(nullable: true)]

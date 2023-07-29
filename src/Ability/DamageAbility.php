@@ -23,20 +23,20 @@ class DamageAbility
      */
     public function total(): int
     {
-        $bab = $this->bab;
-        if ($this->twoHanded) {
-            if ($this->bab > 0) {
-                $bab = $bab * 1.5;
-            }
-        }
-
         $strength = $this->strength;
-        if (!$this->leadingHand) {
+
+        if ($this->twoHanded) {
             if ($strength > 0) {
-                $strength = $strength / 2;
+                $strength = $strength * 1.5;
+            }
+        } else {
+            if (!$this->leadingHand) {
+                if ($strength > 0) {
+                    $strength = $strength / 2;
+                }
             }
         }
 
-        return $bab + $strength;
+        return $this->bab + $strength;
     }
 }

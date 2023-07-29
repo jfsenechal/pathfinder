@@ -8,8 +8,8 @@ class AttackAbility
         readonly string $name,
         readonly int $bab,
         readonly int $caracteristic,
-        readonly string $weaponDamage,
-        readonly int $sizeModifier = 0
+        readonly int $sizeModifier = 0,
+        readonly int $rangePenalty = 0
     ) {
     }
 
@@ -22,6 +22,6 @@ class AttackAbility
      */
     public function total(): int
     {
-        return $this->bab + $this->caracteristic + $this->sizeModifier;
+        return $this->bab + $this->caracteristic + $this->sizeModifier + $this->rangePenalty;
     }
 }

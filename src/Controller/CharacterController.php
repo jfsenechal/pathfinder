@@ -8,6 +8,7 @@ use AfmLibre\Pathfinder\Ability\CombatCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
@@ -88,11 +89,6 @@ class CharacterController extends AbstractController
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $spells = SpellUtils::groupByLevel($characterSpells);
 
-        $classT = $character->classT;
-        foreach ($levels = $this->levelRepository->findByClass($classT) as $level) {
-            $level->features = $this->classFeatureRepository->findByClassAndLevel($classT, $level);
-        }
-
         $modifiers = $this->raceTraitRepository->findByRaceAndName($character->race, "Caractéristiques");
         $currentLevel = $character->current_level;
 
@@ -113,34 +109,34 @@ class CharacterController extends AbstractController
             Character::getValueModifier($character->wisdom)
         );
 
-        $armors = $this->characterArmorRepository->findByCharacter($character);
-        $armors = array_map(fn($object) => $object->armor, $armors);
+        $characterArmors = $this->characterArmorRepository->findByCharacter($character);
+
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
-        $weapons = array_map(fn($object) => $object->weapon, $weapons);
+        $characterWeapons = array_map(function (CharacterWeapon $characterWeapon) use ($character) {
+            $weapon = $characterWeapon->weapon;
+            $characterWeapon->damageAbility = CombatCalculator::createDamageAbility($character, $weapon);
+            $characterWeapon->attackAbility = CombatCalculator::createAttackAbility($character, $weapon, ModifierSizeEnum::SIZE_MIDDLE);
+
+            return $characterWeapon;
+        }, $weapons);
 
         $bmo = CombatCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
         $dmd = CombatCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $armorAbility = CombatCalculator::createArmorAbility($character, $armors, ModifierSizeEnum::SIZE_MIDDLE);
-
-        $attackAbility = CombatCalculator::createAttackAbility($character, $weapons[0], ModifierSizeEnum::SIZE_MIDDLE);
-        $damageAbility = CombatCalculator::createDamageAbility($character, $weapons[0]);
+        $armorAbility = CombatCalculator::createArmorAbility($character, $characterArmors, ModifierSizeEnum::SIZE_MIDDLE);
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
             [
                 'character' => $character,
                 'spells' => $spells,
-                'levels' => $levels,
                 'currentLevel' => $currentLevel,
                 'modifiers' => $modifiers,
                 'abilities' => $abilities,
-                'armors' => $armors,
-                'weapons' => $weapons,
+                'characterArmors' => $characterArmors,
+                'characterWeapons' => $characterWeapons,
                 'bmoAbility' => $bmo,
                 'dmdAbility' => $dmd,
                 'armorAbility' => $armorAbility,
-                'attackAbility' => $attackAbility,
-                'damageAbility' => $damageAbility,
             ]
         );
     }

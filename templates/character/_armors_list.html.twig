@@ -5,13 +5,14 @@
         <th>Ca</th>
         <th>Malus</th>
     </tr>
-    {% for armor in armors %}
+    {% for characterArmor in characterArmors %}
+        {% set armor = characterArmor.armor %}
         <tr>
             <td>
                 <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">{{ armor.name }}</a>
             </td>
             <td>{{ armor.bonus }}</td>
-            <td>{{ armor.malus }}</td>
+            <td>{{ armor.penalty }}</td>
         </tr>
     {% endfor %}
 </table>

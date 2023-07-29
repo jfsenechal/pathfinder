@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Ability;
 
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 
@@ -40,17 +41,18 @@ class CombatCalculator
     /**
      * 10 + bonus d’armure + bonus de bouclier + modificateur de Dextérité + modificateur de taille
      * @param Character $character
-     * @param Armor[] $armors
+     * @param CharacterArmor[] $characterArmors
      * @param ModifierSizeEnum $modifier
      * @return ArmorAbility
      */
     public static function createArmorAbility(
         Character $character,
-        array $armors,
+        array $characterArmors,
         ModifierSizeEnum $modifier
     ): ArmorAbility {
         $caArmors = 0;
-        foreach ($armors as $armor) {
+        foreach ($characterArmors as $characterArmor) {
+            $armor = $characterArmor->armor;
             $caArmors += $armor->bonus;
         }
 
@@ -69,17 +71,19 @@ class CombatCalculator
     ): AttackAbility {
 
         $caracteristic = $character->strength;
+        $rangePenalty = 0;
 
         if ($weapon->distance) {
             $caracteristic = $character->dexterity;
+            $rangePenalty = $weapon->ranged;
         }
 
         return new AttackAbility(
             "ja",
             $character->current_level->bab,
             Character::getValueModifier($caracteristic),
-            $weapon->damageMedium,
-            $modifier->getModificateur()
+            $modifier->getModificateur(),
+            $rangePenalty
         );
     }
 
