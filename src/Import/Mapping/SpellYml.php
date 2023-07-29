@@ -6,7 +6,7 @@
  * Time: 10:40
  */
 
-namespace AfmLibre\Pathfinder\Mapping;
+namespace AfmLibre\Pathfinder\Import\Mapping;
 
 class SpellYml
 {

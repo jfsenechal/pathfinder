@@ -1,0 +1,16 @@
+<h4 class="text-success">Don(s)</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>Nom</th>
+        <th>Résumé</th>
+    </tr>
+    {% for characterFeat in characterFeats %}
+        {% set feat = characterFeat.feat %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_feat_show', {'id': feat.id}) }}">{{ feat.name }}</a>
+            </td>
+            <td>{{ feat.summary }}</td>
+        </tr>
+    {% endfor %}
+</table>

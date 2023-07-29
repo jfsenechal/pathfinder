@@ -10,6 +10,11 @@
             </h3>
         </div>
         <div class="card-body">
+
+            <a href="{{ path('pathfinder_feat_outfit', { 'id': feat.id }) }}" role="button"
+               class="btn btn-primary mb-3"><i class="ti ti-feather"></i> Acquérir</a>
+
+
             {% if feat.summary %}
                 <p class="text-muted">{{ feat.summary }}</p>
             {% endif %}
