@@ -1,0 +1,31 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Passage de niveau{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Chaussette ! {{ character.name }}</h3>
+        </div>
+        <div class="card-body">
+
+            <h5>
+                <strong>Votre niveau actuel : {{ character.current_level.lvl }}</strong>
+            </h5>
+
+            <h5 class="text-success mt-3">Détails du prochain niveau :</h5>
+
+            {% include '@AfmLibrePathfinder/level/_list.html.twig' with {'levels': [nextLevel]} %}
+
+            <button class="btn btn-primary mr-1 mb-2" type="submit">
+                <i class="ti ti-arrow-big-up"></i>
+                Passer de niveau
+            </button>
+
+            <h4 class="text-success mt-3">Tous les Niveaux</h4>
+            {% include '@AfmLibrePathfinder/level/_list.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
