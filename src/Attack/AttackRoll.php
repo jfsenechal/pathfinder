@@ -1,8 +1,13 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Ability;
+namespace AfmLibre\Pathfinder\Attack;
 
-class AttackAbility
+/**
+ * Melee attack roll result = d20 roll
+ * + Strength modifier (or optionally Dexterity modifier for a finesse weapon) + proficiency bonus + other bonuses + penalties
+ * Ranged attack roll result = d20 roll + Dexterity modifier + proficiency bonus + other bonuses + penalties
+ */
+class AttackRoll
 {
     public function __construct(
         readonly string $name,

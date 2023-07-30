@@ -1,8 +1,12 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Ability;
+namespace AfmLibre\Pathfinder\Armor;
 
-class ArmorAbility
+/**
+ * Armor Class = 10 + Dexterity modifier (up to your armor’s Dex Cap)
+ * + proficiency bonus + armor’s item bonus to AC + other bonuses + penalties
+ */
+class ArmorClass
 {
     public function __construct(
         readonly string $name,

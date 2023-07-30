@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Ability\AbilityCalculator;
 use AfmLibre\Pathfinder\Ability\AbilityDto;
-use AfmLibre\Pathfinder\Ability\CombatCalculator;
+use AfmLibre\Pathfinder\Attack\AttackCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
@@ -116,8 +116,8 @@ class CharacterController extends AbstractController
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
         $characterWeapons = array_map(function (CharacterWeapon $characterWeapon) use ($character) {
             $weapon = $characterWeapon->weapon;
-            $characterWeapon->damageAbility = CombatCalculator::createDamageAbility($character, $weapon);
-            $characterWeapon->attackAbility = CombatCalculator::createAttackAbility(
+            $characterWeapon->damageRoll = AttackCalculator::createDamageAbility($character, $weapon);
+            $characterWeapon->attackRoll = AttackCalculator::createAttackRoll(
                 $character,
                 $weapon,
                 ModifierSizeEnum::SIZE_MIDDLE
@@ -128,9 +128,9 @@ class CharacterController extends AbstractController
 
         $characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
-        $bmo = CombatCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $dmd = CombatCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $armorAbility = CombatCalculator::createArmorAbility(
+        $bmo = AttackCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $dmd = AttackCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $armorClass = AttackCalculator::createArmorAbility(
             $character,
             $characterArmors,
             ModifierSizeEnum::SIZE_MIDDLE
@@ -149,7 +149,7 @@ class CharacterController extends AbstractController
                 'characterFeats' => $characterFeats,
                 'bmoAbility' => $bmo,
                 'dmdAbility' => $dmd,
-                'armorAbility' => $armorAbility,
+                'armorClass' => $armorClass,
             ]
         );
     }

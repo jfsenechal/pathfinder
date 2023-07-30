@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use AfmLibre\Pathfinder\Ability\AttackAbility;
-use AfmLibre\Pathfinder\Ability\DamageAbility;
+use AfmLibre\Pathfinder\Attack\AttackRoll;
+use AfmLibre\Pathfinder\Damage\DamageRoll;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,8 +28,8 @@ class CharacterWeapon implements \Stringable
     #[ORM\Column(nullable: true)]
     public ?string $emplacement;
 
-    public ?AttackAbility $attackAbility = null;
-    public ?DamageAbility $damageAbility = null;
+    public ?AttackRoll $attackRoll = null;
+    public ?DamageRoll $damageRoll = null;
 
     public function __construct(Character $character, Weapon $weapon)
     {

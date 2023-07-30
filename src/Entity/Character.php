@@ -92,7 +92,7 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public static function getValueModifier(int $value): int
     {
-        return AbilityEnum::getValueModifier($value);
+        return AbilityEnum::valueModifier($value);
     }
 
     public function shouldGenerateUniqueSlugs(): bool

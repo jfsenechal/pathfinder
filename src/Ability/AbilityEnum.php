@@ -3,7 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Ability;
 
-enum AbilityEnum:int
+enum AbilityEnum: int
 {
     case ABILITY_STRENGH = 0;
     case ABILITY_DEXTERITY = 1;
@@ -12,7 +12,7 @@ enum AbilityEnum:int
     case ABILITY_WISDOM = 4;
     case ABILITY_CHARISMA = 5;
 
-    public static function getValueModifier(int $val): int
+    public static function valueModifier(int $val): int
     {
         return match ($val) {
             1 => -5,
@@ -25,6 +25,8 @@ enum AbilityEnum:int
             14, 15 => +2,
             16, 17 => +3,
             18, 19 => +4,
+            21, 20 => +5,
+            22, 23 => +6,
         };
     }
 }

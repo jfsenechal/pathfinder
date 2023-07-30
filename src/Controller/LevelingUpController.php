@@ -14,7 +14,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/level')]
-class LevelCrossingController extends AbstractController
+class LevelingUpController extends AbstractController
 {
     public function __construct(
         private LevelRepository $levelRepository,

@@ -1,16 +1,19 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Ability;
+namespace AfmLibre\Pathfinder\Attack;
 
-use AfmLibre\Pathfinder\Entity\Armor;
+use AfmLibre\Pathfinder\Ability\BmoDto;
+use AfmLibre\Pathfinder\Ability\DmdDto;
+use AfmLibre\Pathfinder\Armor\ArmorClass;
+use AfmLibre\Pathfinder\Damage\DamageRoll;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 
-class CombatCalculator
+class AttackCalculator
 {
-//BMO=Bonus de base à l’attaque + modificateur de Force + modificateur de taille spécial
+    //BMO=Bonus de base à l’attaque + modificateur de Force + modificateur de taille spécial
     //Le bonus de manœuvre offensive
     public static function createBmo(Character $character, ModifierSizeEnum $modifier): BmoDto
     {
@@ -43,20 +46,19 @@ class CombatCalculator
      * @param Character $character
      * @param CharacterArmor[] $characterArmors
      * @param ModifierSizeEnum $modifier
-     * @return ArmorAbility
      */
     public static function createArmorAbility(
         Character $character,
         array $characterArmors,
         ModifierSizeEnum $modifier
-    ): ArmorAbility {
+    ): ArmorClass {
         $caArmors = 0;
         foreach ($characterArmors as $characterArmor) {
             $armor = $characterArmor->armor;
             $caArmors += $armor->bonus;
         }
 
-        return new ArmorAbility(
+        return new ArmorClass(
             "ca",
             Character::getValueModifier($character->dexterity),
             $caArmors,
@@ -64,11 +66,11 @@ class CombatCalculator
         );
     }
 
-    public static function createAttackAbility(
+    public static function createAttackRoll(
         Character $character,
         Weapon $weapon,
         ModifierSizeEnum $modifier
-    ): AttackAbility {
+    ): AttackRoll {
 
         $caracteristic = $character->strength;
         $rangePenalty = 0;
@@ -78,7 +80,7 @@ class CombatCalculator
             $rangePenalty = $weapon->ranged;
         }
 
-        return new AttackAbility(
+        return new AttackRoll(
             "ja",
             $character->current_level->bab,
             Character::getValueModifier($caracteristic),
@@ -90,9 +92,9 @@ class CombatCalculator
     public static function createDamageAbility(
         Character $character,
         Weapon $weapon,
-    ): DamageAbility {
+    ): DamageRoll {
 
-        return new DamageAbility(
+        return new DamageRoll(
             "jd",
             $character->current_level->bab,
             $weapon->damageMedium,
