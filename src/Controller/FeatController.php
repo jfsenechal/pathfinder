@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Repository\FeatRepository;
+use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,8 @@ class FeatController extends AbstractController
     public function __construct(
         private readonly FeatRepository $featRepository,
         private readonly CharacterFeatRepository $characterFeatRepository,
-        private readonly CharacterRepository $characterRepository
+        private readonly CharacterRepository $characterRepository,
+        private readonly ModifierRepository $modifierRepository
     ) {
     }
 
@@ -38,10 +40,13 @@ class FeatController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_feat_show')]
     public function show(Feat $feat)
     {
+        $modifiers = $this->modifierRepository->findByClassName($feat::class);
+
         return $this->render(
             '@AfmLibrePathfinder/feat/show.html.twig',
             [
                 'feat' => $feat,
+                'modifiers' => $modifiers,
             ]
         );
     }

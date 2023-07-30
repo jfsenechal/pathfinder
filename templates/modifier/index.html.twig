@@ -1,0 +1,41 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Armures{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3>Les {{ modifiers|length }} armures</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                    <th>Bonus</th>
+                    <th>Vitesse 6M / 9M</th>
+                    <th>Dextérité maximum</th>
+                </tr>
+                {% for modifier in modifiers %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('pathfinder_modifier_show', {'id': modifier.id}) }}">
+                                {{ modifier.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ modifier.bonus }}
+                        </td>
+                        <td>
+                            {{ modifier.speed6 }} / {{ modifier.speed9 }}
+                        </td>
+                        <td>
+                            {{ modifier.bonusDexMax }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
