@@ -33,7 +33,7 @@ class FeatRepository extends ServiceEntityRepository
         if ($name) {
             $qb
                 ->andWhere('feat.name LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', '%'.$name.'%');
         }
 
         if ($category) {
@@ -64,5 +64,14 @@ class FeatRepository extends ServiceEntityRepository
             ->addOrderBy('feat.name', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByName(string $name): ?Feat
+    {
+        return $this->createQueryBuilder('feat')
+            ->andWhere('feat.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -2,11 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Command;
 
+use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
-use AfmLibre\Pathfinder\Repository\RaceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,8 +22,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class mportModifierCommand extends Command
 {
-    public function __construct(private RaceRepository $raceRepository, private ModifierRepository $modifierRepository)
-    {
+    private SymfonyStyle $io;
+
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private ModifierRepository $modifierRepository
+    ) {
         parent::__construct();
     }
 
@@ -35,28 +40,64 @@ class mportModifierCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $this->io = new SymfonyStyle($input, $output);
 
-        $className = Race::class;
+        $this->import();
+        $this->modifierRepository->flush();
+
+        return Command::SUCCESS;
+    }
+
+    private function treatement(array $data, string $className)
+    {
+        foreach ($data as $name => $values) {
+            $object = $this->entityManager->getRepository($className)->findByName($name);
+            if (!$object) {
+                $this->io->error('Objet non trouvé '.$className.' '.$name);
+                continue;
+            }
+            foreach ($values as $ability => $value) {
+                if (!$modifier = $this->modifierRepository->findByIdAndClassName($object->getId(), $className)) {
+                    $modifier = new Modifier($object->getId(), $className);
+                    $this->modifierRepository->persist($modifier);
+                }
+                $modifier->value = $value;
+                $modifier->ability = ModifierEnum::findByName($ability);
+            }
+        }
+    }
+
+    private function import()
+    {
         $races = [
             'Elfe' => [
                 ModifierEnum::ABILITY_DEXTERITY->value => +2,
                 ModifierEnum::ABILITY_INTELLIGENCE->value => +2,
                 ModifierEnum::ABILITY_CONSTITUTION->value => -2,
             ],
+            'Halfelin' => [
+                ModifierEnum::ABILITY_DEXTERITY->value => +2,
+                ModifierEnum::ABILITY_CHARISMA->value => +2,
+                ModifierEnum::ABILITY_STRENGH->value => -2,
+            ],
+            'Nain' => [
+                ModifierEnum::ABILITY_CONSTITUTION->value => +2,
+                ModifierEnum::ABILITY_WISDOM->value => +2,
+                ModifierEnum::ABILITY_CHARISMA->value => -2,
+            ],
+            'Gnome' => [
+                ModifierEnum::ABILITY_CONSTITUTION->value => +2,
+                ModifierEnum::ABILITY_CHARISMA->value => +2,
+                ModifierEnum::ABILITY_STRENGH->value => -2,
+            ],
         ];
-        foreach ($races as $name => $values) {
-            $race = $this->raceRepository->findByName($name);
-            foreach ($values as $ability => $value) {
-                $modifier = new Modifier($race->getId(), $className);
-                $modifier->value = $value;
-                $modifier->ability = ModifierEnum::findByName($ability);
-                $this->modifierRepository->persist($modifier);
-            }
-        }
 
-        $this->modifierRepository->flush();
-
-        return Command::SUCCESS;
+        $this->treatement($races, Race::class);
+        $feats = [
+            'Esquive' => [
+                ModifierEnum::ABILITY_CA->value => +1,
+            ],
+        ];
+        $this->treatement($feats, Feat::class);
     }
 }

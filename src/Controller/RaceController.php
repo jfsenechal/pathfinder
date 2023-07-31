@@ -34,7 +34,7 @@ class RaceController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_race_show')]
     public function show(Race $race)
     {
-        $modifiers = $this->modifierRepository->findByClassName($race::class);
+        $modifiers = $this->modifierRepository->findByIdClass($race->getId());
 
         return $this->render(
             '@AfmLibrePathfinder/race/show.html.twig',

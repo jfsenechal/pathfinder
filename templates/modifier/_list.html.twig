@@ -1,13 +1,15 @@
-<h4 class="text-success mt-3">Modificateur(s)</h4>
-<table class="table table-bordered">
-    <tr>
-        <th>Caractéristique</th>
-        <th>Value</th>
-    </tr>
-    {% for modifier in modifiers %}
-    <tr>
-        <td>{{ modifier.ability.value }}</td>
-        <td>{{ modifier.value }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% if modifiers|length > 0 %}
+    <h4 class="text-success mt-3">Modificateur(s)</h4>
+    <table class="table table-bordered">
+        <tr>
+            <th>Caractéristique</th>
+            <th>Value</th>
+        </tr>
+        {% for modifier in modifiers %}
+            <tr>
+                <td>{{ modifier.ability.value }}</td>
+                <td>{{ modifier.value }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

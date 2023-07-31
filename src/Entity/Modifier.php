@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Modifier\ModifierEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\UniqueConstraint(columns: ['object_class', 'object_id'])]
 #[ORM\Entity(repositoryClass: ModifierRepository::class)]
 class Modifier
 {

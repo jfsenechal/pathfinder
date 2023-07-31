@@ -24,26 +24,35 @@ class WeaponRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array|Weapon[]
+     * @return Weapon[]
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('s')
-            ->orderBy('s.name', 'ASC')
+        return $this->createQueryBuilder('weapon')
+            ->orderBy('weapon.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * @return array|Weapon[]
+     * @return Weapon[]
      */
     public function findByCategory(WeaponCategory $category): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.category = :category')
+        return $this->createQueryBuilder('weapon')
+            ->andWhere('weapon.category = :category')
             ->setParameter('category', $category)
-            ->orderBy('s.name', 'ASC')
+            ->orderBy('weapon.name', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByName(string $name): ?Weapon
+    {
+        return $this->createQueryBuilder('weapon')
+            ->andWhere('weapon.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

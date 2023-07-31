@@ -70,6 +70,17 @@ class ModifierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByIdAndClassName(int $id, string $className): ?Modifier
+    {
+        return $this->createQbl()
+            ->andWhere('modifier.object_id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('modifier.object_class = :class')
+            ->setParameter('class', $className)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('modifier')
