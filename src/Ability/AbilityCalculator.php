@@ -18,7 +18,7 @@ class AbilityCalculator
     ) {
     }
 
-    public function abilitiesScore(Character $character): array
+    public function calculate(Character $character): array
     {
         $abilities = [];
         foreach (ModifierEnum::abilities() as $modifierEnum) {

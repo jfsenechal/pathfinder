@@ -1,10 +1,10 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Ability;
+namespace AfmLibre\Pathfinder\SavingThrow;
 
 use AfmLibre\Pathfinder\Entity\Modifier;
 
-class AbilityDto
+class SavingThrowDto
 {
     /**
      * @param string $name

@@ -97,8 +97,8 @@ class CharacterController extends AbstractController
 
         $currentLevel = $character->current_level;
 
-        $abilities = $this->abilityCalculator->abilitiesScore($character);
-        $savingThrows = $this->savingThrowCalculator->run($character);
+        $abilities = $this->abilityCalculator->calculate($character);
+        $savingThrows = $this->savingThrowCalculator->calculate($character);
 
         $characterArmors = $this->characterArmorRepository->findByCharacter($character);
         $armorClass = AttackCalculator::createArmorAbility(

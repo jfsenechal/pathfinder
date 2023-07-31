@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\SavingThrow;
 
-use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
@@ -19,7 +18,11 @@ class SavingThrowCalculator
     ) {
     }
 
-    public function run(Character $character,): array
+    /**
+     * @param Character $character
+     * @return SavingThrowDto[]
+     */
+    public function calculate(Character $character,): array
     {
         $race = $character->race;
 
@@ -32,9 +35,9 @@ class SavingThrowCalculator
             $specials = [$modifier];
         }
 
-        $abilities = [];
+        $savingThrows = [];
         $currentLevel = $character->current_level;
-        $abilities[] = new AbilityDto(
+        $savingThrows[] = new SavingThrowDto(
             'Réflexe',
             $currentLevel->reflex,
             'Dextérité',
@@ -51,7 +54,7 @@ class SavingThrowCalculator
             $specials = [$modifier];
         }
 
-        $abilities[] = new AbilityDto(
+        $savingThrows[] = new SavingThrowDto(
             'Vigueur',
             $currentLevel->fortitude,
             'Constitution',
@@ -59,7 +62,7 @@ class SavingThrowCalculator
             $specials
         );
         $specials = [];
-        $abilities[] = new AbilityDto(
+        $savingThrows[] = new SavingThrowDto(
             'Volonté',
             $currentLevel->will,
             'Sagesse',
@@ -67,7 +70,7 @@ class SavingThrowCalculator
             $specials
         );
 
-        return $abilities;
+        return $savingThrows;
     }
 
     /**
