@@ -1,37 +1,18 @@
 <table class="table table-bordered">
     <tr>
         <th></th>
-        <th>Mod</th>
+        <th>Total bonus</th>
         <th>Base</th>
+        <th>Bonus de base</th>
+        <th>Specials</th>
     </tr>
-    <tr>
-        <th>Force</th>
-        <td>{{ character.valueModifier(character.strength) }}</td>
-        <td>{{ character.strength }}</td>
-    </tr>
-    <tr>
-        <th>Dextérité</th>
-        <td>{{ character.valueModifier(character.dexterity) }}</td>
-        <td>{{ character.dexterity }}</td>
-    </tr>
-    <tr>
-        <th>Constitution</th>
-        <td>{{ character.valueModifier(character.constitution) }}</td>
-        <td>{{ character.constitution }}</td>
-    </tr>
-    <tr>
-        <th>Intelligence</th>
-        <td>{{ character.valueModifier(character.intelligence) }}</td>
-        <td>{{ character.intelligence }}</td>
-    </tr>
-    <tr>
-        <th>Sagesse</th>
-        <td>{{ character.valueModifier(character.wisdom) }}</td>
-        <td>{{ character.wisdom }}</td>
-    </tr>
-    <tr>
-        <th>Charisme</th>
-        <td>{{ character.valueModifier(character.charisma) }}</td>
-        <td>{{ character.charisma }}</td>
-    </tr>
+    {% for ability6 in abilities6 %}
+        <tr>
+            <th>{{ ability6.name }}</th>
+            <td>{{ ability6.total }}</td>
+            <td>{{ ability6.base }}</td>
+            <td>{{ ability6.baseValueModifier }}</td>
+            <td> </td>
+        </tr>
+    {% endfor %}
 </table>

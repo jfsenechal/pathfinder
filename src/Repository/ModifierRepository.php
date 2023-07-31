@@ -61,22 +61,26 @@ class ModifierRepository extends ServiceEntityRepository
     /**
      * @return Modifier[]
      */
-    public function findByIdClass(int $id): array
-    {
-        return $this->createQbl()
-            ->andWhere('modifier.object_id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByIdAndClassName(int $id, string $className): ?Modifier
+    public function findByIdAndClassName(int $id, string $className): array
     {
         return $this->createQbl()
             ->andWhere('modifier.object_id = :id')
             ->setParameter('id', $id)
             ->andWhere('modifier.object_class = :class')
             ->setParameter('class', $className)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findOneByIdClassNameAndAbility(?int $id, string $className, ModifierEnum $ability): ?Modifier
+    {
+        return $this->createQbl()
+            ->andWhere('modifier.object_id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('modifier.object_class = :class')
+            ->setParameter('class', $className)
+            ->andWhere('modifier.object_class = :ability')
+            ->setParameter('ability', $ability)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -86,4 +90,5 @@ class ModifierRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('modifier')
             ->orderBy('modifier.object_class', 'ASC');
     }
+
 }

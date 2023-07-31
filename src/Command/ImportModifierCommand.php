@@ -20,7 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'pathfinder:import-modifier',
     description: 'Add a short description for your command',
 )]
-class mportModifierCommand extends Command
+class ImportModifierCommand extends Command
 {
     private SymfonyStyle $io;
 
@@ -57,12 +57,17 @@ class mportModifierCommand extends Command
                 continue;
             }
             foreach ($values as $ability => $value) {
-                if (!$modifier = $this->modifierRepository->findByIdAndClassName($object->getId(), $className)) {
+                $abilityEnum = ModifierEnum::findByName($ability);
+                if (!$modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
+                    $object->getId(),
+                    $className,
+                    $abilityEnum
+                )) {
                     $modifier = new Modifier($object->getId(), $className);
                     $this->modifierRepository->persist($modifier);
                 }
                 $modifier->value = $value;
-                $modifier->ability = ModifierEnum::findByName($ability);
+                $modifier->ability = $abilityEnum;
             }
         }
     }
@@ -78,7 +83,7 @@ class mportModifierCommand extends Command
             'Halfelin' => [
                 ModifierEnum::ABILITY_DEXTERITY->value => +2,
                 ModifierEnum::ABILITY_CHARISMA->value => +2,
-                ModifierEnum::ABILITY_STRENGH->value => -2,
+                ModifierEnum::ABILITY_STRENGTH->value => -2,
             ],
             'Nain' => [
                 ModifierEnum::ABILITY_CONSTITUTION->value => +2,
@@ -88,7 +93,7 @@ class mportModifierCommand extends Command
             'Gnome' => [
                 ModifierEnum::ABILITY_CONSTITUTION->value => +2,
                 ModifierEnum::ABILITY_CHARISMA->value => +2,
-                ModifierEnum::ABILITY_STRENGH->value => -2,
+                ModifierEnum::ABILITY_STRENGTH->value => -2,
             ],
         ];
 
@@ -96,6 +101,15 @@ class mportModifierCommand extends Command
         $feats = [
             'Esquive' => [
                 ModifierEnum::ABILITY_CA->value => +1,
+            ],
+            'Réflexes surhumains' => [
+                ModifierEnum::ABILITY_REFLEX->value => +2,
+            ],
+            'Vigueur surhumaine' => [
+                ModifierEnum::ABILITY_FORTITUDE->value => +2,
+            ],
+            'Fente' => [
+                ModifierEnum::ABILITY_CA->value => -2,
             ],
         ];
         $this->treatement($feats, Feat::class);

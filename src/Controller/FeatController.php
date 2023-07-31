@@ -40,7 +40,7 @@ class FeatController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_feat_show')]
     public function show(Feat $feat)
     {
-        $modifiers = $this->modifierRepository->findByClassName($feat::class);
+        $modifiers = $this->modifierRepository->findByIdAndClassName($feat->getId(), Feat::class);
 
         return $this->render(
             '@AfmLibrePathfinder/feat/show.html.twig',

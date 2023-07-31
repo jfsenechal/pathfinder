@@ -3,7 +3,6 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Ability\AbilityCalculator;
-use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Attack\AttackCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
@@ -91,25 +90,12 @@ class CharacterController extends AbstractController
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $spells = SpellUtils::groupByLevel($characterSpells);
 
-        $modifiers = $this->raceTraitRepository->findByRaceAndName($character->race, "Caractéristiques");
+        $raceModifier = $this->raceTraitRepository->findOneByRaceAndName($character->race, "Caractéristiques");
+
         $currentLevel = $character->current_level;
 
-        $abilities = [];
-        $abilities[] = new AbilityDto(
-            'Réflexe',
-            $currentLevel->reflex,
-            Character::getValueModifier($character->dexterity)
-        );
-        $abilities[] = new AbilityDto(
-            'Vigueur',
-            $currentLevel->fortitude,
-            Character::getValueModifier($character->constitution)
-        );
-        $abilities[] = new AbilityDto(
-            'Volonté',
-            $currentLevel->will,
-            Character::getValueModifier($character->wisdom)
-        );
+        $abilities6 = $this->abilityCalculator->abilities6Score($character);
+        $abilities = $this->abilityCalculator->abilities($character);
 
         $characterArmors = $this->characterArmorRepository->findByCharacter($character);
 
@@ -142,7 +128,8 @@ class CharacterController extends AbstractController
                 'character' => $character,
                 'spells' => $spells,
                 'currentLevel' => $currentLevel,
-                'modifiers' => $modifiers,
+                'raceModifier' => $raceModifier,
+                'abilities6' => $abilities6,
                 'abilities' => $abilities,
                 'characterArmors' => $characterArmors,
                 'characterWeapons' => $characterWeapons,

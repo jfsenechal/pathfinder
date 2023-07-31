@@ -35,10 +35,7 @@ class RaceTraitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return RaceTrait[]
-     */
-    public function findByRaceAndName(Race $race, string $name): array
+    public function findOneByRaceAndName(Race $race, string $name): ?RaceTrait
     {
         return $this->createQueryBuilder('race_trait')
             ->andWhere('race_trait.race = :race')
@@ -46,6 +43,6 @@ class RaceTraitRepository extends ServiceEntityRepository
             ->andWhere('race_trait.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 }

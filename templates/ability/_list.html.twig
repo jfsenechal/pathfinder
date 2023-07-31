@@ -7,10 +7,13 @@
     </tr>
     {% for ability in abilities %}
         <tr>
-            <th>{{ ability.name }}</th>
+            <th>{{ ability.name }} </th>
             <td>{{ ability.total }}</td>
             <td>{{ ability.base }}</td>
-            <td>{{ ability.caracteristic }}</td>
+            <td>
+                {{ ability.caracteristicValue }}
+                <span class="text-muted">({{ ability.caracteristicName }})</span>
+            </td>
         </tr>
     {% endfor %}
 </table>
