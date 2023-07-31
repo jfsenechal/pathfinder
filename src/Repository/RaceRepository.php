@@ -25,8 +25,8 @@ class RaceRepository extends ServiceEntityRepository
 
     public function getQl(): QueryBuilder
     {
-        return $this->createQueryBuilder('r')
-            ->orderBy('r.name', 'ASC');
+        return $this->createQueryBuilder('race')
+            ->orderBy('race.name', 'ASC');
     }
 
     /**
@@ -34,9 +34,18 @@ class RaceRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('r')
-            ->orderBy('r.name')
+        return $this->createQueryBuilder('race')
+            ->orderBy('race.name')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByName(string $name): ?Race
+    {
+        return $this->createQueryBuilder('race')
+            ->andWhere('race.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
