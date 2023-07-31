@@ -25,7 +25,7 @@ class AbilityCalculator
             $basespecials = $this->findSpecials($character, $modifierEnum);
             $property = strtolower($modifierEnum->value);
             $specials = [];
-            $abilities[] = new Ability6Dto(
+            $abilities[] = new AbilityDto(
                 $modifierEnum->value,
                 $character->$property,
                 AbilityEnum::valueModifier($character->$property),

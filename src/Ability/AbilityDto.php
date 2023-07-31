@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Ability;
 
 use AfmLibre\Pathfinder\Entity\Modifier;
 
-class Ability6Dto
+class AbilityDto
 {
     /**
      * @param string $name

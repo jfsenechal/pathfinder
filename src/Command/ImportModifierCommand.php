@@ -102,16 +102,16 @@ class ImportModifierCommand extends Command
         $this->treatement($races, Race::class);
         $feats = [
             'Esquive' => [
-                ModifierEnum::ABILITY_CA->value => +1,
+                ModifierEnum::ARMOR_CLASS->value => +1,
             ],
             'Réflexes surhumains' => [
-                ModifierEnum::ABILITY_REFLEX->value => +2,
+                ModifierEnum::SAVING_THROW_REFLEX->value => +2,
             ],
             'Vigueur surhumaine' => [
-                ModifierEnum::ABILITY_FORTITUDE->value => +2,
+                ModifierEnum::SAVING_THROW_FORTITUDE->value => +2,
             ],
             'Fente' => [
-                ModifierEnum::ABILITY_CA->value => -2,
+                ModifierEnum::ARMOR_CLASS->value => -2,
             ],
         ];
         $this->treatement($feats, Feat::class);

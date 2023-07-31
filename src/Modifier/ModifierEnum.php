@@ -10,11 +10,14 @@ enum ModifierEnum: string
     case ABILITY_INTELLIGENCE = 'INTELLIGENCE';
     case ABILITY_WISDOM = 'WISDOM';
     case ABILITY_CHARISMA = 'CHARISMA';
-    case ABILITY_DMD = 'DMD';
-    case ABILITY_CA = 'CA';
-    case ABILITY_REFLEX = 'REFLEX';
-    case ABILITY_FORTITUDE = 'FORTITUDE';//vigueur
-    case ABILITY_WILL = 'WILL';//volonte
+
+    case COMBAT_DMD = 'DMD';
+    case COMBAT_BMO = 'BMO';
+    case ARMOR_CLASS = 'CA';
+
+    case SAVING_THROW_REFLEX = 'REFLEX';
+    case SAVING_THROW_FORTITUDE = 'FORTITUDE';//vigueur
+    case SAVING_THROW_WILL = 'WILL';//volonte
 
     public static function findByName(string $name): ?ModifierEnum
     {
@@ -25,11 +28,11 @@ enum ModifierEnum: string
             self::ABILITY_INTELLIGENCE->value => ModifierEnum::ABILITY_INTELLIGENCE,
             self::ABILITY_WISDOM->value => ModifierEnum::ABILITY_WISDOM,
             self::ABILITY_CHARISMA->value => ModifierEnum::ABILITY_CHARISMA,
-            self::ABILITY_DMD->value => ModifierEnum::ABILITY_DMD,
-            self::ABILITY_CA->value => ModifierEnum::ABILITY_CA,
-            self::ABILITY_REFLEX->value => ModifierEnum::ABILITY_REFLEX,
-            self::ABILITY_FORTITUDE->value => ModifierEnum::ABILITY_FORTITUDE,
-            self::ABILITY_WILL->value => ModifierEnum::ABILITY_WILL,
+            self::COMBAT_DMD->value => ModifierEnum::COMBAT_DMD,
+            self::ARMOR_CLASS->value => ModifierEnum::ARMOR_CLASS,
+            self::SAVING_THROW_REFLEX->value => ModifierEnum::SAVING_THROW_REFLEX,
+            self::SAVING_THROW_FORTITUDE->value => ModifierEnum::SAVING_THROW_FORTITUDE,
+            self::SAVING_THROW_WILL->value => ModifierEnum::SAVING_THROW_WILL,
             default => null
         };
     }
@@ -45,6 +48,18 @@ enum ModifierEnum: string
             self::ABILITY_CONSTITUTION,
             self::ABILITY_INTELLIGENCE,
             self::ABILITY_WISDOM,
+        ];
+    }
+
+    /**
+     * @return ModifierEnum[]
+     */
+    public static function savingThrows(): array
+    {
+        return [
+            self::SAVING_THROW_FORTITUDE,
+            self::SAVING_THROW_REFLEX,
+            self::SAVING_THROW_WILL,
         ];
     }
 
