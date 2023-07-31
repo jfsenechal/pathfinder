@@ -58,12 +58,14 @@ class ImportModifierCommand extends Command
             }
             foreach ($values as $ability => $value) {
                 $abilityEnum = ModifierEnum::findByName($ability);
+
                 if (!$modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
                     $object->getId(),
                     $className,
                     $abilityEnum
                 )) {
                     $modifier = new Modifier($object->getId(), $className);
+                    $modifier->name = $object->name;
                     $this->modifierRepository->persist($modifier);
                 }
                 $modifier->value = $value;

@@ -50,13 +50,20 @@ class ModifierController extends AbstractController
     #[Route(path: '/{id}/{className}/new', name: 'pathfinder_modifier_new')]
     public function new(Request $request, int $id, string $className): Response
     {
+        $object = $this->entityManager->getRepository($className)->find($id);
+        if (!$object) {
+            $this->addFlash('danger', 'Objet non trouvé');
+
+            return $this->redirectToRoute('pathfinder_home');
+        }
+
         $modifier = new Modifier($id, $className);
 
         $form = $this->createForm(ModifierType::class, $modifier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $modifier->name = $object->name;
             $this->modifierRepository->persist($modifier);
             $this->modifierRepository->flush();
 

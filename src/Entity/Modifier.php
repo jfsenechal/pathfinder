@@ -3,15 +3,16 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\UniqueConstraint(columns: ['object_class', 'ability'])]
+#[ORM\UniqueConstraint(columns: ['object_class', 'object_id', 'ability'])]
 #[ORM\Entity(repositoryClass: ModifierRepository::class)]
 class Modifier
 {
-    use IdTrait;
+    use IdTrait, NameTrait;
 
     #[ORM\Column(nullable: false)]
     public ModifierEnum $ability;

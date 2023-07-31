@@ -16,7 +16,7 @@ enum ModifierEnum: string
     case ABILITY_FORTITUDE = 'FORTITUDE';//vigueur
     case ABILITY_WILL = 'WILL';//volonte
 
-    public static function findByName(string $name)
+    public static function findByName(string $name): ?ModifierEnum
     {
         return match ($name) {
             self::ABILITY_STRENGTH->value => ModifierEnum::ABILITY_STRENGTH,
@@ -27,11 +27,17 @@ enum ModifierEnum: string
             self::ABILITY_CHARISMA->value => ModifierEnum::ABILITY_CHARISMA,
             self::ABILITY_DMD->value => ModifierEnum::ABILITY_DMD,
             self::ABILITY_CA->value => ModifierEnum::ABILITY_CA,
+            self::ABILITY_REFLEX->value => ModifierEnum::ABILITY_REFLEX,
+            self::ABILITY_FORTITUDE->value => ModifierEnum::ABILITY_FORTITUDE,
+            self::ABILITY_WILL->value => ModifierEnum::ABILITY_WILL,
             default => null
         };
     }
 
-    public static  function abilities(): array
+    /**
+     * @return ModifierEnum[]
+     */
+    public static function abilities(): array
     {
         return [
             self::ABILITY_STRENGTH,

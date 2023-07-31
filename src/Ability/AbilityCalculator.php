@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Ability;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
+use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierEnum;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
@@ -87,7 +88,12 @@ class AbilityCalculator
         return $abilities;
     }
 
-    private function findSpecials(Character $character, ModifierEnum $modifierEnum)
+    /**
+     * @param Character $character
+     * @param ModifierEnum $modifierEnum
+     * @return Modifier[]
+     */
+    private function findSpecials(Character $character, ModifierEnum $modifierEnum): array
     {
         $baseSpecials = [];
         /**

@@ -79,7 +79,7 @@ class ModifierRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->andWhere('modifier.object_class = :class')
             ->setParameter('class', $className)
-            ->andWhere('modifier.object_class = :ability')
+            ->andWhere('modifier.ability = :ability')
             ->setParameter('ability', $ability)
             ->getQuery()
             ->getOneOrNullResult();

@@ -15,14 +15,15 @@ class PathfinderExtension extends AbstractExtension
             // If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
-            new TwigFilter('class_name', [PathfinderExtensionRuntime::class, 'doSomething']),
+            new TwigFilter('class_name', [PathfinderExtensionRuntime::class, 'className']),
+            new TwigFilter('number_sign', [PathfinderExtensionRuntime::class, 'numberSign']),
         ];
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('function_name', [PathfinderExtensionRuntime::class, 'doSomething']),
+
         ];
     }
 }

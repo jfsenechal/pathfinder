@@ -11,8 +11,8 @@
             <td>
                 <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">{{ armor.name }}</a>
             </td>
-            <td>{{ armor.bonus }}</td>
-            <td>{{ armor.penalty }}</td>
+            <td>{{ armor.bonus|number_sign }}</td>
+            <td>{{ armor.penalty|number_sign }}</td>
         </tr>
     {% endfor %}
 </table>

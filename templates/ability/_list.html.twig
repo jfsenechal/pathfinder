@@ -8,10 +8,10 @@
     {% for ability in abilities %}
         <tr>
             <th>{{ ability.name }} </th>
-            <td>{{ ability.total }}</td>
+            <td>{{ ability.total|number_sign }}</td>
             <td>{{ ability.base }}</td>
             <td>
-                {{ ability.caracteristicValue }}
+                {{ ability.caracteristicValue|number_sign }}
                 <span class="text-muted">({{ ability.caracteristicName }})</span>
             </td>
         </tr>

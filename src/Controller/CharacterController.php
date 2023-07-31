@@ -8,6 +8,7 @@ use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
+use AfmLibre\Pathfinder\Form\CharacterEditType;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
@@ -95,6 +96,7 @@ class CharacterController extends AbstractController
         $currentLevel = $character->current_level;
 
         $abilities6 = $this->abilityCalculator->abilities6Score($character);
+
         $abilities = $this->abilityCalculator->abilities($character);
 
         $characterArmors = $this->characterArmorRepository->findByCharacter($character);
@@ -144,7 +146,7 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}/edit', name: 'pathfinder_character_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character): Response
     {
-        $form = $this->createForm(CharacterType::class, $character);
+        $form = $this->createForm(CharacterEditType::class, $character);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

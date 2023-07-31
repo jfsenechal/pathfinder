@@ -11,8 +11,8 @@
     <tr>
         <td>CA</td>
         <td>{{ armorClass.total }}</td>
-        <td>{{ armorClass.armorsCa }}</td>
-        <td>{{ armorClass.dexterity }}</td>
+        <td>{{ armorClass.armorsCa|number_sign }}</td>
+        <td>{{ armorClass.dexterity|number_sign }}</td>
         <td>{{ armorClass.sizeModifier }}</td>
         <td colspan="2"></td>
     </tr>
@@ -27,8 +27,8 @@
     <tr>
         <td>BMO</td>
         <td>{{ bmoAbility.total }}</td>
-        <td>{{ bmoAbility.bab }}</td>
-        <td>{{ bmoAbility.fortitude }}</td>
+        <td>{{ bmoAbility.bab|number_sign }}</td>
+        <td>{{ bmoAbility.fortitude|number_sign }}</td>
         <td>{{ bmoAbility.sizeModifier }}</td>
         <td colspan="2"></td>
     </tr>
@@ -44,9 +44,9 @@
     <tr>
         <td>DMD</td>
         <td>{{ dmdAbility.total }}</td>
-        <td>{{ dmdAbility.bab }}</td>
-        <td>{{ dmdAbility.fortitude }}</td>
-        <td>{{ dmdAbility.dexterity }}</td>
+        <td>{{ dmdAbility.bab|number_sign }}</td>
+        <td>{{ dmdAbility.fortitude|number_sign }}</td>
+        <td>{{ dmdAbility.dexterity|number_sign }}</td>
         <td></td>
         <td></td>
     </tr>
