@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Damage;
+namespace AfmLibre\Pathfinder\Attack;
 
 /**
  * Melee damage roll = damage die of weapon or unarmed attack + Strength modifier + bonuses + penalties

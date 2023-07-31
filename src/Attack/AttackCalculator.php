@@ -5,7 +5,6 @@ namespace AfmLibre\Pathfinder\Attack;
 use AfmLibre\Pathfinder\Ability\BmoDto;
 use AfmLibre\Pathfinder\Ability\DmdDto;
 use AfmLibre\Pathfinder\Armor\ArmorClass;
-use AfmLibre\Pathfinder\Damage\DamageRoll;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Entity\Weapon;

@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Attack\AttackRoll;
-use AfmLibre\Pathfinder\Damage\DamageRoll;
+use AfmLibre\Pathfinder\Attack\DamageRoll;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use Doctrine\ORM\Mapping as ORM;

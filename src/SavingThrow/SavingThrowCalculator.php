@@ -1,7 +1,8 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Ability;
+namespace AfmLibre\Pathfinder\SavingThrow;
 
+use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
@@ -10,7 +11,7 @@ use AfmLibre\Pathfinder\Modifier\ModifierEnum;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 
-class AbilityCalculator
+class SavingThrowCalculator
 {
     public function __construct(
         private ModifierRepository $modifierRepository,
@@ -18,21 +19,53 @@ class AbilityCalculator
     ) {
     }
 
-    public function abilitiesScore(Character $character): array
+    public function run(Character $character,): array
     {
-        $abilities = [];
-        foreach (ModifierEnum::abilities() as $modifierEnum) {
-            $basespecials = $this->findSpecials($character, $modifierEnum);
-            $property = strtolower($modifierEnum->value);
-            $specials = [];
-            $abilities[] = new Ability6Dto(
-                $modifierEnum->value,
-                $character->$property,
-                AbilityEnum::valueModifier($character->$property),
-                $basespecials,
-                $specials
-            );
+        $race = $character->race;
+
+        $specials = [];
+        if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
+            $race->getId(),
+            $race::class,
+            ModifierEnum::ABILITY_DEXTERITY
+        )) {
+            $specials = [$modifier];
         }
+
+        $abilities = [];
+        $currentLevel = $character->current_level;
+        $abilities[] = new AbilityDto(
+            'Réflexe',
+            $currentLevel->reflex,
+            'Dextérité',
+            Character::getValueModifier($character->dexterity),
+            $specials
+        );
+
+        $specials = [];
+        if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
+            $race->getId(),
+            $race::class,
+            ModifierEnum::ABILITY_CONSTITUTION
+        )) {
+            $specials = [$modifier];
+        }
+
+        $abilities[] = new AbilityDto(
+            'Vigueur',
+            $currentLevel->fortitude,
+            'Constitution',
+            Character::getValueModifier($character->constitution),
+            $specials
+        );
+        $specials = [];
+        $abilities[] = new AbilityDto(
+            'Volonté',
+            $currentLevel->will,
+            'Sagesse',
+            Character::getValueModifier($character->wisdom),
+            $specials
+        );
 
         return $abilities;
     }

@@ -1,6 +1,6 @@
 {% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}Personnage{% endblock %}
+{% block title %}{{ character.name }} - Personnage{% endblock %}
 
 {% block body %}
     <div class="card">
@@ -31,12 +31,12 @@
             </table>
             <div class="row">
                 <div class="col-6">
-                    <h4 class="text-success">Charactéristiques</h4>
-                    {{ include('@AfmLibrePathfinder/characteristic/_list.html.twig') }}
+                    <h4 class="text-success">Caractéristiques</h4>
+                    {{ include('@AfmLibrePathfinder/ability/_list.html.twig') }}
                 </div>
                 <div class="col-6">
-                    <h4 class="text-success">Résistence</h4>
-                    {{ include('@AfmLibrePathfinder/ability/_list.html.twig') }}
+                    <h4 class="text-success">Jets de sauvegarde</h4>
+                    {{ include('@AfmLibrePathfinder/saving_throws/_list.html.twig') }}
                     {{ include('@AfmLibrePathfinder/character/_modifiers.html.twig') }}
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Attack;
+namespace AfmLibre\Pathfinder\SavingThrow;
 
 enum SavingThrowEnum: string
 {
