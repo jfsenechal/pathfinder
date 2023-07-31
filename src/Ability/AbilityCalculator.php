@@ -6,7 +6,8 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 
@@ -21,14 +22,14 @@ class AbilityCalculator
     public function calculate(Character $character): array
     {
         $abilities = [];
-        foreach (ModifierEnum::abilities() as $modifierEnum) {
+        foreach (ModifierListingEnum::abilities() as $modifierEnum) {
             $basespecials = $this->findSpecials($character, $modifierEnum);
             $property = strtolower($modifierEnum->value);
             $specials = [];
             $abilities[] = new AbilityDto(
                 $modifierEnum->value,
                 $character->$property,
-                AbilityEnum::valueModifier($character->$property),
+                ModifierCalculator::abilityValueModifier($character->$property),
                 $basespecials,
                 $specials
             );
@@ -39,10 +40,10 @@ class AbilityCalculator
 
     /**
      * @param Character $character
-     * @param ModifierEnum $modifierEnum
+     * @param ModifierListingEnum $modifierEnum
      * @return Modifier[]
      */
-    private function findSpecials(Character $character, ModifierEnum $modifierEnum): array
+    private function findSpecials(Character $character, ModifierListingEnum $modifierEnum): array
     {
         $baseSpecials = [];
         /**

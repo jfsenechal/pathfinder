@@ -3,11 +3,11 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use AfmLibre\Pathfinder\Ability\AbilityEnum;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
+use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -92,7 +92,7 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public static function getValueModifier(int $value): int
     {
-        return AbilityEnum::valueModifier($value);
+        return ModifierCalculator::abilityValueModifier($value);
     }
 
     public function shouldGenerateUniqueSlugs(): bool

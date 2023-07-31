@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Modifier;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,7 +37,7 @@ class ModifierRepository extends ServiceEntityRepository
     /**
      * @return Modifier[]
      */
-    public function findByAbility(ModifierEnum $ability): array
+    public function findByAbility(ModifierListingEnum $ability): array
     {
         return $this->createQbl()
             ->andWhere('modifier.ability = :ability')
@@ -72,7 +72,7 @@ class ModifierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByIdClassNameAndAbility(?int $id, string $className, ModifierEnum $ability): ?Modifier
+    public function findOneByIdClassNameAndAbility(?int $id, string $className, ModifierListingEnum $ability): ?Modifier
     {
         return $this->createQbl()
             ->andWhere('modifier.object_id = :id')

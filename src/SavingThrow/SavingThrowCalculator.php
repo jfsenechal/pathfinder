@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 
@@ -30,7 +30,7 @@ class SavingThrowCalculator
         if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
             $race->getId(),
             $race::class,
-            ModifierEnum::ABILITY_DEXTERITY
+            ModifierListingEnum::ABILITY_DEXTERITY
         )) {
             $specials = [$modifier];
         }
@@ -49,7 +49,7 @@ class SavingThrowCalculator
         if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
             $race->getId(),
             $race::class,
-            ModifierEnum::ABILITY_CONSTITUTION
+            ModifierListingEnum::ABILITY_CONSTITUTION
         )) {
             $specials = [$modifier];
         }
@@ -75,10 +75,10 @@ class SavingThrowCalculator
 
     /**
      * @param Character $character
-     * @param ModifierEnum $modifierEnum
+     * @param ModifierListingEnum $modifierEnum
      * @return Modifier[]
      */
-    private function findSpecials(Character $character, ModifierEnum $modifierEnum): array
+    private function findSpecials(Character $character, ModifierListingEnum $modifierEnum): array
     {
         $baseSpecials = [];
         /**

@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,7 +15,7 @@ class Modifier
     use IdTrait, NameTrait;
 
     #[ORM\Column(nullable: false)]
-    public ModifierEnum $ability;
+    public ModifierListingEnum $ability;
 
     #[ORM\Column(nullable: false)]
     public int $value = 0;

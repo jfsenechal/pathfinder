@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Ability;
 
 use AfmLibre\Pathfinder\Entity\Modifier;
+use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 
 class AbilityDto
 {
@@ -28,7 +29,7 @@ class AbilityDto
         foreach ($this->baseModifiers as $baseModifier) {
             $baseFull += $baseModifier->value;
         }
-        $bonusBase = AbilityEnum::valueModifier($baseFull);
+        $bonusBase = ModifierCalculator::abilityValueModifier($baseFull);
         $bonus = 0;
         foreach ($this->bonusModifiers as $modifier) {
             $bonus += $modifier->value;

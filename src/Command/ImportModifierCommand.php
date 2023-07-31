@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Command;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -57,7 +57,7 @@ class ImportModifierCommand extends Command
                 continue;
             }
             foreach ($values as $ability => $value) {
-                $abilityEnum = ModifierEnum::findByName($ability);
+                $abilityEnum = ModifierListingEnum::findByName($ability);
 
                 if (!$modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
                     $object->getId(),
@@ -78,40 +78,40 @@ class ImportModifierCommand extends Command
     {
         $races = [
             'Elfe' => [
-                ModifierEnum::ABILITY_DEXTERITY->value => +2,
-                ModifierEnum::ABILITY_INTELLIGENCE->value => +2,
-                ModifierEnum::ABILITY_CONSTITUTION->value => -2,
+                ModifierListingEnum::ABILITY_DEXTERITY->value => +2,
+                ModifierListingEnum::ABILITY_INTELLIGENCE->value => +2,
+                ModifierListingEnum::ABILITY_CONSTITUTION->value => -2,
             ],
             'Halfelin' => [
-                ModifierEnum::ABILITY_DEXTERITY->value => +2,
-                ModifierEnum::ABILITY_CHARISMA->value => +2,
-                ModifierEnum::ABILITY_STRENGTH->value => -2,
+                ModifierListingEnum::ABILITY_DEXTERITY->value => +2,
+                ModifierListingEnum::ABILITY_CHARISMA->value => +2,
+                ModifierListingEnum::ABILITY_STRENGTH->value => -2,
             ],
             'Nain' => [
-                ModifierEnum::ABILITY_CONSTITUTION->value => +2,
-                ModifierEnum::ABILITY_WISDOM->value => +2,
-                ModifierEnum::ABILITY_CHARISMA->value => -2,
+                ModifierListingEnum::ABILITY_CONSTITUTION->value => +2,
+                ModifierListingEnum::ABILITY_WISDOM->value => +2,
+                ModifierListingEnum::ABILITY_CHARISMA->value => -2,
             ],
             'Gnome' => [
-                ModifierEnum::ABILITY_CONSTITUTION->value => +2,
-                ModifierEnum::ABILITY_CHARISMA->value => +2,
-                ModifierEnum::ABILITY_STRENGTH->value => -2,
+                ModifierListingEnum::ABILITY_CONSTITUTION->value => +2,
+                ModifierListingEnum::ABILITY_CHARISMA->value => +2,
+                ModifierListingEnum::ABILITY_STRENGTH->value => -2,
             ],
         ];
 
         $this->treatement($races, Race::class);
         $feats = [
             'Esquive' => [
-                ModifierEnum::ARMOR_CLASS->value => +1,
+                ModifierListingEnum::ARMOR_CLASS->value => +1,
             ],
             'Réflexes surhumains' => [
-                ModifierEnum::SAVING_THROW_REFLEX->value => +2,
+                ModifierListingEnum::SAVING_THROW_REFLEX->value => +2,
             ],
             'Vigueur surhumaine' => [
-                ModifierEnum::SAVING_THROW_FORTITUDE->value => +2,
+                ModifierListingEnum::SAVING_THROW_FORTITUDE->value => +2,
             ],
             'Fente' => [
-                ModifierEnum::ARMOR_CLASS->value => -2,
+                ModifierListingEnum::ARMOR_CLASS->value => -2,
             ],
         ];
         $this->treatement($feats, Feat::class);

@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Form;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Modifier;
-use AfmLibre\Pathfinder\Modifier\ModifierEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -19,7 +19,7 @@ class ModifierType extends AbstractType
     {
         $builder
             ->add('ability', EnumType::class, [
-                'class' => ModifierEnum::class,
+                'class' => ModifierListingEnum::class,
                 'label' => 'Capacité influencée',
                 'placeholder' => 'Sélectionnez',
             ])
