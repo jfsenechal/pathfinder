@@ -36,16 +36,16 @@
                 </div>
                 <div class="col-6">
                     <h4 class="text-success">Jets de sauvegarde</h4>
-                    {{ include('@AfmLibrePathfinder/saving_throws/_list.html.twig') }}
+                    {{ include('@AfmLibrePathfinder/saving_throw/_list_by_character.html.twig') }}
                     {{ include('@AfmLibrePathfinder/character/_modifiers.html.twig') }}
                 </div>
             </div>
 
             {{ include('@AfmLibrePathfinder/character/_combat_values.html.twig') }}
 
-            {% include '@AfmLibrePathfinder/character/_armors_list.html.twig' %}
-            {% include '@AfmLibrePathfinder/character/_weapons_list.html.twig' %}
-            {% include '@AfmLibrePathfinder/character/_feats_list.html.twig' %}
+            {% include '@AfmLibrePathfinder/armor/_list_by_character.html.twig' %}
+            {% include '@AfmLibrePathfinder/weapon/_list_by_character.html.twig' %}
+            {% include '@AfmLibrePathfinder/feat/_list_by_character.html.twig' %}
 
             {{ include('@AfmLibrePathfinder/character/_spells_favorite.html.twig') }}
 

@@ -2,11 +2,22 @@
 
 namespace AfmLibre\Pathfinder\SavingThrow;
 
+use AfmLibre\Pathfinder\Ability\AbilityEnum;
+
 enum SavingThrowEnum: string
 {
     case REFLEX = 'REFLEX';
     case FORTITUDE = 'FORTITUDE';//vigueur
     case WILL = 'WILL';//volonte
+
+    public static function ability(self $t): ?AbilityEnum
+    {
+        return match ($t) {
+            self::REFLEX => AbilityEnum::ABILITY_DEXTERITY,
+            self::FORTITUDE => AbilityEnum::ABILITY_CONSTITUTION,
+            self::WILL => AbilityEnum::ABILITY_WISDOM,
+        };
+    }
 
     /**
      * Fortitude save result = d20 roll + Constitution modifier + proficiency bonus + other bonuses + penalties

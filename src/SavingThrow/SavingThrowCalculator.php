@@ -24,51 +24,18 @@ class SavingThrowCalculator
      */
     public function calculate(Character $character,): array
     {
-        $race = $character->race;
-
-        $specials = [];
-        if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
-            $race->getId(),
-            $race::class,
-            ModifierListingEnum::ABILITY_DEXTERITY
-        )) {
-            $specials = [$modifier];
-        }
-
         $savingThrows = [];
-        $currentLevel = $character->current_level;
-        $savingThrows[] = new SavingThrowDto(
-            'Réflexe',
-            $currentLevel->reflex,
-            'Dextérité',
-            Character::getValueModifier($character->dexterity),
-            $specials
-        );
-
-        $specials = [];
-        if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
-            $race->getId(),
-            $race::class,
-            ModifierListingEnum::ABILITY_CONSTITUTION
-        )) {
-            $specials = [$modifier];
+        foreach (SavingThrowEnum::cases() as $savingThrowEnum) {
+            $specials = [];
+            $currentLevel = $character->current_level;
+            $savingThrows[] = new SavingThrowDto(
+                $savingThrowEnum->value,
+                $currentLevel->reflex,
+                SavingThrowEnum::ability($savingThrowEnum)->value,
+                Character::getValueModifier($character->dexterity),
+                $specials
+            );
         }
-
-        $savingThrows[] = new SavingThrowDto(
-            'Vigueur',
-            $currentLevel->fortitude,
-            'Constitution',
-            Character::getValueModifier($character->constitution),
-            $specials
-        );
-        $specials = [];
-        $savingThrows[] = new SavingThrowDto(
-            'Volonté',
-            $currentLevel->will,
-            'Sagesse',
-            Character::getValueModifier($character->wisdom),
-            $specials
-        );
 
         return $savingThrows;
     }

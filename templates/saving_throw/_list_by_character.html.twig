@@ -7,12 +7,12 @@
     </tr>
     {% for savingThrow in savingThrows %}
         <tr>
-            <th>{{ savingThrow.name }} </th>
+            <th>{{ savingThrow.name|trans }} </th>
             <td>{{ savingThrow.total|number_sign }}</td>
             <td>{{ savingThrow.base }}</td>
             <td>
                 {{ savingThrow.caracteristicValue|number_sign }}
-                <span class="text-muted">({{ savingThrow.caracteristicName }})</span>
+                <span class="text-muted">({{ savingThrow.caracteristicName|trans }})</span>
             </td>
         </tr>
     {% endfor %}

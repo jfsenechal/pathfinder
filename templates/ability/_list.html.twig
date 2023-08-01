@@ -8,13 +8,13 @@
     </tr>
     {% for ability in abilities %}
         <tr>
-            <th>{{ ability.name }}</th>
+            <th>{{ ability.name|trans }}</th>
             <td>{{ ability.total|number_sign }}</td>
             <td>{{ ability.base }}</td>
             <td>{{ ability.baseValueModifier|number_sign }}</td>
             <td>
                 {% for special in ability.baseModifiers %}
-                    <span title="{{ special.name }}">{{ special.value|number_sign }}</span>
+                    <span title="{{ special.name|trans }}">{{ special.value|number_sign }}</span>
                 {% endfor %}
             </td>
         </tr>
