@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 
 #[ORM\Table(name: 'spell_class')]
+#[ORM\UniqueConstraint(columns: ['class_t_id', 'spell_id'])]
 #[ORM\Entity(repositoryClass: SpellClassRepository::class)]
 class SpellClass
 {

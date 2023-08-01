@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 class Skill
 {
-    use IdTrait,CampaingTrait, SourceTrait;
+    use IdTrait, CampaingTrait, SourceTrait;
     use NameTrait;
 
     #[ORM\Column(type: 'text', nullable: true)]
@@ -27,8 +27,11 @@ class Skill
     #[ORM\Column(type: 'text', nullable: true)]
     public bool $training;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'skills')]
-    public ?ClassT $classT;
+    /**
+     * @var SkillClass[]
+     */
+    #[ORM\OneToMany(targetEntity: SkillClass::class, mappedBy: 'skill')]
+    public iterable $skill_classes;
 
     public function __toString(): string
     {

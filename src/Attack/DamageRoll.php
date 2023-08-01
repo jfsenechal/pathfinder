@@ -4,13 +4,14 @@ namespace AfmLibre\Pathfinder\Attack;
 
 /**
  * Melee damage roll = damage die of weapon or unarmed attack + Strength modifier + bonuses + penalties
-
-Ranged damage roll = damage die of weapon + Strength modifier for thrown weapons + bonuses + penalties
-
-Spell (and similar effects) damage roll = damage die of the effect + bonuses + penalties
+ *
+ * Ranged damage roll = damage die of weapon + Strength modifier for thrown weapons + bonuses + penalties
+ *
+ * Spell (and similar effects) damage roll = damage die of the effect + bonuses + penalties
  */
 class DamageRoll
-{public function __construct(
+{
+    public function __construct(
         readonly string $name,
         readonly int $bab,
         readonly string $weaponDamage,

@@ -31,7 +31,7 @@ class ClassRepository extends ServiceEntityRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-    public function findByName(string $name): ?ClassT
+    public function findOneByName(string $name): ?ClassT
     {
         return $this->createQueryBuilder('class_t')
             ->andWhere('class_t.name = :name')

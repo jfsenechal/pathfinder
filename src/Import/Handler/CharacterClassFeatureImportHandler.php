@@ -21,7 +21,7 @@ class CharacterClassFeatureImportHandler
     public function call(SymfonyStyle $io, array $classeFeatures)
     {
         foreach ($classeFeatures as $data) {
-            $classT = $this->classTRepository->findByName($data['Classe']);
+            $classT = $this->classTRepository->findOneByName($data['Classe']);
             if (!$classT instanceof ClassT) {
                 $io->error('Classe non trouvee ' . $data['Nom']);
                 continue;

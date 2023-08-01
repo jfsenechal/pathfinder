@@ -1,0 +1,25 @@
+<h4 class="text-success">Compétences</h4>
+<table class="table table-bordered">
+    <tr>
+        <th></th>
+        <th>Nom</th>
+        <th>Caractéristique</th>
+        <th>Bonus caract</th>
+    </tr>
+    {% for skillDto in skills %}
+        <tr>
+            <td>
+                {% if  skillDto.trained %}
+                    <i class="ti ti-square-filled"></i>
+                {% else %}
+                    <i class="ti ti-square"></i>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('pathfinder_feat_show', {'id': skillDto.id}) }}">{{ skillDto.name }}</a>
+            </td>
+            <td>{{ skillDto.abilityName }}</td>
+            <td>{{ skillDto.abilityValueModifier|number_sign }}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -6,7 +6,7 @@ namespace AfmLibre\Pathfinder\Armor;
  * Armor Class = 10 + Dexterity modifier (up to your armor’s Dex Cap)
  * + proficiency bonus + armor’s item bonus to AC + other bonuses + penalties
  */
-class ArmorClass
+class ArmorClassDto
 {
     public function __construct(
         readonly string $name,
@@ -18,6 +18,6 @@ class ArmorClass
 
     public function total(): int
     {
-        return 10+ $this->armorsCa + $this->dexterity;
+        return 10 + $this->armorsCa + $this->dexterity;
     }
 }

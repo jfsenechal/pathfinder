@@ -27,7 +27,7 @@ class LevelParser
         foreach ($data as $level) {
             [$shortName, $level] = explode(' ', $level);
             $name = ClassParser::getClassName($shortName);
-            $character = $this->classTRepository->findByName($name);
+            $character = $this->classTRepository->findOneByName($name);
             // dump($character->getName());
             $levels[] = new LevelDto($character, $level);
         }

@@ -65,44 +65,4 @@ class Spell implements \Stringable
         return (string)$this->name;
     }
 
-    public function addSpellClass(SpellClass $spellClass): self
-    {
-        if (!$this->spell_classes->contains($spellClass)) {
-            $this->spell_classes[] = $spellClass;
-            $spellClass->spell = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeSpellClass(SpellClass $spellClass): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->spell_classes->removeElement($spellClass) && $spellClass->spell === $this) {
-            $spellClass->spell = null;
-        }
-
-        return $this;
-    }
-
-
-    public function addCharacterSpell(CharacterSpell $characterSpell): self
-    {
-        if (!$this->character_spells->contains($characterSpell)) {
-            $this->character_spells[] = $characterSpell;
-            $characterSpell->spell = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterSpell(CharacterSpell $characterSpell): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->character_spells->removeElement($characterSpell) && $characterSpell->spell === $this) {
-            $characterSpell->spell = null;
-        }
-
-        return $this;
-    }
 }

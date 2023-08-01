@@ -25,7 +25,9 @@ class SkillImportHandler
 
     private function createSkill(array $data): Skill
     {
-        $skill = new Skill();
+        if (!$skill = $this->skillRepository->findOneByName($data['Nom'])) {
+            $skill = new Skill();
+        }
         $skill->name = $data['Nom'];
         $skill->ability = $data['Caractéristique associée'];
         $skill->training = $data['Formation nécessaire'] == 'oui' ? true : false;

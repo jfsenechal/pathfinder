@@ -32,9 +32,6 @@ class ClassT implements \JsonSerializable, \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $alignment;
 
-    #[ORM\OneToMany(targetEntity: Skill::class, mappedBy: 'classT')]
-    public iterable $skills;
-
     #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'classT')]
     public iterable $levels;
 
@@ -43,6 +40,11 @@ class ClassT implements \JsonSerializable, \Stringable
      */
     #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'classT')]
     public iterable $spell_classes;
+    /**
+     * @var SkillClass[]
+     */
+    #[ORM\OneToMany(targetEntity: SkillClass::class, mappedBy: 'classT')]
+    public iterable $skill_classes;
 
     /**
      * @var Spell[] $spells
@@ -53,33 +55,13 @@ class ClassT implements \JsonSerializable, \Stringable
     {
         $this->spells = new ArrayCollection();
         $this->spell_classes = new ArrayCollection();
-        $this->skills = new ArrayCollection();
+        $this->skill_classes = new ArrayCollection();
         $this->levels = new ArrayCollection();
     }
 
     public function __toString(): string
     {
         return (string)$this->name;
-    }
-
-    public function addSpellClass(SpellClass $spellClass): self
-    {
-        if (!$this->spell_classes->contains($spellClass)) {
-            $this->spell_classes[] = $spellClass;
-            $spellClass->classT = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeSpellClass(SpellClass $spellClass): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->spell_classes->removeElement($spellClass) && $spellClass->classT === $this) {
-            $spellClass->classT = null;
-        }
-
-        return $this;
     }
 
     public function jsonSerialize()

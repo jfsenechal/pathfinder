@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Ability\AbilityCalculator;
+use AfmLibre\Pathfinder\Armor\ArmorCalculator;
 use AfmLibre\Pathfinder\Attack\AttackCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
@@ -21,6 +22,7 @@ use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use AfmLibre\Pathfinder\SavingThrow\SavingThrowCalculator;
+use AfmLibre\Pathfinder\Skill\SkillCalculator;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +45,7 @@ class CharacterController extends AbstractController
         private readonly CharacterFeatRepository $characterFeatRepository,
         private readonly AbilityCalculator $abilityCalculator,
         private readonly SavingThrowCalculator $savingThrowCalculator,
+        private readonly SkillCalculator $skillCalculator,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -99,9 +102,10 @@ class CharacterController extends AbstractController
 
         $abilities = $this->abilityCalculator->calculate($character);
         $savingThrows = $this->savingThrowCalculator->calculate($character);
+        $skills = $this->skillCalculator->calculate($character);
 
         $characterArmors = $this->characterArmorRepository->findByCharacter($character);
-        $armorClass = AttackCalculator::createArmorAbility(
+        $armorClass = ArmorCalculator::createArmorAbility(
             $character,
             $characterArmors,
             ModifierSizeEnum::SIZE_MIDDLE
@@ -123,7 +127,7 @@ class CharacterController extends AbstractController
         $characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
         $bmo = AttackCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $dmd = AttackCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $dmd = ArmorCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
@@ -140,6 +144,7 @@ class CharacterController extends AbstractController
                 'bmoAbility' => $bmo,
                 'dmdAbility' => $dmd,
                 'armorClass' => $armorClass,
+                'skills' => $skills,
             ]
         );
     }

@@ -40,7 +40,7 @@ class RaceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByName(string $name): ?Race
+    public function findOneByName(string $name): ?Race
     {
         return $this->createQueryBuilder('race')
             ->andWhere('race.name = :name')

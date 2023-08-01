@@ -5,21 +5,31 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
+use AfmLibre\Pathfinder\Entity\SkillClass;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
+use AfmLibre\Pathfinder\Repository\SkillRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ClassImportHandler
 {
-    public function __construct(private readonly ClassRepository $classTRepository)
-    {
+    private SymfonyStyle $io;
+
+    public function __construct(
+        private readonly ClassRepository $classTRepository,
+        private readonly SkillRepository $skillRepository
+    ) {
     }
 
     public function call(SymfonyStyle $io, array $classes)
     {
+        $this->io = $io;
+
         foreach ($classes as $classData) {
-            if ($this->classTRepository->findByName($classData['Nom']) instanceof ClassT) {
+            if ($classT = $this->classTRepository->findOneByName($classData['Nom'])) {
+                $this->addSkills($classT, $classData);
                 continue;
             }
+            continue;
             $classT = new ClassT();
             $classT->name = $classData['Nom'];
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
@@ -31,12 +41,13 @@ class ClassImportHandler
             $classT->alignment = $classData['Alignement'];
             $this->classTRepository->persist($classT);
             $this->addLevels($classT, $classData);
+            $this->addSkills($classT, $classData);
             $io->writeln($classT->name);
         }
         $this->classTRepository->flush();
     }
 
-    private function addLevels(ClassT $class, array $classData)
+    private function addLevels(ClassT $class, array $classData): void
     {
         foreach ($classData['Progression'] as $levelData) {
             $level = new Level($class);
@@ -48,6 +59,28 @@ class ClassImportHandler
             $level->maxSpellLvl = (int)$levelData['SortMax'];
 
             $this->classTRepository->persist($level);
+        }
+    }
+
+    private function addSkills(ClassT $class, array $classData): void
+    {
+        foreach ($classData['CompétencesDeClasse'] as $data) {
+            foreach ($data as $name) {
+                if (!$skill = $this->skillRepository->findOneByName($name)) {
+                    $this->io->error('Skill non trouvé '.$name.' pour la classe '.$classData['Nom']);
+                    continue;
+                }
+                $skillClass = new SkillClass($skill, $class);
+                $this->classTRepository->persist($skillClass);
+            }
+        }
+    }
+
+    //todo "BBA" => "+15/+10/+5"
+    private function attack(string $bba)
+    {
+        if (str_contains("/", $bba)) {
+            list($a, $b, $c) = explode('/', $bba);
         }
     }
 }

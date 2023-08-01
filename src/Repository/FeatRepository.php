@@ -66,7 +66,7 @@ class FeatRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByName(string $name): ?Feat
+    public function findOneByName(string $name): ?Feat
     {
         return $this->createQueryBuilder('feat')
             ->andWhere('feat.name = :name')

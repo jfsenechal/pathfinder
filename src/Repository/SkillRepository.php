@@ -33,4 +33,13 @@ class SkillRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findOneByName(string $name): ?Skill
+    {
+        return $this->createQueryBuilder('skill')
+            ->andWhere('skill.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

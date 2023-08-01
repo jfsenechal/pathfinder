@@ -51,7 +51,7 @@ class ImportModifierCommand extends Command
     private function treatement(array $data, string $className)
     {
         foreach ($data as $name => $values) {
-            $object = $this->entityManager->getRepository($className)->findByName($name);
+            $object = $this->entityManager->getRepository($className)->findOneByName($name);
             if (!$object) {
                 $this->io->error('Objet non trouvé '.$className.' '.$name);
                 continue;
