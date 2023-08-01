@@ -8,7 +8,7 @@ use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\UniqueConstraint(columns: ['object_class', 'object_id', 'ability'])]
+#[ORM\UniqueConstraint(columns: ['object_class', 'object_id', 'ability', 'race_id'])]
 #[ORM\Entity(repositoryClass: ModifierRepository::class)]
 class Modifier
 {
@@ -28,6 +28,10 @@ class Modifier
 
     #[ORM\Column(nullable: true)]
     public ?string $description = null;
+
+    #[ORM\ManyToOne(targetEntity: Race::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    public ?Race $race = null;
 
     public function __construct(int $objectId, string $objectClassName)
     {

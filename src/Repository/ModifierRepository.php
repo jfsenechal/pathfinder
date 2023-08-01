@@ -4,6 +4,8 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Modifier;
+use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -83,6 +85,43 @@ class ModifierRepository extends ServiceEntityRepository
             ->setParameter('ability', $ability)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findOneByIdClassNameAbilityAndRace(
+        ?int $id,
+        string $className,
+        ModifierListingEnum $ability,
+        Race $race
+    ): ?Modifier {
+        return $this->createQbl()
+            ->andWhere('modifier.object_id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('modifier.object_class = :className')
+            ->setParameter('className', $className)
+            ->andWhere('modifier.ability = :ability')
+            ->setParameter('ability', $ability)
+            ->andWhere('modifier.race = :race')
+            ->setParameter('race', $race)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return Modifier[]
+     */
+    public function findSkillByRace(
+        ModifierListingEnum $ability,
+        Race $race
+    ): array {
+        return $this->createQbl()
+            ->andWhere('modifier.object_class = :className')
+            ->setParameter('className', Skill::class)
+            ->andWhere('modifier.ability = :ability')
+            ->setParameter('ability', $ability)
+            ->andWhere('modifier.race = :race')
+            ->setParameter('race', $race)
+            ->getQuery()
+            ->getResult();
     }
 
     private function createQbl(): QueryBuilder

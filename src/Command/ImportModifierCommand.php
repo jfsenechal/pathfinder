@@ -8,7 +8,6 @@ use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
-use AfmLibre\Pathfinder\Repository\SkillClassRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -29,7 +28,6 @@ class ImportModifierCommand extends Command
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private ModifierRepository $modifierRepository,
-        private SkillClassRepository $skillClassRepository
     ) {
         parent::__construct();
     }
@@ -46,6 +44,7 @@ class ImportModifierCommand extends Command
         $this->io = new SymfonyStyle($input, $output);
 
         $this->import();
+
         $this->modifierRepository->flush();
 
         return Command::SUCCESS;
@@ -120,10 +119,51 @@ class ImportModifierCommand extends Command
         $this->treatement($feats, Feat::class);
 
         $skills = [
-            'Perception' => [
-                ModifierListingEnum::SKILL->value => +2,
-            ],
+            'Elfe' => ['Perception' => +2],
+            'Nain' => ['Perception' => +2],
+            'Demi-elfe' => ['Perception' => +2],
+            'Halfelin' => ['Perception' => +2, 'Acrobaties' => +4, 'Escalade' => +4],
+            'Gnome' => ['Discrétion' => +4],
+            'Demi-orque' => ['Intimidation' => +2],
         ];
-        $this->treatement($skills, Skill::class);
+
+        foreach ($skills as $raceName => $data) {
+            foreach ($data as $skillName => $value) {
+                if (!$race = $this->entityManager->getRepository(Race::class)->findOneByName($raceName)) {
+                    $this->io->error('Race non trouvée '.$raceName);
+                    continue;
+                }
+                if (!$skill = $this->entityManager->getRepository(Skill::class)->findOneByName($skillName)) {
+                    $this->io->error('Skill non trouvée '.$skillName);
+                    continue;
+                }
+
+                $abilityEnum = ModifierListingEnum::SKILL;
+
+                if (!$modifier = $this->modifierRepository->findOneByIdClassNameAbilityAndRace(
+                    $skill->getId(),
+                    Skill::class,
+                    $abilityEnum,
+                    $race
+                )) {
+                    $modifier = new Modifier($skill->getId(), Skill::class);
+                    $modifier->name = $skill->name;
+                    $modifier->race = $race;
+                    $this->modifierRepository->persist($modifier);
+                }
+                $modifier->value = $value;
+                $modifier->ability = $abilityEnum;
+            }
+        }
     }
 }
+/**
+ * Les elfes reçoivent un bonus racial de +2 aux tests de Perception.
+ * Les demi-elfes reçoivent un bonus racial de +2 aux tests de Perception.
+ * Les demi-orques reçoivent un bonus racial de +2 aux tests d’Intimidation grâce à leur nature féroce.
+ * Gnome +4 aux tests de Discrétion
+ * Les halfelins reçoivent un bonus racial de +2 à tous les tests d’Acrobaties et d’Escalade.
+ * Les halfelins reçoivent un bonus racial de +2 à tous les tests de Perception.
+ * Les nains gagnent un bonus racial de +2 aux tests d’Estimation visant à déterminer le prix d’objets non-magiques comportant des métaux ou des pierres précieuses.
+ * Les nains reçoivent un bonus racial de +2 aux tests de Perception
+ */

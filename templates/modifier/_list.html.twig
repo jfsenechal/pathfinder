@@ -2,12 +2,18 @@
     <h4 class="text-success mt-3">Modificateur(s)</h4>
     <table class="table table-bordered">
         <tr>
+            <th>Nom</th>
             <th>Caractéristique</th>
             <th>Value</th>
         </tr>
         {% for modifier in modifiers %}
             <tr>
-                <td>{{ modifier.ability.value|trans }}</td>
+                <td>
+                    {{ modifier.name }}
+                </td>
+                <td>
+                    {{ modifier.ability.value|trans }}
+                </td>
                 <td>{{ modifier.value|number_sign }}</td>
             </tr>
         {% endfor %}

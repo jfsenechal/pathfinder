@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +35,7 @@ class RaceController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_race_show')]
     public function show(Race $race)
     {
-        $modifiers = $this->modifierRepository->findByIdAndClassName($race->getId(), $race::class);
+        $modifiers = $this->modifierRepository->findSkillByRace(ModifierListingEnum::SKILL, $race);
 
         return $this->render(
             '@AfmLibrePathfinder/race/show.html.twig',
