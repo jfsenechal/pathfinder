@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\ArmorCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,8 +29,7 @@ class ArmorRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('s')
-            ->orderBy('s.name', 'ASC')
+        return $this->createQbl()
             ->getQuery()
             ->getResult();
     }
@@ -39,11 +39,18 @@ class ArmorRepository extends ServiceEntityRepository
      */
     public function findByCategory(ArmorCategory $category): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.category = :category')
+        return $this->createQbl()
+            ->andWhere('armor.category = :category')
             ->setParameter('category', $category)
-            ->orderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('armor')
+            ->leftJoin('armor.category', 'category', 'WITH')
+            ->addSelect('category')
+            ->orderBy('armor.name', 'ASC');
     }
 }

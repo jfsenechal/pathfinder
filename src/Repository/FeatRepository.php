@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Feat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,7 +29,7 @@ class FeatRepository extends ServiceEntityRepository
      */
     public function search(?string $name = null, ?string $category = null, ?string $source = null): array
     {
-        $qb = $this->createQueryBuilder('feat');
+        $qb = $this->createQbl();
 
         if ($name) {
             $qb
@@ -58,20 +59,26 @@ class FeatRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('feat')
+        return $this->createQbl()
             ->andWhere('feat.sourced LIKE :src')
             ->setParameter('src', 'MJ')
-            ->addOrderBy('feat.name', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
 
     public function findOneByName(string $name): ?Feat
     {
-        return $this->createQueryBuilder('feat')
+        return $this->createQbl()
             ->andWhere('feat.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('feat')
+            ->addOrderBy('feat.name', Criteria::ASC);
+    }
+
 }

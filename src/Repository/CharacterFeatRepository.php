@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterFeat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,15 +29,20 @@ class CharacterFeatRepository extends ServiceEntityRepository
      */
     public function findByCharacter(Character $character): array
     {
+        return $this->createQbl()
+            ->andWhere('character_feat.character = :character')
+            ->setParameter('character', $character)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
         return $this->createQueryBuilder('character_feat')
             ->leftJoin('character_feat.feat', 'feat', 'WITH')
             ->leftJoin('character_feat.character', 'character', 'WITH')
             ->addSelect('feat', 'character')
-            ->andWhere('character_feat.character = :character')
-            ->setParameter('character', $character)
-            ->addOrderBy('feat.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('feat.name', 'ASC');
     }
 
 }

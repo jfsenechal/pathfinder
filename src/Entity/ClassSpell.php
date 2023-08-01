@@ -3,22 +3,22 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 
-#[ORM\Table(name: 'spell_class')]
+#[ORM\Table(name: 'class_spell')]
 #[ORM\UniqueConstraint(columns: ['class_t_id', 'spell_id'])]
-#[ORM\Entity(repositoryClass: SpellClassRepository::class)]
-class SpellClass
+#[ORM\Entity(repositoryClass: ClassSpellRepository::class)]
+class ClassSpell
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'spell_classes')]
+    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'class_spells')]
     #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'spell_classes')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'class_spells')]
     #[ORM\JoinColumn(nullable: false)]
     public ?ClassT $classT;
 

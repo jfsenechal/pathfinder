@@ -28,10 +28,10 @@ class Skill
     public bool $training;
 
     /**
-     * @var SkillClass[]
+     * @var ClassSkill[]
      */
-    #[ORM\OneToMany(targetEntity: SkillClass::class, mappedBy: 'skill')]
-    public iterable $skill_classes;
+    #[ORM\OneToMany(targetEntity: ClassSkill::class, mappedBy: 'skill')]
+    public iterable $class_skills;
 
     public function __toString(): string
     {

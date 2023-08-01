@@ -36,15 +36,15 @@ class ClassT implements \JsonSerializable, \Stringable
     public iterable $levels;
 
     /**
-     * @var SpellClass[]
+     * @var ClassSpell[]
      */
-    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'classT')]
-    public iterable $spell_classes;
+    #[ORM\OneToMany(targetEntity: ClassSpell::class, mappedBy: 'classT')]
+    public iterable $class_spells;
     /**
-     * @var SkillClass[]
+     * @var ClassSkill[]
      */
-    #[ORM\OneToMany(targetEntity: SkillClass::class, mappedBy: 'classT')]
-    public iterable $skill_classes;
+    #[ORM\OneToMany(targetEntity: ClassSkill::class, mappedBy: 'classT')]
+    public iterable $class_skills;
 
     /**
      * @var Spell[] $spells
@@ -54,8 +54,8 @@ class ClassT implements \JsonSerializable, \Stringable
     public function __construct()
     {
         $this->spells = new ArrayCollection();
-        $this->spell_classes = new ArrayCollection();
-        $this->skill_classes = new ArrayCollection();
+        $this->class_spells = new ArrayCollection();
+        $this->class_skills = new ArrayCollection();
         $this->levels = new ArrayCollection();
     }
 

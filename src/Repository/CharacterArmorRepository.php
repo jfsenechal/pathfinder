@@ -5,8 +5,8 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
-use AfmLibre\Pathfinder\Entity\Armor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,15 +29,21 @@ class CharacterArmorRepository extends ServiceEntityRepository
      */
     public function findByCharacter(Character $character): array
     {
+        return $this->createQbl()
+            ->andWhere('character_armor.character = :character')
+            ->setParameter('character', $character)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
         return $this->createQueryBuilder('character_armor')
             ->leftJoin('character_armor.armor', 'armor', 'WITH')
             ->leftJoin('character_armor.character', 'character', 'WITH')
             ->addSelect('armor', 'character')
-            ->andWhere('character_armor.character = :character')
-            ->setParameter('character', $character)
-            ->addOrderBy('armor.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('armor.name', 'ASC');
     }
+
 
 }

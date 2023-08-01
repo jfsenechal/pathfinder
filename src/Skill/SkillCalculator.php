@@ -10,7 +10,7 @@ use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
-use AfmLibre\Pathfinder\Repository\SkillClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 
 class SkillCalculator
@@ -22,7 +22,7 @@ class SkillCalculator
 
     public function __construct(
         private SkillRepository $skillRepository,
-        private SkillClassRepository $skillClassRepository,
+        private ClassSkillRepository $classSkillRepository,
         private ModifierRepository $modifierRepository,
     ) {
     }
@@ -35,7 +35,7 @@ class SkillCalculator
         $skillsDto = [];
 
         $all = $this->skillRepository->findAllOrdered();
-        $classSkills = $this->skillClassRepository->findByClass($character->classT);
+        $classSkills = $this->classSkillRepository->findByClass($character->classT);
         $this->ownedIds = array_map(function ($classSkill) {
             return $classSkill->skill->getId();
         }, $classSkills);

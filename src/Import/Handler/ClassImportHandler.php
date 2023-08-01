@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
-use AfmLibre\Pathfinder\Entity\SkillClass;
+use AfmLibre\Pathfinder\Entity\ClassSkill;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -68,8 +68,8 @@ class ClassImportHandler
                     $this->io->error('Skill non trouvé '.$name.' pour la classe '.$classData['Nom']);
                     continue;
                 }
-                $skillClass = new SkillClass($skill, $class);
-                $this->classTRepository->persist($skillClass);
+                $classSkill = new ClassSkill($skill, $class);
+                $this->classTRepository->persist($classSkill);
             }
         }
     }

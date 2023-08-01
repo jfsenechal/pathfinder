@@ -23,17 +23,9 @@ class ClassRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, ClassT::class);
     }
 
-    public function findByShortName(string $name): ?ClassT
-    {
-        return $this->createQueryBuilder('class_t')
-            ->andWhere('class_t.short_name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()->getOneOrNullResult();
-    }
-
     public function findOneByName(string $name): ?ClassT
     {
-        return $this->createQueryBuilder('class_t')
+        return $this->createQbl()
             ->andWhere('class_t.name = :name')
             ->setParameter('name', $name)
             ->getQuery()->getOneOrNullResult();
@@ -41,7 +33,7 @@ class ClassRepository extends ServiceEntityRepository
 
     public function getQl(): QueryBuilder
     {
-        return $this->createQueryBuilder('class_t')
+        return $this->createQbl()
             ->orderBy('class_t.name');
     }
 
@@ -50,13 +42,24 @@ class ClassRepository extends ServiceEntityRepository
      */
     public function searchByName(?string $name = null): array
     {
-        $qb = $this->createQueryBuilder('class_t');
+        $qb = $this->createQbl();
         if ($name) {
             $qb->andWhere('class_t.name LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', '%'.$name.'%');
         }
         $qb->orderBy('class_t.name');
 
         return $qb->getQuery()->getResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('class_t')
+            ->leftJoin('class_t.class_skills', 'class_skills', 'WITH')
+            ->leftJoin('class_t.class_spells', 'class_spells', 'WITH')
+            ->leftJoin('class_t.levels', 'levels', 'WITH')
+            ->addSelect('class_skills', 'class_spells', 'levels')
+            ->addOrderBy('class_t.name', 'ASC');
+    }
+
 }

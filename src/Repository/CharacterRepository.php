@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,18 +28,24 @@ class CharacterRepository extends ServiceEntityRepository
      */
     public function searchByUser(?string $username = null): array
     {
-        $qb = $this->createQueryBuilder('character')
-            ->leftJoin('character.classT', 'classT', 'WITH')
-            ->leftJoin('character.race', 'race', 'WITH')
-            ->addSelect('classT', 'race');
+        $qb = $this->createQbl();
 
         if ($username) {
             $qb->andWhere('character.name LIKE :name')
-                ->setParameter('name', '%' . $username . '%');
+                ->setParameter('name', '%'.$username.'%');
         }
 
         $qb->addOrderBy('character.name');
 
         return $qb->getQuery()->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('character')
+            ->leftJoin('character.classT', 'classT', 'WITH')
+            ->leftJoin('character.race', 'race', 'WITH')
+            ->addSelect('classT', 'race')
+            ->orderBy('character.name', 'ASC');
     }
 }

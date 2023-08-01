@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Skill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,7 +29,7 @@ class SkillRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('skill')
+        return $this->createQbl()
             ->addOrderBy('skill.name', Criteria::ASC)
             ->getQuery()
             ->getResult();
@@ -36,10 +37,19 @@ class SkillRepository extends ServiceEntityRepository
 
     public function findOneByName(string $name): ?Skill
     {
-        return $this->createQueryBuilder('skill')
+        return $this->createQbl()
             ->andWhere('skill.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('skill')
+            ->leftJoin('skill.class_skills', 'class_skills', 'WITH')
+            ->addSelect('class_skills')
+            ->orderBy('skill.name', 'ASC');
+    }
+
 }

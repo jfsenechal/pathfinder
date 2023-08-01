@@ -5,46 +5,46 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\SpellClass;
+use AfmLibre\Pathfinder\Entity\ClassSpell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method SpellClass|null find($id, $lockMode = null, $lockVersion = null)
- * @method SpellClass|null findOneBy(array $criteria, array $orderBy = null)
- * @method SpellClass[]    findAll()
- * @method SpellClass[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ClassSpell|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ClassSpell|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ClassSpell[]    findAll()
+ * @method ClassSpell[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SpellClassRepository extends ServiceEntityRepository
+class ClassSpellRepository extends ServiceEntityRepository
 {
     use OrmCrudTrait;
 
     public function __construct(ManagerRegistry $managerRegistry)
     {
-        parent::__construct($managerRegistry, SpellClass::class);
+        parent::__construct($managerRegistry, ClassSpell::class);
     }
 
-    public function searchByClassAndSpell(?ClassT $class, Spell $spell): ?SpellClass
+    public function searchByClassAndSpell(?ClassT $class, Spell $spell): ?ClassSpell
     {
-        return $this->createQueryBuilder('spellClass')
-            ->leftJoin('spellClass.spell', 'spell', 'WITH')
-            ->leftJoin('spellClass.classT', 'classT', 'WITH')
+        return $this->createQueryBuilder('classSpell')
+            ->leftJoin('classSpell.spell', 'spell', 'WITH')
+            ->leftJoin('classSpell.classT', 'classT', 'WITH')
             ->addSelect('classT', 'spell')
             ->andWhere('spell = :spell')
             ->setParameter('spell', $spell)
-            ->andWhere('spellClass.classT = :class2')
+            ->andWhere('classSpell.classT = :class2')
             ->setParameter('class2', $class)
             ->getQuery()->getOneOrNullResult();
     }
 
     /**
-     * @return array|SpellClass[]
+     * @return array|ClassSpell[]
      */
     public function searchByNameAndClass(?string $name = null, ?ClassT $class = null): array
     {
-        $qb = $this->createQueryBuilder('spellClass')
-            ->leftJoin('spellClass.spell', 'spell', 'WITH')
-            ->leftJoin('spellClass.classT', 'classT', 'WITH')
+        $qb = $this->createQueryBuilder('classSpell')
+            ->leftJoin('classSpell.spell', 'spell', 'WITH')
+            ->leftJoin('classSpell.classT', 'classT', 'WITH')
             ->addSelect('classT', 'spell');
 
         if ($name) {
@@ -53,7 +53,7 @@ class SpellClassRepository extends ServiceEntityRepository
         }
 
         if ($class instanceof ClassT) {
-            $qb->andWhere('spellClass.classT = :class2')
+            $qb->andWhere('classSpell.classT = :class2')
                 ->setParameter('class2', $class);
         }
 

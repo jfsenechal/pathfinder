@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,34 +26,37 @@ class CharacterSpellRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return CharacterSpell[] Returns an array of CharacterSpell objects
+     * @return CharacterSpell[]
      */
     public function findByCharacter(Character $character): array
     {
-        return $this->createQueryBuilder('character_spell')
-            ->leftJoin('character_spell.spell', 'spell', 'WITH')
-            ->leftJoin('character_spell.character', 'character', 'WITH')
-            ->addSelect('spell', 'character')
+        return $this->createQbl()
             ->andWhere('character_spell.character = :character')
             ->setParameter('character', $character)
             ->addOrderBy('character_spell.level', 'ASC')
-            ->addOrderBy('spell.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     public function findByCharacterAndSpell(Character $character, Spell $spell): ?CharacterSpell
     {
-        return $this->createQueryBuilder('character_spell')
-            ->leftJoin('character_spell.spell', 'spell', 'WITH')
-            ->leftJoin('character_spell.character', 'character', 'WITH')
-            ->addSelect('spell', 'character')
+        return $this->createQbl()
             ->andWhere('character_spell.character = :character')
             ->setParameter('character', $character)
             ->andWhere('spell = :spell')
             ->setParameter('spell', $spell)
-            ->orderBy('spell.name', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('character_spell')
+            ->leftJoin('character_spell.spell', 'spell', 'WITH')
+            ->leftJoin('character_spell.character', 'character', 'WITH')
+            ->addSelect('spell', 'character')
+            ->orderBy('character.name', 'ASC')
+            ->orderBy('spell.name', 'ASC');
+    }
+
 }

@@ -43,10 +43,10 @@ class Spell implements \Stringable
     public ?School $school = null;
 
     /**
-     * @var SpellClass[]
+     * @var ClassSpell[]
      */
-    #[ORM\OneToMany(targetEntity: SpellClass::class, mappedBy: 'spell')]
-    public iterable $spell_classes;
+    #[ORM\OneToMany(targetEntity: ClassSpell::class, mappedBy: 'spell')]
+    public iterable $class_spells;
 
     /**
      * @var CharacterSpell[]
@@ -56,7 +56,7 @@ class Spell implements \Stringable
 
     public function __construct()
     {
-        $this->spell_classes = new ArrayCollection();
+        $this->class_spells = new ArrayCollection();
         $this->character_spells = new ArrayCollection();
     }
 

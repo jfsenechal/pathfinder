@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Repository;
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\School;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,9 +28,15 @@ class SchoolRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('s')
-            ->orderBy('s.name', 'ASC')
+        return $this->createQbl()
             ->getQuery()
             ->getResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('school')
+            ->orderBy('school.name', 'ASC');
+    }
+
 }

@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\SpellProfile;
 use AfmLibre\Pathfinder\Entity\SpellProfileCharacter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,10 +29,7 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
      */
     public function searchByCharacter(SpellProfile $character): array
     {
-        return $this->createQueryBuilder('spellProfile')
-            ->leftJoin('spellProfile.character', 'character', 'WITH')
-            ->leftJoin('spellProfile.character_spells', 'character_spells', 'WITH')
-            ->addSelect('character', 'character_spells')
+        return $this->createQbl()
             ->andWhere('spellProfile.character = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spellProfile.name')
@@ -42,10 +40,7 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
         SpellProfile $spellProfile,
         $characterSpell
     ): ?SpellProfileCharacter {
-        return $this->createQueryBuilder('spell_profile_character')
-            ->leftJoin('spell_profile_character.spell_profile', 'spell_profile', 'WITH')
-            ->leftJoin('spell_profile_character.character_spell', 'character_spell', 'WITH')
-            ->addSelect('spell_profile', 'character_spell')
+        return $this->createQbl()
             ->andWhere('character_spell = :character')
             ->setParameter('character', $characterSpell)
             ->andWhere('spell_profile = :profile')
@@ -58,13 +53,20 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
      */
     public function findBySpellProfile(SpellProfile $spellProfile): array
     {
-        return $this->createQueryBuilder('spcs')
-            ->leftJoin('spcs.spell_profile', 'spellProfile')
-            ->addSelect('spellProfile')
+        return $this->createQbl()
             ->andWhere('spcs.spell_profile = :profile')
             ->setParameter('profile', $spellProfile)
             ->addOrderBy('spcs.id')
             ->getQuery()
             ->getResult();
     }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('spell_profile_character')
+            ->leftJoin('spell_profile_character.character_spell', 'character_spell', 'WITH')
+            ->leftJoin('spell_profile_character.spell_profile', 'spell_profile', 'WITH')
+            ->addSelect('character_spell', 'spell_profile');
+    }
+
 }

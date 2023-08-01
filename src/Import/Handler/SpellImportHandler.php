@@ -5,11 +5,11 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\School;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\SpellClass;
+use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Import\Mapping\SpellYml;
 use AfmLibre\Pathfinder\Level\LevelParser;
 use AfmLibre\Pathfinder\Repository\SchoolRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -17,7 +17,7 @@ class SpellImportHandler
 {
     public function __construct(
         private readonly SpellRepository $spellRepository,
-        private readonly SpellClassRepository $spellClassRepository,
+        private readonly ClassSpellRepository $classSpellRepository,
         private readonly SchoolRepository $schoolRepository,
         private readonly LevelParser $levelParser
     ) {
@@ -31,15 +31,15 @@ class SpellImportHandler
             try {
                 $levels = $this->levelParser->parse($spellData['Niveau']);
                 foreach ($levels as $levelDto) {
-                    $spellClass = new SpellClass($spell, $levelDto->classT, $levelDto->level);
-                    $this->spellClassRepository->persist($spellClass);
+                    $classSpell = new ClassSpell($spell, $levelDto->classT, $levelDto->level);
+                    $this->classSpellRepository->persist($classSpell);
                 }
             } catch (\Exception $e) {
                 $io->error($e->getMessage() . $spellData['Nom']);
             }
         }
         $this->spellRepository->flush();
-        $this->spellClassRepository->flush();
+        $this->classSpellRepository->flush();
     }
 
     /**

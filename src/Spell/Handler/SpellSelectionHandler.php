@@ -6,15 +6,15 @@ namespace AfmLibre\Pathfinder\Spell\Handler;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\SpellClass;
+use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 
 class SpellSelectionHandler
 {
     public function __construct(
         private readonly CharacterSpellRepository $characterSpellRepository,
-        private readonly SpellClassRepository $spellClassRepository,
+        private readonly ClassSpellRepository $classSpellRepository,
     ) {
     }
 
@@ -53,10 +53,10 @@ class SpellSelectionHandler
     {
         $class = $character->classT;
         $level = 0;
-        if (($spellLevel = $this->spellClassRepository->searchByClassAndSpell(
+        if (($spellLevel = $this->classSpellRepository->searchByClassAndSpell(
             $class,
             $spell
-        )) instanceof SpellClass) {
+        )) instanceof ClassSpell) {
             $level = $spellLevel->level;
         }
 

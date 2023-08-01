@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Entity\WeaponCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,8 +29,7 @@ class WeaponRepository extends ServiceEntityRepository
      */
     public function findAllOrdered(): array
     {
-        return $this->createQueryBuilder('weapon')
-            ->orderBy('weapon.name', 'ASC')
+        return $this->createQbl()
             ->getQuery()
             ->getResult();
     }
@@ -39,20 +39,29 @@ class WeaponRepository extends ServiceEntityRepository
      */
     public function findByCategory(WeaponCategory $category): array
     {
-        return $this->createQueryBuilder('weapon')
+        return $this->createQbl()
             ->andWhere('weapon.category = :category')
             ->setParameter('category', $category)
-            ->orderBy('weapon.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
     public function findByName(string $name): ?Weapon
     {
-        return $this->createQueryBuilder('weapon')
+        return $this->createQbl()
             ->andWhere('weapon.name = :name')
             ->setParameter('name', $name)
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('weapon')
+            ->leftJoin('weapon.category', 'category', 'WITH')
+            ->addSelect('category')
+            ->orderBy('weapon.name', 'ASC');
+    }
+
 }

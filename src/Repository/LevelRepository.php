@@ -26,7 +26,7 @@ class LevelRepository extends ServiceEntityRepository
 
     public function findByClassAndLevel(ClassT $classT, int $level): ?Level
     {
-        return $this->createQueryBuilder('level')
+        return $this->createQbl()
             ->andWhere('level.classT = :charclass')
             ->setParameter('charclass', $classT)
             ->andWhere('level.lvl = :lvl')
@@ -40,17 +40,20 @@ class LevelRepository extends ServiceEntityRepository
      */
     public function findByClass(ClassT $classT): array
     {
-        return $this->createQueryBuilder('level')
+        return $this->createQbl()
             ->andWhere('level.classT = :charclass')
             ->setParameter('charclass', $classT)
             ->getQuery()
             ->getResult();
     }
 
-    public function getQl(): QueryBuilder
+    private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('level')
-            ->orderBy('level.lvl', 'ASC');
+            ->leftJoin('level.classT', 'class_t', 'WITH')
+            ->addSelect('class_t')
+            ->orderBy('level.name', 'ASC');
     }
+
 
 }

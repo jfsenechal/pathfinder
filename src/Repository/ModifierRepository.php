@@ -127,6 +127,8 @@ class ModifierRepository extends ServiceEntityRepository
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('modifier')
+            ->leftJoin('modifier.race', 'race', 'WITH')
+            ->addSelect('race')
             ->orderBy('modifier.object_class', 'ASC');
     }
 

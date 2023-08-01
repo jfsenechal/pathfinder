@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,9 +31,9 @@ class ClassFeatureRepository extends ServiceEntityRepository
     public function findByCharacterClass(ClassT $classT): array
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.classT = :val')
+            ->andWhere('class_feature.classT = :val')
             ->setParameter('val', $classT)
-            ->orderBy('c.name', 'ASC')
+            ->orderBy('class_feature.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -42,12 +43,12 @@ class ClassFeatureRepository extends ServiceEntityRepository
      */
     public function findByClassAndLevel(ClassT $classT, Level $level): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.classT = :val')
+        return $this->createQbl()
+            ->andWhere('class_feature.classT = :val')
             ->setParameter('val', $classT)
-            ->andWhere('c.level = :lvl')
+            ->andWhere('class_feature.level = :lvl')
             ->setParameter('lvl', $level)
-            ->orderBy('c.name', 'ASC')
+            ->orderBy('class_feature.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -57,15 +58,24 @@ class ClassFeatureRepository extends ServiceEntityRepository
      */
     public function findByClassLevelAndSrc(ClassT $classT, Level $level, string $src): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.classT = :val')
+        return $this->createQbl()
+            ->andWhere('class_feature.classT = :val')
             ->setParameter('val', $classT)
-            ->andWhere('c.level = :lvl')
+            ->andWhere('class_feature.level = :lvl')
             ->setParameter('lvl', $level)
-            ->andWhere('c.sourced = :src')
+            ->andWhere('class_feature.sourced = :src')
             ->setParameter('src', $src)
-            ->orderBy('c.name', 'ASC')
+            ->orderBy('class_feature.name', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('class_feature')
+            ->leftJoin('class_feature.classT', 'classT', 'WITH')
+            ->leftJoin('class_feature.level', 'level', 'WITH')
+            ->addSelect('classT', 'level')
+            ->addOrderBy('classT.name', 'ASC');
     }
 }

@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,14 +29,19 @@ class CharacterWeaponRepository extends ServiceEntityRepository
      */
     public function findByCharacter(Character $character): array
     {
+        return $this->createQbl()
+            ->andWhere('character_weapon.character = :character')
+            ->setParameter('character', $character)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
         return $this->createQueryBuilder('character_weapon')
             ->leftJoin('character_weapon.weapon', 'weapon', 'WITH')
             ->leftJoin('character_weapon.character', 'character', 'WITH')
             ->addSelect('weapon', 'character')
-            ->andWhere('character_weapon.character = :character')
-            ->setParameter('character', $character)
-            ->addOrderBy('weapon.name', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('weapon.name', 'ASC');
     }
 }

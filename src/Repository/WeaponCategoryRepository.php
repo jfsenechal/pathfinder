@@ -103,7 +103,6 @@ class WeaponCategoryRepository extends ServiceEntityRepository
             ->getQuery()->getOneOrNullResult();
     }
 
-
     private function createQb(): QueryBuilder
     {
         return $this->createQueryBuilder('category')

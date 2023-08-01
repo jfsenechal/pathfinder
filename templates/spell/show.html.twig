@@ -12,11 +12,11 @@
                 <tr>
                     <th>Niveau</th>
                     <td>
-                        {% for spellClasse in spell.spell_classes %}
-                            <a href="{{ path('pathfinder_class_show', {'id':  spellClasse.classT.id }) }}">
-                                {{ spellClasse.classT }}
+                        {% for classSpelle in spell.class_spelles %}
+                            <a href="{{ path('pathfinder_class_show', {'id':  classSpelle.classT.id }) }}">
+                                {{ classSpelle.classT }}
                             </a>
-                            ({{ spellClasse.level }})
+                            ({{ classSpelle.level }})
                         {% endfor %}
                     </td>
                 </tr>

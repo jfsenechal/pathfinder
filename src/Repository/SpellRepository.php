@@ -41,12 +41,12 @@ class SpellRepository extends ServiceEntityRepository
         }
 
         if ($class instanceof ClassT) {
-            $qb->andWhere('spell_classes.classT = :class2')
+            $qb->andWhere('class_spelles.classT = :class2')
                 ->setParameter('class2', $class);
         }
 
         if ($level !== null) {
-            $qb->andWhere('spell_classes.level = :level')
+            $qb->andWhere('class_spelles.level = :level')
                 ->setParameter('level', $level);
         }
 
@@ -74,7 +74,7 @@ class SpellRepository extends ServiceEntityRepository
     public function findByClass(ClassT $class): array
     {
         return $this->createQbl()
-            ->andWhere('spell_classes.classT = :class')
+            ->andWhere('class_spelles.classT = :class')
             ->setParameter('class', $class)
             ->getQuery()->getResult();
     }
@@ -83,8 +83,8 @@ class SpellRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('spell')
             ->leftJoin('spell.character_spells', 'character_spells', 'WITH')
-            ->leftJoin('spell.spell_classes', 'spell_classes', 'WITH')
-            ->addSelect('character_spells', 'spell_classes')
+            ->leftJoin('spell.class_spelles', 'class_spelles', 'WITH')
+            ->addSelect('character_spells', 'class_spelles')
             ->addOrderBy('spell.name');
     }
 }

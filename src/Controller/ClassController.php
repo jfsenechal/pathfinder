@@ -7,8 +7,8 @@ use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
-use AfmLibre\Pathfinder\Repository\SkillClassRepository;
-use AfmLibre\Pathfinder\Repository\SpellClassRepository;
+use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
+use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,10 +19,10 @@ class ClassController extends AbstractController
 {
     public function __construct(
         private readonly ClassRepository $classTRepository,
-        private readonly SpellClassRepository $spellClassRepository,
+        private readonly ClassSpellRepository $classSpellRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
-        private readonly SkillClassRepository $skillClassRepository
+        private readonly ClassSkillRepository $classSkillRepository
     ) {
     }
 
@@ -53,14 +53,14 @@ class ClassController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_class_show')]
     public function show(ClassT $classT)
     {
-        $spellsClass = $this->spellClassRepository->searchByNameAndClass(null, $classT);
+        $spellsClass = $this->classSpellRepository->searchByNameAndClass(null, $classT);
         $countSpells = count($spellsClass);
         foreach ($levels = $this->levelRepository->findByClass($classT) as $level) {
             $level->features = $this->classFeatureRepository->findByClassLevelAndSrc($classT, $level, 'MJ');
         }
 
         $spells = SpellUtils::groupByLevel($spellsClass);
-        $classSkills = $this->skillClassRepository->findByClass($classT);
+        $classSkills = $this->classSkillRepository->findByClass($classT);
         $skills = array_map(function ($classSkill) {
             return $classSkill->skill;
         }, $classSkills);
