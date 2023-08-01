@@ -6,7 +6,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Les {{ classTes|length }} classes</h3>
+            <h3>Les {{ classes|length }} classes</h3>
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/class/_form_search.html.twig' %}
@@ -17,20 +17,20 @@
                     <th>Campagnes</th>
                     <th>Set</th>
                 </tr>
-                {% for classT in classTes %}
+                {% for class in classes %}
                     <tr>
                         <td>
-                            <a href="{{ path('pathfinder_class_show', {'id': classT.id}) }}">
-                                {{ classT.name }}
+                            <a href="{{ path('pathfinder_class_show', {'id': class.id}) }}">
+                                {{ class.name }}
                             </a>
                         </td>
-                        <td id="result-{{ classT.id }}">
-                            {% if classT.campaings %}
-                                {{ classT.campaings|join('') }}
+                        <td id="result-{{ class.id }}">
+                            {% if class.campaings %}
+                                {{ class.campaings|join('') }}
                             {% endif %}
                         </td>
                         <td>
-                            {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': classT } %}
+                            {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': class } %}
                         </td>
                     </tr>
                 {% endfor %}

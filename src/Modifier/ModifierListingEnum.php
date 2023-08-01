@@ -19,6 +19,8 @@ enum ModifierListingEnum: string
     case SAVING_THROW_FORTITUDE = 'FORTITUDE';//vigueur
     case SAVING_THROW_WILL = 'WILL';//volonte
 
+    case SKILL = 'SKILL';
+
     public static function findByName(string $name): ?ModifierListingEnum
     {
         return match ($name) {
@@ -33,6 +35,7 @@ enum ModifierListingEnum: string
             self::SAVING_THROW_REFLEX->value => ModifierListingEnum::SAVING_THROW_REFLEX,
             self::SAVING_THROW_FORTITUDE->value => ModifierListingEnum::SAVING_THROW_FORTITUDE,
             self::SAVING_THROW_WILL->value => ModifierListingEnum::SAVING_THROW_WILL,
+            self::SKILL->value => ModifierListingEnum::SKILL,
             default => null
         };
     }

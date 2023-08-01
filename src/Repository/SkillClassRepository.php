@@ -4,6 +4,7 @@ namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\ClassT;
+use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Entity\SkillClass;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -32,13 +33,28 @@ class SkillClassRepository extends ServiceEntityRepository
         return $this->createQbl()
             ->andWhere('skill_class.classT = :class')
             ->setParameter('class', $class)
+            ->addOrderBy('skill.name')
+            ->getQuery()->getResult();
+    }
+
+    /**
+     * @return SkillClass[]
+     */
+    public function findBySkill(Skill $skill): array
+    {
+        return $this->createQbl()
+            ->andWhere('skill_class.skill = :skill')
+            ->setParameter('skill', $skill)
+            ->addOrderBy('classT.name')
             ->getQuery()->getResult();
     }
 
     private function createQbl(): QueryBuilder
     {
-        return $this->createQueryBuilder('skill_class');
+        return $this->createQueryBuilder('skill_class')
+            ->leftJoin('skill_class.skill', 'skill', 'WITH')
+            ->leftJoin('skill_class.classT', 'classT', 'WITH')
+            ->addSelect('skill', 'classT');
     }
-
 
 }

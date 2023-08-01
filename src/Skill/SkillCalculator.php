@@ -4,7 +4,11 @@ namespace AfmLibre\Pathfinder\Skill;
 
 use AfmLibre\Pathfinder\Ability\AbilityEnum;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\Modifier;
+use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
+use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Repository\SkillClassRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 
@@ -17,7 +21,8 @@ class SkillCalculator
 
     public function __construct(
         private SkillRepository $skillRepository,
-        private SkillClassRepository $skillClassRepository
+        private SkillClassRepository $skillClassRepository,
+        private ModifierRepository $modifierRepository,
     ) {
     }
 
@@ -37,6 +42,7 @@ class SkillCalculator
         foreach ($all as $skill) {
             $isTrained = $this->isTrained($skill->getId());
             $ability = AbilityEnum::returnByNameFr($skill->ability);
+            $racials = $this->racials($skill);
             $property = strtolower($ability->value);
             $skillsDto[] = new SkillDto(
                 $skill->name,
@@ -45,7 +51,7 @@ class SkillCalculator
                 0,
                 $ability->value,
                 ModifierCalculator::abilityValueModifier($character->$property),
-                [],
+                $racials,
                 []
             );
         }
@@ -56,6 +62,25 @@ class SkillCalculator
     private function isTrained(int $id): bool
     {
         return in_array($id, $this->ownedIds);
+    }
+
+    /**
+     * @param Skill $skill
+     * @return Modifier[]
+     */
+    private function racials(Skill $skill): array
+    {
+        $modifiers = [];
+
+        if ($modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
+            $skill->getId(),
+            Skill::class,
+            ModifierListingEnum::SKILL
+        )) {
+            $modifiers[] = $modifier;
+        }
+
+        return $modifiers;
     }
 
 }

@@ -7,8 +7,8 @@
         </tr>
         {% for modifier in modifiers %}
             <tr>
-                <td>{{ modifier.ability.value }}</td>
-                <td>{{ modifier.value }}</td>
+                <td>{{ modifier.ability.value|trans }}</td>
+                <td>{{ modifier.value|number_sign }}</td>
             </tr>
         {% endfor %}
     </table>

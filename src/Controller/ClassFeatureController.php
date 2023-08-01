@@ -30,12 +30,12 @@ class ClassFeatureController extends AbstractController
             $name = $data['name'];
         }
 
-        $classTes = $this->classTRepository->searchByName($name);
+        $classes = $this->classTRepository->searchByName($name);
 
         return $this->render(
             '@AfmLibrePathfinder/class/index.html.twig',
             [
-                'classTes' => $classTes,
+                'classes' => $classes,
                 'form' => $form->createView(),
             ]
         );

@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Form\SearchNameType;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\LevelRepository;
+use AfmLibre\Pathfinder\Repository\SkillClassRepository;
 use AfmLibre\Pathfinder\Repository\SpellClassRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,8 @@ class ClassController extends AbstractController
         private readonly ClassRepository $classTRepository,
         private readonly SpellClassRepository $spellClassRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
-        private readonly LevelRepository $levelRepository
+        private readonly LevelRepository $levelRepository,
+        private readonly SkillClassRepository $skillClassRepository
     ) {
     }
 
@@ -37,12 +39,12 @@ class ClassController extends AbstractController
             $name = $data['name'];
         }
 
-        $classTes = $this->classTRepository->searchByName($name);
+        $classes = $this->classTRepository->searchByName($name);
 
         return $this->render(
             '@AfmLibrePathfinder/class/index.html.twig',
             [
-                'classTes' => $classTes,
+                'classes' => $classes,
                 'form' => $form->createView(),
             ]
         );
@@ -58,6 +60,10 @@ class ClassController extends AbstractController
         }
 
         $spells = SpellUtils::groupByLevel($spellsClass);
+        $classSkills = $this->skillClassRepository->findByClass($classT);
+        $skills = array_map(function ($classSkill) {
+            return $classSkill->skill;
+        }, $classSkills);
 
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',
@@ -66,6 +72,7 @@ class ClassController extends AbstractController
                 'spells' => $spells,
                 'countSpells' => $countSpells,
                 'levels' => $levels,
+                'skills' => $skills,
             ]
         );
     }

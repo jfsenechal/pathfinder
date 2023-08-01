@@ -2,11 +2,24 @@
 
 namespace AfmLibre\Pathfinder\Skill;
 
+use AfmLibre\Pathfinder\Entity\Modifier;
+use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
+
 /**
  * Skill modifier = modifier of the skill’s key ability score + proficiency bonus + other bonuses + penalties
  */
 class SkillDto
 {
+    /**
+     * @param string $name
+     * @param int $id
+     * @param bool $trained
+     * @param int $base
+     * @param string $abilityName
+     * @param int $abilityValueModifier
+     * @param Modifier[] $racialModifiers
+     * @param Modifier[] $bonusModifiers
+     */
     public function __construct(
         readonly string $name,
         readonly int $id,
@@ -14,26 +27,30 @@ class SkillDto
         readonly int $base,
         readonly string $abilityName,
         readonly int $abilityValueModifier,
-        readonly array $baseModifiers,
+        readonly array $racialModifiers,
         readonly array $bonusModifiers
     ) {
 
     }
 
-//Total Carac Classe Rangs Modificateurs
-
     public function total(): int
     {
-        $baseFull = $this->base;
-        foreach ($this->baseModifiers as $baseModifier) {
-            $baseFull += $baseModifier->value;
+        $racial = $this->base;
+        foreach ($this->racialModifiers as $racialModifier) {
+            $racial += $racialModifier->value;
         }
-        $bonusBase = ModifierCalculator::abilityValueModifier($baseFull);
+
         $bonus = 0;
         foreach ($this->bonusModifiers as $modifier) {
             $bonus += $modifier->value;
         }
 
-        return $bonusBase + $bonus;
+        $bonusTrained = 0;
+        if ($this->trained) {
+            $bonusTrained = 3;
+        }
+        $racialBonus = ModifierCalculator::abilityValueModifier($racial);
+
+        return $this->abilityValueModifier + $racialBonus + $bonusTrained;
     }
 }

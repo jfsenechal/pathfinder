@@ -5,8 +5,10 @@ namespace AfmLibre\Pathfinder\Command;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Repository\SkillClassRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -26,7 +28,8 @@ class ImportModifierCommand extends Command
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private ModifierRepository $modifierRepository
+        private ModifierRepository $modifierRepository,
+        private SkillClassRepository $skillClassRepository
     ) {
         parent::__construct();
     }
@@ -51,12 +54,12 @@ class ImportModifierCommand extends Command
     private function treatement(array $data, string $className)
     {
         foreach ($data as $name => $values) {
-            $object = $this->entityManager->getRepository($className)->findOneByName($name);
-            if (!$object) {
+            if (!$object = $this->entityManager->getRepository($className)->findOneByName($name)) {
                 $this->io->error('Objet non trouvé '.$className.' '.$name);
                 continue;
             }
             foreach ($values as $ability => $value) {
+
                 $abilityEnum = ModifierListingEnum::findByName($ability);
 
                 if (!$modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
@@ -115,5 +118,12 @@ class ImportModifierCommand extends Command
             ],
         ];
         $this->treatement($feats, Feat::class);
+
+        $skills = [
+            'Perception' => [
+                ModifierListingEnum::SKILL->value => +2,
+            ],
+        ];
+        $this->treatement($skills, Skill::class);
     }
 }

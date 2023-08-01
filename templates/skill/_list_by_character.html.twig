@@ -5,6 +5,7 @@
         <th>Nom</th>
         <th>Caractéristique</th>
         <th>Bonus caract</th>
+        <th>Spécial</th>
     </tr>
     {% for skillDto in skills %}
         <tr>
@@ -18,8 +19,13 @@
             <td>
                 <a href="{{ path('pathfinder_feat_show', {'id': skillDto.id}) }}">{{ skillDto.name }}</a>
             </td>
-            <td>{{ skillDto.abilityName }}</td>
+            <td>{{ skillDto.abilityName|trans }}</td>
             <td>{{ skillDto.abilityValueModifier|number_sign }}</td>
+            <td>
+                {% for modifier in skillDto.racialModifiers %}
+                    {{ modifier.value|number_sign }}
+                {% endfor %}
+            </td>
         </tr>
     {% endfor %}
 </table>

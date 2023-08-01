@@ -1,0 +1,19 @@
+<h4 class="text-success">Classes liées</h4>
+<table class="table table-bordered mt-3">
+    <tr>
+        <th>Nom</th>
+        <th></th>
+    </tr>
+    {% for class in classes %}
+        <tr>
+            <td>
+                <a href="{{ path('pathfinder_class_show', {'id': class.id}) }}">
+                    {{ class.name }}
+                </a>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+    {% endfor %}
+</table>

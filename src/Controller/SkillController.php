@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Skill;
+use AfmLibre\Pathfinder\Repository\SkillClassRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,8 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/skill')]
 class SkillController extends AbstractController
 {
-    public function __construct(private readonly SkillRepository $skillRepository)
-    {
+    public function __construct(
+        private readonly SkillRepository $skillRepository,
+        private SkillClassRepository $skillClassRepository
+    ) {
     }
 
     #[Route(path: '/', name: 'pathfinder_skill_index')]
@@ -31,10 +34,16 @@ class SkillController extends AbstractController
     #[Route(path: '/{id}', name: 'pathfinder_skill_show')]
     public function show(Skill $skill)
     {
+        $classSkills = $this->skillClassRepository->findBySkill($skill);
+        $classes = array_map(function ($classSkill) {
+            return $classSkill->classT;
+        }, $classSkills);
+
         return $this->render(
             '@AfmLibrePathfinder/skill/show.html.twig',
             [
                 'skill' => $skill,
+                'classes' => $classes,
             ]
         );
     }

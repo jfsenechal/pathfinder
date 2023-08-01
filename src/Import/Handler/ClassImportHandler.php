@@ -25,11 +25,9 @@ class ClassImportHandler
         $this->io = $io;
 
         foreach ($classes as $classData) {
-            if ($classT = $this->classTRepository->findOneByName($classData['Nom'])) {
-                $this->addSkills($classT, $classData);
+            if ($this->classTRepository->findOneByName($classData['Nom'])) {
                 continue;
             }
-            continue;
             $classT = new ClassT();
             $classT->name = $classData['Nom'];
             $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
