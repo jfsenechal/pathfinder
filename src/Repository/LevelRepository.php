@@ -52,7 +52,7 @@ class LevelRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('level')
             ->leftJoin('level.classT', 'class_t', 'WITH')
             ->addSelect('class_t')
-            ->orderBy('level.name', 'ASC');
+            ->orderBy('level.id', 'ASC');
     }
 
 
