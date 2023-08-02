@@ -10,7 +10,7 @@
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_script_tags('app') }}
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-1020" style="height: 100vh;">
 {% block header %}
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
@@ -71,8 +71,8 @@
 
 {% block footer %}
     <footer class="footer mt-auto py-3 bg-body-tertiary">
-        <div class="container">
-            <a href="https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.MainPage.ashx">https://www.pathfinder-fr.org</a>
+        <div class="container d-flex" style="align-items: center; justify-content: center;">
+            <a href="https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.MainPage.ashx" target="_blank">https://www.pathfinder-fr.org</a>
         </div>
     </footer>
 {% endblock %}
