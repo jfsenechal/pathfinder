@@ -46,6 +46,15 @@ class ArmorRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOneByName(string $name): ?Armor
+    {
+        return $this->createQbl()
+            ->andWhere('armor.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('armor')

@@ -181,9 +181,9 @@ class ImportModifierCommand extends Command
     {
         $race = $this->entityManager->getRepository(Race::class)->findOneByName('Demi-orque');
         $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Guerrier');
-        $level = $this->entityManager->getRepository(Level::class)->findByClassAndLevel($class, 1);
-        $armor = $this->entityManager->getRepository(Armor::class)->findByName('Cotte de mailles');
-        $weapon = $this->entityManager->getRepository(Weapon::class)->findByName('Cimeterre à deux mains');
+        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 1);
+        $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Cotte de mailles');
+        $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Cimeterre à deux mains');
 
         $character = new Character();
         $character->name = 'Fiona';

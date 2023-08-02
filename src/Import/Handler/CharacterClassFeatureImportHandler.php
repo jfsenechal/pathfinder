@@ -28,7 +28,7 @@ class CharacterClassFeatureImportHandler
                 $io->error('Classe non trouvee '.$data['Nom']);
                 continue;
             }
-            if (!$level = $this->levelRepository->findByClassAndLevel($classT, $data['Niveau'])) {
+            if (!$level = $this->levelRepository->findOneByClassAndLevel($classT, $data['Niveau'])) {
                 $io->error('Level non trouvee '.$data['Nom']);
                 continue;
             }

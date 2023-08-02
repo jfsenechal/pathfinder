@@ -46,7 +46,7 @@ class WeaponRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByName(string $name): ?Weapon
+    public function findOneByName(string $name): ?Weapon
     {
         return $this->createQbl()
             ->andWhere('weapon.name = :name')
@@ -54,7 +54,6 @@ class WeaponRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
 
     private function createQbl(): QueryBuilder
     {

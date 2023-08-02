@@ -31,7 +31,7 @@ class LevelingUpController extends AbstractController
             $level->features = $this->classFeatureRepository->findByClassAndLevel($class, $level);
         }
 
-        $nextLevel = $this->levelRepository->findByClassAndLevel($class, $character->current_level->lvl + 1);
+        $nextLevel = $this->levelRepository->findOneByClassAndLevel($class, $character->current_level->lvl + 1);
         $nextLevel->features = $this->classFeatureRepository->findByClassAndLevel($class, $level);
 
         $form = $this->createForm(LevelCrossingType::class, $character);

@@ -70,7 +70,7 @@ class CharacterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $character->uuid = $character->generateUuid();
-            $character->current_level = $this->levelRepository->findByClassAndLevel(
+            $character->current_level = $this->levelRepository->findOneByClassAndLevel(
                 $character->classT,
                 $character->select_level
             );
