@@ -16,6 +16,8 @@ class FeatImportHandler
 
     public function call(SymfonyStyle $io, array $feats)
     {
+        $io->section('FEATS');
+
         foreach ($feats as $featData) {
             $io->writeln($featData['Nom']);
             $feat = $this->createFeat($featData);

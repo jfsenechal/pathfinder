@@ -55,12 +55,13 @@ class ImportCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
         $name = $input->getArgument('name');
+        $kinds = ['all', 'skills', 'classes', 'classfeatures', 'spells', 'races', 'feats', 'armors', 'weapons'];
 
         if (!$name) {
             $helper = $this->getHelper('question');
             $question = new ChoiceQuestion(
                 'What do you want to import ?',
-                ['all', 'skills', 'classes', 'classfeatures', 'spells', 'races', 'feats', 'armors', 'weapons']
+                $kinds
             );
 
             $question->setErrorMessage('This choice %s is invalid.');
@@ -94,13 +95,12 @@ class ImportCommand extends Command
     private function importAll()
     {
         $this->skillImportHandler->call($this->io, $this->readFile('skills'));
-        $this->classTImportHandler->call($this->io, $this->readFile('classes'));
-        $this->classTFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
-        $this->spellImportHandler->call($this->io, $this->readFile('spells'));
         $this->raceImportHandler->call($this->io, $this->readFile('races'));
-
         $this->featImportHandler->call($this->io, $this->readFile('feats'));
         $this->armorImportHandler->call($this->io, $this->readFile('armors'));
         $this->weaponImportHandler->call($this->io, $this->readFile('weapons'));
+        $this->classTImportHandler->call($this->io, $this->readFile('classes'));
+        $this->classTFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
+        $this->spellImportHandler->call($this->io, $this->readFile('spells'));
     }
 }

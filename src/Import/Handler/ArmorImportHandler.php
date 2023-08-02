@@ -19,6 +19,8 @@ class ArmorImportHandler
 
     public function call(SymfonyStyle $io, array $armors)
     {
+        $io->section('ARMORS');
+
         $this->addCategories($armors);
 
         foreach ($armors as $data) {

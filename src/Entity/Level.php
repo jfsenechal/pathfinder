@@ -29,7 +29,7 @@ class Level
     #[ORM\Column(nullable: false)]
     public int $maxSpellLvl = 0;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'levels')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class)]
     public ?ClassT $classT;
 
     /**

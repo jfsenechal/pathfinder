@@ -15,6 +15,8 @@ class SkillImportHandler
 
     public function call(SymfonyStyle $io, array $skills)
     {
+        $io->section('SKILLS');
+
         foreach ($skills as $skillData) {
             $io->writeln($skillData['Nom']);
             $race = $this->createSkill($skillData);

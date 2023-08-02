@@ -15,11 +15,11 @@ class CharacterSpell implements \Stringable
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spells_selection')]
+    #[ORM\ManyToOne(targetEntity: Character::class)]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
     public ?Character $character;
 
-    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'character_spells')]
+    #[ORM\ManyToOne(targetEntity: Spell::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
 

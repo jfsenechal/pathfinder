@@ -14,11 +14,11 @@ class ClassSpell
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'class_spells')]
+    #[ORM\ManyToOne(targetEntity: Spell::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'class_spells')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?ClassT $classT;
 

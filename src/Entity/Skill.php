@@ -27,12 +27,6 @@ class Skill
     #[ORM\Column(type: 'text', nullable: true)]
     public bool $training;
 
-    /**
-     * @var ClassSkill[]
-     */
-    #[ORM\OneToMany(targetEntity: ClassSkill::class, mappedBy: 'skill')]
-    public iterable $class_skills;
-
     public function __toString(): string
     {
         return $this->name;

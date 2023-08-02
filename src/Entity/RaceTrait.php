@@ -19,7 +19,7 @@ class RaceTrait implements \Stringable
     #[ORM\Column(type: 'json', nullable: true)]
     public ?iterable $replaces = [];
 
-    #[ORM\ManyToOne(targetEntity: Race::class, inversedBy: 'traits')]
+    #[ORM\ManyToOne(targetEntity: Race::class)]
     public ?Race $race;
 
     public function __construct(Race $race)

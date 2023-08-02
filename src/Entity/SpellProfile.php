@@ -31,20 +31,13 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
-    /**
-     * @var SpellProfileCharacter[]
-     */
-    #[ORM\OneToMany(targetEntity: SpellProfileCharacter::class, mappedBy: 'spell_profile')]
-    public iterable $spells_profile_character;
-
-    #[ORM\ManyToOne(targetEntity: Character::class, inversedBy: 'character_spell_profiles')]
+    #[ORM\ManyToOne(targetEntity: Character::class)]
     #[ORM\JoinColumn(name: 'character_id', nullable: false)]
     public ?Character $character;
 
     public function __construct(Character $character)
     {
         $this->character = $character;
-        $this->spells_profile_character = new ArrayCollection();
         $this->character_spells = new ArrayCollection();
     }
 
@@ -72,8 +65,8 @@ class SpellProfile implements SluggableInterface, TimestampableInterface, \Strin
     {
         // set the owning side to null (unless already changed)
         if ($this->spells_profile_character->removeElement(
-            $spellProfileCharacter
-        ) && $spellProfileCharacter->spell_profile === $this) {
+                $spellProfileCharacter
+            ) && $spellProfileCharacter->spell_profile === $this) {
             $spellProfileCharacter->spell_profile = null;
         }
 

@@ -19,6 +19,8 @@ class WeaponImportHandler
 
     public function call(SymfonyStyle $io, array $weapons)
     {
+        $io->section('WEAPONS');
+
         $this->addCategories($weapons);
 
         foreach ($weapons as $data) {

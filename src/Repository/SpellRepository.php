@@ -37,7 +37,7 @@ class SpellRepository extends ServiceEntityRepository
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', '%'.$name.'%');
         }
 
         if ($class instanceof ClassT) {
@@ -82,9 +82,6 @@ class SpellRepository extends ServiceEntityRepository
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('spell')
-            ->leftJoin('spell.character_spells', 'character_spells', 'WITH')
-            ->leftJoin('spell.class_spelles', 'class_spelles', 'WITH')
-            ->addSelect('character_spells', 'class_spelles')
             ->addOrderBy('spell.name');
     }
 }

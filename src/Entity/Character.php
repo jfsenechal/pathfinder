@@ -51,18 +51,6 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\JoinColumn(nullable: false)]
     public ?ClassT $classT = null;
 
-    /**
-     * @var CharacterSpell[]
-     */
-    #[ORM\OneToMany(targetEntity: CharacterSpell::class, mappedBy: 'character', orphanRemoval: true)]
-    public iterable $character_spells_selection;
-
-    /**
-     * @var SpellProfile[]
-     */
-    #[ORM\OneToMany(targetEntity: SpellProfile::class, mappedBy: 'character', orphanRemoval: true)]
-    public iterable $character_spell_profiles;
-
     #[ORM\ManyToOne(targetEntity: Level::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?Level $current_level = null;
@@ -81,8 +69,7 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     public function __construct()
     {
-        $this->character_spells_selection = new ArrayCollection();
-        $this->character_spell_profiles = new ArrayCollection();
+
     }
 
     public function __toString(): string

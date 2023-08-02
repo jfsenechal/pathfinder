@@ -3,10 +3,11 @@
 namespace AfmLibre\Pathfinder\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
+use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Entity\ClassSpell;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,14 +27,11 @@ class ClassSpellRepository extends ServiceEntityRepository
 
     public function searchByClassAndSpell(?ClassT $class, Spell $spell): ?ClassSpell
     {
-        return $this->createQueryBuilder('classSpell')
-            ->leftJoin('classSpell.spell', 'spell', 'WITH')
-            ->leftJoin('classSpell.classT', 'classT', 'WITH')
-            ->addSelect('classT', 'spell')
+        return $this->createQbl()
             ->andWhere('spell = :spell')
             ->setParameter('spell', $spell)
-            ->andWhere('classSpell.classT = :class2')
-            ->setParameter('class2', $class)
+            ->andWhere('class_spell.classT = :classT')
+            ->setParameter('classT', $class)
             ->getQuery()->getOneOrNullResult();
     }
 
@@ -42,23 +40,27 @@ class ClassSpellRepository extends ServiceEntityRepository
      */
     public function searchByNameAndClass(?string $name = null, ?ClassT $class = null): array
     {
-        $qb = $this->createQueryBuilder('classSpell')
-            ->leftJoin('classSpell.spell', 'spell', 'WITH')
-            ->leftJoin('classSpell.classT', 'classT', 'WITH')
-            ->addSelect('classT', 'spell');
+        $qb = $this->createQbl();
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', '%'.$name.'%');
         }
 
         if ($class instanceof ClassT) {
-            $qb->andWhere('classSpell.classT = :class2')
+            $qb->andWhere('class_spell.classT = :class2')
                 ->setParameter('class2', $class);
         }
 
-        $qb->addOrderBy('spell.name');
-
         return $qb->getQuery()->getResult();
+    }
+
+    private function createQbl(): QueryBuilder
+    {
+        return $this->createQueryBuilder('class_spell')
+            ->leftJoin('class_spell.spell', 'spell', 'WITH')
+            ->leftJoin('class_spell.classT', 'classT', 'WITH')
+            ->addSelect('classT', 'spell')
+            ->addOrderBy('spell.name');
     }
 }

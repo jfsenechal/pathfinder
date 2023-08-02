@@ -50,8 +50,6 @@ class RaceRepository extends ServiceEntityRepository
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('race')
-            ->leftJoin('race.traits', 'traits', 'WITH')
-            ->addSelect('traits')
             ->orderBy('race.name', 'ASC');
     }
 

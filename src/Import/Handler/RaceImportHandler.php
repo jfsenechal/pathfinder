@@ -19,6 +19,8 @@ class RaceImportHandler
 
     public function call(SymfonyStyle $io, array $races)
     {
+        $io->section('RACES');
+
         foreach ($races as $raceData) {
             $io->writeln($raceData['Nom']);
             $race = $this->createRace($raceData);

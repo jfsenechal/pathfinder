@@ -55,10 +55,6 @@ class ClassRepository extends ServiceEntityRepository
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('class_t')
-            ->leftJoin('class_t.class_skills', 'class_skills', 'WITH')
-            ->leftJoin('class_t.class_spells', 'class_spells', 'WITH')
-            ->leftJoin('class_t.levels', 'levels', 'WITH')
-            ->addSelect('class_skills', 'class_spells', 'levels')
             ->addOrderBy('class_t.name', 'ASC');
     }
 

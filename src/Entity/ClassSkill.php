@@ -13,11 +13,11 @@ class ClassSkill
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Skill::class, inversedBy: 'class_skills')]
+    #[ORM\ManyToOne(targetEntity: Skill::class)]
     #[ORM\JoinColumn(nullable: false)]
     public Skill $skill;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class, inversedBy: 'class_skills')]
+    #[ORM\ManyToOne(targetEntity: ClassT::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ClassT $classT;
 

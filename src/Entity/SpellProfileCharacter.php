@@ -18,7 +18,7 @@ class SpellProfileCharacter
     #[ORM\Column(type: 'integer')]
     public int $quantity = 0;
 
-    #[ORM\ManyToOne(targetEntity: SpellProfile::class, inversedBy: 'spells_profile_character')]
+    #[ORM\ManyToOne(targetEntity: SpellProfile::class)]
     #[ORM\JoinColumn(nullable: false)]
     public ?SpellProfile $spell_profile;
 

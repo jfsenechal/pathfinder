@@ -32,20 +32,6 @@ class ClassT implements \JsonSerializable, \Stringable
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $alignment;
 
-    #[ORM\OneToMany(targetEntity: Level::class, mappedBy: 'classT')]
-    public iterable $levels;
-
-    /**
-     * @var ClassSpell[]
-     */
-    #[ORM\OneToMany(targetEntity: ClassSpell::class, mappedBy: 'classT')]
-    public iterable $class_spells;
-    /**
-     * @var ClassSkill[]
-     */
-    #[ORM\OneToMany(targetEntity: ClassSkill::class, mappedBy: 'classT')]
-    public iterable $class_skills;
-
     /**
      * @var Spell[] $spells
      */
@@ -54,9 +40,6 @@ class ClassT implements \JsonSerializable, \Stringable
     public function __construct()
     {
         $this->spells = new ArrayCollection();
-        $this->class_spells = new ArrayCollection();
-        $this->class_skills = new ArrayCollection();
-        $this->levels = new ArrayCollection();
     }
 
     public function __toString(): string

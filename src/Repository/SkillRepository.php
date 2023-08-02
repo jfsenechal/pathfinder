@@ -47,8 +47,6 @@ class SkillRepository extends ServiceEntityRepository
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('skill')
-            ->leftJoin('skill.class_skills', 'class_skills', 'WITH')
-            ->addSelect('class_skills')
             ->orderBy('skill.name', 'ASC');
     }
 

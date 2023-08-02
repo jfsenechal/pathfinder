@@ -30,7 +30,7 @@ class SpellProfileRepository extends ServiceEntityRepository
     public function findByCharacter(Character $character): array
     {
         return $this->createQbl()
-            ->andWhere('spellProfile.character = :character')
+            ->andWhere('character = :character')
             ->setParameter('character', $character)
             ->addOrderBy('spellProfile.name')
             ->getQuery()->getResult();
@@ -40,8 +40,7 @@ class SpellProfileRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('spell_profile')
             ->leftJoin('spell_profile.character', 'character', 'WITH')
-            ->leftJoin('spell_profile.spells_profile_character', 'spells_profile_character', 'WITH')
-            ->addSelect('character', 'spells_profile_character')
+            ->addSelect('character')
             ->orderBy('spell_profile.name', 'ASC');
     }
 

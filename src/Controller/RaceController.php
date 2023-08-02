@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
+use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,7 @@ class RaceController extends AbstractController
 {
     public function __construct(
         private readonly RaceRepository $raceRepository,
+        private readonly RaceTraitRepository $raceTraitRepository,
         private readonly ModifierRepository $modifierRepository
     ) {
     }
@@ -36,12 +38,13 @@ class RaceController extends AbstractController
     public function show(Race $race)
     {
         $modifiers = $this->modifierRepository->findSkillByRace(ModifierListingEnum::SKILL, $race);
+        $traits = $this->raceTraitRepository->findByRace($race);
 
         return $this->render(
             '@AfmLibrePathfinder/race/show.html.twig',
             [
                 'race' => $race,
-                'traits' => $race->traits,
+                'traits' => $traits,
                 'modifiers' => $modifiers,
             ]
         );

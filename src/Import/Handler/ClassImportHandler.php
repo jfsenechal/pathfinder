@@ -3,9 +3,9 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use AfmLibre\Pathfinder\Entity\ClassSkill;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Level;
-use AfmLibre\Pathfinder\Entity\ClassSkill;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -22,6 +22,8 @@ class ClassImportHandler
 
     public function call(SymfonyStyle $io, array $classes)
     {
+        $io->section('CLASSES');
+
         $this->io = $io;
 
         foreach ($classes as $classData) {
