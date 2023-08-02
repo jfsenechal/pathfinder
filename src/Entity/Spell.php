@@ -41,6 +41,9 @@ class Spell implements \Stringable
     #[ORM\JoinColumn(nullable: true)]
     public ?School $school = null;
 
+    #[ORM\OneToMany(targetEntity: ClassSpell::class, mappedBy: 'spell')]
+    public iterable $class_spells = [];
+
     public function __construct()
     {
 

@@ -27,9 +27,11 @@ class LevelParser
         foreach ($data as $level) {
             [$shortName, $level] = explode(' ', $level);
             $name = ClassParser::getClassName($shortName);
-            $character = $this->classTRepository->findOneByName($name);
-            // dump($character->getName());
-            $levels[] = new LevelDto($character, $level);
+            $classT = $this->classTRepository->findOneByName($name);
+            if(!$classT){
+                throw new \Exception('Class not found '.$name);
+            }
+            $levels[] = new LevelDto($classT, (int)$level);
         }
 
         return $levels;

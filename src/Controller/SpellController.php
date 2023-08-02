@@ -26,14 +26,21 @@ class SpellController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $spells = $this->spellRepository->searchByNameAndClassAndLevel($data['name'], $data['class']);
+            $spells = $this->spellRepository->searchByNameAndClassAndLevel(
+                $data['name'],
+                $data['class'],
+                $data['level']
+            );
         }
+
+        $search = $form->isSubmitted();
 
         return $this->render(
             '@AfmLibrePathfinder/spell/index.html.twig',
             [
                 'spells' => $spells,
                 'form' => $form->createView(),
+                'search' => $search,
             ]
         );
     }

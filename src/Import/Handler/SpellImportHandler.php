@@ -31,8 +31,8 @@ class SpellImportHandler
             $spell = $this->createSpell($spellData);
             $this->spellRepository->persist($spell);
             try {
-                $levels = $this->levelParser->parse($spellData['Niveau']);
-                foreach ($levels as $levelDto) {
+                $levelsDto = $this->levelParser->parse($spellData['Niveau']);
+                foreach ($levelsDto as $levelDto) {
                     $classSpell = new ClassSpell($spell, $levelDto->classT, $levelDto->level);
                     $this->classSpellRepository->persist($classSpell);
                 }

@@ -12,11 +12,11 @@
                 <tr>
                     <th>Niveau</th>
                     <td>
-                        {% for classSpelle in spell.class_spelles %}
-                            <a href="{{ path('pathfinder_class_show', {'id':  classSpelle.classT.id }) }}">
-                                {{ classSpelle.classT }}
+                        {% for classSpell in spell.class_spells %}
+                            <a href="{{ path('pathfinder_class_show', {'id':  classSpell.classT.id }) }}">
+                                {{ classSpell.classT }}
                             </a>
-                            ({{ classSpelle.level }})
+                            ({{ classSpell.level }})
                         {% endfor %}
                     </td>
                 </tr>
@@ -35,6 +35,10 @@
                 <tr>
                     <th>Cible</th>
                     <td>{{ spell.target }}</td>
+                </tr>
+                <tr>
+                    <th>Portée</th>
+                    <td>{{ spell.ranged }}</td>
                 </tr>
                 <tr>
                     <th>Jet de sauvegarde</th>

@@ -6,35 +6,45 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Les {{ spells|length }} sorts</h3>
+            <h3>Les {% if search %}{{ spells|length }}{% endif %} sorts</h3>
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/spell/_form_search.html.twig' %}
 
-            <table class="table table-bordered mt-3"{{ stimulus_controller('campaign',{'url':url('pathfinder_api_set_pathfinder'),'type':'spell'}) }}>
-                <tr>
-                    <th>Nom</th>
-                    <th>Campagnes</th>
-                    <th>Set</th>
-                </tr>
-                {% for spell in spells %}
+            {% if search %}
+                <table class="table table-bordered mt-3"{{ stimulus_controller('campaign',{'url':url('pathfinder_api_set_pathfinder'),'type':'spell'}) }}>
                     <tr>
-                        <td>
-                            <a href="{{ path('pathfinder_spell_show', {'id': spell.id}) }}">
-                                {{ spell.name }}
-                            </a>
-                        </td>
-                        <td id="result-{{ spell.id }}">
-                            {% if spell.campaings %}
-                                {{ spell.campaings|join('') }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': spell } %}
-                        </td>
+                        <th>Nom</th>
+                        <th>Classes</th>
+                        <th>Campagnes</th>
+                        <th>Set</th>
                     </tr>
-                {% endfor %}
-            </table>
+                    {% for spell in spells %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('pathfinder_spell_show', {'id': spell.id}) }}">
+                                    {{ spell.name }}
+                                </a>
+                            </td>
+                            <td>
+                                {% for classSpell in spell.class_spells %}
+                                    {{ classSpell.classT }} <span class="text-muted">(N{{ classSpell.level }})</span>
+                                {% endfor %}
+                            </td>
+                            <td id="result-{{ spell.id }}">
+                                {% if spell.campaings %}
+                                    {{ spell.campaings|join('') }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% include '@AfmLibrePathfinder/default/_btn_set_campaign.html.twig' with {'object': spell } %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p class="text-muted my-3">Effectuez un recherche</p>
+            {% endif %}
         </div>
     </div>
 

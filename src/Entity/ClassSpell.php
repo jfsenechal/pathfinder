@@ -14,7 +14,7 @@ class ClassSpell
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Spell::class)]
+    #[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'class_spells')]
     #[ORM\JoinColumn(nullable: false)]
     public ?Spell $spell;
 
