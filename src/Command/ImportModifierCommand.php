@@ -2,10 +2,17 @@
 
 namespace AfmLibre\Pathfinder\Command;
 
+use AfmLibre\Pathfinder\Entity\Armor;
+use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\CharacterArmor;
+use AfmLibre\Pathfinder\Entity\CharacterWeapon;
+use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Feat;
+use AfmLibre\Pathfinder\Entity\Level;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Skill;
+use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,8 +20,8 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
@@ -35,15 +42,28 @@ class ImportModifierCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
+            ->addArgument('name', InputArgument::OPTIONAL, 'modifier, fiona');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
+        $name = $input->getArgument('name');
+        if (!$name) {
+            $helper = $this->getHelper('question');
+            $question = new ChoiceQuestion('What do you want to import ?', ['modifiers', 'fiona']);
 
-        $this->import();
+            $question->setErrorMessage('This choice %s is invalid.');
+
+            $name = $helper->ask($input, $output, $question);
+        }
+
+        $output->writeln($name.' import...');
+
+        match ($name) {
+            'fiona' => $this->importFiona(),
+            'default' => $this->import()
+        };
 
         $this->modifierRepository->flush();
 
@@ -156,14 +176,35 @@ class ImportModifierCommand extends Command
             }
         }
     }
+
+    public function importFiona()
+    {
+        $race = $this->entityManager->getRepository(Race::class)->findOneByName('Demi-orque');
+        $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Guerrier');
+        $level = $this->entityManager->getRepository(Level::class)->findByClassAndLevel($class, 1);
+        $armor = $this->entityManager->getRepository(Armor::class)->findByName('Cotte de mailles');
+        $weapon = $this->entityManager->getRepository(Weapon::class)->findByName('Cimeterre à deux mains');
+
+        $character = new Character();
+        $character->name = 'Fiona';
+        $character->strength = 16;
+        $character->dexterity = 12;
+        $character->constitution = 12;
+        $character->intelligence = 8;
+        $character->charisma = 8;
+        $character->race = $race;
+        $character->classT = $class;
+        $character->current_level = $level;
+        $character->uuid = $character->generateUuid();
+
+        $this->entityManager->persist($character);
+
+        $characterArmor = new CharacterArmor($character, $armor);
+        $characterWeapon = new CharacterWeapon($character, $weapon);
+
+        $this->entityManager->persist($characterArmor);
+        $this->entityManager->persist($characterWeapon);
+
+        $this->entityManager->flush();
+    }
 }
-/**
- * Les elfes reçoivent un bonus racial de +2 aux tests de Perception.
- * Les demi-elfes reçoivent un bonus racial de +2 aux tests de Perception.
- * Les demi-orques reçoivent un bonus racial de +2 aux tests d’Intimidation grâce à leur nature féroce.
- * Gnome +4 aux tests de Discrétion
- * Les halfelins reçoivent un bonus racial de +2 à tous les tests d’Acrobaties et d’Escalade.
- * Les halfelins reçoivent un bonus racial de +2 à tous les tests de Perception.
- * Les nains gagnent un bonus racial de +2 aux tests d’Estimation visant à déterminer le prix d’objets non-magiques comportant des métaux ou des pierres précieuses.
- * Les nains reçoivent un bonus racial de +2 aux tests de Perception
- */
