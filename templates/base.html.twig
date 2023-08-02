@@ -10,11 +10,10 @@
     {{ encore_entry_link_tags('app') }}
     {{ encore_entry_script_tags('app') }}
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 {% block header %}
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
-
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
                     <i class="fas fa-store icon-rose"></i> <span class="fs-4">Pathfinder</span>
@@ -55,27 +54,30 @@
         </div>
     </header>
 {% endblock %}
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    <div class="container pt-3">
+        {% include '@AfmLibrePathfinder/_flash_messages.html.twig' %}
 
-<main role="main" {% block main_class %}class="container pt-3"{% endblock %}>
+        {% block notifications %}
 
-    {% include '@AfmLibrePathfinder/_flash_messages.html.twig' %}
+        {% endblock %}
 
-    {% block notifications %}
+        {% block body %}
 
-    {% endblock %}
-
-    {% block body %}
-
-    {% endblock %}
+        {% endblock %}
+    </div>
 </main>
 
 {% block footer %}
-    <footer class="mb-5 d-print-none d-flex" style="align-items: center; justify-content: center;" >
-        <a href="https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.MainPage.ashx">https://www.pathfinder-fr.org</a>
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+        <div class="container">
+            <a href="https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.MainPage.ashx">https://www.pathfinder-fr.org</a>
+        </div>
     </footer>
 {% endblock %}
+
 {% block scripts %}{% endblock %}
-{% block javascripts %}{% endblock %}
 
 </body>
 </html>
