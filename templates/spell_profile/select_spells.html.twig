@@ -16,21 +16,26 @@
         <div class="card-body">
             {{ form_start(form) }}
             {{ form_errors(form) }}
-            {% for spell in form.spells %}
-                <div class="row">
-                    <div class="col">
-                        {{ form_row(spell) }}
-                    </div>
-                    <div class="col">
-                        {{ form_row(form.quantities[loop.index0]) }}
-                    </div>
-                </div>
-            {% endfor %}
+            <table class="table table-bordered">
+                <tr>
+                    <th>Nom</th>
+                    <th>Quantité</th>
+                </tr>
+                {% for spell in form.spells %}
+                    <tr>
+                        <td>
+                            {{ form_row(spell) }}
+                        </td>
+                        <td>
+                            {{ form_row(form.quantities[loop.index0]) }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
             <button type="submit" name="valider" class="btn btn-primary">
                 Valider
             </button>
             {{ form_end(form) }}
         </div>
     </div>
-
 {% endblock %}

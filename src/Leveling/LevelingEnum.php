@@ -12,4 +12,13 @@ enum LevelingEnum: string
         return [self::INCREASE_SKILL, self::INCREASE_LIFE];
     }
 
+    public static function choicesForList(): array
+    {
+        return [
+            self::INCREASE_SKILL->value => self::INCREASE_SKILL->value,
+            self::INCREASE_LIFE->value => self::INCREASE_LIFE->value,
+        ];
+
+    }
+
 }

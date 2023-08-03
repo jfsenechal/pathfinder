@@ -212,5 +212,49 @@ class ImportModifierCommand extends Command
         $this->entityManager->persist($characterFeat);
 
         $this->entityManager->flush();
+        $this->importKathia();
+    }
+
+    public function importKathia()
+    {
+        $race = $this->entityManager->getRepository(Race::class)->findOneByName('Humain');
+        $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Prêtre');
+        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 14);
+        $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Armure de plaques');
+        $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Gourdin');
+        $feat1 = $this->entityManager->getRepository(Feat::class)->findOneByName('Esquive');
+        $feat2 = $this->entityManager->getRepository(Feat::class)->findOneByName(
+            'Efficacité des sorts accrue supérieure'
+        );
+        $feat3 = $this->entityManager->getRepository(Feat::class)->findOneByName('Efficacité des sorts accrue');
+        $feat4 = $this->entityManager->getRepository(Feat::class)->findOneByName('Science de l\'initiative');
+        $feat5 = $this->entityManager->getRepository(Feat::class)->findOneByName('Canalisation sélective');
+        $feat6 = $this->entityManager->getRepository(Feat::class)->findOneByName('Canalisation supplémentaire');
+
+        $character = new Character();
+        $character->name = 'Fiona';
+        $character->strength = 16;
+        $character->dexterity = 12;
+        $character->constitution = 12;
+        $character->intelligence = 8;
+        $character->charisma = 8;
+        $character->point_by_level = LevelingEnum::INCREASE_LIFE->value;
+        $character->race = $race;
+        $character->classT = $class;
+        $character->current_level = $level;
+        $character->uuid = $character->generateUuid();
+
+        $this->entityManager->persist($character);
+
+        $this->entityManager->persist(new CharacterArmor($character, $armor));
+        $this->entityManager->persist(new CharacterWeapon($character, $weapon));
+        $this->entityManager->persist(new CharacterFeat($character, $feat1));
+        $this->entityManager->persist(new CharacterFeat($character, $feat2));
+        $this->entityManager->persist(new CharacterFeat($character, $feat3));
+        $this->entityManager->persist(new CharacterFeat($character, $feat4));
+        $this->entityManager->persist(new CharacterFeat($character, $feat5));
+        $this->entityManager->persist(new CharacterFeat($character, $feat6));
+
+        $this->entityManager->flush();
     }
 }

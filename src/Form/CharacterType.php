@@ -121,7 +121,8 @@ class CharacterType extends AbstractType
                     'label' => 'Point supplémentaire par niveau',
                     'help' => 'Point attribué par le MD',
                     'required' => true,
-                    'choices' =>[LevelingEnum::choiceIncrease()]
+                    'placeholder' => 'Choisissez',
+                    'choices' => LevelingEnum::choicesForList(),
                 ]
             );
     }

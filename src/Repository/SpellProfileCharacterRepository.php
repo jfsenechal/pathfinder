@@ -24,18 +24,6 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
         parent::__construct($managerRegistry, SpellProfileCharacter::class);
     }
 
-    /**
-     * @return array|SpellProfileCharacter[]
-     */
-    public function searchByCharacter(SpellProfile $character): array
-    {
-        return $this->createQbl()
-            ->andWhere('spellProfile.character = :character')
-            ->setParameter('character', $character)
-            ->addOrderBy('spellProfile.name')
-            ->getQuery()->getResult();
-    }
-
     public function findByProfileAndCharacterSpell(
         SpellProfile $spellProfile,
         $characterSpell
@@ -54,9 +42,9 @@ class SpellProfileCharacterRepository extends ServiceEntityRepository
     public function findBySpellProfile(SpellProfile $spellProfile): array
     {
         return $this->createQbl()
-            ->andWhere('spcs.spell_profile = :profile')
+            ->andWhere('spell_profile_character.spell_profile = :profile')
             ->setParameter('profile', $spellProfile)
-            ->addOrderBy('spcs.id')
+            ->addOrderBy('spell_profile_character.id')
             ->getQuery()
             ->getResult();
     }

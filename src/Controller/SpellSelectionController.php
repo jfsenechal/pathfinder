@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Form\SearchSpellForSelectionType;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
@@ -37,7 +38,7 @@ class SpellSelectionController extends AbstractController
         }
 
         $data = ['name' => null, 'class' => $class, 'level' => null];
-        $form = $this->createForm(SearchSpellType::class, $data);
+        $form = $this->createForm(SearchSpellForSelectionType::class, $data);
 
         $form->handleRequest($request);
 

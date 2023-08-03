@@ -32,7 +32,6 @@ class SpellProfileRepository extends ServiceEntityRepository
         return $this->createQbl()
             ->andWhere('character = :character')
             ->setParameter('character', $character)
-            ->addOrderBy('spellProfile.name')
             ->getQuery()->getResult();
     }
 

@@ -9,7 +9,7 @@ use AfmLibre\Pathfinder\Entity\Spell;
 class SpellUtils
 {
     /**
-     * @param iterable|CharacterSpell[] $characterSpells
+     * @param CharacterSpell[] $characterSpells
      * @return Spell[]
      */
     public static function groupByLevel(iterable $characterSpells): array
