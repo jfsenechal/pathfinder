@@ -9,26 +9,8 @@
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/character/_actions.html.twig' %}
-            <table class="table table-bordered">
-                <tbody>
-                <tr>
-                    <th>Race</th>
-                    <td>
-                        <a href="{{ path('pathfinder_race_show', {'id': character.race.id}) }}">
-                            {{ character.race }}
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Classe</th>
-                    <td>
-                        <a href="{{ path('pathfinder_class_show', {'id': character.classT.id}) }}">
-                            {{ character.classT }}
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+
+            {% include '@AfmLibrePathfinder/ancestry/_by_character.html.twig' %}
             <div class="row">
                 <div class="col-6">
                     <h4 class="text-success my-3">Caractéristiques</h4>

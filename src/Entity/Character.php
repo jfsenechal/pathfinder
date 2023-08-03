@@ -42,6 +42,43 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\Column(type: 'smallint', nullable: false)]
     public int $charisma = 10;
 
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    public int $hit_point = 0;
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    public int $speed = 9;
+    #[ORM\Column(nullable: true)]
+    public ?string $alignment = null;
+    #[ORM\Column(nullable: true)]
+    public ?string $divinity = null;
+
+    #[ORM\Column(nullable: true)]
+    public ?string $sizeType;
+    #[ORM\Column(nullable: true)]
+    public ?string $sex;
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    public int $age = 0;
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    public int $height = 0;
+    #[ORM\Column(type: 'smallint', nullable: false)]
+    public int $weight = 0;
+    #[ORM\Column(nullable: true)]
+    public ?string $hair = null;
+    #[ORM\Column(nullable: true)]
+    public ?string $eyes = null;
+    #[ORM\Column(type: 'json', nullable: false)]
+    public array $languages = [];
+    #[ORM\Column(nullable: false)]
+    public int $experience = 0;
+
+    #[ORM\Column(nullable: false)]
+    public int $moneyCP = 0;
+    #[ORM\Column(nullable: false)]
+    public int $moneySP = 0;
+    #[ORM\Column(nullable: false)]
+    public int $moneyGP = 0;
+    #[ORM\Column(nullable: false)]
+    public int $moneyPP = 0;
+
     #[ORM\Column(nullable: true)]
     public ?string $point_by_level = null;
 

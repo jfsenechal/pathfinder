@@ -11,7 +11,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Form\CharacterEditType;
 use AfmLibre\Pathfinder\Form\CharacterType;
-use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
+use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
@@ -108,7 +108,7 @@ class CharacterController extends AbstractController
         $armorClass = ArmorCalculator::createArmorAbility(
             $character,
             $characterArmors,
-            ModifierSizeEnum::SIZE_MIDDLE
+            SizeEnum::SIZE_MIDDLE
         );
 
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
@@ -118,7 +118,7 @@ class CharacterController extends AbstractController
             $characterWeapon->attackRoll = AttackCalculator::createAttackRoll(
                 $character,
                 $weapon,
-                ModifierSizeEnum::SIZE_MIDDLE
+                SizeEnum::SIZE_MIDDLE
             );
 
             return $characterWeapon;
@@ -126,8 +126,8 @@ class CharacterController extends AbstractController
 
         $characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
-        $bmo = AttackCalculator::createBmo($character, ModifierSizeEnum::SIZE_MIDDLE);
-        $dmd = ArmorCalculator::createDmd($character, ModifierSizeEnum::SIZE_MIDDLE);
+        $bmo = AttackCalculator::createBmo($character, SizeEnum::SIZE_MIDDLE);
+        $dmd = ArmorCalculator::createDmd($character, SizeEnum::SIZE_MIDDLE);
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',

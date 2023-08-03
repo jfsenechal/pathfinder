@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-6">
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>Race</th>
+                <td>
+                    <a href="{{ path('pathfinder_race_show', {'id': character.race.id}) }}">
+                        {{ character.race }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Classe</th>
+                <td>
+                    <a href="{{ path('pathfinder_class_show', {'id': character.classT.id}) }}">
+                        {{ character.classT }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Dé de vie</th>
+                <td>
+                    {{ character.classT.dieOfLive }}
+                </td>
+            </tr>
+            <tr>
+                <th>Points de vie</th>
+                <td>
+                    {{ character.hit_point }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-6">
+
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>Alignement</th>
+                <td>
+                    {{ character.alignment }}
+                </td>
+            </tr>
+            <tr>
+                <th>Vitesse</th>
+                <td>
+                    {{ character.speed }}
+                </td>
+            </tr>
+            <tr>
+                <th>Divinité</th>
+                <td>
+                    {{ character.divinity }}
+                </td>
+            </tr>
+            <tr>
+                <th>Langues</th>
+                <td>
+                    {% for language in character.languages %}
+                        {{ language }}
+                    {% endfor %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

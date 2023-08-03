@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Form;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Race;
+use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Repository\RaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -111,6 +112,16 @@ class CharacterType extends AbstractType
                     'label' => 'Niveau',
                     'placeholder' => '',
                     'choices' => array_combine(range(1, 20), range(1, 20)),
+                ]
+            )
+            ->add(
+                'point_by_level',
+                ChoiceType::class,
+                [
+                    'label' => 'Point supplémentaire par niveau',
+                    'help' => 'Point attribué par le MD',
+                    'required' => true,
+                    'choices' =>[LevelingEnum::choiceIncrease()]
                 ]
             );
     }

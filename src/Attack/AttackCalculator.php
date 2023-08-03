@@ -2,15 +2,15 @@
 
 namespace AfmLibre\Pathfinder\Attack;
 
+use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Weapon;
-use AfmLibre\Pathfinder\Modifier\ModifierSizeEnum;
 
 class AttackCalculator
 {
     //BMO=Bonus de base à l’attaque + modificateur de Force + modificateur de taille spécial
     //Le bonus de manœuvre offensive
-    public static function createBmo(Character $character, ModifierSizeEnum $modifier): BmoDto
+    public static function createBmo(Character $character, SizeEnum $modifier): BmoDto
     {
         return
             new BmoDto(
@@ -24,7 +24,7 @@ class AttackCalculator
     public static function createAttackRoll(
         Character $character,
         Weapon $weapon,
-        ModifierSizeEnum $modifier
+        SizeEnum $modifier
     ): AttackRoll {
 
         $caracteristic = $character->strength;

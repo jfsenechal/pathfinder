@@ -1,8 +1,8 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Modifier;
+namespace AfmLibre\Pathfinder\Ancestry;
 
-enum ModifierSizeEnum
+enum SizeEnum
 {
     case SIZE_FINE;
     case SIZE_DIMINUTIVE;
