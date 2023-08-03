@@ -13,8 +13,8 @@ class SkillDto
     /**
      * @param string $name
      * @param int $id
-     * @param bool $trained
-     * @param int $base
+     * @param bool $isTrained
+     * @param int $rank
      * @param string $abilityName
      * @param int $abilityValueModifier
      * @param Modifier[] $racialModifiers
@@ -23,8 +23,8 @@ class SkillDto
     public function __construct(
         readonly string $name,
         readonly int $id,
-        readonly bool $trained,
-        readonly int $base,
+        readonly bool $isTrained,
+        readonly int $rank,
         readonly string $abilityName,
         readonly int $abilityValueModifier,
         readonly array $racialModifiers,
@@ -35,7 +35,7 @@ class SkillDto
 
     public function total(): int
     {
-        $racial = $this->base;
+        $racial = $this->rank;
         foreach ($this->racialModifiers as $racialModifier) {
             $racial += $racialModifier->value;
         }
@@ -46,11 +46,11 @@ class SkillDto
         }
 
         $bonusTrained = 0;
-        if ($this->trained) {
+        if ($this->isTrained) {
             $bonusTrained = 3;
         }
-        $racialBonus = ModifierCalculator::abilityValueModifier($racial);
+        //$racialBonus = ModifierCalculator::abilityValueModifier($racial);
 
-        return $this->abilityValueModifier + $racialBonus + $bonusTrained;
+        return $this->abilityValueModifier + $racial + $bonusTrained;
     }
 }

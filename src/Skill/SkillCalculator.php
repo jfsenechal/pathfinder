@@ -7,10 +7,12 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Skill;
+use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Repository\CharacterSkillRepository;
 use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
+use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Repository\SkillRepository;
 
 class SkillCalculator
@@ -24,6 +26,7 @@ class SkillCalculator
         private SkillRepository $skillRepository,
         private ClassSkillRepository $classSkillRepository,
         private ModifierRepository $modifierRepository,
+        private CharacterSkillRepository $characterSkillRepository
     ) {
     }
 
@@ -45,11 +48,15 @@ class SkillCalculator
             $ability = AbilityEnum::returnByNameFr($skill->ability);
             $racials = $this->racials($skill, $character->race);
             $property = strtolower($ability->value);
+            $pointsSpent = 0;
+            if ($characterSkill = $this->characterSkillRepository->findByCharacterAndSkill($character, $skill)) {
+                $pointsSpent = $characterSkill->point_spent;
+            }
             $skillsDto[] = new SkillDto(
                 $skill->name,
                 $skill->getId(),
                 $isTrained,
-                0,
+                $pointsSpent,
                 $ability->value,
                 ModifierCalculator::abilityValueModifier($character->$property),
                 $racials,
@@ -67,6 +74,7 @@ class SkillCalculator
 
     /**
      * @param Skill $skill
+     * @param Race $race
      * @return Modifier[]
      */
     private function racials(Skill $skill, Race $race): array
@@ -83,6 +91,44 @@ class SkillCalculator
         }
 
         return $modifiers;
+    }
+
+    public function points(Character $character): SkillPointDto
+    {
+        $class = $character->classT;
+        $human = 0;
+        $level = $character->current_level->lvl;
+        if ($character->race == 'Humain') {
+            $human = 1 * $level;
+        }
+        $bonusIncrease = 0;
+        if ($character->point_by_level && $character->point_by_level === LevelingEnum::INCREASE_SKILL->value) {
+            $bonusIncrease = 1 * $level;
+        }
+
+        $pointsSpent = $this->pointsSpent($character);
+
+        return new SkillPointDto(
+            ($class->ranksPerLevel * $level),
+            ModifierCalculator::abilityValueModifier($character->intelligence),
+            $human,
+            $bonusIncrease,
+            $pointsSpent
+        );
+    }
+
+    public function pointsSpent(Character $character): int
+    {
+        $total = 0;
+        $points = array_map(function ($characterSkill) use ($total) {
+            return $characterSkill->point_spent;
+        }, $this->characterSkillRepository->findByCharacter($character));
+
+        foreach ($points as $point) {
+            $total += $point;
+        }
+
+        return $total;
     }
 
 }

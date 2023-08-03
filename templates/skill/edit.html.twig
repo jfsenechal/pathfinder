@@ -1,0 +1,97 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Compétence{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                Compétences de
+                <a href="{{ path('pathfinder_character_show', {'uuid': character.uuid}) }}">
+                    {{ character.name }}
+                </a>
+            </h3>
+        </div>
+        <div class="card-body">
+
+            {% if skillPointDto.pointsSpent > skillPointDto.totalToSpend %}
+                <div class="alert alert-danger">
+                    Vous avez dépensez trop de points {{ skillPointDto.pointsSpent }} > {{ skillPointDto.totalToSpend }}
+                </div>
+            {% endif %}
+
+            <h5 class="text-warning">Répartitions des points</h5>
+            <div {{ stimulus_controller('skill',{'url':url('pathfinder_skill_outfit'),'uuid':character.uuid}) }}>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Points de classe</th>
+                        <th>Points d'intelligence</th>
+                        <th>Points de humain</th>
+                        <th>Points par niveau supplémentaire</th>
+                        <th>Total à dépenser</th>
+                        <th>Total dépensé</th>
+                    </tr>
+                    <tr>
+                        <td>{{ skillPointDto.class }}</td>
+                        <td>{{ skillPointDto.intelligence }}</td>
+                        <td>{{ skillPointDto.human }}</td>
+                        <td>{{ skillPointDto.bonusIncrease }}</td>
+                        <td>{{ skillPointDto.totalToSpend }}</td>
+                        <td>{{ skillPointDto.pointsSpent }}</td>
+                    </tr>
+                </table>
+                <span data-skill-target="output"></span>
+
+                <form>
+                    <table class="table table-bordered mt-3">
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>Caractéristique</th>
+                            <th>Bonus caractéristique</th>
+                            <th>Spécial</th>
+                            <th>Rang</th>
+                        </tr>
+                        {% for skillDto in skills %}
+                            <tr>
+                                <td>
+                                    {% if  skillDto.isTrained %}
+                                        <i class="ti ti-square-filled"></i>
+                                    {% else %}
+                                        <i class="ti ti-square"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('pathfinder_feat_show', {'id': skillDto.id}) }}">{{ skillDto.name }}</a>
+                                </td>
+                                <td>{{ skillDto.abilityName|trans }}</td>
+                                <td>{{ skillDto.abilityValueModifier|number_sign }}</td>
+                                <td>
+                                    {% for modifier in skillDto.racialModifiers %}
+                                        {{ modifier.value|number_sign }}
+                                    {% endfor %}
+                                </td>
+                                <td style="width: 150px;">
+                                    <label for="character_edit_strength"
+                                           class="form-label required sr-only">{{ skillDto.id }}</label>
+                                    <input type="number"
+                                           name="kill_points[]"
+                                           required="required"
+                                           class="form-control"
+                                           max="{{ character.current_level.lvl }}"
+                                           min="0"
+                                           data-action="change->skill#up"
+                                           data-id="{{ skillDto.id }}"
+                                           value="{{ skillDto.rank }}">
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('pathfinder_character_show', {'uuid': character.uuid}) }}">Annuler</a>
+        </div>
+    </div>
+{% endblock %}

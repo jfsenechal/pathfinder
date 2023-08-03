@@ -9,7 +9,9 @@
         </div>
         <div class="card-body">
             {{ include('@AfmLibrePathfinder/character/_form.html.twig') }}
-
+        </div>
+        <div class="card-footer">
+            <a href="{{ path('pathfinder_character_show', {'uuid': character.uuid}) }}">Annuler</a>
         </div>
     </div>
 {% endblock %}

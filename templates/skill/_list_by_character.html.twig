@@ -1,16 +1,37 @@
-<h4 class="text-success my-3">Compétences</h4>
+<div class="d-flex flex-row justify-content-between align-items-center">
+    <h4 class="text-success my-3">Compétences</h4>
+    <a href="{{ path('pathfinder_skill_character_edit', {'uuid': character.uuid}) }}" class="btn btn-sm btn-secondary"
+       title="Répartir les points">
+        <i class="ti ti-pencil"></i> Points</a>
+</div>
+<div class="alert alert-info">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <strong>Sans formation</strong> 1d20 + modificateur de caractéristique + modificateur racial
+        </li>
+        <li class="list-group-item">
+            <strong>Avec formation, hors classe</strong> 1d20 + rang + modificateur de caractéristique + modificateur
+            racial
+        </li>
+        <li class="list-group-item">
+            <strong>Avec formation, de classe</strong> 1d20 + rang + modificateur de caractéristique + modificateur
+            racial + 3
+        </li>
+    </ul>
+</div>
 <table class="table table-bordered">
     <tr>
         <th></th>
         <th>Nom</th>
+        <th>Bonus total</th>
+        <th>Rang</th>
         <th>Caractéristique</th>
-        <th>Bonus caract</th>
-        <th>Spécial</th>
+        <th>Racial</th>
     </tr>
     {% for skillDto in skills %}
         <tr>
             <td>
-                {% if  skillDto.trained %}
+                {% if  skillDto.isTrained %}
                     <i class="ti ti-square-filled"></i>
                 {% else %}
                     <i class="ti ti-square"></i>
@@ -19,8 +40,16 @@
             <td>
                 <a href="{{ path('pathfinder_feat_show', {'id': skillDto.id}) }}">{{ skillDto.name }}</a>
             </td>
-            <td>{{ skillDto.abilityName|trans }}</td>
-            <td>{{ skillDto.abilityValueModifier|number_sign }}</td>
+            <td>
+                {{ skillDto.total|number_sign }}
+            </td>
+            <td>{{ skillDto.rank|number_sign }}</td>
+            <td>
+                {{ skillDto.abilityValueModifier|number_sign }}
+                <span class="text-muted">
+                ({{ skillDto.abilityName|trans }})
+                </span>
+            </td>
             <td>
                 {% for modifier in skillDto.racialModifiers %}
                     {{ modifier.value|number_sign }}

@@ -13,6 +13,7 @@ use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Entity\Weapon;
+use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -192,6 +193,7 @@ class ImportModifierCommand extends Command
         $character->constitution = 12;
         $character->intelligence = 8;
         $character->charisma = 8;
+        $character->point_by_level = LevelingEnum::INCREASE_LIFE->value;
         $character->race = $race;
         $character->classT = $class;
         $character->current_level = $level;

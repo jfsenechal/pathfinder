@@ -9,7 +9,6 @@ use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -42,6 +41,9 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     public int $wisdom = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
     public int $charisma = 10;
+
+    #[ORM\Column(nullable: true)]
+    public ?string $point_by_level = null;
 
     #[ORM\ManyToOne(targetEntity: Race::class)]
     #[ORM\JoinColumn(nullable: false)]
