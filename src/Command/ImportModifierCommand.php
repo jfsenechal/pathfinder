@@ -5,6 +5,7 @@ namespace AfmLibre\Pathfinder\Command;
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
+use AfmLibre\Pathfinder\Entity\CharacterFeat;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Feat;
@@ -185,6 +186,7 @@ class ImportModifierCommand extends Command
         $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 1);
         $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Cotte de mailles');
         $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Cimeterre à deux mains');
+        $feat = $this->entityManager->getRepository(Feat::class)->findOneByName('Attaque en puissance');
 
         $character = new Character();
         $character->name = 'Fiona';
@@ -203,9 +205,11 @@ class ImportModifierCommand extends Command
 
         $characterArmor = new CharacterArmor($character, $armor);
         $characterWeapon = new CharacterWeapon($character, $weapon);
+        $characterFeat = new CharacterFeat($character, $feat);
 
         $this->entityManager->persist($characterArmor);
         $this->entityManager->persist($characterWeapon);
+        $this->entityManager->persist($characterFeat);
 
         $this->entityManager->flush();
     }
