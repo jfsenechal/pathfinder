@@ -126,46 +126,4 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
         return true;
     }
 
-    public function addSpell(CharacterSpell $spell): self
-    {
-        if (!$this->character_spells_selection->contains($spell)) {
-            $this->character_spells_selection[] = $spell;
-            $spell->character = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeSpell(CharacterSpell $spell): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->character_spells_selection->removeElement($spell) && $spell->character === $this) {
-            $spell->character = null;
-        }
-
-        return $this;
-    }
-
-    public function addCharacterSpellsSelection(CharacterSpell $characterSpellsSelection): self
-    {
-        if (!$this->character_spells_selection->contains($characterSpellsSelection)) {
-            $this->character_spells_selection[] = $characterSpellsSelection;
-            $characterSpellsSelection->character = $this;
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterSpellsSelection(CharacterSpell $characterSpellsSelection): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->character_spells_selection->removeElement(
-                $characterSpellsSelection
-            ) && $characterSpellsSelection->character === $this) {
-            $characterSpellsSelection->character = null;
-        }
-
-        return $this;
-    }
-
 }

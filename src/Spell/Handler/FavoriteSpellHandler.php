@@ -4,16 +4,16 @@
 namespace AfmLibre\Pathfinder\Spell\Handler;
 
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterSpell;
+use AfmLibre\Pathfinder\Entity\FavoriteSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\ClassSpell;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
 use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 
-class SpellSelectionHandler
+class FavoriteSpellHandler
 {
     public function __construct(
-        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly FavoriteSpellRepository $characterSpellRepository,
         private readonly ClassSpellRepository $classSpellRepository,
     ) {
     }
@@ -27,8 +27,8 @@ class SpellSelectionHandler
             if (!$this->characterSpellRepository->findByCharacterAndSpell(
                 $character,
                 $spell
-            ) instanceof CharacterSpell) {
-                $this->characterSpellRepository->persist($this->createCharacterSpell($character, $spell));
+            ) instanceof FavoriteSpell) {
+                $this->characterSpellRepository->persist($this->createFavoriteSpell($character, $spell));
             }
         }
         $this->characterSpellRepository->flush();
@@ -38,7 +38,7 @@ class SpellSelectionHandler
     {
         if (($characterSpell = $this->characterSpellRepository->find(
             $characterSpellId
-        )) instanceof CharacterSpell) {
+        )) instanceof FavoriteSpell) {
             $character = $characterSpell->character;
             $this->characterSpellRepository->remove($characterSpell);
             $this->characterSpellRepository->flush();
@@ -49,7 +49,7 @@ class SpellSelectionHandler
         return null;
     }
 
-    private function createCharacterSpell(Character $character, Spell $spell): CharacterSpell
+    private function createFavoriteSpell(Character $character, Spell $spell): FavoriteSpell
     {
         $class = $character->classT;
         $level = 0;
@@ -60,6 +60,6 @@ class SpellSelectionHandler
             $level = $spellLevel->level;
         }
 
-        return new CharacterSpell($character, $spell, $level);
+        return new FavoriteSpell($character, $spell, $level);
     }
 }

@@ -5,20 +5,20 @@ namespace AfmLibre\Pathfinder\Spell\Factory;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SelectionType;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
-use AfmLibre\Pathfinder\Spell\Dto\SpellSelectionDto;
+use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
+use AfmLibre\Pathfinder\Spell\Dto\FavoriteSpellDto;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
 class FormFactory
 {
     public function __construct(
-        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly FavoriteSpellRepository $characterSpellRepository,
         private readonly FormFactoryInterface $formFactory
     ) {
     }
 
-    public function createFormSelectionSpells(Character $character, array $spellsForSelection): FormInterface
+    public function createFormFavoriteSpells(Character $character, array $favoriteSpells): FormInterface
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $characterSpells2 = array_map(
@@ -26,13 +26,13 @@ class FormFactory
             $characterSpells
         );
 
-        $selection = new SpellSelectionDto($character, $characterSpells2);
+        $favoriteSpellDto = new FavoriteSpellDto($character, $characterSpells2);
 
         return $this->formFactory->create(
             SelectionType::class,
-            $selection,
+            $favoriteSpellDto,
             [
-                'spells' => $spellsForSelection,
+                'spells' => $favoriteSpells,
             ]
         );
     }

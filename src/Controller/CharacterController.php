@@ -15,7 +15,7 @@ use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Repository\CharacterArmorRepository;
 use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Repository\CharacterRepository;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
 use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Repository\ClassRepository;
@@ -35,7 +35,7 @@ class CharacterController extends AbstractController
 {
     public function __construct(
         private readonly CharacterRepository $characterRepository,
-        private readonly CharacterSpellRepository $characterSpellRepository,
+        private readonly FavoriteSpellRepository $characterSpellRepository,
         private readonly ClassRepository $classTRepository,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,

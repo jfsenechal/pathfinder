@@ -3,13 +3,13 @@
 
 namespace AfmLibre\Pathfinder\Spell\Utils;
 
-use AfmLibre\Pathfinder\Entity\CharacterSpell;
+use AfmLibre\Pathfinder\Entity\FavoriteSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 
 class SpellUtils
 {
     /**
-     * @param CharacterSpell[] $characterSpells
+     * @param FavoriteSpell[] $characterSpells
      * @return Spell[]
      */
     public static function groupByLevel(iterable $characterSpells): array

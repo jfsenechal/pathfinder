@@ -3,15 +3,15 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\CharacterSpellRepository;
+use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Table]
 #[ORM\UniqueConstraint(columns: ['character_id', 'spell_id'])]
-#[ORM\Entity(repositoryClass: CharacterSpellRepository::class)]
-#[UniqueEntity(fields: ['character', 'spell'], message: 'Sort déjà dans votre sélection')]
-class CharacterSpell implements \Stringable
+#[ORM\Entity(repositoryClass: FavoriteSpellRepository::class)]
+#[UniqueEntity(fields: ['character', 'spell'], message: 'Sort déjà dans vos favoris')]
+class FavoriteSpell implements \Stringable
 {
     use IdTrait;
 

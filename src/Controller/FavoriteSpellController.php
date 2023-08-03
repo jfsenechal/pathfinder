@@ -3,42 +3,41 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Form\SearchSpellForSelectionType;
-use AfmLibre\Pathfinder\Form\SearchSpellType;
+use AfmLibre\Pathfinder\Form\SearchSpellForFavoritesType;
 use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
-use AfmLibre\Pathfinder\Spell\Handler\SpellSelectionHandler;
-use AfmLibre\Pathfinder\Spell\Message\SpellSelectionUpdated;
+use AfmLibre\Pathfinder\Spell\Handler\FavoriteSpellHandler;
+use AfmLibre\Pathfinder\Spell\Message\FavoriteSpellUpdated;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/spell/selection')]
-class SpellSelectionController extends AbstractController
+#[Route(path: '/spell/favorite')]
+class FavoriteSpellController extends AbstractController
 {
     public function __construct(
         private readonly SpellRepository $spellRepository,
-        private readonly SpellSelectionHandler $spellSelectionHandler,
+        private readonly FavoriteSpellHandler $favoriteSpellHandler,
         private readonly FormFactory $formFactory,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
 
-    #[Route(path: '/{uuid}/edit', name: 'pathfinder_spell_selection_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{uuid}/edit', name: 'pathfinder_favorite_spell_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Character $character)
     {
         $class = $character->classT;
 
         $spellsForSelection = $this->spellRepository->findByClass($class);
         if (count($spellsForSelection) == 0) {
-            $this->addFlash('warning', 'Aucun sort pour la classe ' . $character->classT);
+            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->classT);
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }
 
         $data = ['name' => null, 'class' => $class, 'level' => null];
-        $form = $this->createForm(SearchSpellForSelectionType::class, $data);
+        $form = $this->createForm(SearchSpellForFavoritesType::class, $data);
 
         $form->handleRequest($request);
 
@@ -52,19 +51,19 @@ class SpellSelectionController extends AbstractController
             $data['level']
         );
 
-        $formSelection = $this->formFactory->createFormSelectionSpells($character, $spellsForSelection);
+        $formSelection = $this->formFactory->createFormFavoriteSpells($character, $spellsForSelection);
         $formSelection->handleRequest($request);
 
         if ($formSelection->isSubmitted() && $formSelection->isValid()) {
-            $selection = $formSelection->getData();
-            $this->spellSelectionHandler->handle($character, $selection->getSpells());
-            $this->dispatcher->dispatch(new SpellSelectionUpdated(0));
+            $favorite = $formSelection->getData();
+            $this->favoriteSpellHandler->handle($character, $favorite->getSpells());
+            $this->dispatcher->dispatch(new FavoriteSpellUpdated(0));
 
-            return $this->redirectToRoute('pathfinder_spell_selection_edit', ['uuid' => $character->uuid]);
+            return $this->redirectToRoute('pathfinder_favorite_spell_edit', ['uuid' => $character->uuid]);
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/spell_selection/index.html.twig',
+            '@AfmLibrePathfinder/favorite_spell/index.html.twig',
             [
                 'character' => $character,
                 'spells' => $spellsForSelection,
@@ -74,21 +73,21 @@ class SpellSelectionController extends AbstractController
         );
     }
 
-    #[Route(path: '/delete', name: 'pathfinder_spell_selection_delete', methods: ['POST'])]
-    public function validDeleteSelection(Request $request)
+    #[Route(path: '/delete', name: 'pathfinder_favorite_spell_delete', methods: ['POST'])]
+    public function validRemoveFavorite(Request $request)
     {
-        if ($this->isCsrfTokenValid('deselection', $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('removefavorite', $request->request->get('_token'))) {
             $characterSpellId = (int)$request->request->get('characterspellid');
 
-            if (null === $characterSpellId) {
+            if (0 === $characterSpellId) {
                 $this->addFlash('danger', 'Sélection non trouvée');
 
                 return $this->redirectToRoute('pathfinder_home');
             }
 
-            if (($character = $this->spellSelectionHandler->delete(
-                $characterSpellId
-            )) instanceof Character) {
+            if (($character = $this->favoriteSpellHandler->delete(
+                    $characterSpellId
+                )) instanceof Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);

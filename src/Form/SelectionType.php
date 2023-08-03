@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Form;
 
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Spell\Dto\SpellSelectionDto;
+use AfmLibre\Pathfinder\Spell\Dto\FavoriteSpellDto;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,7 +31,7 @@ class SelectionType extends AbstractType
         $resolver
             ->setDefaults(
                 [
-                    'data_class' => SpellSelectionDto::class,
+                    'data_class' => FavoriteSpellDto::class,
                     'spells' => [],
                 ]
             )

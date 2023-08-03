@@ -35,11 +35,11 @@
         </div>
     </div>
     {{ include('@AfmLibrePathfinder/character/_form_delete.html.twig') }}
-    {{ include('@AfmLibrePathfinder/character/_form_deselection.html.twig') }}
+    {{ include('@AfmLibrePathfinder/character/_form_favorite_remove.html.twig') }}
 {% endblock %}
 {% block scripts %}
     <script>
-        var exampleModal = document.getElementById('deselectionModal')
+        var exampleModal = document.getElementById('removeFavoriteModal')
         exampleModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var recipient = button.getAttribute('data-bs-whatever')

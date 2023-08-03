@@ -6,7 +6,7 @@ namespace AfmLibre\Pathfinder\Spell\Dto;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Spell;
 
-class SpellSelectionDto
+class FavoriteSpellDto
 {
     public function __construct(private Character $character_player, private array $spells)
     {

@@ -6,11 +6,11 @@
                 {% for spell in data %}
                     <li class="list-group-item">
                         <a href="{{ path('pathfinder_spell_show', {'id':  spell.id }) }}">{{ spell.name }}</a>
-                        <button title="Déselectionné {{ spell.name }}"
+                        <button title="Retirer le sort {{ spell.name }}"
                                 type="button"
                                 class="btn btn-danger btn-sm float-end"
                                 data-bs-toggle="modal"
-                                data-bs-target="#deselectionModal"
+                                data-bs-target="#removeFavoriteModal"
                                 data-bs-whatever="{{ spell.id }}"
                                 data-bs-spellname="{{ spell.name }}">
                             <i class="far fa-trash-alt"></i>
@@ -21,7 +21,7 @@
         </li>
     {% else %}
         <li class="list-group-item">
-            <a href="{{ path('pathfinder_spell_selection_edit', {'uuid': character.uuid}) }}">Sélectionnez vos sorts</a>
+            <a href="{{ path('pathfinder_favorite_spell_edit', {'uuid': character.uuid}) }}">Sélectionnez vos sorts</a>
         </li>
     {% endfor %}
 </ul>
