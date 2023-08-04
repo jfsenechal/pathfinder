@@ -18,7 +18,8 @@ class DefaultController extends AbstractController
     #[Route(path: '/', name: 'pathfinder_home')]
     public function index()
     {
-        $characters = $this->characterRepository->findAll();
+        $user = $this->getUser();
+        $characters = $this->characterRepository->findByUser($user);
 
         return $this->render(
             '@AfmLibrePathfinder/default/index.html.twig',

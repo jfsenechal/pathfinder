@@ -2,28 +2,15 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Ability\AbilityCalculator;
-use AfmLibre\Pathfinder\Ancestry\SizeEnum;
-use AfmLibre\Pathfinder\Armor\ArmorCalculator;
-use AfmLibre\Pathfinder\Attack\AttackCalculator;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
-use AfmLibre\Pathfinder\Character\Repository\CharacterArmorRepository;
-use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
+use AfmLibre\Pathfinder\Character\Repository\CharacterLoader;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
-use AfmLibre\Pathfinder\Character\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
-use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Form\CharacterEditType;
 use AfmLibre\Pathfinder\Form\CharacterType;
 use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
-use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
-use AfmLibre\Pathfinder\SavingThrow\SavingThrowCalculator;
-use AfmLibre\Pathfinder\Skill\SkillCalculator;
-use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
-use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,17 +22,9 @@ class CharacterController extends AbstractController
 {
     public function __construct(
         private readonly CharacterRepository $characterRepository,
-        private readonly FavoriteSpellRepository $characterSpellRepository,
-        private readonly ClassRepository $classTRepository,
+        private readonly CharacterLoader $characterLoader,
         private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly LevelRepository $levelRepository,
-        private readonly RaceTraitRepository $raceTraitRepository,
-        private readonly CharacterArmorRepository $characterArmorRepository,
-        private readonly CharacterWeaponRepository $characterWeaponRepository,
-        private readonly CharacterFeatRepository $characterFeatRepository,
-        private readonly AbilityCalculator $abilityCalculator,
-        private readonly SavingThrowCalculator $savingThrowCalculator,
-        private readonly SkillCalculator $skillCalculator,
         private readonly MessageBusInterface $dispatcher
     ) {
     }
@@ -93,59 +72,15 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}', name: 'pathfinder_character_show', methods: ['GET'])]
     public function show(Character $character): Response
     {
-        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
-        $spells = SpellUtils::groupByLevel($characterSpells);
+        $characterDto = $this->characterLoader->load($character);
 
-        $raceModifier = $this->raceTraitRepository->findOneByRaceAndName($character->race, "Caractéristiques");
-
-        $currentLevel = $character->current_level;
-
-        $abilities = $this->abilityCalculator->calculate($character);
-        $savingThrows = $this->savingThrowCalculator->calculate($character);
-        $skills = $this->skillCalculator->calculate($character);
-
-        $characterArmors = $this->characterArmorRepository->findByCharacter($character);
-        $armorClass = ArmorCalculator::createArmorAbility(
-            $character,
-            $characterArmors,
-            SizeEnum::SIZE_MIDDLE
-        );
-
-        $weapons = $this->characterWeaponRepository->findByCharacter($character);
-        $characterWeapons = array_map(function (CharacterWeapon $characterWeapon) use ($character) {
-            $weapon = $characterWeapon->weapon;
-            $characterWeapon->damageRoll = AttackCalculator::createDamageAbility($character, $weapon);
-            $characterWeapon->attackRoll = AttackCalculator::createAttackRoll(
-                $character,
-                $weapon,
-                SizeEnum::SIZE_MIDDLE
-            );
-
-            return $characterWeapon;
-        }, $weapons);
-
-        $characterFeats = $this->characterFeatRepository->findByCharacter($character);
-
-        $bmo = AttackCalculator::createBmo($character, SizeEnum::SIZE_MIDDLE);
-        $dmd = ArmorCalculator::createDmd($character, SizeEnum::SIZE_MIDDLE);
+        $context = get_object_vars($characterDto);
+        $context['character'] = $character;
+        $context['characterDto'] = $characterDto;
 
         return $this->render(
             '@AfmLibrePathfinder/character/show.html.twig',
-            [
-                'character' => $character,
-                'spells' => $spells,
-                'currentLevel' => $currentLevel,
-                'raceModifier' => $raceModifier,
-                'abilities' => $abilities,
-                'savingThrows' => $savingThrows,
-                'characterArmors' => $characterArmors,
-                'characterWeapons' => $characterWeapons,
-                'characterFeats' => $characterFeats,
-                'bmoAbility' => $bmo,
-                'dmdAbility' => $dmd,
-                'armorClass' => $armorClass,
-                'skills' => $skills,
-            ]
+            $context
         );
     }
 

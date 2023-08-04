@@ -19,6 +19,10 @@ class AbilityCalculator
     ) {
     }
 
+    /**
+     * @param Character $character
+     * @return AbilityDto[]
+     */
     public function calculate(Character $character): array
     {
         $abilities = [];

@@ -7,6 +7,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Character|null find($id, $lockMode = null, $lockVersion = null)
@@ -35,9 +36,16 @@ class CharacterRepository extends ServiceEntityRepository
                 ->setParameter('name', '%'.$username.'%');
         }
 
-        $qb->addOrderBy('character.name');
-
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param UserInterface|null $user
+     * @return Character[]
+     */
+    public function findByUser(?UserInterface $user): array
+    {
+        return $this->createQbl()->getQuery()->getResult();
     }
 
     private function createQbl(): QueryBuilder
@@ -48,4 +56,5 @@ class CharacterRepository extends ServiceEntityRepository
             ->addSelect('classT', 'race')
             ->orderBy('character.name', 'ASC');
     }
+
 }
