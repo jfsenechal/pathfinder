@@ -5,7 +5,6 @@ namespace AfmLibre\Pathfinder\Form;
 
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Level\LevelUtils;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

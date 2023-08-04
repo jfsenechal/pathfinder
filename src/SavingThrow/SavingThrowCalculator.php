@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\SavingThrow;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 
 class SavingThrowCalculator
 {

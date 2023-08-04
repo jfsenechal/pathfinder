@@ -3,8 +3,8 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\WeaponCategory;
-use AfmLibre\Pathfinder\Repository\WeaponCategoryRepository;
-use AfmLibre\Pathfinder\Repository\WeaponRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponCategoryRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

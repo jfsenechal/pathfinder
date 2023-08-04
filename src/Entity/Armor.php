@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Armor\Repository\ArmorRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
-use AfmLibre\Pathfinder\Repository\ArmorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArmorRepository::class)]

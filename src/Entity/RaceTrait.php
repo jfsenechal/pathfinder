@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
-use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RaceTraitRepository::class)]

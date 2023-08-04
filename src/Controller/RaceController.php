@@ -4,9 +4,9 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
-use AfmLibre\Pathfinder\Repository\RaceRepository;
-use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

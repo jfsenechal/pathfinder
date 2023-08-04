@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 

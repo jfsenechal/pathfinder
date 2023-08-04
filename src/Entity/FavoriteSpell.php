@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
+use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 

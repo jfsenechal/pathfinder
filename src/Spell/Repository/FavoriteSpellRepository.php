@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Repository;
+namespace AfmLibre\Pathfinder\Spell\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Character;
@@ -55,7 +55,6 @@ class FavoriteSpellRepository extends ServiceEntityRepository
             ->leftJoin('favorite_spell.spell', 'spell', 'WITH')
             ->leftJoin('favorite_spell.character', 'character', 'WITH')
             ->addSelect('spell', 'character')
-            ->orderBy('character.name', 'ASC')
             ->orderBy('spell.name', 'ASC');
     }
 

@@ -5,8 +5,8 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\RaceTrait;
-use AfmLibre\Pathfinder\Repository\RaceRepository;
-use AfmLibre\Pathfinder\Repository\RaceTraitRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RaceImportHandler

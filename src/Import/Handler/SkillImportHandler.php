@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\Skill;
-use AfmLibre\Pathfinder\Repository\SkillRepository;
+use AfmLibre\Pathfinder\Skill\Repository\SkillRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SkillImportHandler

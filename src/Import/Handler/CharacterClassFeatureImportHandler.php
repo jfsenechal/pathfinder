@@ -2,11 +2,11 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Entity\ClassT;
-use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
-use AfmLibre\Pathfinder\Repository\LevelRepository;
+use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CharacterClassFeatureImportHandler

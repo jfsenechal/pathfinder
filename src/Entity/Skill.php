@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
-use AfmLibre\Pathfinder\Repository\SkillRepository;
+use AfmLibre\Pathfinder\Skill\Repository\SkillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SkillRepository::class)]

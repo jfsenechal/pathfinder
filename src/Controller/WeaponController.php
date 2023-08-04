@@ -2,11 +2,11 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
+use AfmLibre\Pathfinder\Character\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Entity\Weapon;
-use AfmLibre\Pathfinder\Repository\CharacterRepository;
-use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
-use AfmLibre\Pathfinder\Repository\WeaponRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

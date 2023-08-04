@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 

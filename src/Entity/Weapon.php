@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
-use AfmLibre\Pathfinder\Repository\WeaponRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WeaponRepository::class)]

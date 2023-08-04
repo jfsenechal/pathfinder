@@ -3,14 +3,14 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Entity\School;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Import\Mapping\SpellYml;
 use AfmLibre\Pathfinder\Level\LevelParser;
-use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
-use AfmLibre\Pathfinder\Repository\SchoolRepository;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Spell\Repository\SchoolRepository;
+use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SpellImportHandler

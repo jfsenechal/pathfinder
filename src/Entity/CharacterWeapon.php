@@ -4,8 +4,8 @@ namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Attack\AttackRoll;
 use AfmLibre\Pathfinder\Attack\DamageRoll;
+use AfmLibre\Pathfinder\Character\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\CharacterWeaponRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -27,6 +27,9 @@ class CharacterWeapon implements \Stringable
 
     #[ORM\Column(nullable: true)]
     public ?string $emplacement;
+
+    #[ORM\Column(nullable: true)]
+    public ?bool $leading_hand = null;
 
     public ?AttackRoll $attackRoll = null;
     public ?DamageRoll $damageRoll = null;

@@ -2,12 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
+use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\CharacterFeat;
 use AfmLibre\Pathfinder\Entity\Feat;
-use AfmLibre\Pathfinder\Repository\CharacterFeatRepository;
-use AfmLibre\Pathfinder\Repository\CharacterRepository;
-use AfmLibre\Pathfinder\Repository\FeatRepository;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

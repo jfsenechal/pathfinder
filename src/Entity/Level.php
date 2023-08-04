@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Entity;
 
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\LevelRepository;
+use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LevelRepository::class)]

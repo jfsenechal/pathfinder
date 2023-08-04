@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
-use AfmLibre\Pathfinder\Repository\FeatRepository;
+use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FeatRepository::class)]

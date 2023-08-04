@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Form\ModifierType;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

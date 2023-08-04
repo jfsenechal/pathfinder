@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Form\SearchHeaderNameType;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,16 +11,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     public function __construct(
-        private readonly ClassRepository $classTRepository
+        private readonly CharacterRepository $characterRepository
     ) {
     }
 
     #[Route(path: '/', name: 'pathfinder_home')]
     public function index()
     {
+        $characters = $this->characterRepository->findAll();
+
         return $this->render(
             '@AfmLibrePathfinder/default/index.html.twig',
             [
+                'characters' => $characters,
             ]
         );
     }
@@ -43,22 +46,5 @@ class DefaultController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
-    }
-
-    private function words()
-    {
-        $pretres = ['prêtre', 'Prê'];
-    }
-
-    private function getCharacterClass(string $class)
-    {
-        if (in_array($this->words(), $class)) {
-            $this->getPretre();
-        }
-    }
-
-    private function getPretre()
-    {
-        $this->classTRepository->findBy(['name' => 'Prêtre']);
     }
 }

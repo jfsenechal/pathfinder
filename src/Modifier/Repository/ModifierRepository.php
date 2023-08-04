@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Repository;
+namespace AfmLibre\Pathfinder\Modifier\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Modifier;

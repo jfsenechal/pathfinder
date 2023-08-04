@@ -3,6 +3,8 @@
 namespace AfmLibre\Pathfinder\Skill;
 
 use AfmLibre\Pathfinder\Ability\AbilityEnum;
+use AfmLibre\Pathfinder\Character\Repository\CharacterSkillRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
@@ -10,10 +12,8 @@ use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\CharacterSkillRepository;
-use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
-use AfmLibre\Pathfinder\Repository\SkillRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Skill\Repository\SkillRepository;
 
 class SkillCalculator
 {

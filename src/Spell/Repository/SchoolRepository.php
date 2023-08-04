@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Repository;
+namespace AfmLibre\Pathfinder\Spell\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\School;

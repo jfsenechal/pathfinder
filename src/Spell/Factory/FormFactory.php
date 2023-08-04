@@ -5,8 +5,8 @@ namespace AfmLibre\Pathfinder\Spell\Factory;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SelectionType;
-use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
 use AfmLibre\Pathfinder\Spell\Dto\FavoriteSpellDto;
+use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 

@@ -2,7 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use AfmLibre\Pathfinder\Repository\WeaponCategoryRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;

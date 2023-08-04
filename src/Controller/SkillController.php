@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
+use AfmLibre\Pathfinder\Character\Repository\CharacterSkillRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterSkill;
 use AfmLibre\Pathfinder\Entity\Skill;
-use AfmLibre\Pathfinder\Repository\CharacterRepository;
-use AfmLibre\Pathfinder\Repository\CharacterSkillRepository;
-use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
-use AfmLibre\Pathfinder\Repository\SkillRepository;
+use AfmLibre\Pathfinder\Skill\Repository\SkillRepository;
 use AfmLibre\Pathfinder\Skill\SkillCalculator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

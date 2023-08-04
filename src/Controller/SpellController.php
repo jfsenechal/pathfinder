@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

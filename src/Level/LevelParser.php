@@ -4,7 +4,7 @@
 namespace AfmLibre\Pathfinder\Level;
 
 use AfmLibre\Pathfinder\Classes\ClassParser;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 
 class LevelParser
 {
@@ -21,14 +21,14 @@ class LevelParser
     {
         $levels = [];
         if ($text == '') {
-            throw new \Exception('level not found ' . $text);
+            throw new \Exception('level not found '.$text);
         }
         $data = explode(', ', $text);
         foreach ($data as $level) {
             [$shortName, $level] = explode(' ', $level);
             $name = ClassParser::getClassName($shortName);
             $classT = $this->classTRepository->findOneByName($name);
-            if(!$classT){
+            if (!$classT) {
                 throw new \Exception('Class not found '.$name);
             }
             $levels[] = new LevelDto($classT, (int)$level);

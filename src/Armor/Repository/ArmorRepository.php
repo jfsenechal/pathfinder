@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Repository;
+namespace AfmLibre\Pathfinder\Armor\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
 use AfmLibre\Pathfinder\Entity\Armor;

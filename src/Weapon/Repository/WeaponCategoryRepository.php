@@ -1,31 +1,31 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Repository;
+namespace AfmLibre\Pathfinder\Weapon\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
-use AfmLibre\Pathfinder\Entity\ArmorCategory;
+use AfmLibre\Pathfinder\Entity\WeaponCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method ArmorCategory|null find($id, $lockMode = null, $lockVersion = null)
- * @method ArmorCategory|null findOneBy(array $criteria, array $orderBy = null)
- * @method ArmorCategory[]    findAll()
- * @method ArmorCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method WeaponCategory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method WeaponCategory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method WeaponCategory[]    findAll()
+ * @method WeaponCategory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ArmorCategoryRepository extends ServiceEntityRepository
+class WeaponCategoryRepository extends ServiceEntityRepository
 {
     use OrmCrudTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ArmorCategory::class);
+        parent::__construct($registry, WeaponCategory::class);
     }
 
     /**
-     * @return ArmorCategory[]
+     * @return WeaponCategory[]
      */
     public function search(iterable $args): array
     {
@@ -41,7 +41,7 @@ class ArmorCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return ArmorCategory[]
+     * @return WeaponCategory[]
      */
     public function findRoots(): array
     {
@@ -51,7 +51,7 @@ class ArmorCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return ArmorCategory[]
+     * @return WeaponCategory[]
      */
     public function findAllGroupByParent(): array
     {
@@ -77,9 +77,9 @@ class ArmorCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return ArmorCategory[]
+     * @return WeaponCategory[]
      */
-    public function findChildren(ArmorCategory $category): array
+    public function findChildren(WeaponCategory $category): array
     {
         return $this->createQb()
             ->andWhere('category.parent = :cat')
@@ -88,14 +88,14 @@ class ArmorCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return ArmorCategory[]
+     * @return WeaponCategory[]
      */
     public function findAllOrdered(): array
     {
         return $this->createQb()->getQuery()->getResult();
     }
 
-    public function findOneByName(string $name): ?ArmorCategory
+    public function findOneByName(string $name): ?WeaponCategory
     {
         return $this->createQb()
             ->andWhere('category.name = :name')
@@ -110,5 +110,4 @@ class ArmorCategoryRepository extends ServiceEntityRepository
             ->addSelect('parent')
             ->addOrderBy('category.name', Criteria::ASC);
     }
-
 }

@@ -16,7 +16,7 @@ use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -36,7 +36,7 @@ class ImportModifierCommand extends Command
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private ModifierRepository $modifierRepository,
+        private readonly ModifierRepository $modifierRepository,
     ) {
         parent::__construct();
     }

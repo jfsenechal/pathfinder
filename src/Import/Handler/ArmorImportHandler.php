@@ -3,10 +3,10 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use AfmLibre\Pathfinder\Armor\Repository\ArmorCategoryRepository;
+use AfmLibre\Pathfinder\Armor\Repository\ArmorRepository;
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\ArmorCategory;
-use AfmLibre\Pathfinder\Repository\ArmorCategoryRepository;
-use AfmLibre\Pathfinder\Repository\ArmorRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ArmorImportHandler

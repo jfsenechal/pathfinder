@@ -3,12 +3,12 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
-use AfmLibre\Pathfinder\Repository\CharacterRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;

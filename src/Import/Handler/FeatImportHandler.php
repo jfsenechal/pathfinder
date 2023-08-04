@@ -4,7 +4,7 @@
 namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\Feat;
-use AfmLibre\Pathfinder\Repository\FeatRepository;
+use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FeatImportHandler

@@ -2,11 +2,11 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\LevelCrossingType;
 use AfmLibre\Pathfinder\Level\Message\LevelCrossingUpdated;
-use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
-use AfmLibre\Pathfinder\Repository\LevelRepository;
+use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class LevelingUpController extends AbstractController
 {
     public function __construct(
-        private LevelRepository $levelRepository,
-        private ClassFeatureRepository $classFeatureRepository,
+        private readonly LevelRepository $levelRepository,
+        private readonly ClassFeatureRepository $classFeatureRepository,
         private readonly MessageBusInterface $dispatcher
     ) {
     }

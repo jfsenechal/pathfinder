@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
-use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'class_skill')]

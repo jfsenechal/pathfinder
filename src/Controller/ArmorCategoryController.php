@@ -2,9 +2,9 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Armor\Repository\ArmorCategoryRepository;
+use AfmLibre\Pathfinder\Armor\Repository\ArmorRepository;
 use AfmLibre\Pathfinder\Entity\ArmorCategory;
-use AfmLibre\Pathfinder\Repository\ArmorCategoryRepository;
-use AfmLibre\Pathfinder\Repository\ArmorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

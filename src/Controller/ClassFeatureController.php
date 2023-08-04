@@ -2,9 +2,9 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

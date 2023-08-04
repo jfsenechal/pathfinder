@@ -5,7 +5,7 @@ namespace AfmLibre\Pathfinder\Entity;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
-use AfmLibre\Pathfinder\Repository\ModifierRepository;
+use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\UniqueConstraint(columns: ['object_class', 'object_id', 'ability', 'race_id'])]

@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
+use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Form\SearchNameType;
-use AfmLibre\Pathfinder\Repository\ClassFeatureRepository;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
-use AfmLibre\Pathfinder\Repository\LevelRepository;
-use AfmLibre\Pathfinder\Repository\ClassSkillRepository;
-use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
+use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

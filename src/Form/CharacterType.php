@@ -2,12 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Form;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Leveling\LevelingEnum;
-use AfmLibre\Pathfinder\Repository\ClassRepository;
-use AfmLibre\Pathfinder\Repository\RaceRepository;
+use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

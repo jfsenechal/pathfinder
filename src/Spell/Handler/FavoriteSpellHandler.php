@@ -3,12 +3,12 @@
 
 namespace AfmLibre\Pathfinder\Spell\Handler;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\FavoriteSpell;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Entity\ClassSpell;
-use AfmLibre\Pathfinder\Repository\FavoriteSpellRepository;
-use AfmLibre\Pathfinder\Repository\ClassSpellRepository;
+use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 
 class FavoriteSpellHandler
 {

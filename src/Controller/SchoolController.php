@@ -3,7 +3,7 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\School;
-use AfmLibre\Pathfinder\Repository\SchoolRepository;
+use AfmLibre\Pathfinder\Spell\Repository\SchoolRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

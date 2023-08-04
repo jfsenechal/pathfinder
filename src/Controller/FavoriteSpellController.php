@@ -4,10 +4,10 @@ namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SearchSpellForFavoritesType;
-use AfmLibre\Pathfinder\Repository\SpellRepository;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Handler\FavoriteSpellHandler;
 use AfmLibre\Pathfinder\Spell\Message\FavoriteSpellUpdated;
+use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Messenger\MessageBusInterface;

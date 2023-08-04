@@ -5,8 +5,8 @@ namespace AfmLibre\Pathfinder\Import\Handler;
 
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Entity\WeaponCategory;
-use AfmLibre\Pathfinder\Repository\WeaponCategoryRepository;
-use AfmLibre\Pathfinder\Repository\WeaponRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponCategoryRepository;
+use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WeaponImportHandler
