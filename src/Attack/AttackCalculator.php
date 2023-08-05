@@ -10,21 +10,21 @@ class AttackCalculator
 {
     //BMO=Bonus de base à l’attaque + modificateur de Force + modificateur de taille spécial
     //Le bonus de manœuvre offensive
-    public static function createCmb(Character $character, SizeEnum $modifier): CmbDto
+    public static function createCmb(Character $character, SizeEnum $sizeEnum): CmbDto
     {
         return
             new CmbDto(
                 "cmb",
                 $character->current_level->bab,
                 $character->current_level->fortitude,
-                $modifier->getModificateur()
+                SizeEnum::valueModifier($sizeEnum)
             );
     }
 
     public static function createAttackRoll(
         Character $character,
         Weapon $weapon,
-        SizeEnum $modifier
+        SizeEnum $sizeEnum
     ): AttackRoll {
 
         $caracteristic = $character->strength;
@@ -39,7 +39,7 @@ class AttackCalculator
             "ja",
             $character->current_level->bab,
             Character::getValueModifier($caracteristic),
-            $modifier->getModificateur(),
+            SizeEnum::valueModifier($sizeEnum),
             $rangePenalty
         );
     }

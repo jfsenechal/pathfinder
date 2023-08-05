@@ -50,7 +50,7 @@ class CharacterLoader
         $characterDto->armorClass = ArmorCalculator::createArmorAbility(
             $character,
             $characterDto->characterArmors,
-            SizeEnum::SIZE_MIDDLE
+            $character->sizeType
         );
 
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
@@ -60,7 +60,7 @@ class CharacterLoader
             $characterWeapon->attackRoll = AttackCalculator::createAttackRoll(
                 $character,
                 $weapon,
-                SizeEnum::SIZE_MIDDLE
+                $character->sizeType
             );
 
             return $characterWeapon;
@@ -68,8 +68,8 @@ class CharacterLoader
 
         $characterDto->characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
-        $characterDto->cmb = AttackCalculator::createCmb($character, SizeEnum::SIZE_MIDDLE);
-        $characterDto->cmd = ArmorCalculator::createCmd($character, SizeEnum::SIZE_MIDDLE);
+        $characterDto->cmb = AttackCalculator::createCmb($character, $character->sizeType);
+        $characterDto->cmd = ArmorCalculator::createCmd($character, $character->sizeType);
 
         return $characterDto;
     }

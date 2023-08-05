@@ -1,7 +1,8 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Form;
+namespace AfmLibre\Pathfinder\Character\Form;
 
+use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\ClassT;
@@ -11,6 +12,7 @@ use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -40,7 +42,6 @@ class CharacterType extends AbstractType
                 'strength',
                 IntegerType::class,
                 [
-                    'label' => 'Force',
                     'required' => true,
                 ]
             )
@@ -48,7 +49,6 @@ class CharacterType extends AbstractType
                 'dexterity',
                 IntegerType::class,
                 [
-                    'label' => 'Dextérité',
                     'required' => true,
                 ]
             )
@@ -56,7 +56,6 @@ class CharacterType extends AbstractType
                 'constitution',
                 IntegerType::class,
                 [
-                    'label' => 'Constitution',
                     'required' => true,
                 ]
             )
@@ -64,7 +63,6 @@ class CharacterType extends AbstractType
                 'intelligence',
                 IntegerType::class,
                 [
-                    'label' => 'Intelligence',
                     'required' => true,
                 ]
             )
@@ -72,7 +70,6 @@ class CharacterType extends AbstractType
                 'wisdom',
                 IntegerType::class,
                 [
-                    'label' => 'Sagesse',
                     'required' => true,
                 ]
             )
@@ -80,7 +77,6 @@ class CharacterType extends AbstractType
                 'charisma',
                 IntegerType::class,
                 [
-                    'label' => 'Charisme',
                     'required' => true,
                 ]
             )
@@ -97,7 +93,6 @@ class CharacterType extends AbstractType
                 'classT',
                 EntityType::class,
                 [
-                    'label' => 'Classe',
                     'placeholder' => '',
                     'class' => ClassT::class,
                     'query_builder' => fn(
@@ -109,7 +104,7 @@ class CharacterType extends AbstractType
                 'select_level',
                 ChoiceType::class,
                 [
-                    'label' => 'Niveau',
+                    'label' => 'Level',
                     'placeholder' => '',
                     'choices' => array_combine(range(1, 20), range(1, 20)),
                 ]
@@ -118,11 +113,19 @@ class CharacterType extends AbstractType
                 'point_by_level',
                 ChoiceType::class,
                 [
-                    'label' => 'Point supplémentaire par niveau',
+                    'label' => 'form.point_by_level.label',
                     'help' => 'Point attribué par le MD',
                     'required' => true,
                     'placeholder' => 'Choisissez',
                     'choices' => LevelingEnum::choicesForList(),
+                ]
+            )
+            ->add(
+                'sizeType',
+                EnumType::class,
+                [
+                    'class' => SizeEnum::class,
+                    'required' => true,
                 ]
             );
     }

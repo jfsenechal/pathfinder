@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Armor;
 
-use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Ancestry\SizeEnum;
+use AfmLibre\Pathfinder\Entity\Character;
 
 class ArmorCalculator
 {
@@ -14,7 +14,7 @@ class ArmorCalculator
     public static function createArmorAbility(
         Character $character,
         array $characterArmors,
-        SizeEnum $modifier
+        SizeEnum $sizeEnum
     ): ArmorClassDto {
         $caArmors = 0;
         foreach ($characterArmors as $characterArmor) {
@@ -26,7 +26,7 @@ class ArmorCalculator
             "ca",
             Character::getValueModifier($character->dexterity),
             $caArmors,
-            $modifier->getModificateur()
+            SizeEnum::valueModifier($sizeEnum)
         );
     }
 
@@ -34,14 +34,14 @@ class ArmorCalculator
     /**
      * 10 + bonus de base à l’attaque + modificateur de Force + modificateur de Dextérité + modificateur de taille spécial
      */
-    public static function createCmd(Character $character, SizeEnum $modifier): CmdDto
+    public static function createCmd(Character $character, SizeEnum $sizeEnum): CmdDto
     {
         return new CmdDto(
             "cmd",
             $character->current_level->bab,
             $character->current_level->fortitude,
             Character::getValueModifier($character->dexterity),
-            $modifier->getModificateur()
+            SizeEnum::valueModifier($sizeEnum)
         );
     }
 }

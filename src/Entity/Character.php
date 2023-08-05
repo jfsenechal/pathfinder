@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
@@ -51,8 +52,8 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\Column(nullable: true)]
     public ?string $divinity = null;
 
-    #[ORM\Column(nullable: true)]
-    public ?string $sizeType;
+    #[ORM\Column(nullable: false)]
+    public SizeEnum $sizeType;
     #[ORM\Column(nullable: true)]
     public ?string $sex;
     #[ORM\Column(type: 'smallint', nullable: false)]

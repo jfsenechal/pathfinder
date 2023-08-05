@@ -2,19 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Command;
 
-use AfmLibre\Pathfinder\Entity\Armor;
-use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterArmor;
-use AfmLibre\Pathfinder\Entity\CharacterFeat;
-use AfmLibre\Pathfinder\Entity\CharacterWeapon;
-use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Feat;
-use AfmLibre\Pathfinder\Entity\Level;
 use AfmLibre\Pathfinder\Entity\Modifier;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\Skill;
-use AfmLibre\Pathfinder\Entity\Weapon;
-use AfmLibre\Pathfinder\Leveling\LevelingEnum;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -51,6 +42,7 @@ class ImportModifierCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
         $name = $input->getArgument('name');
+        $name = 'ok';
         if (!$name) {
             $helper = $this->getHelper('question');
             $question = new ChoiceQuestion('What do you want to import ?', ['modifiers', 'fiona']);
@@ -62,10 +54,7 @@ class ImportModifierCommand extends Command
 
         $output->writeln($name.' import...');
 
-        match ($name) {
-            'fiona' => $this->importFiona(),
-            'default' => $this->import()
-        };
+        $this->import();
 
         $this->modifierRepository->flush();
 
@@ -179,82 +168,4 @@ class ImportModifierCommand extends Command
         }
     }
 
-    public function importFiona()
-    {
-        $race = $this->entityManager->getRepository(Race::class)->findOneByName('Demi-orque');
-        $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Guerrier');
-        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 1);
-        $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Cotte de mailles');
-        $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Cimeterre à deux mains');
-        $feat = $this->entityManager->getRepository(Feat::class)->findOneByName('Attaque en puissance');
-
-        $character = new Character();
-        $character->name = 'Fiona';
-        $character->strength = 16;
-        $character->dexterity = 12;
-        $character->constitution = 12;
-        $character->intelligence = 8;
-        $character->charisma = 8;
-        $character->point_by_level = LevelingEnum::INCREASE_LIFE->value;
-        $character->race = $race;
-        $character->classT = $class;
-        $character->current_level = $level;
-        $character->uuid = $character->generateUuid();
-
-        $this->entityManager->persist($character);
-
-        $characterArmor = new CharacterArmor($character, $armor);
-        $characterWeapon = new CharacterWeapon($character, $weapon);
-        $characterFeat = new CharacterFeat($character, $feat);
-
-        $this->entityManager->persist($characterArmor);
-        $this->entityManager->persist($characterWeapon);
-        $this->entityManager->persist($characterFeat);
-
-        $this->entityManager->flush();
-        $this->importKathia();
-    }
-
-    public function importKathia()
-    {
-        $race = $this->entityManager->getRepository(Race::class)->findOneByName('Humain');
-        $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Prêtre');
-        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 14);
-        $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Armure de plaques');
-        $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Gourdin');
-        $feat1 = $this->entityManager->getRepository(Feat::class)->findOneByName('Esquive');
-        $feat2 = $this->entityManager->getRepository(Feat::class)->findOneByName(
-            'Efficacité des sorts accrue supérieure'
-        );
-        $feat3 = $this->entityManager->getRepository(Feat::class)->findOneByName('Efficacité des sorts accrue');
-        $feat4 = $this->entityManager->getRepository(Feat::class)->findOneByName('Science de l\'initiative');
-        $feat5 = $this->entityManager->getRepository(Feat::class)->findOneByName('Canalisation sélective');
-        $feat6 = $this->entityManager->getRepository(Feat::class)->findOneByName('Canalisation supplémentaire');
-
-        $character = new Character();
-        $character->name = 'Fiona';
-        $character->strength = 16;
-        $character->dexterity = 12;
-        $character->constitution = 12;
-        $character->intelligence = 8;
-        $character->charisma = 8;
-        $character->point_by_level = LevelingEnum::INCREASE_LIFE->value;
-        $character->race = $race;
-        $character->classT = $class;
-        $character->current_level = $level;
-        $character->uuid = $character->generateUuid();
-
-        $this->entityManager->persist($character);
-
-        $this->entityManager->persist(new CharacterArmor($character, $armor));
-        $this->entityManager->persist(new CharacterWeapon($character, $weapon));
-        $this->entityManager->persist(new CharacterFeat($character, $feat1));
-        $this->entityManager->persist(new CharacterFeat($character, $feat2));
-        $this->entityManager->persist(new CharacterFeat($character, $feat3));
-        $this->entityManager->persist(new CharacterFeat($character, $feat4));
-        $this->entityManager->persist(new CharacterFeat($character, $feat5));
-        $this->entityManager->persist(new CharacterFeat($character, $feat6));
-
-        $this->entityManager->flush();
-    }
 }
