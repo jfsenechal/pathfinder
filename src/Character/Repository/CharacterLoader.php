@@ -68,8 +68,8 @@ class CharacterLoader
 
         $characterDto->characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
-        $characterDto->bmo = AttackCalculator::createBmo($character, SizeEnum::SIZE_MIDDLE);
-        $characterDto->dmd = ArmorCalculator::createDmd($character, SizeEnum::SIZE_MIDDLE);
+        $characterDto->cmb = AttackCalculator::createCmb($character, SizeEnum::SIZE_MIDDLE);
+        $characterDto->cmd = ArmorCalculator::createCmd($character, SizeEnum::SIZE_MIDDLE);
 
         return $characterDto;
     }

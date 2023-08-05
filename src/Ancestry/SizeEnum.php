@@ -18,6 +18,18 @@ enum SizeEnum
     case SIZE_COLO_TALL;
     case SIZE_COLO_LONG;
 
+    /**
+     * Colossal    +8
+     * Gargantuan    +4
+     * Huge    +2
+     * Large    +1
+     * Medium    +0
+     * Small    -1
+     * Tiny    -2
+     * Diminutive    -4
+     * Fine    -8
+     * @return int
+     */
     public function getModificateur(): int
     {
         return match ($this) {

@@ -4,9 +4,9 @@ namespace AfmLibre\Pathfinder\Character\Model;
 
 use AfmLibre\Pathfinder\Ability\AbilityDto;
 use AfmLibre\Pathfinder\Armor\ArmorClassDto;
-use AfmLibre\Pathfinder\Armor\DmdDto;
+use AfmLibre\Pathfinder\Armor\CmdDto;
 use AfmLibre\Pathfinder\Attack\AttackRoll;
-use AfmLibre\Pathfinder\Attack\BmoDto;
+use AfmLibre\Pathfinder\Attack\CmbDto;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Entity\CharacterFeat;
@@ -48,8 +48,8 @@ class CharacterDto
      * @var  CharacterFeat[]
      */
     public array $characterFeats=[];
-    public BmoDto $bmo;
-    public DmdDto $dmd;
+    public CmbDto $cmb;
+    public CmdDto $cmd;
     /**
      * @var CharacterArmor[]
      */

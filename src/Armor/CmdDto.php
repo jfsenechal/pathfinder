@@ -2,12 +2,15 @@
 
 namespace AfmLibre\Pathfinder\Armor;
 
-class DmdDto
+/**
+ * Combat Maneuver Defense
+ */
+class CmdDto
 {
     public function __construct(
         readonly string $name,
         readonly int $bab,
-        readonly int $fortitude,
+        readonly int $strength,
         readonly int $dexterity,
         readonly int $sizeModifier
     ) {
@@ -17,7 +20,7 @@ class DmdDto
     {
         return 10 +
             $this->bab +
-            $this->fortitude +
+            $this->strength +
             $this->dexterity +
             $this->sizeModifier;
     }

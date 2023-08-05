@@ -34,10 +34,10 @@ class ArmorCalculator
     /**
      * 10 + bonus de base à l’attaque + modificateur de Force + modificateur de Dextérité + modificateur de taille spécial
      */
-    public static function createDmd(Character $character, SizeEnum $modifier): DmdDto
+    public static function createCmd(Character $character, SizeEnum $modifier): CmdDto
     {
-        return new DmdDto(
-            "dmd",
+        return new CmdDto(
+            "cmd",
             $character->current_level->bab,
             $character->current_level->fortitude,
             Character::getValueModifier($character->dexterity),
