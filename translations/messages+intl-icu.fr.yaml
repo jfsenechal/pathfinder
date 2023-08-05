@@ -20,8 +20,10 @@ cmd:
   description: 'Bonus de manoeuvre défensive'
 cmb:
   description: 'Bonus de manoeuvre offensive'
-form.point_by_level.label: 'Point supplémentaire par niveau'
-form.point_by_level.help: 'Point supplémentaire attribué par le MD'
+form:
+  point_by_level.label: 'Point supplémentaire par niveau'
+  point_by_level.help: 'Point supplémentaire attribué par le MD'
+  hit_point.label: 'Points de vie'
 Fine: 'Infime'
 Diminutive: 'Minuscule'
 Tiny: 'Très petite'
@@ -49,3 +51,4 @@ character:
   title: 'Personnage'
 delete:
   action: 'Supprimer'
+LIFE: 'Vie'

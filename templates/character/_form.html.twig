@@ -32,10 +32,17 @@
 </div>
 <div class="row">
     <div class="col-6">
+       {{ form_row(form.sizeType) }}
+    </div>
+    <div class="col-6">
+       {{ form_row(form.hit_point) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
         {{ form_row(form.point_by_level) }}
     </div>
 </div>
-{{ form_row(form.sizeType) }}
 
 {{ form_row(form.description) }}
 <button class="btn btn-primary mr-1 mb-2" type="submit"><i class="far fa-save" aria-hidden="true"></i>

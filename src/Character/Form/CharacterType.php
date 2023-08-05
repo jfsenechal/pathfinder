@@ -127,6 +127,14 @@ class CharacterType extends AbstractType
                     'class' => SizeEnum::class,
                     'required' => true,
                 ]
+            )
+            ->add(
+                'hit_point',
+                IntegerType::class,
+                [
+                    'label' => 'form.hit_point.label',
+                    'required' => true,
+                ]
             );
     }
 
