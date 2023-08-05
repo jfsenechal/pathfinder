@@ -2,32 +2,32 @@
 
 <li>
     <a href="{{ path('pathfinder_character_index') }}" class="nav-link px-2 link-dark">
-        Personnages
+        {{ 'menu.characters'|trans }}
     </a>
 </li>
 <li>
     <a href="{{ path('pathfinder_race_index') }}" class="nav-link px-2 link-dark">
-        Races
+        {{ 'menu.races'|trans }}
     </a>
 </li>
 <li>
     <a href="{{ path('pathfinder_class_index') }}" class="nav-link px-2 link-dark">
-        Classes
+        {{ 'menu.classes'|trans }}
     </a>
 </li>
 <li>
     <a href="{{ path('pathfinder_spell_index') }}" class="nav-link px-2 link-dark">
-        Sorts
+        {{ 'menu.spells'|trans }}
     </a>
 </li>
 <li>
     <a href="{{ path('pathfinder_armor_index') }}" class="nav-link px-2 link-dark">
-        Armures
+        {{ 'menu.armors'|trans }}
     </a>
 </li>
 <li>
     <a href="{{ path('pathfinder_weapon_index') }}" class="nav-link px-2 link-dark">
-        Armes
+        {{ 'menu.weapons'|trans }}
     </a>
 </li>
 <li class="nav-item dropdown">
@@ -36,21 +36,21 @@
     <ul class="dropdown-menu">
         <li>
             <a href="{{ path('pathfinder_feat_index') }}" class="dropdown-item">
-                Dons
+                {{ 'menu.feats'|trans }}
             </a>
         </li>
         <li>
             <a href="{{ path('pathfinder_skill_index') }}" class="dropdown-item">
-                Compétences
+                {{ 'menu.skills'|trans }}
             </a>
         </li>
         <li>
-            <a href="{{ path('pathfinder_user_index') }}" class="dropdown-item">Les Utilisateurs</a>
+            <a href="{{ path('pathfinder_user_index') }}" class="dropdown-item">{{ 'menu.users'|trans }}</a>
         </li>
         <li>
             <a href="https://www.pathfinder-fr.org/wiki/GetFile.aspx?File=%2fADJ%2fPathfinder-RPG%2fPFSheet.pdf"
                class="dropdown-item">
-                Pdf
+                {{ 'menu.pdf'|trans }}
             </a>
         </li>
 

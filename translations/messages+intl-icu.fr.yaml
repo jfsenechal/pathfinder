@@ -31,3 +31,21 @@ Large: 'Grande'
 Huge: 'Très grande'
 Gargantuan: 'Gigantesque'
 Colossal: 'Colossale'
+menu:
+  pdf: 'Pdf'
+  users: 'Utilisateurs'
+  skills: 'Compétences'
+  feats: 'Dons'
+  weapons: 'Armes'
+  armors: 'Armures'
+  spells: 'Sorts'
+  classes: 'Classes'
+  races: 'Races'
+  characters: 'Personnages'
+skills:
+  title: 'Caractéristiques'
+Level: 'Niveau'
+character:
+  title: 'Personnage'
+delete:
+  action: 'Supprimer'

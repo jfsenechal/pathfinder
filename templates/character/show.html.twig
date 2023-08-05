@@ -1,11 +1,11 @@
 {% extends '@AfmLibrePathfinder/base.html.twig' %}
 
-{% block title %}{{ character.name }} - Personnage{% endblock %}
+{% block title %}{{ character.name }} - {{ 'character.title'|trans }}{% endblock %}
 
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3>{{ character }} / Niveau {{ character.current_level.lvl }}</h3>
+            <h3>{{ character }} / {{ 'level'|title|trans}} {{ character.current_level.lvl }}</h3>
         </div>
         <div class="card-body">
             {% include '@AfmLibrePathfinder/character/_actions.html.twig' %}
@@ -13,7 +13,7 @@
             {% include '@AfmLibrePathfinder/ancestry/_by_character.html.twig' %}
             <div class="row">
                 <div class="col-6">
-                    <h4 class="text-success my-3">Caractéristiques</h4>
+                    <h4 class="text-success my-3">{{ 'skills.title'|trans }}</h4>
                     {{ include('@AfmLibrePathfinder/ability/_list.html.twig') }}
                 </div>
                 <div class="col-6">

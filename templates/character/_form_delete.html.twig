@@ -3,11 +3,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Supprimer un personnage</h5>
+                <h5 class="modal-title" id="deleteModalLabel">{{'delete.action'|trans}} un personnage</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Supprimer {{ character }} ?
+                {{'delete.action'|trans}} {{ character }} ?
             </div>
             <div class="modal-footer">
                 <form method="post" action="{{ path('pathfinder_character_delete', {'uuid': character.uuid}) }}">
@@ -15,7 +15,7 @@
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">Annuler
                     </button>
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    <button type="submit" class="btn btn-danger">{{'delete.action'|trans}}</button>
                 </form>
             </div>
         </div>

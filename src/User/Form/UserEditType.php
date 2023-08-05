@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Form;
+namespace AfmLibre\Pathfinder\User\Form;
 
 use AfmLibre\Pathfinder\Entity\User;
 use Symfony\Component\Form\AbstractType;

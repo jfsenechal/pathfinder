@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Character\Repository\CharacterLoader;
@@ -44,6 +45,7 @@ class CharacterController extends AbstractController
     public function new(Request $request): Response
     {
         $character = new Character();
+        $character->sizeType = SizeEnum::Medium;
         $form = $this->createForm(CharacterType::class, $character);
         $form->handleRequest($request);
 

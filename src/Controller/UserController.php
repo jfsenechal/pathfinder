@@ -3,8 +3,8 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\User;
-use AfmLibre\Pathfinder\Form\UserEditType;
-use AfmLibre\Pathfinder\Form\UserType;
+use AfmLibre\Pathfinder\User\Form\UserEditType;
+use AfmLibre\Pathfinder\User\Form\UserType;
 use AfmLibre\Pathfinder\User\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
