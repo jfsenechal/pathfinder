@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Twig\Extension;
 
+use AfmLibre\Pathfinder\Helper\NumberHelper;
 use AfmLibre\Pathfinder\Twig\Runtime\PathfinderExtensionRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 class PathfinderExtension extends AbstractExtension
 {
@@ -16,7 +16,7 @@ class PathfinderExtension extends AbstractExtension
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
             new TwigFilter('class_name', [PathfinderExtensionRuntime::class, 'className']),
-            new TwigFilter('number_sign', [PathfinderExtensionRuntime::class, 'numberSign']),
+            new TwigFilter('number_sign', fn($number) => NumberHelper::numberSign($number)),
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Attack;
 
+use AfmLibre\Pathfinder\Helper\NumberHelper;
+
 /**
  * Melee attack roll result = d20 roll
  * + Strength modifier (or optionally Dexterity modifier for a finesse weapon) + proficiency bonus + other bonuses + penalties
@@ -29,6 +31,15 @@ class AttackRoll
     public function bonusAttack(): int
     {
         return $this->bab + $this->characteristicModifier + $this->sizeModifier + $this->rangePenalty;
+    }
+
+    public function explain(): string
+    {
+        return
+            ' Bab:'.NumberHelper::numberSign($this->bab).
+            ' '.ucfirst($this->characteristicName).':'.NumberHelper::numberSign($this->characteristicModifier).
+            ' Size: '.NumberHelper::numberSign($this->sizeModifier).
+            ' Range penalty '.NumberHelper::numberSign($this->rangePenalty);
     }
 
 }
