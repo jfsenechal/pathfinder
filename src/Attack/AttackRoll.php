@@ -12,7 +12,7 @@ class AttackRoll
     public function __construct(
         readonly string $name,
         readonly int $bab,
-        readonly int $caracteristic,
+        readonly int $characteristic,
         readonly int $sizeModifier = 0,
         readonly int $rangePenalty = 0
     ) {
@@ -27,6 +27,6 @@ class AttackRoll
      */
     public function total(): int
     {
-        return $this->bab + $this->caracteristic + $this->sizeModifier + $this->rangePenalty;
+        return $this->bab + $this->characteristic + $this->sizeModifier + $this->rangePenalty;
     }
 }

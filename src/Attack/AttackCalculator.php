@@ -27,18 +27,18 @@ class AttackCalculator
         SizeEnum $sizeEnum
     ): AttackRoll {
 
-        $caracteristic = $character->strength;
+        $characteristic = $character->strength;
         $rangePenalty = 0;
 
         if ($weapon->distance) {
-            $caracteristic = $character->dexterity;
+            $characteristic = $character->dexterity;
             $rangePenalty = $weapon->ranged;
         }
 
         return new AttackRoll(
             "ja",
             $character->current_level->bab,
-            Character::getValueModifier($caracteristic),
+            Character::getValueModifier($characteristic),
             SizeEnum::valueModifier($sizeEnum),
             $rangePenalty
         );
