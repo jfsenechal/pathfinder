@@ -15,6 +15,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'characters')]//!character reserved
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
@@ -27,20 +28,28 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     use TimestampableTrait;
     use SlugTrait;
 
+    private const maxAbilityValue = 30;
+
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $description = null;
 
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $strength = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $dexterity = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $constitution = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $intelligence = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $wisdom = 10;
     #[ORM\Column(type: 'smallint', nullable: false)]
+    #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $charisma = 10;
 
     #[ORM\Column(type: 'smallint', nullable: false)]

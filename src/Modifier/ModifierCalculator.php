@@ -4,7 +4,6 @@ namespace AfmLibre\Pathfinder\Modifier;
 
 class ModifierCalculator
 {
-
     public static function abilityValueModifier(int $val): int
     {
         return match ($val) {
@@ -18,8 +17,12 @@ class ModifierCalculator
             14, 15 => +2,
             16, 17 => +3,
             18, 19 => +4,
-            21, 20 => +5,
+            20, 21 => +5,
             22, 23 => +6,
+            24, 25 => +7,
+            26, 27 => +8,
+            28, 29 => +9,
+            30, 31 => +10,
         };
     }
 }

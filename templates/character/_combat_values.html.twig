@@ -2,17 +2,19 @@
 <table class="table table-bordered">
     <tr>
         <th></th>
-        <th>TOTAL</th>
-        <th>Bonus d'armures</th>
+        <th>Classe d'armure</th>
+        <th>Bonus d'armure</th>
         <th>Dextérité</th>
+        <th>Dextérité maximum</th>
         <th>Taille</th>
         <th colspan="2">Spéciale</th>
     </tr>
     <tr>
         <td>CA</td>
-        <td>{{ armorClass.total }}</td>
-        <td>{{ armorClass.armorCa|number_sign }}</td>
-        <td>{{ armorClass.dexterity|number_sign }}</td>
+        <td>{{ armorClass.ac|number_sign }}</td>
+        <td>{{ armorClass.armorBonus|number_sign }}</td>
+        <td>{{ armorClass.dexterityModifier|number_sign }}</td>
+        <td>{{ armorClass.dexterityMax|number_sign }}</td>
         <td>{{ armorClass.sizeModifier }}</td>
         <td colspan="2"></td>
     </tr>

@@ -10,15 +10,21 @@ class ArmorClassDto
 {
     public function __construct(
         readonly string $name,
-        readonly int $dexterity,
-        readonly int $armorCa,
+        readonly int $dexterityModifier,
+        readonly ?int $dexterityMax,
+        readonly int $armorBonus,
         readonly int $sizeModifier,
         readonly array $items = []
     ) {
     }
 
-    public function total(): int
+    public function ac(): int
     {
-        return 10 + $this->armorCa + $this->dexterity;
+        $dexterityModifier = $this->dexterityModifier;
+        if ($this->dexterityMax !== null && $this->dexterityMax < $this->dexterityModifier) {
+            $dexterityModifier = $this->dexterityMax;
+        }
+
+        return 10 + $this->armorBonus + $dexterityModifier;
     }
 }

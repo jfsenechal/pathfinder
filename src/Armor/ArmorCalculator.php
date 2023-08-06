@@ -11,21 +11,22 @@ class ArmorCalculator
     /**
      * 10 + bonus d’armure + bonus de bouclier + modificateur de Dextérité + modificateur de taille
      */
-    public function createArmorAbility(
+    public static function createArmorAbility(
         Character $character,
         SizeEnum $sizeEnum
     ): ArmorClassDto {
-        $dexterity = $character->dexterity;
         $armor = $character->armor;
+        $dexterityMax = null;
         $armorBonus = 0;
-        if ($armor&&$armor->bonus_dexterity_max) {
-            $dexterity = $armor->bonus_dexterity_max;
+        if ($armor && $armor->bonus_dexterity_max) {
+            $dexterityMax = $armor->bonus_dexterity_max;
             $armorBonus = $armor->bonus;
         }
 
         return new ArmorClassDto(
             "ca",
-            Character::getValueModifier($dexterity),
+            Character::getValueModifier($character->dexterity),
+            $dexterityMax,
             $armorBonus,
             SizeEnum::valueModifier($sizeEnum)
         );
