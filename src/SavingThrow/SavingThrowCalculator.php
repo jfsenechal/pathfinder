@@ -28,11 +28,13 @@ class SavingThrowCalculator
         foreach (SavingThrowEnum::cases() as $savingThrowEnum) {
             $specials = [];
             $currentLevel = $character->current_level;
+            $propertyAbilityName = SavingThrowEnum::ability($savingThrowEnum);
+            $levelName = $savingThrowEnum->value;
             $savingThrows[] = new SavingThrowDto(
                 $savingThrowEnum->value,
-                $currentLevel->reflex,
-                SavingThrowEnum::ability($savingThrowEnum)->value,
-                Character::getValueModifier($character->dexterity),
+                $currentLevel->$levelName,
+                $propertyAbilityName,
+                Character::getValueModifier($character->$propertyAbilityName),
                 $specials
             );
         }

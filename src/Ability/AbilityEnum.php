@@ -5,12 +5,12 @@ namespace AfmLibre\Pathfinder\Ability;
 
 enum AbilityEnum: string
 {
-    case ABILITY_STRENGH = 'STRENGTH';
-    case ABILITY_DEXTERITY = 'DEXTERITY';
-    case ABILITY_CONSTITUTION = 'CONSTITUTION';
-    case ABILITY_INTELLIGENCE = 'INTELLIGENCE';
-    case ABILITY_WISDOM = 'WISDOM';
-    case ABILITY_CHARISMA = 'CHARISMA';
+    case ABILITY_STRENGH = 'strength';
+    case ABILITY_DEXTERITY = 'dexterity';
+    case ABILITY_CONSTITUTION = 'constitution';
+    case ABILITY_INTELLIGENCE = 'intelligence';
+    case ABILITY_WISDOM = 'wisdom';
+    case ABILITY_CHARISMA = 'charisma';
 
     public static function returnByNameFr(string $nameFr): ?self
     {

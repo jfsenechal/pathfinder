@@ -4,8 +4,8 @@ namespace AfmLibre\Pathfinder\Leveling;
 
 enum LevelingEnum: string
 {
-    case INCREASE_SKILL = 'SKILL';
-    case INCREASE_LIFE = 'LIFE';
+    case INCREASE_SKILL = 'skill';
+    case INCREASE_LIFE = 'life';
 
     public static function choiceIncrease(): array
     {

@@ -4,22 +4,22 @@ namespace AfmLibre\Pathfinder\Modifier;
 
 enum ModifierListingEnum: string
 {
-    case ABILITY_STRENGTH = 'STRENGTH';
-    case ABILITY_DEXTERITY = 'DEXTERITY';
-    case ABILITY_CONSTITUTION = 'CONSTITUTION';
-    case ABILITY_INTELLIGENCE = 'INTELLIGENCE';
-    case ABILITY_WISDOM = 'WISDOM';
-    case ABILITY_CHARISMA = 'CHARISMA';
+    case ABILITY_STRENGTH = 'strength';
+    case ABILITY_DEXTERITY = 'dexterity';
+    case ABILITY_CONSTITUTION = 'constitution';
+    case ABILITY_INTELLIGENCE = 'intelligence';
+    case ABILITY_WISDOM = 'wisdom';
+    case ABILITY_CHARISMA = 'charisma';
 
-    case COMBAT_DMD = 'DMD';
-    case COMBAT_BMO = 'BMO';
-    case ARMOR_CLASS = 'CA';
+    case COMBAT_DMD = 'dmd';
+    case COMBAT_BMO = 'bmo';
+    case ARMOR_CLASS = 'ca';
 
-    case SAVING_THROW_REFLEX = 'REFLEX';
-    case SAVING_THROW_FORTITUDE = 'FORTITUDE';//vigueur
-    case SAVING_THROW_WILL = 'WILL';//volonte
+    case SAVING_THROW_REFLEX = 'reflex';
+    case SAVING_THROW_FORTITUDE = 'fortitude';//vigueur
+    case SAVING_THROW_WILL = 'will';//volonte
 
-    case SKILL = 'SKILL';
+    case SKILL = 'skill';
 
     public static function findByName(string $name): ?ModifierListingEnum
     {

@@ -28,12 +28,12 @@ class AbilityCalculator
         $abilities = [];
         foreach (ModifierListingEnum::abilities() as $modifierEnum) {
             $basespecials = $this->findSpecials($character, $modifierEnum);
-            $property = strtolower($modifierEnum->value);
+            $propertyName = $modifierEnum->value;
             $specials = [];
             $abilities[] = new AbilityDto(
                 $modifierEnum->value,
-                $character->$property,
-                ModifierCalculator::abilityValueModifier($character->$property),
+                $character->$propertyName,
+                ModifierCalculator::abilityValueModifier($character->$propertyName),
                 $basespecials,
                 $specials
             );

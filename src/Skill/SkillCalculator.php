@@ -47,7 +47,7 @@ class SkillCalculator
             $isTrained = $this->isTrained($skill->getId());
             $ability = AbilityEnum::returnByNameFr($skill->ability);
             $racials = $this->racials($skill, $character->race);
-            $property = strtolower($ability->value);
+            $propertyName = $ability->value;
             $pointsSpent = 0;
             if ($characterSkill = $this->characterSkillRepository->findByCharacterAndSkill($character, $skill)) {
                 $pointsSpent = $characterSkill->point_spent;
@@ -58,7 +58,7 @@ class SkillCalculator
                 $isTrained,
                 $pointsSpent,
                 $ability->value,
-                ModifierCalculator::abilityValueModifier($character->$property),
+                ModifierCalculator::abilityValueModifier($character->$propertyName),
                 $racials,
                 []
             );

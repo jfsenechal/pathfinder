@@ -2,20 +2,20 @@
 
 namespace AfmLibre\Pathfinder\SavingThrow;
 
-use AfmLibre\Pathfinder\Ability\AbilityEnum;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 
 enum SavingThrowEnum: string
 {
-    case REFLEX = 'REFLEX';
-    case FORTITUDE = 'FORTITUDE';//vigueur
-    case WILL = 'WILL';//volonte
+    case REFLEX = 'reflex';
+    case FORTITUDE = 'fortitude';//vigueur
+    case WILL = 'will';//volonte
 
-    public static function ability(self $t): ?AbilityEnum
+    public static function ability(self $st): string
     {
-        return match ($t) {
-            self::REFLEX => AbilityEnum::ABILITY_DEXTERITY,
-            self::FORTITUDE => AbilityEnum::ABILITY_CONSTITUTION,
-            self::WILL => AbilityEnum::ABILITY_WISDOM,
+        return match ($st) {
+            self::REFLEX => ModifierListingEnum::ABILITY_DEXTERITY->value,
+            self::FORTITUDE => ModifierListingEnum::ABILITY_CONSTITUTION->value,
+            self::WILL => ModifierListingEnum::ABILITY_WISDOM->value,
         };
     }
 
