@@ -3,7 +3,6 @@
 namespace AfmLibre\Pathfinder\Character\Repository;
 
 use AfmLibre\Pathfinder\Ability\AbilityCalculator;
-use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Armor\ArmorCalculator;
 use AfmLibre\Pathfinder\Attack\AttackCalculator;
 use AfmLibre\Pathfinder\Character\Model\CharacterDto;
@@ -26,6 +25,8 @@ class CharacterLoader
         private readonly AbilityCalculator $abilityCalculator,
         private readonly SavingThrowCalculator $savingThrowCalculator,
         private readonly SkillCalculator $skillCalculator,
+        private readonly AttackCalculator $attackCalculator,
+        private readonly ArmorCalculator $armorCalculator
     ) {
     }
 
@@ -47,7 +48,7 @@ class CharacterLoader
         $characterDto->skills = $this->skillCalculator->calculate($character);
 
         $characterDto->characterArmors = $this->characterArmorRepository->findByCharacter($character);
-        $characterDto->armorClass = ArmorCalculator::createArmorAbility(
+        $characterDto->armorClass = $this->armorCalculator->createArmorAbility(
             $character,
             $characterDto->characterArmors,
             $character->sizeType
@@ -68,8 +69,8 @@ class CharacterLoader
 
         $characterDto->characterFeats = $this->characterFeatRepository->findByCharacter($character);
 
-        $characterDto->cmb = AttackCalculator::createCmb($character, $character->sizeType);
-        $characterDto->cmd = ArmorCalculator::createCmd($character, $character->sizeType);
+        $characterDto->cmb = $this->attackCalculator->createCmb($character, $character->sizeType);
+        $characterDto->cmd = $this->armorCalculator->createCmd($character, $character->sizeType);
 
         return $characterDto;
     }

@@ -18,11 +18,11 @@ class Armor
     #[ORM\Column(nullable: true)]
     public ?string $bonus;
     #[ORM\Column(nullable: true)]
-    public ?string $bonusDexMax;
+    public ?string $bonus_dexterity_max;
     #[ORM\Column(nullable: true)]
-    public ?string $penalty;
+    public ?string $penalty;//on dexterity or strength
     #[ORM\Column(nullable: true)]
-    public ?string $castFail;
+    public ?string $cast_fail;
     #[ORM\Column(nullable: true)]
     public ?string $speed9;
     #[ORM\Column(nullable: true)]

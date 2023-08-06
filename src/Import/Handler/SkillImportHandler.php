@@ -32,7 +32,7 @@ class SkillImportHandler
         }
         $skill->name = $data['Nom'];
         $skill->ability = $data['Caractéristique associée'];
-        $skill->training = $data['Formation nécessaire'] == 'oui' ? true : false;
+        $skill->training_needed = $data['Formation nécessaire'] == 'oui' ? true : false;
         $skill->descriptoin = $data['Description'];
         $skill->descriptionHtml = $data['DescriptionHTML'];
         $skill->sourced = $data['Référence'];

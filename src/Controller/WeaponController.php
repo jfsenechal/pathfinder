@@ -52,6 +52,15 @@ class WeaponController extends AbstractController
         $characters = $this->characterRepository->findAll();
         $character = $characters[0];
 
+        if ($this->characterWeaponRepository->finOneByCharacterAndArmor($character, $weapon)) {
+            $this->addFlash('danger', 'Vous êtes déjà équipé de cette arme');
+
+            return $this->redirectToRoute(
+                'pathfinder_character_show',
+                ['uuid' => $character->uuid]
+            );
+        }
+
         $item = new CharacterWeapon($character, $weapon);
         $this->characterWeaponRepository->persist($item);
         $this->characterWeaponRepository->flush();

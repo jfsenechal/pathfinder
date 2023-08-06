@@ -31,6 +31,9 @@ class CharacterWeapon implements \Stringable
     #[ORM\Column(nullable: true)]
     public ?bool $leading_hand = null;
 
+    #[ORM\Column(nullable: false)]
+    public bool $trained = true;
+
     public ?AttackRoll $attackRoll = null;
     public ?DamageRoll $damageRoll = null;
 

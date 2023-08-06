@@ -52,6 +52,15 @@ class ArmorController extends AbstractController
         $characters = $this->characterRepository->findAll();
         $character = $characters[0];
 
+        if ($this->characterArmorRepository->finOneByCharacterAndArmor($character, $armor)) {
+            $this->addFlash('danger', 'Vous êtes déjà équipé de cette armure');
+
+            return $this->redirectToRoute(
+                'pathfinder_character_show',
+                ['uuid' => $character->uuid]
+            );
+        }
+
         $item = new CharacterArmor($character, $armor);
         $this->characterArmorRepository->persist($item);
         $this->characterArmorRepository->flush();

@@ -26,6 +26,9 @@ class CharacterArmor implements \Stringable
     #[ORM\Column(nullable: true)]
     public ?string $emplacement;
 
+    #[ORM\Column(nullable: false)]
+    public bool $trained = true;
+
     public function __construct(Character $character, Armor $armor)
     {
         $this->character = $character;

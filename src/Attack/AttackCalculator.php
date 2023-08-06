@@ -10,7 +10,7 @@ class AttackCalculator
 {
     //BMO=Bonus de base à l’attaque + modificateur de Force + modificateur de taille spécial
     //Le bonus de manœuvre offensive
-    public static function createCmb(Character $character, SizeEnum $sizeEnum): CmbDto
+    public function createCmb(Character $character, SizeEnum $sizeEnum): CmbDto
     {
         return
             new CmbDto(

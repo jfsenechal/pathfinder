@@ -3,6 +3,7 @@
 namespace AfmLibre\Pathfinder\Character\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
+use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -36,6 +37,17 @@ class CharacterArmorRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function finOneByCharacterAndArmor(Character $character, Armor $armor): ?CharacterArmor
+    {
+        return $this->createQbl()
+            ->andWhere('character_armor.character = :character')
+            ->setParameter('character', $character)
+            ->andWhere('character_armor.armor = :armor')
+            ->setParameter('armor', $armor)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('character_armor')
@@ -44,6 +56,5 @@ class CharacterArmorRepository extends ServiceEntityRepository
             ->addSelect('armor', 'character')
             ->orderBy('armor.name', 'ASC');
     }
-
 
 }

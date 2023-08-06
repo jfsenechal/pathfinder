@@ -24,8 +24,8 @@ class Skill
     #[ORM\Column(nullable: true)]
     public ?string $ability;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    public bool $training;
+    #[ORM\Column(nullable: false)]
+    public bool $training_needed;
 
     public function __toString(): string
     {
