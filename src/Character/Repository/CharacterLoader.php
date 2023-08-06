@@ -19,7 +19,6 @@ class CharacterLoader
     public function __construct(
         private readonly FavoriteSpellRepository $characterSpellRepository,
         private readonly RaceTraitRepository $raceTraitRepository,
-        private readonly CharacterArmorRepository $characterArmorRepository,
         private readonly CharacterWeaponRepository $characterWeaponRepository,
         private readonly CharacterFeatRepository $characterFeatRepository,
         private readonly AbilityCalculator $abilityCalculator,
@@ -47,10 +46,9 @@ class CharacterLoader
         $characterDto->savingThrows = $this->savingThrowCalculator->calculate($character);
         $characterDto->skills = $this->skillCalculator->calculate($character);
 
-        $characterDto->characterArmors = $this->characterArmorRepository->findByCharacter($character);
+        $characterDto->armor = $character->armor;
         $characterDto->armorClass = $this->armorCalculator->createArmorAbility(
             $character,
-            $characterDto->characterArmors,
             $character->sizeType
         );
 

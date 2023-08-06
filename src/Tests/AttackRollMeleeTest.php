@@ -18,13 +18,16 @@ it('check bonus melee', function (int $bab, int $strength, SizeEnum $sizeEnum, i
         ->disableOriginalConstructor()
         ->getMock();
 
+    $client = Mockery::mock(Weapon::class);
+    $client->shouldReceive('post');
+
     $character->strength = $strength;
     $level->bab = $bab;
     $character->current_level = $level;
 
     $attack = AttackCalculator::createAttackRoll($character, $weapon, $sizeEnum);
 
-    expect($attack->total())->toBe($total);
+    expect($attack->bonusAttack())->toBe($total);
 })->with('weaponsMelee');
 
 dataset('weaponsMelee', [

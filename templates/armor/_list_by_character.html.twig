@@ -1,15 +1,14 @@
-<h4 class="text-success my-3">Armure(s)</h4>
-<table class="table table-bordered">
-    <tr>
-        <th>Nom</th>
-        <th>Ca</th>
-        <th>Dextérité max</th>
-        <th>
-            Malus<br/>
-        </th>
-    </tr>
-    {% for characterArmor in characterArmors %}
-        {% set armor = characterArmor.armor %}
+<h4 class="text-success my-3">Armure</h4>
+{% if armor %}
+    <table class="table table-bordered">
+        <tr>
+            <th>Nom</th>
+            <th>Ca</th>
+            <th>Dextérité max</th>
+            <th>
+                Malus<br/>
+            </th>
+        </tr>
         <tr>
             <td>
                 <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">{{ armor.name }}</a>
@@ -18,5 +17,7 @@
             <td>{{ armor.bonus_dexterity_max|number_sign }}</td>
             <td>{{ armor.penalty|number_sign }}</td>
         </tr>
-    {% endfor %}
-</table>
+    </table>
+    {% else %}
+    <p class="text-muted">Aucune</p>
+{% endif %}

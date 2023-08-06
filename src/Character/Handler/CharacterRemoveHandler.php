@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Character\Handler;
 
-use AfmLibre\Pathfinder\Character\Repository\CharacterArmorRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterSkillRepository;
@@ -13,7 +12,6 @@ use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 class CharacterRemoveHandler
 {
     public function __construct(
-        private CharacterArmorRepository $characterArmorRepository,
         private CharacterWeaponRepository $characterWeaponRepository,
         private CharacterFeatRepository $characterFeatRepository,
         private CharacterSkillRepository $characterSkillRepository,
@@ -24,9 +22,6 @@ class CharacterRemoveHandler
 
     public function remove(Character $character)
     {
-        foreach ($this->characterArmorRepository->findByCharacter($character) as $entity) {
-            $this->characterRepository->remove($entity);
-        }
         foreach ($this->characterWeaponRepository->findByCharacter($character) as $entity) {
             $this->characterRepository->remove($entity);
         }

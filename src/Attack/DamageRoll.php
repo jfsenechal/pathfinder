@@ -28,7 +28,7 @@ class DamageRoll
      * !Arme à deux mains.il ajoute une fois et demie son bonus normal (les malus de Force ne sont pas multipliés)
      *  arme légère à deux mains, il ne bénéficie pas de ce bonus.
      */
-    public function total(): int
+    public function bonusDamage(): int
     {
         $strength = $this->strength;
 

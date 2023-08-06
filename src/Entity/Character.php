@@ -95,12 +95,16 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\JoinColumn(nullable: false)]
     public ?Level $current_level = null;
 
+    #[ORM\ManyToOne(targetEntity: Armor::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    public ?Armor $armor = null;
+
     public int $select_level;
 
     /**
-     * @var Armor[]
+     * @var Item[]
      */
-    public array $armors = [];
+    public array $items = [];
 
     /**
      * @var Weapon[]

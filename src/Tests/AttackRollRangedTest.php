@@ -30,7 +30,7 @@ it(
 
         $attack = AttackCalculator::createAttackRoll($character, $weapon, $sizeEnum);
 
-        expect($attack->total())->toBe($total);
+        expect($attack->bonusAttack())->toBe($total);
     }
 )->with('weaponsRanged');
 

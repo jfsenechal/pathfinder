@@ -9,7 +9,7 @@ class Speed
 
     public function calculate(Character $character) {
         $heavy = '';
-        if($character->armors[0] === $heavy)  {
+        if($character->armor === $heavy)  {
 
         }
     }

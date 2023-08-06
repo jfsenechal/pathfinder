@@ -25,7 +25,7 @@ class AttackRoll
      * Bonus d'attaque à distance
      * Bonus de base à l’attaque + modificateur de Dextérité + modificateur de taille + malus de portée
      */
-    public function total(): int
+    public function bonusAttack(): int
     {
         return $this->bab + $this->characteristic + $this->sizeModifier + $this->rangePenalty;
     }

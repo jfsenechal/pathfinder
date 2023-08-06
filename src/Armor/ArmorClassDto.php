@@ -11,13 +11,14 @@ class ArmorClassDto
     public function __construct(
         readonly string $name,
         readonly int $dexterity,
-        readonly int $armorsCa,
-        readonly int $sizeModifier
+        readonly int $armorCa,
+        readonly int $sizeModifier,
+        readonly array $items = []
     ) {
     }
 
     public function total(): int
     {
-        return 10 + $this->armorsCa + $this->dexterity;
+        return 10 + $this->armorCa + $this->dexterity;
     }
 }

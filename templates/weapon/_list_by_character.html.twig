@@ -16,7 +16,7 @@
             <td>
                 <a href="{{ path('pathfinder_weapon_show', {'id': weapon.id}) }}">{{ weapon.name }}</a>
             </td>
-            <td>{{ characterWeapon.damageRoll.total|number_sign }}</td>
+            <td>{{ characterWeapon.damageRoll.bonusDamage|number_sign }}</td>
             <td>{{ characterWeapon.damageRoll.bab|number_sign }}</td>
             <td>{{ weapon.damageMedium }}</td>
             <td>{{ characterWeapon.damageRoll.strength }}</td>

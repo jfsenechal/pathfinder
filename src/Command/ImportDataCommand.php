@@ -6,7 +6,6 @@ use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Character\Handler\CharacterRemoveHandler;
 use AfmLibre\Pathfinder\Entity\Armor;
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Entity\CharacterArmor;
 use AfmLibre\Pathfinder\Entity\CharacterFeat;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Entity\ClassT;
@@ -88,15 +87,14 @@ class ImportDataCommand extends Command
         $character->race = $race;
         $character->classT = $class;
         $character->current_level = $level;
+        $character->armor = $armor;
         $character->uuid = $character->generateUuid();
 
         $this->entityManager->persist($character);
 
-        $characterArmor = new CharacterArmor($character, $armor);
         $characterWeapon = new CharacterWeapon($character, $weapon);
         $characterFeat = new CharacterFeat($character, $feat);
 
-        $this->entityManager->persist($characterArmor);
         $this->entityManager->persist($characterWeapon);
         $this->entityManager->persist($characterFeat);
 
@@ -132,11 +130,11 @@ class ImportDataCommand extends Command
         $character->race = $race;
         $character->classT = $class;
         $character->current_level = $level;
+        $character->armor = $armor;
         $character->uuid = $character->generateUuid();
 
         $this->entityManager->persist($character);
 
-        $this->entityManager->persist(new CharacterArmor($character, $armor));
         $this->entityManager->persist(new CharacterWeapon($character, $weapon));
         $this->entityManager->persist(new CharacterFeat($character, $feat1));
         $this->entityManager->persist(new CharacterFeat($character, $feat2));
