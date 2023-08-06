@@ -3,7 +3,10 @@
     <tr>
         <th>Nom</th>
         <th>Ca</th>
-        <th>Malus</th>
+        <th>Dextérité max</th>
+        <th>
+            Malus<br/>
+        </th>
     </tr>
     {% for characterArmor in characterArmors %}
         {% set armor = characterArmor.armor %}
@@ -12,6 +15,7 @@
                 <a href="{{ path('pathfinder_armor_show', {'id': armor.id}) }}">{{ armor.name }}</a>
             </td>
             <td>{{ armor.bonus|number_sign }}</td>
+            <td>{{ armor.bonus_dexterity_max|number_sign }}</td>
             <td>{{ armor.penalty|number_sign }}</td>
         </tr>
     {% endfor %}
