@@ -40,7 +40,7 @@ class ArmorCalculator
         return new CmdDto(
             "cmd",
             $character->current_level->bab,
-            $character->current_level->fortitude,
+            Character::getValueModifier($character->strength),
             Character::getValueModifier($character->dexterity),
             SizeEnum::valueModifier($sizeEnum)
         );

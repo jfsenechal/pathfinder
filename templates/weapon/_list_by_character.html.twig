@@ -2,10 +2,11 @@
 <table class="table table-bordered">
     <tr>
         <th>Nom</th>
-        <th>Bonus dégats total</th>
+        <th>Jet d'attaque</th>
+        <th>Bonus de dégâts</th>
         <th>BBA</th>
         <th>Dégâts</th>
-        <th>Force/Dex</th>
+        <th>Force</th>
         <th>Critique</th>
         <th>Main directrice</th>
         <th>2 mains</th>
@@ -16,10 +17,13 @@
             <td>
                 <a href="{{ path('pathfinder_weapon_show', {'id': weapon.id}) }}">{{ weapon.name }}</a>
             </td>
+            <td title="bba {{ characterWeapon.attackRoll.bab|number_sign }} {{ characterWeapon.attackRoll.characteristicName }} {{ characterWeapon.attackRoll.characteristicModifier|number_sign }}">
+                {{ characterWeapon.attackRoll.bonusAttack|number_sign }}
+            </td>
             <td>{{ characterWeapon.damageRoll.bonusDamage|number_sign }}</td>
             <td>{{ characterWeapon.damageRoll.bab|number_sign }}</td>
             <td>{{ weapon.damageMedium }}</td>
-            <td>{{ characterWeapon.damageRoll.strength }}</td>
+            <td>{{ characterWeapon.damageRoll.strengthModifier|number_sign }}</td>
             <td>{{ weapon.critical }}</td>
             <td>
                 {% if  characterWeapon.damageRoll.leadingHand %}
@@ -39,19 +43,3 @@
         </tr>
     {% endfor %}
 </table>
-{#
-<tr>
-    <th></th>
-    <th>TOTAL</th>
-    <th>BBA</th>
-    <th>Force/Dex</th>
-    <th colspan="3">Arme</th>
-</tr>
-<tr>
-    <td>Jet de touch</td>
-    <td>{{ attackRoll.total }}</td>
-    <td>{{ attackRoll.bab }}</td>
-    <td>{{ attackRoll.characteristic }}</td>
-    <td colspan="3">{{ attackRoll.weaponDamage }}</td>
-</tr>
-#}

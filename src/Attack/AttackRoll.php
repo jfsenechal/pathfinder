@@ -12,7 +12,8 @@ class AttackRoll
     public function __construct(
         readonly string $name,
         readonly int $bab,
-        readonly int $characteristic,
+        readonly string $characteristicName,
+        readonly int $characteristicModifier,
         readonly int $sizeModifier = 0,
         readonly int $rangePenalty = 0
     ) {
@@ -27,6 +28,7 @@ class AttackRoll
      */
     public function bonusAttack(): int
     {
-        return $this->bab + $this->characteristic + $this->sizeModifier + $this->rangePenalty;
+        return $this->bab + $this->characteristicModifier + $this->sizeModifier + $this->rangePenalty;
     }
+
 }

@@ -55,7 +55,7 @@ class CharacterLoader
         $weapons = $this->characterWeaponRepository->findByCharacter($character);
         $characterDto->characterWeapons = array_map(function (CharacterWeapon $characterWeapon) use ($character) {
             $weapon = $characterWeapon->weapon;
-            $characterWeapon->damageRoll = AttackCalculator::createDamageAbility($character, $weapon);
+            $characterWeapon->damageRoll = AttackCalculator::createDamageRoll($character, $weapon);
             $characterWeapon->attackRoll = AttackCalculator::createAttackRoll(
                 $character,
                 $weapon,

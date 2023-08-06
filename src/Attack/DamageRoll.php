@@ -15,7 +15,7 @@ class DamageRoll
         readonly string $name,
         readonly int $bab,
         readonly string $weaponDamage,
-        readonly int $strength,
+        readonly int $strengthModifier,
         readonly bool $twoHanded,
         readonly bool $leadingHand,
     ) {
@@ -30,7 +30,7 @@ class DamageRoll
      */
     public function bonusDamage(): int
     {
-        $strength = $this->strength;
+        $strength = $this->strengthModifier;
 
         if ($this->twoHanded) {
             if ($strength > 0) {

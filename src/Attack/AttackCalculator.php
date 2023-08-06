@@ -16,7 +16,7 @@ class AttackCalculator
             new CmbDto(
                 "cmb",
                 $character->current_level->bab,
-                $character->current_level->fortitude,
+                Character::getValueModifier($character->strength),
                 SizeEnum::valueModifier($sizeEnum)
             );
     }
@@ -27,10 +27,13 @@ class AttackCalculator
         SizeEnum $sizeEnum
     ): AttackRoll {
 
+        $characteristicName = 'strength';
+
         $characteristic = $character->strength;
         $rangePenalty = 0;
 
         if ($weapon->distance) {
+            $characteristicName = 'dexterity';
             $characteristic = $character->dexterity;
             $rangePenalty = $weapon->ranged;
         }
@@ -38,13 +41,14 @@ class AttackCalculator
         return new AttackRoll(
             "ja",
             $character->current_level->bab,
+            $characteristicName,
             Character::getValueModifier($characteristic),
             SizeEnum::valueModifier($sizeEnum),
             $rangePenalty
         );
     }
 
-    public static function createDamageAbility(
+    public static function createDamageRoll(
         Character $character,
         Weapon $weapon,
     ): DamageRoll {

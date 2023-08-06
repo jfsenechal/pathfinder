@@ -29,7 +29,7 @@ it('check bonus melee', function (int $bab, int $strength, bool $twoHanded, bool
     $weapon->twoHanded = $twoHanded;
     $weapon->leadingHand = $leadingHand;
 
-    $attack = AttackCalculator::createDamageAbility($character, $weapon);
+    $attack = AttackCalculator::createDamageRoll($character, $weapon);
 
     expect($attack->bonusDamage())->toBe($total);
 })->with('weaponsMelee');

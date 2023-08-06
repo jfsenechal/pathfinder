@@ -20,7 +20,7 @@
     </tr>
     <tr>
         <th></th>
-        <th>Bonus d'attaque</th>
+        <th>Bonus offensif</th>
         <th>BBA</th>
         <th>Force</th>
         <th>Taille</th>
@@ -28,17 +28,17 @@
     </tr>
     <tr>
         <td title="{{ 'cmb.description'|trans }}">{{ 'cmb'|title|trans }}</td>
-        <td>{{ cmb.total }}</td>
+        <td>{{ cmb.total|number_sign }}</td>
         <td>{{ cmb.bab|number_sign }}</td>
-        <td>{{ cmb.strength|number_sign }}</td>
+        <td>{{ cmb.strengthModifier|number_sign }}</td>
         <td>{{ cmb.sizeModifier }}</td>
         <td colspan="2"></td>
     </tr>
     <tr>
         <th></th>
-        <th>Bonus d'attaque</th>
+        <th>Bonus défensif</th>
         <th>BBA</th>
-        <th>Force</th>
+        <th>{{ 'Strength'|trans }}</th>
         <th>Dextérité</th>
         <th>Taille</th>
         <th>Spéciale</th>
@@ -47,8 +47,8 @@
         <td title="{{ 'cmd.description'|trans }}">{{ 'cmd'|title|trans }}</td>
         <td>{{ cmd.total }}</td>
         <td>{{ cmd.bab|number_sign }}</td>
-        <td>{{ cmd.strength|number_sign }}</td>
-        <td>{{ cmd.dexterity|number_sign }}</td>
+        <td>{{ cmd.strengthModifier|number_sign }}</td>
+        <td>{{ cmd.dexterityModifier|number_sign }}</td>
         <td></td>
         <td></td>
     </tr>
