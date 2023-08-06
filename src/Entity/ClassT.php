@@ -47,7 +47,7 @@ class ClassT implements \JsonSerializable, \Stringable
         return (string)$this->name;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return ['id' => $this->id];
     }

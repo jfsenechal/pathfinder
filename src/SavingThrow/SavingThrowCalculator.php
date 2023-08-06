@@ -13,9 +13,10 @@ use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 class SavingThrowCalculator
 {
     public function __construct(
-        private ModifierRepository $modifierRepository,
-        private CharacterFeatRepository $characterFeatRepository
-    ) {
+        //private ModifierRepository $modifierRepository,
+        //private CharacterFeatRepository $characterFeatRepository
+    )
+    {
     }
 
     /**
