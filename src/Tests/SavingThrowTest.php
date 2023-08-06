@@ -1,94 +1,88 @@
 <?php
 
-use AfmLibre\Pathfinder\Ancestry\SizeEnum;
-use AfmLibre\Pathfinder\Armor\ArmorCalculator;
-use AfmLibre\Pathfinder\Entity\Armor;
+use AfmLibre\Pathfinder\Ability\AbilityEnum;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Entity\Level;
+use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
+use AfmLibre\Pathfinder\SavingThrow\SavingThrowCalculator;
+use AfmLibre\Pathfinder\SavingThrow\SavingThrowDto;
+use AfmLibre\Pathfinder\SavingThrow\SavingThrowEnum;
 
 it(
     'savingThrow class',
     function (
-        bool $withArmor,
-        int $armorBonus,
-        int $armorDexterityMax,
+        int $reflex,
         int $dexterity,
-        SizeEnum $sizeEnum,
-        int $total
+        int $fortitude,
+        int $constitution,
+        int $will,
+        int $wisdom,
+        array $totals
     ) {
-
-
-        $character = \Mockery::mock(Character::class);
-
-        $service = Mockery::mock('SavingThrowCalculator');
-        $service->shouldReceive('calculate')
-            ->times(1)
-            ->andReturn(10, 12, 14);
-
-        $temperature = new Temperature($service);
-
         $level = $this->getMockBuilder(Level::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $level->fortitude = $fortitude;
+        $level->will = $will;
+        $level->reflex = $reflex;
 
-        $this->assertEquals(12, $temperature->average());
         $character = $this->getMockBuilder(Character::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $character->dexterity = $dexterity;
+        $character->wisdom = $wisdom;
+        $character->constitution = $constitution;
         $character->current_level = $level;
 
-        $attack = SavingThrowCalculator::createArmorAbility($character, $sizeEnum);
+        $calculator = Mockery::mock(SavingThrowCalculator::class);
+        $calculator->shouldReceive('calculate')->andReturnValues([
+            [
+                new SavingThrowDto(
+                    SavingThrowEnum::Reflex->value,
+                    $reflex,
+                    AbilityEnum::ABILITY_DEXTERITY->value,
+                    ModifierCalculator::abilityValueModifier($dexterity),
+                ),
+                new SavingThrowDto(
+                    SavingThrowEnum::Fortitude->value,
+                    $fortitude,
+                    AbilityEnum::ABILITY_CONSTITUTION->value,
+                    ModifierCalculator::abilityValueModifier($constitution),
+                ),
+                new SavingThrowDto(
+                    SavingThrowEnum::Will->value,
+                    $will,
+                    AbilityEnum::ABILITY_WISDOM->value,
+                    ModifierCalculator::abilityValueModifier($wisdom),
+                ),
+            ],
+        ]);
 
-        expect($attack->ac())->toBe($total);
+        $results = $calculator->calculate($character);
+        expect($results[0]->total())->toBe($totals[0]);
+        expect($results[1]->total())->toBe($totals[1]);
+        expect($results[2]->total())->toBe($totals[2]);
+
     }
-)->with('armors');
+)->with('savingThrows');
 
-dataset('armors', [
-    'armorNormal' => [
-        'armor' => true,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +2,
-        'dexterity' => 12,//+1
-        'size' => SizeEnum::Medium,
-        'total' => 15,
+dataset('savingThrows', [
+    'test1' => [
+        'reflex' => 0,
+        'dexterity' => 12,
+        'fortitude' => 2,
+        'constitution' => 12,
+        'will' => 0,
+        'wisdom' => 10,
+        'totals' => [1, 3, 0],
     ],
-    'armorDex0' => [
-        'armor' => true,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +2,
-        'dexterity' => 10,//+0
-        'size' => SizeEnum::Medium,
-        'total' => 14,
-    ],
-    'armorDexNegative' => [
-        'armor' => true,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +2,
-        'dexterity' => 6,//-2
-        'size' => SizeEnum::Medium,
-        'total' => 12,
-    ],
-    'dexMaxOverload' => [
-        'armor' => true,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +2,
-        'dexterity' => 18,//+4
-        'size' => SizeEnum::Medium,
-        'total' => 16,
-    ],
-    'dexMaxNotOverload' => [
-        'armor' => true,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +4,
-        'dexterity' => 18,//+4
-        'size' => SizeEnum::Medium,
-        'total' => 18,
-    ],
-    'noArmor' => [
-        'armor' => false,
-        'armorBonus' => +4,
-        'armorDexterityMax' => +4,
-        'dexterity' => 14,//+2
-        'size' => SizeEnum::Medium,
-        'total' => 12,
+    'test2' => [
+        'reflex' => 2,
+        'dexterity' => 14,
+        'fortitude' => 0,
+        'constitution' => 8,
+        'will' => 4,
+        'wisdom' => 16,
+        'totals' => [4, -1, 7],
     ],
 ]);

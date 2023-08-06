@@ -6,16 +6,16 @@ use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 
 enum SavingThrowEnum: string
 {
-    case REFLEX = 'reflex';
-    case FORTITUDE = 'fortitude';//vigueur
-    case WILL = 'will';//volonte
+    case Reflex = 'reflex';
+    case Fortitude = 'fortitude';//vigueur
+    case Will = 'will';//volonte
 
-    public static function ability(self $st): string
+    public static function abilityLinked(self $st): string
     {
         return match ($st) {
-            self::REFLEX => ModifierListingEnum::ABILITY_DEXTERITY->value,
-            self::FORTITUDE => ModifierListingEnum::ABILITY_CONSTITUTION->value,
-            self::WILL => ModifierListingEnum::ABILITY_WISDOM->value,
+            self::Reflex => ModifierListingEnum::ABILITY_DEXTERITY->value,
+            self::Fortitude => ModifierListingEnum::ABILITY_CONSTITUTION->value,
+            self::Will => ModifierListingEnum::ABILITY_WISDOM->value,
         };
     }
 

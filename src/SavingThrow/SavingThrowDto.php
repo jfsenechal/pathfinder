@@ -18,7 +18,7 @@ class SavingThrowDto
         readonly int $base,
         readonly string $caracteristicName,
         readonly int $caracteristicValue,
-        readonly array $modifiers
+        readonly array $modifiers = []
     ) {
     }
 
