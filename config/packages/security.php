@@ -20,6 +20,15 @@ return static function (SecurityConfig $security) {
         'form_login' => [],
         'entry_point' => PathfinderAuthenticator::class,
         'custom_authenticators' => [PathfinderAuthenticator::class],
+        'login_throttling' => [
+            'max_attempts' => 6, //per minute...
+        ],
+        'remember_me' => [
+            'secret' => '%kernel.secret%',
+            'lifetime' => 604800,
+            'path' => '/',
+            'always_remember_me' => true,
+        ],
     ];
 
     $security->firewall('main', $main);
