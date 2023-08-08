@@ -108,6 +108,10 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     #[ORM\JoinColumn(nullable: true)]
     public ?Armor $armor = null;
 
+    #[ORM\ManyToOne(targetEntity: Armor::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    public ?Armor $shield = null;
+
     public int $select_level;
 
     /**
