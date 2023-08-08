@@ -13,7 +13,7 @@ class ArmorDexterityMaximum implements ModifierInterface
     {
         $this->character = $character;
 
-        return $this->character->armor === !null;
+        return $this->character->armor !== null;
     }
 
     public function useOn(): ModifierListingEnum

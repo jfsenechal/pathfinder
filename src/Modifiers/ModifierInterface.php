@@ -6,7 +6,7 @@ use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
-#[AutoconfigureTag('pathfinder.modifier_tag', ['lazy' => true])]
+#[AutoconfigureTag(ModifierInterface::class)]
 interface ModifierInterface
 {
     public function isCharacterConcern(Character $character): bool;
@@ -15,6 +15,6 @@ interface ModifierInterface
 
     public function valueModifier(): int;
 
-    public function explain():string;
+    public function explain(): string;
 
 }
