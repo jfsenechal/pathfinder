@@ -35,6 +35,6 @@ class ArmorClassDto
             $bonusItems += $item->valueModifier();
         }
 
-        return 10 + $this->armorBonus + $dexterityModifier + $bonusItems;
+        return 10 + $this->armorBonus + $this->shieldBonus + $dexterityModifier + $bonusItems;
     }
 }
