@@ -3,16 +3,16 @@
     <tr>
         <th></th>
         <th>Classe d'armure</th>
-        <th>Bonus d'armure</th>
+        <th>Bonus d'armure/bouclier</th>
         <th>Dextérité</th>
         <th>Dextérité maximum</th>
         <th>Taille</th>
-        <th colspan="2">Spéciale</th>
+        <th colspan="2">Items</th>
     </tr>
     <tr>
         <td>CA</td>
         <td>{{ armorClass.ac|number_sign }}</td>
-        <td>{{ armorClass.armorBonus|number_sign }}</td>
+        <td>{{ armorClass.armorBonus|number_sign }} {% if character.shield %} {{ armorClass.shieldBonus|number_sign }} {% endif %}</td>
         <td>{{ armorClass.dexterityModifier|number_sign }}</td>
         <td>{{ armorClass.dexterityMax|number_sign }}</td>
         <td>{{ armorClass.sizeModifier }}</td>
@@ -28,7 +28,7 @@
         <th>BBA</th>
         <th>Force</th>
         <th>Taille</th>
-        <th colspan="2">Spéciale</th>
+        <th colspan="2">Items</th>
     </tr>
     <tr>
         <td title="{{ 'cmb.description'|trans }}">{{ 'cmb'|title|trans }}</td>
@@ -45,7 +45,7 @@
         <th>{{ 'strength'|trans }}</th>
         <th>Dextérité</th>
         <th>Taille</th>
-        <th>Spéciale</th>
+        <th>Items</th>
     </tr>
     <tr>
         <td title="{{ 'cmd.description'|trans }}">{{ 'cmd'|title|trans }}</td>
