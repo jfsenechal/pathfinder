@@ -16,7 +16,11 @@
         <td>{{ armorClass.dexterityModifier|number_sign }}</td>
         <td>{{ armorClass.dexterityMax|number_sign }}</td>
         <td>{{ armorClass.sizeModifier }}</td>
-        <td colspan="2"></td>
+        <td colspan="2">
+            {% for item in armorClass.items %}
+                <span title="{{ item.explain }}">{{ item.valueModifier|number_sign }}</span>
+            {% endfor %}
+        </td>
     </tr>
     <tr>
         <th></th>

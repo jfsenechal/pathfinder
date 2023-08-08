@@ -4,31 +4,54 @@ namespace AfmLibre\Pathfinder\Armor;
 
 use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Entity\Character;
+use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
+use AfmLibre\Pathfinder\Modifiers\ModifierInterface;
+use AfmLibre\Pathfinder\Modifiers\ModifiersHandler;
 
 class ArmorCalculator
 {
+    public function __construct(private readonly ModifiersHandler $modifiersHandler)
+    {
+    }
+
+    /**
+     * @param Character $character
+     * @return ModifierInterface[]
+     */
+    public function items(Character $character): array
+    {
+        $modifiers = $this->modifiersHandler->locate(ModifierListingEnum::ARMOR_CLASS);
+        $items = [];
+        foreach ($modifiers as $modifier) {
+            if ($modifier->isCharacterConcern($character)) {
+                $items[] = $modifier;
+            }
+        }
+
+        return $items;
+    }
 
     /**
      * 10 + bonus d’armure + bonus de bouclier + modificateur de Dextérité + modificateur de taille
      */
-    public static function createArmorAbility(
+    public function createArmorAbility(
         Character $character,
         SizeEnum $sizeEnum
     ): ArmorClassDto {
-        $armor = $character->armor;
-        $dexterityMax = null;
-        $armorBonus = 0;
-        if ($armor && $armor->bonus_dexterity_max) {
-            $dexterityMax = $armor->bonus_dexterity_max;
-            $armorBonus = $armor->bonus;
-        }
+
+        $dexterityMax = self::dexterityMax($character);
+        $armorBonus = $character->armor?->bonus ?? 0;
+        $shieldBonus = $character->shield?->bonus ?? 0;
+        $items = $this->items($character);
 
         return new ArmorClassDto(
             "ca",
             Character::getValueModifier($character->dexterity),
             $dexterityMax,
             $armorBonus,
-            SizeEnum::valueModifier($sizeEnum)
+            $shieldBonus,
+            SizeEnum::valueModifier($sizeEnum),
+            $items
         );
     }
 
@@ -46,14 +69,16 @@ class ArmorCalculator
         );
     }
 
-    public function dexterityMax(Character $character): int
+    private static function dexterityMax(Character $character): ?int
     {
-        $dexterity = $character->dexterity;
         $armor = $character->armor;
-        if ($armor->bonus_dexterity_max) {
-            $dexterity = $armor->bonus_dexterity_max;
+        if (!$armor) {
+            return null;
+        }
+        if ((int)$armor->bonus_dexterity_max >= 0) {
+            return (int)$armor->bonus_dexterity_max;
         }
 
-        return $dexterity;
+        return null;
     }
 }
