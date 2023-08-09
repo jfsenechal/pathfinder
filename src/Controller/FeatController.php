@@ -3,7 +3,6 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
-use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\CharacterFeat;
 use AfmLibre\Pathfinder\Entity\Feat;
 use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
@@ -16,10 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/feat')]
 class FeatController extends AbstractController
 {
+    use GetCharacterTrait;
+
     public function __construct(
         private readonly FeatRepository $featRepository,
         private readonly CharacterFeatRepository $characterFeatRepository,
-        private readonly CharacterRepository $characterRepository,
         private readonly ModifierRepository $modifierRepository
     ) {
     }
@@ -55,8 +55,9 @@ class FeatController extends AbstractController
     #[Route(path: '/{id}/outfit', name: 'pathfinder_feat_outfit')]
     public function outFit(Request $request, Feat $feat): Response
     {
-        $characters = $this->characterRepository->findAll();
-        $character = $characters[0];
+        if (($character = $this->hasCharacter($request)) instanceof Response) {
+            return $character;
+        }
 
         $item = new CharacterFeat($character, $feat);
         $this->characterFeatRepository->persist($item);

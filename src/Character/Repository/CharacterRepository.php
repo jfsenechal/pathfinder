@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @method Character|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,6 +49,25 @@ class CharacterRepository extends ServiceEntityRepository
         return $this->createQbl()->getQuery()->getResult();
     }
 
+    public function findOneByName(string $name): ?Character
+    {
+        return $this->createQbl()
+            ->andWhere('character.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    public function findOneByUuid(string $uuid): ?Character
+    {
+        $uid = Uuid::fromString($uuid);
+
+        return $this->createQbl()
+            ->andWhere('character.uuid = :uuid')
+            ->setParameter('uuid', $uid->toBinary())
+            ->getQuery()->getOneOrNullResult();
+    }
+
+
     private function createQbl(): QueryBuilder
     {
         return $this->createQueryBuilder('character')
@@ -56,5 +76,6 @@ class CharacterRepository extends ServiceEntityRepository
             ->addSelect('classT', 'race')
             ->orderBy('character.name', 'ASC');
     }
+
 
 }

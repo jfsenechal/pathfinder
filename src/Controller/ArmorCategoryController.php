@@ -22,6 +22,7 @@ class ArmorCategoryController extends AbstractController
     public function index(): Response
     {
         $categories = $this->armorCategoryRepository->findAllOrdered();
+
         foreach ($categories as $category) {
             $category->armors = $this->armorRepository->findByCategory($category);
         }

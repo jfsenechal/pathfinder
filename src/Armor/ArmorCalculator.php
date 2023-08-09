@@ -75,6 +75,9 @@ class ArmorCalculator
         if (!$armor) {
             return null;
         }
+        if ($armor->bonus_dexterity_max === null) {
+            return null;
+        }
         if ((int)$armor->bonus_dexterity_max >= 0) {
             return (int)$armor->bonus_dexterity_max;
         }

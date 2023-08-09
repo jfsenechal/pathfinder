@@ -19,6 +19,7 @@
                     <th>Race</th>
                     <th>Classe</th>
                     <th>Niveau</th>
+                    <th>Sélectionner</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,15 @@
                         <td>{{ character.classT ? character.classT.name }}</td>
                         <td>
                             {{ character.current_level.lvl }}
+                        </td>
+                        <td>
+                            {% if characterSelected and characterSelected.id == character.id %}
+                                <i class="ti ti-select"></i>      {{ 'selected'|trans }}
+                            {% else %} <a href="{{ path('pathfinder_character_select', {'uuid': character.uuid}) }}">
+                                Sélectionner
+                            </a>
+                            {% endif %}
+
                         </td>
                     </tr>
                 {% endfor %}

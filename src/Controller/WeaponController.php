@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Entity\CharacterWeapon;
 use AfmLibre\Pathfinder\Entity\Weapon;
@@ -15,9 +14,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/weapon')]
 class WeaponController extends AbstractController
 {
+    use GetCharacterTrait;
+
     public function __construct(
         private readonly WeaponRepository $weaponRepository,
-        private readonly CharacterRepository $characterRepository,
         private readonly CharacterWeaponRepository $characterWeaponRepository
     ) {
     }
@@ -49,8 +49,9 @@ class WeaponController extends AbstractController
     #[Route(path: '/{id}/outfit', name: 'pathfinder_weapon_outfit')]
     public function outFit(Request $request, Weapon $weapon): Response
     {
-        $characters = $this->characterRepository->findAll();
-        $character = $characters[0];
+        if (($character = $this->hasCharacter($request)) instanceof Response) {
+            return $character;
+        }
 
         if ($this->characterWeaponRepository->finOneByCharacterAndArmor($character, $weapon)) {
             $this->addFlash('danger', 'Vous êtes déjà équipé de cette arme');

@@ -3,14 +3,15 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Ancestry\SizeEnum;
+use AfmLibre\Pathfinder\Character\Form\CharacterEditType;
+use AfmLibre\Pathfinder\Character\Form\CharacterType;
 use AfmLibre\Pathfinder\Character\Message\CharacterCreated;
 use AfmLibre\Pathfinder\Character\Message\CharacterUpdated;
 use AfmLibre\Pathfinder\Character\Repository\CharacterLoader;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Character\Form\CharacterEditType;
-use AfmLibre\Pathfinder\Character\Form\CharacterType;
+use AfmLibre\Pathfinder\Helper\SessionHelper;
 use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,12 +32,18 @@ class CharacterController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_character_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $characterSelected = null;
+        if ($uuid = $request->getSession()->get(SessionHelper::KEY_CHARACTER_SELECTED)) {
+            $characterSelected = $this->characterRepository->findOneByUuid($uuid);
+        }
+
         return $this->render(
             '@AfmLibrePathfinder/character/index.html.twig',
             [
                 'characters' => $this->characterRepository->searchByUser(),
+                'characterSelected' => $characterSelected,
             ]
         );
     }
@@ -106,6 +113,16 @@ class CharacterController extends AbstractController
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    #[Route(path: '/select/{uuid}', name: 'pathfinder_character_select', methods: ['GET'])]
+    public function select(Request $request, Character $character): Response
+    {
+        $request->getSession()->set(SessionHelper::KEY_CHARACTER_SELECTED, $character->uuid);
+
+        $this->addFlash('success', 'Your character is selected');
+
+        return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
     }
 
     #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]

@@ -33,7 +33,7 @@ class ArmorImportHandler
             $armor->category = $cateory;
             $armor->cost = $data['Prix'];
             $armor->bonus = $data['Bonus'];
-            $armor->bonus_dexterity_max = $data['BonusDexMax'];
+            $armor->bonus_dexterity_max = $data['BonusDexMax'] == '—' ?? null;
             $armor->penalty = $data['Malus'];
             $armor->cast_fail = $data['ÉchecProfane'];
             $armor->speed9 = $data['Vit9m'];

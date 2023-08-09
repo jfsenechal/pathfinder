@@ -6,15 +6,25 @@
 
     <div class="card">
         <div class="card-header">
-            <h3>Les {{ armors|length }} armures</h3>
+            <h3>Les {{ armors|length }} {% if category %}{{ category.name }}{% else %}armures{% endif %}</h3>
         </div>
         <div class="card-body">
+
+            <ul class="list-group list-group-horizontal m-3">
+                {% for category in categories %}
+                    <li class="list-group-item">
+                        <a href="{{ path('pathfinder_armor_index', {'id':category.id}) }}">{{ category.name }}</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
             <table class="table table-bordered">
                 <tr>
                     <th>Nom</th>
                     <th>Bonus</th>
                     <th>Vitesse 6M / 9M</th>
                     <th>Dextérité maximum</th>
+                    <th>Catégorie</th>
                 </tr>
                 {% for armor in armors %}
                     <tr>
@@ -32,6 +42,7 @@
                         <td>
                             {{ armor.bonus_dexterity_max }}
                         </td>
+                        <td>{{ armor.category }}</td>
                     </tr>
                 {% endfor %}
             </table>
