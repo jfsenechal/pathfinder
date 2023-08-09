@@ -61,16 +61,17 @@ class ArmorController extends AbstractController
             return $character;
         }
 
-        $shield = $this->armorRepository->findOneByName(ArmorEnum::Shield->value);
+        $shieldCategory = $this->armorCategoryRepository->findOneByName(ArmorEnum::ShieldFr->value);
 
-        if ($armor->category === $shield) {
+        if ($armor->category->id === $shieldCategory->id) {
+            $this->addFlash('success', 'Bouclier équipé');
             $character->shield = $armor;
         } else {
+            $this->addFlash('success', 'Armure équipée');
             $character->armor = $armor;
         }
 
         $this->armorRepository->flush();
-        $this->addFlash('success', 'Armure équipée');
 
         return $this->redirectToRoute(
             'pathfinder_character_show',

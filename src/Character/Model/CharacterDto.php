@@ -51,6 +51,7 @@ class CharacterDto
     public CmbDto $cmb;
     public CmdDto $cmd;
     public ?Armor $armor = null;
+    public ?Armor $shield = null;
 
     public function __construct(Character $character)
     {

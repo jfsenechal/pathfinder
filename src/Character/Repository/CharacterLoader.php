@@ -47,6 +47,7 @@ class CharacterLoader
         $characterDto->skills = $this->skillCalculator->calculate($character);
 
         $characterDto->armor = $character->armor;
+        $characterDto->shield = $character->shield;
         $characterDto->armorClass = $this->armorCalculator->createArmorAbility(
             $character,
             $character->sizeType

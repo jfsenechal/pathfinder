@@ -12,7 +12,7 @@
     <tr>
         <td>CA</td>
         <td>{{ armorClass.ac|number_sign }}</td>
-        <td>{{ armorClass.armorBonus|number_sign }} {% if character.shield %} {{ armorClass.shieldBonus|number_sign }} {% endif %}</td>
+        <td>{{ armorClass.armorBonus|number_sign }} {% if character.shield %} / {{ armorClass.shieldBonus|number_sign }} {% endif %}</td>
         <td>{{ armorClass.dexterityModifier|number_sign }}</td>
         <td>{{ armorClass.dexterityMax|number_sign }}</td>
         <td>{{ armorClass.sizeModifier }}</td>
