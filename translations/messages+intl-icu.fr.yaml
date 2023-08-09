@@ -49,3 +49,4 @@ delete:
   action: 'Supprimer'
 life: 'Vie'
 selected: 'Sélectionné'
+ability: 'capacité'
