@@ -25,7 +25,7 @@ class ArmorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array|Armor[]
+     * @return Armor[]
      */
     public function findAllOrdered(): array
     {
@@ -35,7 +35,7 @@ class ArmorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array|Armor[]
+     * @return Armor[]
      */
     public function findByCategory(ArmorCategory $category): array
     {

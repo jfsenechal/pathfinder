@@ -6,6 +6,7 @@ use AfmLibre\Pathfinder\Import\Handler\ArmorImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\CharacterClassFeatureImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\ClassImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\FeatImportHandler;
+use AfmLibre\Pathfinder\Import\Handler\ItemImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\RaceImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SkillImportHandler;
 use AfmLibre\Pathfinder\Import\Handler\SpellImportHandler;
@@ -40,6 +41,7 @@ class ImportCommand extends Command
         private readonly CharacterClassFeatureImportHandler $classTFeatureImportHandler,
         private readonly ArmorImportHandler $armorImportHandler,
         private readonly WeaponImportHandler $weaponImportHandler,
+        private readonly ItemImportHandler $itemImportHandler,
         private readonly ParameterBagInterface $parameterBag
     ) {
         parent::__construct();
@@ -55,7 +57,18 @@ class ImportCommand extends Command
     {
         $this->io = new SymfonyStyle($input, $output);
         $name = $input->getArgument('name');
-        $kinds = ['all', 'skills', 'classes', 'classfeatures', 'spells', 'races', 'feats', 'armors', 'weapons'];
+        $kinds = [
+            'all',
+            'skills',
+            'classes',
+            'classfeatures',
+            'spells',
+            'races',
+            'feats',
+            'armors',
+            'weapons',
+            'items',
+        ];
 
         if (!$name) {
             $helper = $this->getHelper('question');
@@ -80,6 +93,7 @@ class ImportCommand extends Command
             'feats' => $this->featImportHandler->call($this->io, $this->readFile($name)),
             'armors' => $this->armorImportHandler->call($this->io, $this->readFile($name)),
             'weapons' => $this->weaponImportHandler->call($this->io, $this->readFile($name)),
+            'items' => $this->itemImportHandler->call($this->io, $this->readFile($name)),
             'all' => $this->importAll(),
             default => $this->io->error('Valeurs possibles: classes classfeatures spells races'),
         };
@@ -102,5 +116,6 @@ class ImportCommand extends Command
         $this->classTImportHandler->call($this->io, $this->readFile('classes'));
         $this->classTFeatureImportHandler->call($this->io, $this->readFile('classfeatures'));
         $this->spellImportHandler->call($this->io, $this->readFile('spells'));
+        $this->spellImportHandler->call($this->io, $this->readFile('items'));
     }
 }
