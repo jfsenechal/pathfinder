@@ -25,8 +25,8 @@ class Item
     #[ORM\Column(type: 'text', nullable: true)]
     public ?string $descriptionHtml = null;
 
-    #[ORM\ManyToOne(targetEntity: ArmorCategory::class)]
+    #[ORM\ManyToOne(targetEntity: ItemCategory::class)]
     #[ORM\JoinColumn(nullable: true)]
-    public ?ArmorCategory $category = null;
+    public ?ItemCategory $category = null;
 
 }
