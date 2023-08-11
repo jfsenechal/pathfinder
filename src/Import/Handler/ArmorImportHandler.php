@@ -24,7 +24,7 @@ class ArmorImportHandler
         $this->addCategories($armors);
 
         foreach ($armors as $data) {
-            if ($this->armorRepository->findByName($data['Nom']) instanceof Armor) {
+            if ($this->armorRepository->findOneByName($data['Nom']) instanceof Armor) {
                 continue;
             }
             $armor = new Armor();

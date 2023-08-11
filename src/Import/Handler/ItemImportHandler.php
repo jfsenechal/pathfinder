@@ -11,25 +11,25 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ItemImportHandler
 {
     public function __construct(
-        private readonly ItemRepository $armorRepository,
-        private readonly ItemCategoryRepository $armorCategoryRepository
+        private readonly ItemRepository $itemRepository,
+        private readonly ItemCategoryRepository $itemCategoryRepository
     ) {
     }
 
-    public function call(SymfonyStyle $io, array $armors)
+    public function call(SymfonyStyle $io, array $items)
     {
         $io->section('ITEMS');
 
-        $this->addCategories($armors);
+        $this->addCategories($items);
 
-        foreach ($armors as $data) {
-            if ($this->armorRepository->findByName($data['Nom']) instanceof Item) {
+        foreach ($items as $data) {
+            if ($this->itemRepository->findOneByName($data['Nom']) instanceof Item) {
                 continue;
             }
             $armor = new Item();
             $armor->name = $data['Nom'];
-            $cateory = $this->armorCategoryRepository->findOneByName($data['Catégorie']);
-            $armor->category = $cateory;
+            $category = $this->itemCategoryRepository->findOneByName($data['Catégorie']);
+            $armor->category = $category;
             $armor->cost = $data['Prix'];
             $armor->weight = $data['Poids'];
             $armor->description = $data['Description'] ?? '';
@@ -39,19 +39,18 @@ class ItemImportHandler
             $this->armorRepository->persist($armor);
             $io->writeln($armor->name);
         }
-        $this->armorRepository->flush();
+       // $this->armorRepository->flush();
     }
 
     public function addCategories(array $armors)
     {
         foreach ($armors as $data) {
-            if (!$this->armorCategoryRepository->findOneByName($data['Catégorie'])) {
+            if (!$this->itemCategoryRepository->findOneByName($data['Catégorie'])) {
                 $category = new ItemCategory($data['Catégorie']);
-                $this->armorCategoryRepository->persist($category);
-                $this->armorCategoryRepository->flush();
+                $this->itemCategoryRepository->persist($category);
+                $this->itemCategoryRepository->flush();
             }
         }
     }
-
 
 }

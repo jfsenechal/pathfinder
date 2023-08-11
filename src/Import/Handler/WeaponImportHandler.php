@@ -24,7 +24,7 @@ class WeaponImportHandler
         $this->addCategories($weapons);
 
         foreach ($weapons as $data) {
-            if ($this->weaponRepository->findByName($data['Nom']) instanceof Weapon) {
+            if ($this->weaponRepository->findOneByName($data['Nom']) instanceof Weapon) {
                 continue;
             }
             $weapon = new Weapon();
