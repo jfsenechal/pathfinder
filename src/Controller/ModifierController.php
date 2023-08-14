@@ -73,7 +73,7 @@ class ModifierController extends AbstractController
         return $this->render(
             '@AfmLibrePathfinder/modifier/new.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
                 'className' => $className,
             ]
         );

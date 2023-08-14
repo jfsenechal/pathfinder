@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
@@ -14,19 +15,19 @@ class Item
     use IdTrait, NameTrait, SourceTrait;
 
     #[ORM\Column(nullable: true)]
-    public ?string $cost;
+    public ?string $cost = null;
 
     #[ORM\Column(nullable: true)]
     public ?string $weight = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $descriptionHtml = null;
 
     #[ORM\ManyToOne(targetEntity: ItemCategory::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn]
     public ?ItemCategory $category = null;
 
 }

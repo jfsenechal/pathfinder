@@ -2,7 +2,7 @@
 
 namespace AfmLibre\Pathfinder\History;
 
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -41,12 +41,11 @@ class HistoryUtils
 
     private function getUsername(): ?string
     {
-        $username = null;
         if (($user = $this->security->getUser()) instanceof UserInterface) {
-            $username = $user->getUserIdentifier();
+            return $user->getUserIdentifier();
         }
 
-        return $username;
+        return null;
     }
 
     private function createForFiche(

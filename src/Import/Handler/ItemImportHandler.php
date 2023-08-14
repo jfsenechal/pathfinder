@@ -28,8 +28,7 @@ class ItemImportHandler
             }
             $item = new Item();
             $item->name = $data['Nom'];
-            $category = $this->itemCategoryRepository->findOneByName($data['Catégorie']);
-            $item->category = $category;
+            $item->category = $this->itemCategoryRepository->findOneByName($data['Catégorie']);
             $item->cost = $data['Prix'];
             $item->weight = $data['Poids'];
             $item->description = $data['Description'] ?? '';

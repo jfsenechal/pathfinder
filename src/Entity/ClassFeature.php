@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
@@ -9,27 +11,21 @@ use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClassFeatureRepository::class)]
-class ClassFeature implements \Stringable
+class ClassFeature implements Stringable
 {
     use IdTrait;
     use NameTrait, SourceTrait;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: Types::BOOLEAN)]
     public bool $auto = false;
 
-    #[ORM\ManyToOne(targetEntity: ClassT::class)]
-    public ?ClassT $classT;
-
-    #[ORM\ManyToOne(targetEntity: Level::class)]
-    public ?Level $level;
-
-    public function __construct(ClassT $classT, Level $level)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ClassT::class)]
+    public ?ClassT $classT, #[ORM\ManyToOne(targetEntity: Level::class)]
+    public ?Level $level)
     {
-        $this->classT = $classT;
-        $this->level = $level;
     }
 
     public function __toString(): string

@@ -12,11 +12,11 @@ use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 class CharacterRemoveHandler
 {
     public function __construct(
-        private CharacterWeaponRepository $characterWeaponRepository,
-        private CharacterFeatRepository $characterFeatRepository,
-        private CharacterSkillRepository $characterSkillRepository,
-        private FavoriteSpellRepository $favoriteSpellRepository,
-        private CharacterRepository $characterRepository
+        private readonly CharacterWeaponRepository $characterWeaponRepository,
+        private readonly CharacterFeatRepository $characterFeatRepository,
+        private readonly CharacterSkillRepository $characterSkillRepository,
+        private readonly FavoriteSpellRepository $favoriteSpellRepository,
+        private readonly CharacterRepository $characterRepository
     ) {
     }
 

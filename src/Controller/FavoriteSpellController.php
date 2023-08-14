@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Form\SearchSpellForFavoritesType;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
@@ -67,14 +68,14 @@ class FavoriteSpellController extends AbstractController
             [
                 'character' => $character,
                 'spells' => $spellsForSelection,
-                'formSearch' => $form->createView(),
-                'formSelection' => $formSelection->createView(),
+                'formSearch' => $form,
+                'formSelection' => $formSelection,
             ]
         );
     }
 
     #[Route(path: '/delete', name: 'pathfinder_favorite_spell_delete', methods: ['POST'])]
-    public function validRemoveFavorite(Request $request)
+    public function validRemoveFavorite(Request $request): RedirectResponse
     {
         if ($this->isCsrfTokenValid('removefavorite', $request->request->get('_token'))) {
             $characterSpellId = (int)$request->request->get('characterspellid');

@@ -3,6 +3,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
@@ -19,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'characters')]//!character reserved
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
-class Character implements SluggableInterface, TimestampableInterface, \Stringable
+class Character implements SluggableInterface, TimestampableInterface, Stringable
 {
     use IdTrait;
     use NameTrait;
@@ -30,63 +32,63 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
 
     private const maxAbilityValue = 30;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $strength = 10;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $dexterity = 10;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $constitution = 10;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $intelligence = 10;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $wisdom = 10;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\Range(min: 1, max: self::maxAbilityValue)]
     public int $charisma = 10;
 
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     public int $hit_point = 0;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     public int $speed = 9;
     #[ORM\Column(nullable: true)]
     public ?string $alignment = null;
     #[ORM\Column(nullable: true)]
     public ?string $divinity = null;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public SizeEnum $sizeType;
     #[ORM\Column(nullable: true)]
-    public ?string $sex;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    public ?string $sex = null;
+    #[ORM\Column(type: Types::SMALLINT)]
     public int $age = 0;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     public int $height = 0;
-    #[ORM\Column(type: 'smallint', nullable: false)]
+    #[ORM\Column(type: Types::SMALLINT)]
     public int $weight = 0;
     #[ORM\Column(nullable: true)]
     public ?string $hair = null;
     #[ORM\Column(nullable: true)]
     public ?string $eyes = null;
-    #[ORM\Column(type: 'json', nullable: false)]
+    #[ORM\Column(type: Types::JSON)]
     public array $languages = [];
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $experience = 0;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $moneyCP = 0;
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $moneySP = 0;
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $moneyGP = 0;
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $moneyPP = 0;
 
     #[ORM\Column(nullable: true)]
@@ -105,11 +107,11 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
     public ?Level $current_level = null;
 
     #[ORM\ManyToOne(targetEntity: Armor::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn]
     public ?Armor $armor = null;
 
     #[ORM\ManyToOne(targetEntity: Armor::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn]
     public ?Armor $shield = null;
 
     public int $select_level;
@@ -123,11 +125,6 @@ class Character implements SluggableInterface, TimestampableInterface, \Stringab
      * @var Weapon[]
      */
     public array $weapons = [];
-
-    public function __construct()
-    {
-
-    }
 
     public function __toString(): string
     {

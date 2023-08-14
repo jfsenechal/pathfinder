@@ -16,7 +16,7 @@ class DefaultController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_home')]
-    public function index()
+    public function index(): Response
     {
         $user = $this->getUser();
         $characters = $this->characterRepository->findByUser($user);
@@ -44,7 +44,7 @@ class DefaultController extends AbstractController
         return $this->render(
             '@AfmLibrePathfinder/_search_form.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }

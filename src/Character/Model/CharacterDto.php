@@ -18,8 +18,6 @@ use AfmLibre\Pathfinder\Skill\SkillDto;
 
 class CharacterDto
 {
-    public readonly Character $character;
-
     /**
      * @var Spell[]
      */
@@ -53,8 +51,7 @@ class CharacterDto
     public ?Armor $armor = null;
     public ?Armor $shield = null;
 
-    public function __construct(Character $character)
+    public function __construct(public readonly Character $character)
     {
-        $this->character = $character;
     }
 }

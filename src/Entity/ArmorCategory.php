@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Armor\Repository\ArmorCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Stringable;
@@ -11,20 +12,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ArmorCategory implements Stringable
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\GeneratedValue]
     public int $id;
-    #[Assert\NotBlank]
-    #[ORM\Column(nullable: false)]
-    public ?string $name = null;
     #[ORM\Column(nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'string', unique: true, nullable: true)]
-    protected $slug = null;
+    #[ORM\Column(type: Types::STRING, unique: true, nullable: true)]
+    protected ?string $slug = null;
 
     #[ORM\ManyToOne(targetEntity: ArmorCategory::class)]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn]
     public ?self $parent = null;
 
     /**
@@ -36,9 +34,10 @@ class ArmorCategory implements Stringable
      */
     public array $armors = [];
 
-    public function __construct(string $name)
+    public function __construct(#[Assert\NotBlank]
+    #[ORM\Column(nullable: false)]
+    public ?string $name)
     {
-        $this->name = $name;
     }
 
     public function __toString(): string

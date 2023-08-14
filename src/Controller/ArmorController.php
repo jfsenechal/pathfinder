@@ -26,11 +26,7 @@ class ArmorController extends AbstractController
     #[Route(path: '/{id<\d+>?0}', name: 'pathfinder_armor_index')]
     public function index(?ArmorCategory $category = null): Response
     {
-        if ($category) {
-            $armors = $this->armorRepository->findByCategory($category);
-        } else {
-            $armors = $this->armorRepository->findAllOrdered();
-        }
+        $armors = $category ? $this->armorRepository->findByCategory($category) : $this->armorRepository->findAllOrdered();
         $categories = $this->armorCategoryRepository->findAll();
 
         return $this->render(

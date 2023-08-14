@@ -53,7 +53,7 @@ class ImportCommand extends Command
             ->addArgument('name', InputArgument::OPTIONAL, 'What kind of data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->io = new SymfonyStyle($input, $output);
         $name = $input->getArgument('name');

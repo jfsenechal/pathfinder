@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use Exception;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Entity\WeaponCategory;
 use AfmLibre\Pathfinder\Weapon\Repository\WeaponCategoryRepository;
@@ -29,8 +30,7 @@ class WeaponImportHandler
             }
             $weapon = new Weapon();
             $weapon->name = $data['Nom'];
-            $category = $this->weaponCategoryRepository->findOneByName($data['Catégorie']);
-            $weapon->category = $category;
+            $weapon->category = $this->weaponCategoryRepository->findOneByName($data['Catégorie']);
             $weapon->category2 = $data['Sous-catégorie'];
             $weapon->cost = $data['Prix'];
             $weapon->damageSmall = $data['DégâtsP'];
@@ -48,7 +48,7 @@ class WeaponImportHandler
             $io->writeln($weapon->name);
             try {
                 $this->weaponRepository->flush();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $io->error($e->getMessage());
                 var_dump($this->weaponRepository);
             }

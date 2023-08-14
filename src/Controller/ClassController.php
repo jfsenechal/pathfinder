@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
@@ -27,7 +28,7 @@ class ClassController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_class_index')]
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $form = $this->createForm(SearchNameType::class);
         $name = null;
@@ -45,13 +46,13 @@ class ClassController extends AbstractController
             '@AfmLibrePathfinder/class/index.html.twig',
             [
                 'classes' => $classes,
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_class_show')]
-    public function show(ClassT $classT)
+    public function show(ClassT $classT): Response
     {
         $spellsClass = $this->classSpellRepository->searchByNameAndClass(null, $classT);
         $countSpells = count($spellsClass);
@@ -61,9 +62,7 @@ class ClassController extends AbstractController
 
         $spells = SpellUtils::groupByLevel($spellsClass);
         $classSkills = $this->classSkillRepository->findByClass($classT);
-        $skills = array_map(function ($classSkill) {
-            return $classSkill->skill;
-        }, $classSkills);
+        $skills = array_map(fn($classSkill) => $classSkill->skill, $classSkills);
 
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',

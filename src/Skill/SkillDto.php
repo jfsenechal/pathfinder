@@ -3,7 +3,6 @@
 namespace AfmLibre\Pathfinder\Skill;
 
 use AfmLibre\Pathfinder\Entity\Modifier;
-use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 
 /**
  * Skill modifier = modifier of the skill’s key ability score + proficiency bonus + other bonuses + penalties
@@ -11,12 +10,6 @@ use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 class SkillDto
 {
     /**
-     * @param string $name
-     * @param int $id
-     * @param bool $isTrained
-     * @param int $rank
-     * @param string $abilityName
-     * @param int $abilityValueModifier
      * @param Modifier[] $racialModifiers
      * @param Modifier[] $bonusModifiers
      */

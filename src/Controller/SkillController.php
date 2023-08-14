@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
+use Exception;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterSkillRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
@@ -28,10 +30,9 @@ class SkillController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_skill_index')]
-    public function index(Request $request)
+    public function index() : Response
     {
         $skills = $this->skillRepository->findAllOrdered();
-
         return $this->render(
             '@AfmLibrePathfinder/skill/index.html.twig',
             [
@@ -41,12 +42,10 @@ class SkillController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_skill_show')]
-    public function show(Skill $skill)
+    public function show(Skill $skill): Response
     {
         $classSkills = $this->classSkillRepository->findBySkill($skill);
-        $classes = array_map(function ($classSkill) {
-            return $classSkill->classT;
-        }, $classSkills);
+        $classes = array_map(fn($classSkill) => $classSkill->classT, $classSkills);
 
         return $this->render(
             '@AfmLibrePathfinder/skill/show.html.twig',
@@ -58,7 +57,7 @@ class SkillController extends AbstractController
     }
 
     #[Route(path: '/{uuid}/edit', name: 'pathfinder_skill_character_edit')]
-    public function edit(Request $request, Character $character)
+    public function edit(Character $character): Response
     {
         $skillsDto = $this->skillCalculator->calculate($character);
         $skillPointDto = $this->skillCalculator->points($character);
@@ -108,7 +107,7 @@ class SkillController extends AbstractController
             $this->characterSkillRepository->flush();
 
             return $this->json(['ok' => ['uuid' => $uuid, 'id' => $id, 'points' => $points]]);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return $this->json(['error' => $exception->getMessage()]);
         }
 

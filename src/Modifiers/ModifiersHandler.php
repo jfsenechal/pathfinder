@@ -10,13 +10,12 @@ class ModifiersHandler
     /**
      * @param ModifierInterface[] $modifiers
      */
-    public function __construct(#[TaggedIterator(ModifierInterface::class)] private iterable $modifiers)
+    public function __construct(#[TaggedIterator(ModifierInterface::class)]private readonly iterable $modifiers)
     {
 
     }
 
     /**
-     * @param ModifierListingEnum $modifierListingEnum
      * @return ModifierInterface[]
      */
     public function locate(ModifierListingEnum $modifierListingEnum): array

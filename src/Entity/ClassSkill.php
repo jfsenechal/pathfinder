@@ -13,18 +13,12 @@ class ClassSkill
 {
     use IdTrait;
 
-    #[ORM\ManyToOne(targetEntity: Skill::class)]
+    public function __construct(#[ORM\ManyToOne(targetEntity: Skill::class)]
     #[ORM\JoinColumn(nullable: false)]
-    public Skill $skill;
-
-    #[ORM\ManyToOne(targetEntity: ClassT::class)]
+    public Skill $skill, #[ORM\ManyToOne(targetEntity: ClassT::class)]
     #[ORM\JoinColumn(nullable: false)]
-    public ClassT $classT;
-
-    public function __construct(Skill $skill, ClassT $classT)
+    public ClassT $classT)
     {
-        $this->classT = $classT;
-        $this->skill = $skill;
     }
 
     public function getId(): ?int

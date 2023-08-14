@@ -26,6 +26,7 @@ class LevelingUpController extends AbstractController
     #[Route('crossing/{uuid}', name: 'pathfinder_level_crossing_up')]
     public function index(Request $request, Character $character): Response
     {
+        $level = null;
         $class = $character->classT;
         foreach ($levels = $this->levelRepository->findByClass($class) as $level) {
             $level->features = $this->classFeatureRepository->findByClassAndLevel($class, $level);

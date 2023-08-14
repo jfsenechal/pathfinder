@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/api')]
 class ApiController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $managerRegistry)
+    public function __construct(private readonly ManagerRegistry $managerRegistry)
     {
     }
 
@@ -40,11 +40,7 @@ class ApiController extends AbstractController
         $manager = $this->managerRegistry->getRepository($class);
 
         if ($object = $manager->find($id)) {
-            if ($object->campaings && count($object->campaings) > 0) {
-                $object->campaings = [];
-            } else {
-                $object->campaings = ['pathfinder-1'];
-            }
+            $object->campaings = $object->campaings && $object->campaings !== [] ? [] : ['pathfinder-1'];
             $manager->flush();
 
             return $this->json($object->campaings);

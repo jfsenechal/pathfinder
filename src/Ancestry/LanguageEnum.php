@@ -4,7 +4,7 @@ namespace AfmLibre\Pathfinder\Ancestry;
 
 enum LanguageEnum
 {
-    const all = [
+    public const all = [
         'Common' => 'Humans, dwarves, elves, halflings, and other common ancestries',
         'Draconic' => 'Dragons, reptilian humanoids',
         'Dwarven' => 'Dwarves',

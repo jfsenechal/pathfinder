@@ -8,9 +8,6 @@ use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
 class AbilityDto
 {
     /**
-     * @param string $name
-     * @param int $base
-     * @param int $baseValueModifier
      * @param Modifier[] $baseModifiers
      * @param Modifier[] $bonusModifiers
      */

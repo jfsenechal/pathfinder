@@ -21,7 +21,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
@@ -30,8 +29,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 )]
 class ImportDataCommand extends Command
 {
-    private SymfonyStyle $io;
-
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly CharacterRemoveHandler $characterRemoveHandler,
@@ -48,7 +45,6 @@ class ImportDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io = new SymfonyStyle($input, $output);
         $remove = (bool)$input->getOption('remove');
 
         if ($remove) {
@@ -57,13 +53,13 @@ class ImportDataCommand extends Command
                 $this->characterRemoveHandler->remove($character);
             }
 
-            return Command::SUCCESS;
+            return (int) Command::SUCCESS;
         }
         $this->importFiona();
         $this->importUser();
         $this->entityManager->flush();
 
-        return Command::SUCCESS;
+        return (int) Command::SUCCESS;
     }
 
     public function importFiona()

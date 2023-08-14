@@ -15,7 +15,6 @@ class ArmorCalculator
     }
 
     /**
-     * @param Character $character
      * @return ModifierInterface[]
      */
     public function items(Character $character): array

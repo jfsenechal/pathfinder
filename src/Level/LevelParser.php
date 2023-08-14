@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Level;
 
+use Exception;
 use AfmLibre\Pathfinder\Classes\ClassParser;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 
@@ -15,13 +16,13 @@ class LevelParser
     /**
      * "Niveau" => "Bar 1, Ens/Mag 1, Prê/Ora 1, Psy 1, Rôd 1"
      * @return LevelDto[]
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse(string $text): array
     {
         $levels = [];
         if ($text == '') {
-            throw new \Exception('level not found '.$text);
+            throw new Exception('level not found '.$text);
         }
         $data = explode(', ', $text);
         foreach ($data as $level) {
@@ -29,7 +30,7 @@ class LevelParser
             $name = ClassParser::getClassName($shortName);
             $classT = $this->classTRepository->findOneByName($name);
             if (!$classT) {
-                throw new \Exception('Class not found '.$name);
+                throw new Exception('Class not found '.$name);
             }
             $levels[] = new LevelDto($classT, (int)$level);
         }

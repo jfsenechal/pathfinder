@@ -32,8 +32,7 @@ class ClassImportHandler
             }
             $classT = new ClassT();
             $classT->name = $classData['Nom'];
-            $die = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
-            $classT->dieOfLive = $die;
+            $classT->dieOfLive = preg_replace('/[^0-9]/', '', (string)$classData['DésDeVie']);
             $classT->description = $classData['Description'];
             $classT->sourced = $classData['Source'];
             $classT->reference = $classData['Référence'];
@@ -73,14 +72,6 @@ class ClassImportHandler
                 $classSkill = new ClassSkill($skill, $class);
                 $this->classTRepository->persist($classSkill);
             }
-        }
-    }
-
-    //todo "BBA" => "+15/+10/+5"
-    private function attack(string $bba)
-    {
-        if (str_contains("/", $bba)) {
-            list($a, $b, $c) = explode('/', $bba);
         }
     }
 }

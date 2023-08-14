@@ -23,10 +23,10 @@ class SkillCalculator
     private array $ownedIds;
 
     public function __construct(
-        private SkillRepository $skillRepository,
-        private ClassSkillRepository $classSkillRepository,
-        private ModifierRepository $modifierRepository,
-        private CharacterSkillRepository $characterSkillRepository
+        private readonly SkillRepository $skillRepository,
+        private readonly ClassSkillRepository $classSkillRepository,
+        private readonly ModifierRepository $modifierRepository,
+        private readonly CharacterSkillRepository $characterSkillRepository
     ) {
     }
 
@@ -39,9 +39,7 @@ class SkillCalculator
 
         $all = $this->skillRepository->findAllOrdered();
         $classSkills = $this->classSkillRepository->findByClass($character->classT);
-        $this->ownedIds = array_map(function ($classSkill) {
-            return $classSkill->skill->getId();
-        }, $classSkills);
+        $this->ownedIds = array_map(fn($classSkill) => $classSkill->skill->getId(), $classSkills);
 
         foreach ($all as $skill) {
             $isTrained = $this->isTrained($skill->getId());
@@ -73,8 +71,6 @@ class SkillCalculator
     }
 
     /**
-     * @param Skill $skill
-     * @param Race $race
      * @return Modifier[]
      */
     private function racials(Skill $skill, Race $race): array
@@ -99,11 +95,11 @@ class SkillCalculator
         $human = 0;
         $level = $character->current_level->lvl;
         if ($character->race == 'Humain') {
-            $human = 1 * $level;
+            $human = $level;
         }
         $bonusIncrease = 0;
         if ($character->point_by_level && $character->point_by_level === LevelingEnum::INCREASE_SKILL->value) {
-            $bonusIncrease = 1 * $level;
+            $bonusIncrease = $level;
         }
 
         $pointsSpent = $this->pointsSpent($character);
@@ -120,9 +116,7 @@ class SkillCalculator
     public function pointsSpent(Character $character): int
     {
         $total = 0;
-        $points = array_map(function ($characterSkill) use ($total) {
-            return $characterSkill->point_spent;
-        }, $this->characterSkillRepository->findByCharacter($character));
+        $points = array_map(fn($characterSkill) => $characterSkill->point_spent, $this->characterSkillRepository->findByCharacter($character));
 
         foreach ($points as $point) {
             $total += $point;

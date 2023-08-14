@@ -2,44 +2,42 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LevelRepository::class)]
-class Level
+class Level implements Stringable
 {
     use IdTrait;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $lvl = 0;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $bab = 0; // base attack bonus
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $fortitude = 0;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $reflex = 0;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $will = 0;
 
-    #[ORM\Column(nullable: false)]
+    #[ORM\Column]
     public int $maxSpellLvl = 0;
-
-    #[ORM\ManyToOne(targetEntity: ClassT::class)]
-    public ?ClassT $classT;
 
     /**
      * @var ClassFeature[] $features
      */
     public array $features = [];
 
-    public function __construct(ClassT $classT)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ClassT::class)]
+    public ?ClassT $classT)
     {
-        $this->classT = $classT;
     }
 
     public function __toString(): string

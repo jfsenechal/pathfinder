@@ -13,10 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchSpellForFavoritesType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $formBuilder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $formBuilder, array $options): void
     {
         $formBuilder
@@ -44,9 +40,6 @@ class SearchSpellForFavoritesType extends AbstractType
         $formBuilder->addEventSubscriber(new AddFieldClassSearchSubscriber());
     }
 
-    /**
-     * @param OptionsResolver $optionsResolver
-     */
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([]);

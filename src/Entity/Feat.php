@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
@@ -10,26 +12,26 @@ use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FeatRepository::class)]
-class Feat
+class Feat implements Stringable
 {
     use IdTrait, NameTrait,CampaingTrait, SourceTrait;
 
     #[ORM\Column(length: 255, nullable: true)]
-    public ?string $summary;
+    public ?string $summary = null;
     #[ORM\Column(length: 150, nullable: true)]
     public ?string $category = null;
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $conditions = null;
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $advantage = null;
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $advantageHtml = null;
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $special = null;
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $normal = null;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column(type: Types::JSON)]
     public array $requires;
 
     // only used during YAML import
@@ -40,6 +42,6 @@ class Feat
 
     public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 }

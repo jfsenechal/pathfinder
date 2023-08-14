@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\ClassFeature;
 use AfmLibre\Pathfinder\Form\SearchNameType;
@@ -18,7 +19,7 @@ class ClassFeatureController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_class_feature_index')]
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $form = $this->createForm(SearchNameType::class);
         $name = null;
@@ -36,13 +37,13 @@ class ClassFeatureController extends AbstractController
             '@AfmLibrePathfinder/class/index.html.twig',
             [
                 'classes' => $classes,
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_class_feature_show')]
-    public function show(ClassFeature $classFeature)
+    public function show(ClassFeature $classFeature): Response
     {
         return $this->render(
             '@AfmLibrePathfinder/class_feature/show.html.twig',

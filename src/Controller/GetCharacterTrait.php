@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Exception;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Helper\SessionHelper;
@@ -32,7 +33,7 @@ trait GetCharacterTrait
                 if ($this->characterSelected = $this->characterRepository->findOneByUuid($uuid)) {
                     return $this->characterSelected;
                 }
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $this->addFlash('danger', 'Error to get character: '.$exception->getMessage());
 
                 return $this->redirectToRoute('pathfinder_character_index');
@@ -40,7 +41,7 @@ trait GetCharacterTrait
         }
 
         $characters = $this->characterRepository->findByUser($user);
-        if (count($characters) === 1) {
+        if ((is_countable($characters) ? count($characters) : 0) === 1) {
             $this->characterSelected = $characters[0];
             $session->set(SessionHelper::KEY_CHARACTER_SELECTED, $this->characterSelected->uuid);
 

@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use Exception;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\RaceTrait;
 use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
@@ -34,7 +35,7 @@ class RaceImportHandler
                 try {
                     $this->raceTraitRepository->flush();
 
-                } catch (\Exception $exception) {
+                } catch (Exception $exception) {
                     $io->error($exception->getMessage());
                     dd($raceData);
                 }

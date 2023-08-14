@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Item\ItemEnum;
 use AfmLibre\Pathfinder\Item\Repository\ItemCategoryRepository;
 use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
 use AfmLibre\Pathfinder\Entity\Item;
@@ -26,11 +25,7 @@ class ItemController extends AbstractController
     #[Route(path: '/{id<\d+>?0}', name: 'pathfinder_item_index')]
     public function index(?ItemCategory $category = null): Response
     {
-        if ($category) {
-            $items = $this->itemRepository->findByCategory($category);
-        } else {
-            $items = $this->itemRepository->findAllOrdered();
-        }
+        $items = $category ? $this->itemRepository->findByCategory($category) : $this->itemRepository->findAllOrdered();
         $categories = $this->itemCategoryRepository->findAll();
 
         return $this->render(

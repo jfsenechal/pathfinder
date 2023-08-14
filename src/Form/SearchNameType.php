@@ -10,10 +10,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchNameType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $formBuilder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $formBuilder, array $options): void
     {
         $formBuilder
@@ -31,9 +27,6 @@ class SearchNameType extends AbstractType
             );
     }
 
-    /**
-     * @param OptionsResolver $optionsResolver
-     */
     public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([]);

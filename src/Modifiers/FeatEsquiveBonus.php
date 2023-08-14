@@ -9,7 +9,7 @@ use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 
 class FeatEsquiveBonus implements ModifierInterface
 {
-    public function __construct(private CharacterFeatRepository $characterFeatRepository)
+    public function __construct(private readonly CharacterFeatRepository $characterFeatRepository)
     {
 
     }
@@ -18,7 +18,7 @@ class FeatEsquiveBonus implements ModifierInterface
     {
         $feats = $this->characterFeatRepository->findByCharacter($character);
 
-        return count(array_filter($feats, fn($feat) => $feat->feat->name == 'Esquive')) > 0;
+        return array_filter($feats, fn($feat) => $feat->feat->name == 'Esquive') !== [];
     }
 
     public function useOn(): ModifierListingEnum

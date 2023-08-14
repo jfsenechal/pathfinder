@@ -7,10 +7,6 @@ use AfmLibre\Pathfinder\Entity\Modifier;
 class SavingThrowDto
 {
     /**
-     * @param string $name
-     * @param int $base
-     * @param string $caracteristicName
-     * @param int $caracteristicValue
      * @param Modifier[] $modifiers
      */
     public function __construct(

@@ -15,7 +15,6 @@ final class SetUserAddSubscriber
     public function __construct(private Security $security, private PropertyUtil $propertyUtil)
     {
     }
-
     public function prePersist(LifecycleEventArgs $lifecycleEventArgs): void
     {
         $object = $lifecycleEventArgs->getObject();
@@ -25,7 +24,6 @@ final class SetUserAddSubscriber
 
         $this->setUserAdd($object);
     }
-
     private function setUserAdd(object $entity): void
     {
         //for loading fixtures

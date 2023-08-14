@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\User\Repository\UserRepository;
@@ -10,21 +12,21 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, \Stringable
+class User implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
 {
     use IdTrait;
     use NameTrait;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     public ?string $email = null;
 
-    #[ORM\Column(type: 'json')]
+    #[ORM\Column(type: Types::JSON)]
     public array $roles = [];
 
-    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 180, nullable: true)]
     public ?string $first_name = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: Types::STRING)]
     public ?string $password = null;
 
     /**

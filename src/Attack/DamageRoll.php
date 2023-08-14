@@ -36,11 +36,9 @@ class DamageRoll
             if ($strength > 0) {
                 $strength = $strength * 1.5;
             }
-        } else {
-            if (!$this->leadingHand) {
-                if ($strength > 0) {
-                    $strength = $strength / 2;
-                }
+        } elseif (!$this->leadingHand) {
+            if ($strength > 0) {
+                $strength = $strength / 2;
             }
         }
 

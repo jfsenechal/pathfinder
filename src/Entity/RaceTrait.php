@@ -2,6 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
+use Stringable;
+use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
@@ -9,22 +11,19 @@ use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RaceTraitRepository::class)]
-class RaceTrait implements \Stringable
+class RaceTrait implements Stringable
 {
     use NameTrait, IdTrait, SourceTrait;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $description = null;
 
-    #[ORM\Column(type: 'json', nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     public ?iterable $replaces = [];
 
-    #[ORM\ManyToOne(targetEntity: Race::class)]
-    public ?Race $race;
-
-    public function __construct(Race $race)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Race::class)]
+    public ?Race $race)
     {
-        $this->race = $race;
     }
 
     public function __toString(): string

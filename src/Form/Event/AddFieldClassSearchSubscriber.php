@@ -17,10 +17,6 @@ class AddFieldClassSearchSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param FormEvent $event
-     * @return void
-     */
     public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();

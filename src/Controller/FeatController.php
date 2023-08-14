@@ -25,10 +25,9 @@ class FeatController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_feat_index')]
-    public function index(Request $request)
+    public function index() : Response
     {
         $feats = $this->featRepository->findAllOrdered();
-
         return $this->render(
             '@AfmLibrePathfinder/feat/index.html.twig',
             [
@@ -38,7 +37,7 @@ class FeatController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_feat_show')]
-    public function show(Feat $feat)
+    public function show(Feat $feat): Response
     {
         $modifiers = $this->modifierRepository->findByIdAndClassName($feat->getId(), Feat::class);
 

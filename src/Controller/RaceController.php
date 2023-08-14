@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
 use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/race')]
@@ -22,10 +22,9 @@ class RaceController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_race_index')]
-    public function index(Request $request)
+    public function index() : Response
     {
         $races = $this->raceRepository->findAllOrdered();
-
         return $this->render(
             '@AfmLibrePathfinder/race/index.html.twig',
             [
@@ -35,7 +34,7 @@ class RaceController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_race_show')]
-    public function show(Race $race)
+    public function show(Race $race): Response
     {
         $modifiers = $this->modifierRepository->findSkillByRace(ModifierListingEnum::SKILL, $race);
         $traits = $this->raceTraitRepository->findByRace($race);

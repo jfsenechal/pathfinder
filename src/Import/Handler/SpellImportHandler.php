@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
+use Exception;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Entity\School;
@@ -36,7 +37,7 @@ class SpellImportHandler
                     $classSpell = new ClassSpell($spell, $levelDto->classT, $levelDto->level);
                     $this->classSpellRepository->persist($classSpell);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $io->error($e->getMessage().$spellData['Nom']);
             }
         }

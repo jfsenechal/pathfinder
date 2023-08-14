@@ -14,13 +14,12 @@ use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 class AbilityCalculator
 {
     public function __construct(
-        private ModifierRepository $modifierRepository,
-        private CharacterFeatRepository $characterFeatRepository
+        private readonly ModifierRepository $modifierRepository,
+        private readonly CharacterFeatRepository $characterFeatRepository
     ) {
     }
 
     /**
-     * @param Character $character
      * @return AbilityDto[]
      */
     public function calculate(Character $character): array
@@ -43,8 +42,6 @@ class AbilityCalculator
     }
 
     /**
-     * @param Character $character
-     * @param ModifierListingEnum $modifierEnum
      * @return Modifier[]
      */
     private function findSpecials(Character $character, ModifierListingEnum $modifierEnum): array

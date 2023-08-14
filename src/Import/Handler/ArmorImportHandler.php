@@ -29,8 +29,7 @@ class ArmorImportHandler
             }
             $armor = new Armor();
             $armor->name = $data['Nom'];
-            $cateory = $this->armorCategoryRepository->findOneByName($data['Catégorie']);
-            $armor->category = $cateory;
+            $armor->category = $this->armorCategoryRepository->findOneByName($data['Catégorie']);
             $armor->cost = $data['Prix'];
             $armor->bonus = $data['Bonus'];
             $armor->bonus_dexterity_max = $data['BonusDexMax'] == '—' ?? null;

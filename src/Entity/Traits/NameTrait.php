@@ -7,6 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait NameTrait
 {
-    #[ORM\Column(length: 150, nullable: false)]
+    #[ORM\Column(length: 150)]
     public ?string $name;
 }

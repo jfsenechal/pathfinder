@@ -2,6 +2,7 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
@@ -17,7 +18,7 @@ class SpellController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_spell_index')]
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $form = $this->createForm(SearchSpellType::class);
         $spells = [];
@@ -39,14 +40,14 @@ class SpellController extends AbstractController
             '@AfmLibrePathfinder/spell/index.html.twig',
             [
                 'spells' => $spells,
-                'form' => $form->createView(),
+                'form' => $form,
                 'search' => $search,
             ]
         );
     }
 
     #[Route(path: '/{id}', name: 'pathfinder_spell_show')]
-    public function show(Spell $spell)
+    public function show(Spell $spell): Response
     {
         return $this->render(
             '@AfmLibrePathfinder/spell/show.html.twig',

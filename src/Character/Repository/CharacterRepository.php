@@ -41,7 +41,6 @@ class CharacterRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param UserInterface|null $user
      * @return Character[]
      */
     public function findByUser(?UserInterface $user): array

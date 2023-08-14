@@ -73,7 +73,7 @@ class CharacterController extends AbstractController
             '@AfmLibrePathfinder/character/new.html.twig',
             [
                 'character' => $character,
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
@@ -110,7 +110,7 @@ class CharacterController extends AbstractController
             '@AfmLibrePathfinder/character/edit.html.twig',
             [
                 'character' => $character,
-                'form' => $form->createView(),
+                'form' => $form,
             ]
         );
     }
