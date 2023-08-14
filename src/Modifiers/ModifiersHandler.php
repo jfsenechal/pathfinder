@@ -10,9 +10,8 @@ class ModifiersHandler
     /**
      * @param ModifierInterface[] $modifiers
      */
-    public function __construct(#[TaggedIterator(ModifierInterface::class)]private readonly iterable $modifiers)
+    public function __construct(#[TaggedIterator(ModifierInterface::class)] private readonly iterable $modifiers)
     {
-
     }
 
     /**
@@ -30,5 +29,4 @@ class ModifiersHandler
 
         return $modifiers;
     }
-
 }

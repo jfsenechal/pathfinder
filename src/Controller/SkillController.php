@@ -2,8 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Exception;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Character\Repository\CharacterSkillRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
@@ -12,9 +10,11 @@ use AfmLibre\Pathfinder\Entity\CharacterSkill;
 use AfmLibre\Pathfinder\Entity\Skill;
 use AfmLibre\Pathfinder\Skill\Repository\SkillRepository;
 use AfmLibre\Pathfinder\Skill\SkillCalculator;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/skill')]
@@ -30,7 +30,7 @@ class SkillController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_skill_index')]
-    public function index() : Response
+    public function index(): Response
     {
         $skills = $this->skillRepository->findAllOrdered();
         return $this->render(
@@ -45,7 +45,7 @@ class SkillController extends AbstractController
     public function show(Skill $skill): Response
     {
         $classSkills = $this->classSkillRepository->findBySkill($skill);
-        $classes = array_map(fn($classSkill) => $classSkill->classT, $classSkills);
+        $classes = array_map(fn ($classSkill) => $classSkill->classT, $classSkills);
 
         return $this->render(
             '@AfmLibrePathfinder/skill/show.html.twig',
@@ -110,7 +110,5 @@ class SkillController extends AbstractController
         } catch (Exception $exception) {
             return $this->json(['error' => $exception->getMessage()]);
         }
-
     }
-
 }

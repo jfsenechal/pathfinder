@@ -2,17 +2,17 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use JsonSerializable;
-use Stringable;
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
+use JsonSerializable;
+use Stringable;
 
 #[ORM\Entity(repositoryClass: ClassRepository::class)]
 class ClassT implements JsonSerializable, Stringable

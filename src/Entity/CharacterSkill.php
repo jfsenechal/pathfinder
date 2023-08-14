@@ -16,11 +16,10 @@ class CharacterSkill
     public int $point_spent = 0;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Character::class)]
-    #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-    public ?Character $character, #[ORM\ManyToOne(targetEntity: Skill::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    public ?Skill $skill)
+        #[ORM\JoinColumn(name: 'character_id', nullable: false)]
+        public ?Character $character, #[ORM\ManyToOne(targetEntity: Skill::class)]
+        #[ORM\JoinColumn(nullable: false)]
+        public ?Skill $skill)
     {
     }
-
 }

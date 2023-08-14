@@ -86,7 +86,7 @@ class CharacterType extends AbstractType
                 [
                     'placeholder' => '',
                     'class' => Race::class,
-                    'query_builder' => fn(RaceRepository $raceRepository) => $raceRepository->getQl(),
+                    'query_builder' => fn (RaceRepository $raceRepository) => $raceRepository->getQl(),
                 ]
             )
             ->add(
@@ -95,7 +95,7 @@ class CharacterType extends AbstractType
                 [
                     'placeholder' => '',
                     'class' => ClassT::class,
-                    'query_builder' => fn(
+                    'query_builder' => fn (
                         ClassRepository $classTRepository
                     ) => $classTRepository->getQl(),
                 ]

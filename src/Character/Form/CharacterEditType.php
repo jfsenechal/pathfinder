@@ -27,6 +27,4 @@ class CharacterEditType extends AbstractType
     {
         return CharacterType::class;
     }
-
-
 }

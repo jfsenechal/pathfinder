@@ -23,7 +23,6 @@ class SkillDto
         readonly array $racialModifiers,
         readonly array $bonusModifiers
     ) {
-
     }
 
     public function total(): int

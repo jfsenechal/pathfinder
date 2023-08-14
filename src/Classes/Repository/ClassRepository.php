@@ -45,7 +45,7 @@ class ClassRepository extends ServiceEntityRepository
         $qb = $this->createQbl();
         if ($name) {
             $qb->andWhere('class_t.name LIKE :name')
-                ->setParameter('name', '%'.$name.'%');
+                ->setParameter('name', '%' . $name . '%');
         }
         $qb->orderBy('class_t.name');
 
@@ -57,5 +57,4 @@ class ClassRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('class_t')
             ->addOrderBy('class_t.name', 'ASC');
     }
-
 }

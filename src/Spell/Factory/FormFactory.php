@@ -22,7 +22,7 @@ class FormFactory
     {
         $characterSpells = $this->characterSpellRepository->findByCharacter($character);
         $characterSpells2 = array_map(
-            fn($characterSpell) => $characterSpell->spell,
+            fn ($characterSpell) => $characterSpell->spell,
             $characterSpells
         );
 

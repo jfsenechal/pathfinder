@@ -50,7 +50,7 @@ class LevelingUpController extends AbstractController
             'levels' => $levels,
             'character' => $character,
             'nextLevel' => $nextLevel,
-            'form'=>$form
+            'form' => $form
         ]);
     }
 }

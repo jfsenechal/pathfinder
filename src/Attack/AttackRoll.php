@@ -36,10 +36,9 @@ class AttackRoll
     public function explain(): string
     {
         return
-            ' Bab:'.NumberHelper::numberSign($this->bab).
-            ' '.ucfirst($this->characteristicName).':'.NumberHelper::numberSign($this->characteristicModifier).
-            ' Size: '.NumberHelper::numberSign($this->sizeModifier).
-            ' Range penalty '.NumberHelper::numberSign($this->rangePenalty);
+            ' Bab:' . NumberHelper::numberSign($this->bab) .
+            ' ' . ucfirst($this->characteristicName) . ':' . NumberHelper::numberSign($this->characteristicModifier) .
+            ' Size: ' . NumberHelper::numberSign($this->sizeModifier) .
+            ' Range penalty ' . NumberHelper::numberSign($this->rangePenalty);
     }
-
 }

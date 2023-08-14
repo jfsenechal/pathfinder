@@ -74,6 +74,5 @@ class AbilityCalculator
         }
 
         return $baseSpecials;
-
     }
 }

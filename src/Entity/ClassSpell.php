@@ -2,9 +2,9 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 
@@ -16,11 +16,11 @@ class ClassSpell
     use IdTrait;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Spell::class, inversedBy: 'class_spells')]
-    #[ORM\JoinColumn(nullable: false)]
-    public ?Spell $spell, #[ORM\ManyToOne(targetEntity: ClassT::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    public ?ClassT $classT, #[Column(type: Types::SMALLINT)]
-    public int $level)
+        #[ORM\JoinColumn(nullable: false)]
+        public ?Spell $spell, #[ORM\ManyToOne(targetEntity: ClassT::class)]
+        #[ORM\JoinColumn(nullable: false)]
+        public ?ClassT $classT, #[Column(type: Types::SMALLINT)]
+        public int $level)
     {
     }
 

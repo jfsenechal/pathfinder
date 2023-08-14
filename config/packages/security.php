@@ -5,7 +5,6 @@ use AfmLibre\Pathfinder\Security\PathfinderAuthenticator;
 use Symfony\Config\SecurityConfig;
 
 return static function (SecurityConfig $security) {
-
     $security->provider('pathfinder_user_provider', [
         'entity' => [
             'class' => User::class,

@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Stringable;
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 #[ORM\Entity(repositoryClass: WeaponRepository::class)]
 class Weapon implements Stringable
@@ -52,5 +52,4 @@ class Weapon implements Stringable
     {
         return (string) $this->name;
     }
-
 }

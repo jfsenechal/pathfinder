@@ -56,5 +56,4 @@ class CharacterWeaponRepository extends ServiceEntityRepository
             ->addSelect('weapon', 'character')
             ->addOrderBy('weapon.name', 'ASC');
     }
-
 }

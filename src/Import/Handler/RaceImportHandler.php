@@ -3,11 +3,11 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-use Exception;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Entity\RaceTrait;
 use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
 use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
+use Exception;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class RaceImportHandler
@@ -34,7 +34,6 @@ class RaceImportHandler
                 $this->raceTraitRepository->persist($raceTrait);
                 try {
                     $this->raceTraitRepository->flush();
-
                 } catch (Exception $exception) {
                     $io->error($exception->getMessage());
                     dd($raceData);

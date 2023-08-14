@@ -66,7 +66,7 @@ class ClassImportHandler
         foreach ($classData['CompétencesDeClasse'] as $data) {
             foreach ($data as $name) {
                 if (!$skill = $this->skillRepository->findOneByName($name)) {
-                    $this->io->error('Skill non trouvé '.$name.' pour la classe '.$classData['Nom']);
+                    $this->io->error('Skill non trouvé ' . $name . ' pour la classe ' . $classData['Nom']);
                     continue;
                 }
                 $classSkill = new ClassSkill($skill, $class);

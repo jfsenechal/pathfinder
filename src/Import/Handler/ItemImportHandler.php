@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-use AfmLibre\Pathfinder\Item\Repository\ItemCategoryRepository;
-use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
 use AfmLibre\Pathfinder\Entity\Item;
 use AfmLibre\Pathfinder\Entity\ItemCategory;
+use AfmLibre\Pathfinder\Item\Repository\ItemCategoryRepository;
+use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ItemImportHandler
@@ -51,5 +51,4 @@ class ItemImportHandler
             }
         }
     }
-
 }

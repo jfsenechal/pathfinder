@@ -52,7 +52,7 @@ class ImportModifierCommand extends Command
             $name = $helper->ask($input, $output, $question);
         }
 
-        $output->writeln($name.' import...');
+        $output->writeln($name . ' import...');
 
         $this->import();
 
@@ -65,11 +65,10 @@ class ImportModifierCommand extends Command
     {
         foreach ($data as $name => $values) {
             if (!$object = $this->entityManager->getRepository($className)->findOneByName($name)) {
-                $this->io->error('Objet non trouvé '.$className.' '.$name);
+                $this->io->error('Objet non trouvé ' . $className . ' ' . $name);
                 continue;
             }
             foreach ($values as $ability => $value) {
-
                 $abilityEnum = ModifierListingEnum::findByName($ability);
 
                 if (!$modifier = $this->modifierRepository->findOneByIdClassNameAndAbility(
@@ -141,11 +140,11 @@ class ImportModifierCommand extends Command
         foreach ($skills as $raceName => $data) {
             foreach ($data as $skillName => $value) {
                 if (!$race = $this->entityManager->getRepository(Race::class)->findOneByName($raceName)) {
-                    $this->io->error('Race non trouvée '.$raceName);
+                    $this->io->error('Race non trouvée ' . $raceName);
                     continue;
                 }
                 if (!$skill = $this->entityManager->getRepository(Skill::class)->findOneByName($skillName)) {
-                    $this->io->error('Skill non trouvée '.$skillName);
+                    $this->io->error('Skill non trouvée ' . $skillName);
                     continue;
                 }
 
@@ -167,5 +166,4 @@ class ImportModifierCommand extends Command
             }
         }
     }
-
 }

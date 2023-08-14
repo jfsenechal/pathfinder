@@ -37,7 +37,6 @@ class ArmorCalculator
         Character $character,
         SizeEnum $sizeEnum
     ): ArmorClassDto {
-
         $dexterityMax = self::dexterityMax($character);
         $armorBonus = $character->armor?->bonus ?? 0;
         $shieldBonus = $character->shield?->bonus ?? 0;

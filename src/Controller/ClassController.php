@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Classes\Repository\ClassFeatureRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSkillRepository;
@@ -13,6 +12,7 @@ use AfmLibre\Pathfinder\Level\Repository\LevelRepository;
 use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/class')]
@@ -62,7 +62,7 @@ class ClassController extends AbstractController
 
         $spells = SpellUtils::groupByLevel($spellsClass);
         $classSkills = $this->classSkillRepository->findByClass($classT);
-        $skills = array_map(fn($classSkill) => $classSkill->skill, $classSkills);
+        $skills = array_map(fn ($classSkill) => $classSkill->skill, $classSkills);
 
         return $this->render(
             '@AfmLibrePathfinder/class/show.html.twig',

@@ -54,5 +54,4 @@ class RaceTraitRepository extends ServiceEntityRepository
             ->addSelect('race')
             ->orderBy('race.name', 'ASC');
     }
-
 }

@@ -9,7 +9,7 @@ class SavingThrowCalculator
     /**
      * @return SavingThrowDto[]
      */
-    public function calculate(Character $character,): array
+    public function calculate(Character $character): array
     {
         $savingThrows = [];
         foreach (SavingThrowEnum::cases() as $savingThrowEnum) {

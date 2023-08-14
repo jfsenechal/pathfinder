@@ -2,12 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Stringable;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 #[ORM\UniqueConstraint(columns: ['object_class', 'object_id', 'ability', 'race_id'])]
 #[ORM\Entity(repositoryClass: ModifierRepository::class)]
@@ -29,8 +29,8 @@ class Modifier implements Stringable
     public ?Race $race = null;
 
     public function __construct(#[ORM\Column(nullable: false)]
-    public int $object_id, #[ORM\Column(nullable: false)]
-    public string $object_class)
+        public int $object_id, #[ORM\Column(nullable: false)]
+        public string $object_class)
     {
     }
 
@@ -38,5 +38,4 @@ class Modifier implements Stringable
     {
         return $this->object_class;
     }
-
 }

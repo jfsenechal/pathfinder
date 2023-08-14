@@ -44,5 +44,4 @@ class DamageRoll
 
         return $this->bab + $strength;
     }
-
 }

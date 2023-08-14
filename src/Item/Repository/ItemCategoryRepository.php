@@ -34,7 +34,7 @@ class ItemCategoryRepository extends ServiceEntityRepository
 
         if ($nom) {
             $qb->andWhere('category.name LIKE :name')
-                ->setParameter('name', '%'.$nom.'%');
+                ->setParameter('name', '%' . $nom . '%');
         }
 
         return $qb->getQuery()->getResult();
@@ -110,5 +110,4 @@ class ItemCategoryRepository extends ServiceEntityRepository
             ->addSelect('parent')
             ->addOrderBy('category.name', Criteria::ASC);
     }
-
 }

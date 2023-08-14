@@ -52,5 +52,4 @@ class RaceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('race')
             ->orderBy('race.name', 'ASC');
     }
-
 }

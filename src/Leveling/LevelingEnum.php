@@ -18,7 +18,5 @@ enum LevelingEnum: string
             self::INCREASE_SKILL->value => self::INCREASE_SKILL->value,
             self::INCREASE_LIFE->value => self::INCREASE_LIFE->value,
         ];
-
     }
-
 }

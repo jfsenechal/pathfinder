@@ -44,5 +44,4 @@ class CharacterFeatRepository extends ServiceEntityRepository
             ->addSelect('feat', 'character')
             ->orderBy('feat.name', 'ASC');
     }
-
 }

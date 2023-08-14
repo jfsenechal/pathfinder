@@ -55,6 +55,4 @@ class CharacterSkillRepository extends ServiceEntityRepository
             ->leftJoin('character_skill.character', 'character', 'WITH')
             ->addSelect('skill', 'character');
     }
-
-
 }

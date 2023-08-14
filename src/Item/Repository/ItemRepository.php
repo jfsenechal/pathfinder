@@ -47,6 +47,4 @@ class ItemRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('item')
             ->orderBy('item.name', 'ASC');
     }
-
-
 }

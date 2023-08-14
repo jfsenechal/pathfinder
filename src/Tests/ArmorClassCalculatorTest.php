@@ -42,7 +42,7 @@ dataset('armors', [
         'armor' => true,
         'armorBonus' => +4,
         'armorDexterityMax' => +2,
-        'dexterity' => 12,//+1
+        'dexterity' => 12, //+1
         'size' => SizeEnum::Medium,
         'total' => 15,
     ],
@@ -50,7 +50,7 @@ dataset('armors', [
         'armor' => true,
         'armorBonus' => +4,
         'armorDexterityMax' => +2,
-        'dexterity' => 10,//+0
+        'dexterity' => 10, //+0
         'size' => SizeEnum::Medium,
         'total' => 14,
     ],
@@ -58,7 +58,7 @@ dataset('armors', [
         'armor' => true,
         'armorBonus' => +4,
         'armorDexterityMax' => +2,
-        'dexterity' => 6,//-2
+        'dexterity' => 6, //-2
         'size' => SizeEnum::Medium,
         'total' => 12,
     ],
@@ -66,7 +66,7 @@ dataset('armors', [
         'armor' => true,
         'armorBonus' => +4,
         'armorDexterityMax' => +2,
-        'dexterity' => 18,//+4
+        'dexterity' => 18, //+4
         'size' => SizeEnum::Medium,
         'total' => 16,
     ],
@@ -74,7 +74,7 @@ dataset('armors', [
         'armor' => true,
         'armorBonus' => +4,
         'armorDexterityMax' => +4,
-        'dexterity' => 18,//+4
+        'dexterity' => 18, //+4
         'size' => SizeEnum::Medium,
         'total' => 18,
     ],
@@ -82,7 +82,7 @@ dataset('armors', [
         'armor' => false,
         'armorBonus' => +4,
         'armorDexterityMax' => +4,
-        'dexterity' => 14,//+2
+        'dexterity' => 14, //+2
         'size' => SizeEnum::Medium,
         'total' => 12,
     ],

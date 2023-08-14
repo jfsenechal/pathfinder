@@ -77,6 +77,5 @@ class ModifierController extends AbstractController
                 'className' => $className,
             ]
         );
-
     }
 }

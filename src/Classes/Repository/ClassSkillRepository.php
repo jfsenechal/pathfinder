@@ -3,9 +3,9 @@
 namespace AfmLibre\Pathfinder\Classes\Repository;
 
 use AfmLibre\Pathfinder\Doctrine\OrmCrudTrait;
+use AfmLibre\Pathfinder\Entity\ClassSkill;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Entity\Skill;
-use AfmLibre\Pathfinder\Entity\ClassSkill;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -56,5 +56,4 @@ class ClassSkillRepository extends ServiceEntityRepository
             ->leftJoin('class_skill.classT', 'classT', 'WITH')
             ->addSelect('skill', 'classT');
     }
-
 }

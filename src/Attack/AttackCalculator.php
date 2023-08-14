@@ -26,7 +26,6 @@ class AttackCalculator
         Weapon $weapon,
         SizeEnum $sizeEnum
     ): AttackRoll {
-
         $characteristicName = 'strength';
 
         $characteristic = $character->strength;
@@ -52,7 +51,6 @@ class AttackCalculator
         Character $character,
         Weapon $weapon,
     ): DamageRoll {
-
         return new DamageRoll(
             "jd",
             $character->current_level->bab,

@@ -28,6 +28,6 @@ class ArmorDexterityMaximum implements ModifierInterface
 
     public function explain(): string
     {
-       return 'Armor maximum dexterity';
+        return 'Armor maximum dexterity';
     }
 }

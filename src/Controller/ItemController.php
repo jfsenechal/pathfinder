@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use AfmLibre\Pathfinder\Item\Repository\ItemCategoryRepository;
-use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
 use AfmLibre\Pathfinder\Entity\Item;
 use AfmLibre\Pathfinder\Entity\ItemCategory;
+use AfmLibre\Pathfinder\Item\Repository\ItemCategoryRepository;
+use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,8 +56,8 @@ class ItemController extends AbstractController
             return $character;
         }
 
-            $this->addFlash('success', 'Armure équipée');
-            $character->item = $item;
+        $this->addFlash('success', 'Armure équipée');
+        $character->item = $item;
 
         $this->itemRepository->flush();
 

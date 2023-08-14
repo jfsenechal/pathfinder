@@ -2,12 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Stringable;
 use AfmLibre\Pathfinder\Attack\AttackRoll;
 use AfmLibre\Pathfinder\Attack\DamageRoll;
 use AfmLibre\Pathfinder\Character\Repository\CharacterWeaponRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\UniqueConstraint(columns: ['character_id', 'weapon_id'])]
@@ -30,10 +30,10 @@ class CharacterWeapon implements Stringable
     public ?DamageRoll $damageRoll = null;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Character::class)]
-    #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-    public ?Character $character, #[ORM\ManyToOne(targetEntity: Weapon::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    public Weapon $weapon)
+        #[ORM\JoinColumn(name: 'character_id', nullable: false)]
+        public ?Character $character, #[ORM\ManyToOne(targetEntity: Weapon::class)]
+        #[ORM\JoinColumn(nullable: false)]
+        public Weapon $weapon)
     {
     }
 

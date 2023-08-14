@@ -40,7 +40,8 @@ final class SavingThrowsUnitTest extends TestCase
         $character->current_level = $level;
 
         $calculator->method('calculate')
-            ->willReturn([
+            ->willReturn(
+                [
                     new SavingThrowDto(
                         SavingThrowEnum::Reflex->value,
                         $reflex,

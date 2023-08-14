@@ -3,8 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Stringable;
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Ancestry\SizeEnum;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
@@ -12,14 +10,16 @@ use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SlugTrait;
 use AfmLibre\Pathfinder\Entity\Traits\UuidTrait;
 use AfmLibre\Pathfinder\Modifier\ModifierCalculator;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\SluggableInterface;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Sluggable\SluggableTrait;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Table(name: 'characters')]//!character reserved
+#[ORM\Table(name: 'characters')] //!character reserved
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
 class Character implements SluggableInterface, TimestampableInterface, Stringable
 {
@@ -140,5 +140,4 @@ class Character implements SluggableInterface, TimestampableInterface, Stringabl
     {
         return true;
     }
-
 }

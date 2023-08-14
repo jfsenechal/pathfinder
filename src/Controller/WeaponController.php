@@ -74,5 +74,4 @@ class WeaponController extends AbstractController
             Response::HTTP_SEE_OTHER
         );
     }
-
 }

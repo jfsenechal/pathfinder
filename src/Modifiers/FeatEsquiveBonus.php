@@ -2,7 +2,6 @@
 
 namespace AfmLibre\Pathfinder\Modifiers;
 
-
 use AfmLibre\Pathfinder\Character\Repository\CharacterFeatRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
@@ -11,14 +10,13 @@ class FeatEsquiveBonus implements ModifierInterface
 {
     public function __construct(private readonly CharacterFeatRepository $characterFeatRepository)
     {
-
     }
 
     public function isCharacterConcern(Character $character): bool
     {
         $feats = $this->characterFeatRepository->findByCharacter($character);
 
-        return array_filter($feats, fn($feat) => $feat->feat->name == 'Esquive') !== [];
+        return array_filter($feats, fn ($feat) => $feat->feat->name == 'Esquive') !== [];
     }
 
     public function useOn(): ModifierListingEnum

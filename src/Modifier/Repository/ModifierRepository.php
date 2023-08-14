@@ -131,5 +131,4 @@ class ModifierRepository extends ServiceEntityRepository
             ->addSelect('race')
             ->orderBy('modifier.object_class', 'ASC');
     }
-
 }

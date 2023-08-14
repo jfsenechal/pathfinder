@@ -62,7 +62,6 @@ it(
         expect($results[0]->total())->toBe($totals[0]);
         expect($results[1]->total())->toBe($totals[1]);
         expect($results[2]->total())->toBe($totals[2]);
-
     }
 )->with('savingThrows');
 

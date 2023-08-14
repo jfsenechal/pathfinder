@@ -44,5 +44,4 @@ class WeaponCategoryController extends AbstractController
             ]
         );
     }
-
 }

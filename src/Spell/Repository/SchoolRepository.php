@@ -38,5 +38,4 @@ class SchoolRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('school')
             ->orderBy('school.name', 'ASC');
     }
-
 }

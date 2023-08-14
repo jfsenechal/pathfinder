@@ -54,6 +54,4 @@ class LevelRepository extends ServiceEntityRepository
             ->addSelect('class_t')
             ->orderBy('level.id', 'ASC');
     }
-
-
 }

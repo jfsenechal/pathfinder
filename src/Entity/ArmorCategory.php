@@ -2,8 +2,8 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Armor\Repository\ArmorCategoryRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,8 +35,8 @@ class ArmorCategory implements Stringable
     public array $armors = [];
 
     public function __construct(#[Assert\NotBlank]
-    #[ORM\Column(nullable: false)]
-    public ?string $name)
+        #[ORM\Column(nullable: false)]
+        public ?string $name)
     {
     }
 

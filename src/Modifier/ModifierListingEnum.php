@@ -66,5 +66,4 @@ enum ModifierListingEnum: string
             self::SAVING_THROW_WILL,
         ];
     }
-
 }

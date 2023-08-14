@@ -2,11 +2,11 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use AfmLibre\Pathfinder\Item\Repository\ItemRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
@@ -29,5 +29,4 @@ class Item
     #[ORM\ManyToOne(targetEntity: ItemCategory::class)]
     #[ORM\JoinColumn]
     public ?ItemCategory $category = null;
-
 }

@@ -25,11 +25,11 @@ class CharacterClassFeatureImportHandler
         foreach ($classeFeatures as $data) {
             $classT = $this->classTRepository->findOneByName($data['Classe']);
             if (!$classT instanceof ClassT) {
-                $io->error('Classe non trouvee '.$data['Nom']);
+                $io->error('Classe non trouvee ' . $data['Nom']);
                 continue;
             }
             if (!$level = $this->levelRepository->findOneByClassAndLevel($classT, $data['Niveau'])) {
-                $io->error('Level non trouvee '.$data['Nom']);
+                $io->error('Level non trouvee ' . $data['Nom']);
                 continue;
             }
             $classeFeature = new ClassFeature($classT, $level);

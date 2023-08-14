@@ -8,7 +8,6 @@ use AfmLibre\Pathfinder\Entity\Level;
 use AfmLibre\Pathfinder\Entity\Weapon;
 
 beforeEach(function () {
-
 });
 
 it('check bonus melee', function (int $bab, int $strength, bool $twoHanded, bool $leadingHand, int $total) {

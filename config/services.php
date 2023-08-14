@@ -16,8 +16,8 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->load('AfmLibre\Pathfinder\\', __DIR__ . '/../src/*')
         ->exclude([__DIR__ . '/../src/{Entity,Tests2}']);
 
- /*   $services->set(ModifiersHandler::class)
-        // inject all services tagged with app.handler as first argument
-        ->args([tagged_iterator('pathfinder.modifier_tag')])
-    ;*/
+    /*   $services->set(ModifiersHandler::class)
+           // inject all services tagged with app.handler as first argument
+           ->args([tagged_iterator('pathfinder.modifier_tag')])
+       ;*/
 };

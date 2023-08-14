@@ -57,5 +57,4 @@ class FavoriteSpellRepository extends ServiceEntityRepository
             ->addSelect('spell', 'character')
             ->orderBy('spell.name', 'ASC');
     }
-
 }

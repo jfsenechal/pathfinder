@@ -2,12 +2,12 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Form\SearchSpellType;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/spell')]

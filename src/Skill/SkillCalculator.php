@@ -39,7 +39,7 @@ class SkillCalculator
 
         $all = $this->skillRepository->findAllOrdered();
         $classSkills = $this->classSkillRepository->findByClass($character->classT);
-        $this->ownedIds = array_map(fn($classSkill) => $classSkill->skill->getId(), $classSkills);
+        $this->ownedIds = array_map(fn ($classSkill) => $classSkill->skill->getId(), $classSkills);
 
         foreach ($all as $skill) {
             $isTrained = $this->isTrained($skill->getId());
@@ -116,7 +116,7 @@ class SkillCalculator
     public function pointsSpent(Character $character): int
     {
         $total = 0;
-        $points = array_map(fn($characterSkill) => $characterSkill->point_spent, $this->characterSkillRepository->findByCharacter($character));
+        $points = array_map(fn ($characterSkill) => $characterSkill->point_spent, $this->characterSkillRepository->findByCharacter($character));
 
         foreach ($points as $point) {
             $total += $point;
@@ -124,5 +124,4 @@ class SkillCalculator
 
         return $total;
     }
-
 }

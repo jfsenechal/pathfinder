@@ -17,5 +17,4 @@ class SkillPointDto
     {
         return $this->class + $this->intelligence + $this->human + $this->bonusIncrease;
     }
-
 }

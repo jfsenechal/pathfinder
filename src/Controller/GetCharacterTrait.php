@@ -2,10 +2,10 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use Exception;
 use AfmLibre\Pathfinder\Character\Repository\CharacterRepository;
 use AfmLibre\Pathfinder\Entity\Character;
 use AfmLibre\Pathfinder\Helper\SessionHelper;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -34,7 +34,7 @@ trait GetCharacterTrait
                     return $this->characterSelected;
                 }
             } catch (Exception $exception) {
-                $this->addFlash('danger', 'Error to get character: '.$exception->getMessage());
+                $this->addFlash('danger', 'Error to get character: ' . $exception->getMessage());
 
                 return $this->redirectToRoute('pathfinder_character_index');
             }
@@ -52,5 +52,4 @@ trait GetCharacterTrait
 
         return $this->redirectToRoute('pathfinder_character_index');
     }
-
 }

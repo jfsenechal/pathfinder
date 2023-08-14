@@ -18,13 +18,12 @@ class AbilityBoosts
      * as well as one free ability boost, which can be applied to any score other than Constitution or Wisdom.
      */
 
-    public function check(Character $character) {
-
-        if($character->current_level->lvl ===1){
+    public function check(Character $character)
+    {
+        if ($character->current_level->lvl === 1) {
             //max 18
         }
 
         //if ability egal 18 max give 1 point
-
     }
 }

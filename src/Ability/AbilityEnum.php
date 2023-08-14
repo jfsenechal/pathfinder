@@ -22,6 +22,5 @@ enum AbilityEnum: string
             'Sagesse' => self::ABILITY_WISDOM,
             default => null,
         };
-
     }
 }

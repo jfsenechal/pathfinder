@@ -62,5 +62,4 @@ class WeaponRepository extends ServiceEntityRepository
             ->addSelect('category')
             ->orderBy('weapon.name', 'ASC');
     }
-
 }

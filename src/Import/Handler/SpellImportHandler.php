@@ -3,7 +3,6 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-use Exception;
 use AfmLibre\Pathfinder\Classes\Repository\ClassSpellRepository;
 use AfmLibre\Pathfinder\Entity\ClassSpell;
 use AfmLibre\Pathfinder\Entity\School;
@@ -12,6 +11,7 @@ use AfmLibre\Pathfinder\Import\Mapping\SpellYml;
 use AfmLibre\Pathfinder\Level\LevelParser;
 use AfmLibre\Pathfinder\Spell\Repository\SchoolRepository;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
+use Exception;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SpellImportHandler
@@ -38,7 +38,7 @@ class SpellImportHandler
                     $this->classSpellRepository->persist($classSpell);
                 }
             } catch (Exception $e) {
-                $io->error($e->getMessage().$spellData['Nom']);
+                $io->error($e->getMessage() . $spellData['Nom']);
             }
         }
         $this->spellRepository->flush();

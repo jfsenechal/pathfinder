@@ -3,11 +3,11 @@
 
 namespace AfmLibre\Pathfinder\Import\Handler;
 
-use Exception;
 use AfmLibre\Pathfinder\Entity\Weapon;
 use AfmLibre\Pathfinder\Entity\WeaponCategory;
 use AfmLibre\Pathfinder\Weapon\Repository\WeaponCategoryRepository;
 use AfmLibre\Pathfinder\Weapon\Repository\WeaponRepository;
+use Exception;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class WeaponImportHandler
@@ -66,5 +66,4 @@ class WeaponImportHandler
             }
         }
     }
-
 }

@@ -14,10 +14,10 @@ class ClassSkill
     use IdTrait;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Skill::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    public Skill $skill, #[ORM\ManyToOne(targetEntity: ClassT::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    public ClassT $classT)
+        #[ORM\JoinColumn(nullable: false)]
+        public Skill $skill, #[ORM\ManyToOne(targetEntity: ClassT::class)]
+        #[ORM\JoinColumn(nullable: false)]
+        public ClassT $classT)
     {
     }
 

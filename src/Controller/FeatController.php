@@ -25,7 +25,7 @@ class FeatController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_feat_index')]
-    public function index() : Response
+    public function index(): Response
     {
         $feats = $this->featRepository->findAllOrdered();
         return $this->render(

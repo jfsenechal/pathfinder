@@ -11,10 +11,9 @@ class NumberHelper
         }
 
         if ($value > 0) {
-            return '+'.$value;
+            return '+' . $value;
         }
 
         return (string)$value;
-
     }
 }

@@ -2,13 +2,13 @@
 
 namespace AfmLibre\Pathfinder\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use AfmLibre\Pathfinder\Entity\Race;
 use AfmLibre\Pathfinder\Modifier\ModifierListingEnum;
 use AfmLibre\Pathfinder\Modifier\Repository\ModifierRepository;
 use AfmLibre\Pathfinder\Race\Repository\RaceRepository;
 use AfmLibre\Pathfinder\Race\Repository\RaceTraitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/race')]
@@ -22,7 +22,7 @@ class RaceController extends AbstractController
     }
 
     #[Route(path: '/', name: 'pathfinder_race_index')]
-    public function index() : Response
+    public function index(): Response
     {
         $races = $this->raceRepository->findAllOrdered();
         return $this->render(

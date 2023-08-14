@@ -82,7 +82,7 @@ class ImportCommand extends Command
             $name = $helper->ask($input, $output, $question);
         }
 
-        $output->writeln($name.' import...');
+        $output->writeln($name . ' import...');
 
         match ($name) {
             'skills' => $this->skillImportHandler->call($this->io, $this->readFile($name)),
@@ -103,7 +103,7 @@ class ImportCommand extends Command
 
     private function readFile(string $fileName): array
     {
-        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir').'/data/'.$fileName.'.yml');
+        return Yaml::parseFile($this->parameterBag->get('kernel.project_dir') . '/data/' . $fileName . '.yml');
     }
 
     private function importAll()

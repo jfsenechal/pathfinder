@@ -34,7 +34,7 @@ class WeaponCategoryRepository extends ServiceEntityRepository
 
         if ($nom) {
             $qb->andWhere('category.name LIKE :name')
-                ->setParameter('name', '%'.$nom.'%');
+                ->setParameter('name', '%' . $nom . '%');
         }
 
         return $qb->getQuery()->getResult();

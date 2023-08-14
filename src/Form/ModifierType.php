@@ -37,5 +37,4 @@ class ModifierType extends AbstractType
             ]
         );
     }
-
 }

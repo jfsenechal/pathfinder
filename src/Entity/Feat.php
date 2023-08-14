@@ -2,14 +2,14 @@
 
 namespace AfmLibre\Pathfinder\Entity;
 
-use Stringable;
-use Doctrine\DBAL\Types\Types;
 use AfmLibre\Pathfinder\Entity\Traits\CampaingTrait;
 use AfmLibre\Pathfinder\Entity\Traits\IdTrait;
 use AfmLibre\Pathfinder\Entity\Traits\NameTrait;
 use AfmLibre\Pathfinder\Entity\Traits\SourceTrait;
 use AfmLibre\Pathfinder\Feat\Repository\FeatRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 #[ORM\Entity(repositoryClass: FeatRepository::class)]
 class Feat implements Stringable

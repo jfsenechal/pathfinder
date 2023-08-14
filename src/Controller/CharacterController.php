@@ -128,7 +128,7 @@ class CharacterController extends AbstractController
     #[Route(path: '/{uuid}', name: 'pathfinder_character_delete', methods: ['POST'])]
     public function delete(Request $request, Character $character): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$character->uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $character->uuid, $request->request->get('_token'))) {
             $id = $character->uuid;
             $this->$this->dispatcher->dispatch(new CharacterUpdated($id));
             $this->characterRepository->remove($character);

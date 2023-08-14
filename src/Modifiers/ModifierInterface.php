@@ -16,5 +16,4 @@ interface ModifierInterface
     public function valueModifier(): int;
 
     public function explain(): string;
-
 }

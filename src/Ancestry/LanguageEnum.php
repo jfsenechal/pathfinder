@@ -29,5 +29,4 @@ enum LanguageEnum
         'Terran' => 'Earth elemental creatures',
         'Druidic' => 'Druids',
     ];
-
 }

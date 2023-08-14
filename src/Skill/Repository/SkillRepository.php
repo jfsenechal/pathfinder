@@ -49,5 +49,4 @@ class SkillRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('skill')
             ->orderBy('skill.name', 'ASC');
     }
-
 }

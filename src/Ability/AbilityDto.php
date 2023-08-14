@@ -34,5 +34,4 @@ class AbilityDto
 
         return $bonusBase + $bonus;
     }
-
 }
