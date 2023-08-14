@@ -38,6 +38,7 @@ class LevelingUpController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $character->current_level = $nextLevel;
             $this->levelRepository->flush();
             $this->dispatcher->dispatch(new LevelCrossingUpdated($character->id));
 
@@ -48,6 +49,7 @@ class LevelingUpController extends AbstractController
             'levels' => $levels,
             'character' => $character,
             'nextLevel' => $nextLevel,
+            'form'=>$form
         ]);
     }
 }

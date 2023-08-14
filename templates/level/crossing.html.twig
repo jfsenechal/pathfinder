@@ -18,11 +18,13 @@
 
             {% include '@AfmLibrePathfinder/level/_list.html.twig' with {'levels': [nextLevel]} %}
 
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
             <button class="btn btn-primary mr-1 mb-2" type="submit">
                 <i class="ti ti-arrow-big-up"></i>
                 Passer de niveau
             </button>
-
+            {{ form_end(form) }}
             <h4 class="text-success mt-3">Tous les Niveaux</h4>
             {% include '@AfmLibrePathfinder/level/_list.html.twig' %}
         </div>

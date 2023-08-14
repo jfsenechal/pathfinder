@@ -70,7 +70,7 @@ class ImportDataCommand extends Command
     {
         $race = $this->entityManager->getRepository(Race::class)->findOneByName('Demi-orque');
         $class = $this->entityManager->getRepository(ClassT::class)->findOneByName('Guerrier');
-        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 1);
+        $level = $this->entityManager->getRepository(Level::class)->findOneByClassAndLevel($class, 2);
         $armor = $this->entityManager->getRepository(Armor::class)->findOneByName('Cotte de mailles');
         $weapon = $this->entityManager->getRepository(Weapon::class)->findOneByName('Cimeterre à deux mains');
         $feat = $this->entityManager->getRepository(Feat::class)->findOneByName('Attaque en puissance');
@@ -79,7 +79,7 @@ class ImportDataCommand extends Command
         $character->name = 'Fiona';
         $character->strength = 16;
         $character->dexterity = 12;
-        $character->constitution = 12;
+        $character->constitution = 14;
         $character->intelligence = 8;
         $character->charisma = 8;
         $character->point_by_level = LevelingEnum::INCREASE_LIFE->value;

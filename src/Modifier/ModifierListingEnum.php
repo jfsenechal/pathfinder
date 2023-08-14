@@ -50,6 +50,7 @@ enum ModifierListingEnum: string
             self::ABILITY_DEXTERITY,
             self::ABILITY_CONSTITUTION,
             self::ABILITY_INTELLIGENCE,
+            self::ABILITY_CHARISMA,
             self::ABILITY_WISDOM,
         ];
     }
