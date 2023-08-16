@@ -10,11 +10,8 @@
         </h5>
         {% for spell in groupedSpell %}
             <div class="card my-2">
-                <h5 class="card-header">
-                    {{ spell.name }}
-                </h5>
-                <a href="{{ path('pathfinder_spell_edit', {'id': spell.id}) }}" class="d-print-none">Edit</a>
-                <div class="card-body">
+                <div class="card-header">
+                    <h5>{{ spell.name }}</h5>
                     <span class="text-muted">
                         {% if spell.summary %}
                             {{ spell.summary }}
@@ -22,7 +19,9 @@
                             {{ spell.description|nl2br }}
                         {% endif %}
                     </span>
-                    <hr>
+                </div>
+                <div class="card-body">
+                    <a href="{{ path('pathfinder_spell_edit', {'id': spell.id}) }}" class="d-print-none">Edit</a>
                     <div class="row">
                         <div class="col-6">
                             <strong>Durée:</strong>
@@ -30,16 +29,13 @@
                             <br/>
                             <strong> Cible:</strong>
                             {{ spell.target }}
-                            <br/>
-                            <strong>Portée:</strong>
-                            {{ spell.ranged }}
                         </div>
                         <div class="col-6">
-                            <strong>Jet de sauvegarde:</strong>
-                            {{ spell.savingThrow }}
+                            <strong>Portée:</strong>
+                            {{ spell.ranged }}
                             <br/>
-                            <strong> Temps d'incantation:</strong>
-                            {{ spell.castringTime }}
+                            <strong>Jet de sauvegarde:</strong>
+                            {{ spell.savingThrow|string_clean }}
                         </div>
                     </div>
                 </div>
