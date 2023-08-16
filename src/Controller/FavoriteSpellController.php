@@ -112,7 +112,6 @@ class FavoriteSpellController extends AbstractController
             [
                 'character' => $character,
                 'groupedSpells' => $groupedSpells,
-                'number' => [0 => 4, 1 => '3+1'],
             ]
         );
     }
