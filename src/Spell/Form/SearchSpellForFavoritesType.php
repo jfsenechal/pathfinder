@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AfmLibre\Pathfinder\Form;
+namespace AfmLibre\Pathfinder\Spell\Form;
 
 use AfmLibre\Pathfinder\Form\Event\AddFieldClassSearchSubscriber;
 use AfmLibre\Pathfinder\Level\LevelUtils;

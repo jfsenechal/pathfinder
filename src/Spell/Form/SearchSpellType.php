@@ -1,7 +1,7 @@
 <?php
 
 
-namespace AfmLibre\Pathfinder\Form;
+namespace AfmLibre\Pathfinder\Spell\Form;
 
 use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\ClassT;

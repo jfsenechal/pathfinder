@@ -1,6 +1,6 @@
 <?php
 
-namespace AfmLibre\Pathfinder\Form;
+namespace AfmLibre\Pathfinder\Spell\Form;
 
 use AfmLibre\Pathfinder\Entity\Spell;
 use AfmLibre\Pathfinder\Spell\Dto\FavoriteSpellDto;

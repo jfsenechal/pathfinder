@@ -3,8 +3,8 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Character;
-use AfmLibre\Pathfinder\Form\SearchSpellForFavoritesType;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
+use AfmLibre\Pathfinder\Spell\Form\SearchSpellForFavoritesType;
 use AfmLibre\Pathfinder\Spell\Handler\FavoriteSpellHandler;
 use AfmLibre\Pathfinder\Spell\Message\FavoriteSpellUpdated;
 use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
@@ -112,6 +112,7 @@ class FavoriteSpellController extends AbstractController
             [
                 'character' => $character,
                 'groupedSpells' => $groupedSpells,
+                'number' => [0 => 4, 1 => '3+1'],
             ]
         );
     }

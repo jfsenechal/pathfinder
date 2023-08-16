@@ -3,7 +3,8 @@
 namespace AfmLibre\Pathfinder\Controller;
 
 use AfmLibre\Pathfinder\Entity\Spell;
-use AfmLibre\Pathfinder\Form\SearchSpellType;
+use AfmLibre\Pathfinder\Spell\Form\SearchSpellType;
+use AfmLibre\Pathfinder\Spell\Form\SpellEditFormType;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,13 +47,35 @@ class SpellController extends AbstractController
         );
     }
 
-    #[Route(path: '/{id}', name: 'pathfinder_spell_show')]
+    #[Route(path: '/{id}/show', name: 'pathfinder_spell_show')]
     public function show(Spell $spell): Response
     {
         return $this->render(
             '@AfmLibrePathfinder/spell/show.html.twig',
             [
                 'spell' => $spell,
+            ]
+        );
+    }
+
+    #[Route(path: '/{id}/edit', name: 'pathfinder_spell_edit')]
+    public function edit(Request $request, Spell $spell): Response
+    {
+        $form = $this->createForm(SpellEditFormType::class, $spell);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->spellRepository->flush();
+
+            return $this->redirectToRoute('pathfinder_spell_show', ['id' => $spell->getId()]);
+        }
+
+        return $this->render(
+            '@AfmLibrePathfinder/spell/edit.html.twig',
+            [
+                'spell' => $spell,
+                'form' => $form
             ]
         );
     }

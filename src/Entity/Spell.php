@@ -19,6 +19,8 @@ class Spell implements Stringable
     use IdTrait, CampaingTrait, SourceTrait;
     use NameTrait;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $summary = null;
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $description = null;
     #[ORM\Column(type: Types::TEXT, nullable: true)]

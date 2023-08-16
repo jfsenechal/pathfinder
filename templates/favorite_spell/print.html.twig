@@ -3,17 +3,25 @@
 {% block title %}Pathfinder{% endblock %}
 
 {% block body %}
+
     {% for level,groupedSpell in groupedSpells %}
-        <h6 class="text-success m-3">
-            Niveau {{ level }}
-        </h6>
+        <h5 class="text-success m-3">
+            Niveau {{ level }} ({{ number[level] }} par jour)
+        </h5>
         {% for spell in groupedSpell %}
             <div class="card my-2">
                 <h5 class="card-header">
                     {{ spell.name }}
                 </h5>
+                <a href="{{ path('pathfinder_spell_edit', {'id': spell.id}) }}" class="d-print-none">Edit</a>
                 <div class="card-body">
-                    <span class="text-muted">{{ spell.description|nl2br }}</span>
+                    <span class="text-muted">
+                        {% if spell.summary %}
+                            {{ spell.summary }}
+                        {% else %}
+                            {{ spell.description|nl2br }}
+                        {% endif %}
+                    </span>
                     <hr>
                     <div class="row">
                         <div class="col-6">
