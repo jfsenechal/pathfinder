@@ -7,7 +7,9 @@ use AfmLibre\Pathfinder\Form\SearchSpellForFavoritesType;
 use AfmLibre\Pathfinder\Spell\Factory\FormFactory;
 use AfmLibre\Pathfinder\Spell\Handler\FavoriteSpellHandler;
 use AfmLibre\Pathfinder\Spell\Message\FavoriteSpellUpdated;
+use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
+use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +21,7 @@ class FavoriteSpellController extends AbstractController
 {
     public function __construct(
         private readonly SpellRepository $spellRepository,
+        private readonly FavoriteSpellRepository $favoriteSpellRepository,
         private readonly FavoriteSpellHandler $favoriteSpellHandler,
         private readonly FormFactory $formFactory,
         private readonly MessageBusInterface $dispatcher
@@ -32,7 +35,7 @@ class FavoriteSpellController extends AbstractController
 
         $spellsForSelection = $this->spellRepository->findByClass($class);
         if (count($spellsForSelection) == 0) {
-            $this->addFlash('warning', 'Aucun sort pour la classe ' . $character->classT);
+            $this->addFlash('warning', 'Aucun sort pour la classe '.$character->classT);
 
             return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
         }
@@ -64,7 +67,7 @@ class FavoriteSpellController extends AbstractController
         }
 
         return $this->render(
-            '@AfmLibrePathfinder/favorite_spell/index.html.twig',
+            '@AfmLibrePathfinder/favorite_spell/edit.html.twig',
             [
                 'character' => $character,
                 'spells' => $spellsForSelection,
@@ -87,8 +90,8 @@ class FavoriteSpellController extends AbstractController
             }
 
             if (($character = $this->favoriteSpellHandler->delete(
-                $characterSpellId
-            )) instanceof Character) {
+                    $characterSpellId
+                )) instanceof Character) {
                 $this->addFlash('success', 'La sélection bien été supprimée');
 
                 return $this->redirectToRoute('pathfinder_character_show', ['uuid' => $character->uuid]);
@@ -96,5 +99,20 @@ class FavoriteSpellController extends AbstractController
         }
 
         return $this->redirectToRoute('pathfinder_home');
+    }
+
+    #[Route(path: '/{uuid}/print', name: 'pathfinder_favorite_spell_print', methods: ['GET', 'POST'])]
+    public function print(Character $character)
+    {
+        $characterSpells = $this->favoriteSpellRepository->findByCharacter($character);
+        $groupedSpells = SpellUtils::groupByLevel($characterSpells);
+
+        return $this->render(
+            '@AfmLibrePathfinder/favorite_spell/print.html.twig',
+            [
+                'character' => $character,
+                'groupedSpells' => $groupedSpells,
+            ]
+        );
     }
 }

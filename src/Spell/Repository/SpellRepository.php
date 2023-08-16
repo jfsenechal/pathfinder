@@ -37,7 +37,7 @@ class SpellRepository extends ServiceEntityRepository
 
         if ($name) {
             $qb->andWhere('spell.name LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+                ->setParameter('name', '%'.$name.'%');
         }
 
         if ($class instanceof ClassT) {
@@ -49,6 +49,10 @@ class SpellRepository extends ServiceEntityRepository
             $qb->andWhere('class_spells.level = :level')
                 ->setParameter('level', $level);
         }
+
+        $camp = 'pathfinder';
+        $qb->andWhere('spell.campaings LIKE :camp')
+            ->setParameter('camp', '%'.$camp.'%');
 
         $qb->addOrderBy('spell.name');
 

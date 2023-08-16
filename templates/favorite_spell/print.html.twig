@@ -1,0 +1,42 @@
+{% extends '@AfmLibrePathfinder/base.html.twig' %}
+
+{% block title %}Pathfinder{% endblock %}
+
+{% block body %}
+    {% for level,groupedSpell in groupedSpells %}
+        <h6 class="text-success m-3">
+            Niveau {{ level }}
+        </h6>
+        {% for spell in groupedSpell %}
+            <div class="card my-2">
+                <h5 class="card-header">
+                    {{ spell.name }}
+                </h5>
+                <div class="card-body">
+                    <span class="text-muted">{{ spell.description|nl2br }}</span>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Durée:</strong>
+                            {{ spell.duration }}
+                            <br/>
+                            <strong> Cible:</strong>
+                            {{ spell.target }}
+                            <br/>
+                            <strong>Portée:</strong>
+                            {{ spell.ranged }}
+                        </div>
+                        <div class="col-6">
+                            <strong>Jet de sauvegarde:</strong>
+                            {{ spell.savingThrow }}
+                            <br/>
+                            <strong> Temps d'incantation:</strong>
+                            {{ spell.castringTime }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}

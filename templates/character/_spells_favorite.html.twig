@@ -1,4 +1,5 @@
-<h4 class="text-success my-3"><i class="ti ti-wand"></i> {{ spells|length }} sorts disponibles</h4>
+<h4 class="text-success my-3"><i class="ti ti-wand"></i> Sorts disponibles</h4>
+<a href="{{ path('pathfinder_favorite_spell_print', {'uuid': character.uuid}) }}" class="m-3 d-block"><i class="ti ti-printer"></i> Imprimer</a>
 <ul class="list-group">
     {% for level, data in spells %}
         <li class="list-group-item"><strong>Lvl {{ level }}</strong>

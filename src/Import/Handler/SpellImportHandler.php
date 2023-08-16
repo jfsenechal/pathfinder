@@ -38,7 +38,7 @@ class SpellImportHandler
                     $this->classSpellRepository->persist($classSpell);
                 }
             } catch (Exception $e) {
-                $io->error($e->getMessage() . $spellData['Nom']);
+                $io->error($e->getMessage().$spellData['Nom']);
             }
         }
         $this->spellRepository->flush();
@@ -92,6 +92,9 @@ class SpellImportHandler
         }
         if (isset($data[SpellYml::YAML_SPELL_RES])) {
             $spell->spellResistance = $data[SpellYml::YAML_SPELL_RES];
+        }
+        if (isset($data[SpellYml::YAML_CASTING])) {
+            $spell->castringTime = $data[SpellYml::YAML_CASTING];
         }
 
         return $spell;

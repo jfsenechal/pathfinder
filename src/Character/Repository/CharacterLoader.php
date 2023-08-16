@@ -17,7 +17,7 @@ use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 class CharacterLoader
 {
     public function __construct(
-        private readonly FavoriteSpellRepository $characterSpellRepository,
+        private readonly FavoriteSpellRepository $favoriteSpellRepository,
         private readonly RaceTraitRepository $raceTraitRepository,
         private readonly CharacterWeaponRepository $characterWeaponRepository,
         private readonly CharacterFeatRepository $characterFeatRepository,
@@ -33,7 +33,7 @@ class CharacterLoader
     {
         $characterDto = new CharacterDto($character);
 
-        $characterSpells = $this->characterSpellRepository->findByCharacter($character);
+        $characterSpells = $this->favoriteSpellRepository->findByCharacter($character);
         $characterDto->spells = SpellUtils::groupByLevel($characterSpells);
 
         $characterDto->raceModifier = $this->raceTraitRepository->findOneByRaceAndName(

@@ -3,6 +3,7 @@
 
 namespace AfmLibre\Pathfinder\Form;
 
+use AfmLibre\Pathfinder\Classes\Repository\ClassRepository;
 use AfmLibre\Pathfinder\Entity\ClassT;
 use AfmLibre\Pathfinder\Level\LevelUtils;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
