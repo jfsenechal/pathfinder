@@ -13,7 +13,7 @@
                 <tr>
                     <th>Nom</th>
                     <th>Catégorie</th>
-                    <td>Summ</td>
+                    <td>Résumé</td>
                     <th>Campaigns</th>
                     <th>Set campaign</th>
                 </tr>
@@ -24,8 +24,8 @@
                                 {{ feat.name }}
                             </a>
                         </td>
-                        <td>{{ feat.summary }}</td>
                         <td>{{ feat.category }}</td>
+                        <td>{{ feat.summary }}</td>
                         <td id="result-{{ feat.id }}">
                             {% if feat.campaings %}
                                 {{ feat.campaings|join('') }}
