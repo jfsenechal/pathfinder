@@ -16,13 +16,23 @@ class FavoriteSpell implements Stringable
 {
     use IdTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Character::class)]
-        #[ORM\JoinColumn(name: 'character_id', nullable: false)]
-        public ?Character $character, #[ORM\ManyToOne(targetEntity: Spell::class)]
-        #[ORM\JoinColumn(nullable: false)]
-        public ?Spell $spell, #[ORM\Column(type: Types::SMALLINT)]
-        public int $level)
-    {
+    #[ORM\ManyToOne(targetEntity: Character::class)]
+    #[ORM\JoinColumn(name: 'character_id', nullable: false)]
+    public ?Character $character;
+    #[ORM\ManyToOne(targetEntity: Spell::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    public ?Spell $spell;
+    #[ORM\Column(type: Types::SMALLINT)]
+    public int $level;
+
+    public function __construct(
+        ?Character $character,
+        ?Spell $spell,
+        int $level
+    ) {
+        $this->character = $character;
+        $this->spell = $spell;
+        $this->level = $level;
     }
 
     public function __toString(): string

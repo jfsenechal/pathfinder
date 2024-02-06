@@ -9,7 +9,6 @@ use AfmLibre\Pathfinder\Spell\Handler\FavoriteSpellHandler;
 use AfmLibre\Pathfinder\Spell\Message\FavoriteSpellUpdated;
 use AfmLibre\Pathfinder\Spell\Repository\FavoriteSpellRepository;
 use AfmLibre\Pathfinder\Spell\Repository\SpellRepository;
-use AfmLibre\Pathfinder\Spell\Utils\SpellUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,17 +100,21 @@ class FavoriteSpellController extends AbstractController
         return $this->redirectToRoute('pathfinder_home');
     }
 
-    #[Route(path: '/{uuid}/print', name: 'pathfinder_favorite_spell_print', methods: ['GET', 'POST'])]
-    public function print(Character $character)
+    #[Route(path: '/{uuid}/{level}/print', name: 'pathfinder_favorite_spell_print', methods: ['GET', 'POST'])]
+    public function print(Character $character, int $level)
     {
-        $characterSpells = $this->favoriteSpellRepository->findByCharacter($character);
-        $groupedSpells = SpellUtils::groupByLevel($characterSpells);
+        $characterSpells = $this->favoriteSpellRepository->findByCharacterAndLevel($character, $level);
+        $spells = [];
+        foreach ($characterSpells as $characterSpell) {
+            $spells[] = $characterSpell->spell;
+        }
 
         return $this->render(
             '@AfmLibrePathfinder/favorite_spell/print.html.twig',
             [
                 'character' => $character,
-                'groupedSpells' => $groupedSpells,
+                'level' => $level,
+                'spells' => $spells,
             ]
         );
     }

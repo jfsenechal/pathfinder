@@ -18,29 +18,40 @@
         }
     </style>
 {% endblock %}
-{% block body %}
 
-    {% for level,groupedSpell in groupedSpells %}
+{% block container %}container-full pt-3 mx-5{% endblock %}
+
+{% block body %}
         <h5 class="text-success text-uppercase ">
             Niveau {{ level }}
         </h5>
         <hr>
         <table class="table table-bordered">
-            {% for spell in groupedSpell %}
+            {% for spell in spells %}
                 <tr class="d-none d-print-none">
-                    <td colspan="5">
+                    <td colspan="4">
                         <a href="{{ path('pathfinder_spell_edit', {'id': spell.id}) }}">Edit</a>
                     </td>
                 </tr>
                 <tr class="table-primary">
-                    <td colspan="5"><h5>{{ spell.name }}</h5></td>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square" width="30"
+                             height="30" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/>
+                        </svg>
+                    </td>
+                    <td colspan="3">
+                        <h5>{{ spell.name }}</h5>
+                    </td>
                 </tr>
                 <tr>
-                    <td class="text-muted" colspan="5">
+                    <td class="text-muted" colspan="4">
                         {% if spell.summary %}
                             {{ spell.summary }}
                         {% else %}
-                            {{ spell.description|nl2br }}
+                            {{ spell.description|u.truncate(500,'...')|nl2br }}
                         {% endif %}
                     </td>
                 </tr>
@@ -58,7 +69,5 @@
                 </tr>
             {% endfor %}
         </table>
-        <div class="{% if loop.index == 1 %}page-breaker{% endif %}"></div>
-    {% endfor %}
-
+        <div class="page-breaker"></div>
 {% endblock %}

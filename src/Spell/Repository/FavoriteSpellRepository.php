@@ -38,6 +38,20 @@ class FavoriteSpellRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return FavoriteSpell[]
+     */
+    public function findByCharacterAndLevel(Character $character, int $level): array
+    {
+        return $this->createQbl()
+            ->andWhere('favorite_spell.character = :character')
+            ->setParameter('character', $character)
+            ->andWhere('favorite_spell.level = :level')
+            ->setParameter('level', $level)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findByCharacterAndSpell(Character $character, Spell $spell): ?FavoriteSpell
     {
         return $this->createQbl()

@@ -50,9 +50,9 @@ class SpellRepository extends ServiceEntityRepository
                 ->setParameter('level', $level);
         }
 
-        $camp = 'pathfinder';
+        /*$camp = 'pathfinder';
         $qb->andWhere('spell.campaings LIKE :camp')
-            ->setParameter('camp', '%'.$camp.'%');
+            ->setParameter('camp', '%'.$camp.'%');*/
 
         $qb->addOrderBy('spell.name');
 
