@@ -26,7 +26,9 @@ class ArmorController extends AbstractController
     #[Route(path: '/{id<\d+>?0}', name: 'pathfinder_armor_index')]
     public function index(?ArmorCategory $category = null): Response
     {
-        $armors = $category ? $this->armorRepository->findByCategory($category) : $this->armorRepository->findAllOrdered();
+        $armors = $category ? $this->armorRepository->findByCategory(
+            $category
+        ) : $this->armorRepository->findAllOrdered();
         $categories = $this->armorCategoryRepository->findAll();
 
         return $this->render(
@@ -60,11 +62,21 @@ class ArmorController extends AbstractController
         $shieldCategory = $this->armorCategoryRepository->findOneByName(ArmorEnum::ShieldFr->value);
 
         if ($armor->category->id === $shieldCategory->id) {
-            $this->addFlash('success', 'Bouclier équipé');
-            $character->shield = $armor;
+            if ($character->shield === $armor) {
+                $character->shield = null;
+                $this->addFlash('success', 'Bouclier déséquipé');
+            } else {
+                $character->shield = $armor;
+                $this->addFlash('success', 'Bouclier équipé');
+            }
         } else {
-            $this->addFlash('success', 'Armure équipée');
-            $character->armor = $armor;
+            if ($character->armor === $armor) {
+                $character->armor = null;
+                $this->addFlash('success', 'Armure déséquipée');
+            } else {
+                $character->armor = $armor;
+                $this->addFlash('success', 'Armure équipée');
+            }
         }
 
         $this->armorRepository->flush();
